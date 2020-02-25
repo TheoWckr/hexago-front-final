@@ -11,6 +11,9 @@ const helmet = require('helmet');
 
 let indexRouter = require('./routes/index');
 let usersRouter = require('./routes/users');
+let locationsRouter = require('./routes/locations');
+let GameDetailsRouter = require('./routes/gameDetails');
+let EventRouter = require('./routes/event');
 
 let app = express();
 
@@ -26,6 +29,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/locations', locationsRouter);
+app.use('/gamedetails', GameDetailsRouter);
+app.use('/event', EventRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -43,7 +50,10 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-app.use('/', indexRouter)
-app.use('/api/v0/users', usersRouter)
+app.use('/', indexRouter);
+app.use('/api/v0/users', usersRouter);
+app.use('/api/v0/locations', locationsRouter);
+app.use('/api/v0/gamedetails', GameDetailsRouter);
+app.use('/api/v0/event', EventRouter);
 
 module.exports = app;

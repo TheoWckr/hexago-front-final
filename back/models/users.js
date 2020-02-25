@@ -5,6 +5,6 @@ mongoose.connect('mongodb://localhost:27017/hexago', { useNewUrlParser: true })
     .catch(err => console.log(err));
 
 let db = mongoose.connection
-let articleSchema = require('../schemas/users')
+let usersSchema = require('../schemas/users')
 
-module.exports = db.model('Article', articleSchema)
+module.exports = db.model('Users', usersSchema)
