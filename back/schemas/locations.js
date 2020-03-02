@@ -9,11 +9,11 @@ let locationsSchema = new Schema({
         type: Number,
         required: true
     },
-    adress: {
+    address: {
         type: String,
         required: true
     },
-    adress2: String,
+    address2: String,
     postCode: {
         type: String,
         required: true
