@@ -1,13 +1,21 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+let createError = require('http-errors');
+let express = require('express');
+let path = require('path');
+let cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const jwt = require("express-jwt");
+const jwksRsa = require("jwks-rsa");
+const helmet = require('helmet');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
 
-var app = express();
+
+let indexRouter = require('./routes/index');
+let usersRouter = require('./routes/users');
+let locationsRouter = require('./routes/locations');
+let GameDetailsRouter = require('./routes/gameDetails');
+let EventRouter = require('./routes/event');
+
+let app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -21,6 +29,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/locations', locationsRouter);
+app.use('/gamedetails', GameDetailsRouter);
+app.use('/event', EventRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -37,5 +49,11 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+app.use('/', indexRouter);
+app.use('/api/v0/users', usersRouter);
+app.use('/api/v0/locations', locationsRouter);
+app.use('/api/v0/gamedetails', GameDetailsRouter);
+app.use('/api/v0/event', EventRouter);
 
 module.exports = app;
