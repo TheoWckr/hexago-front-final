@@ -8,8 +8,6 @@ const App = () => {
   return (
       <div >
         <Header />
-	<div> Ma bite </div>
-
       </div>
   );
 }
