@@ -14,6 +14,7 @@ let usersRouter = require('./routes/users');
 let locationsRouter = require('./routes/locations');
 let GameDetailsRouter = require('./routes/gameDetails');
 let EventRouter = require('./routes/event');
+let BadgeRouter = require('./routes/badge');
 
 let app = express();
 
@@ -32,6 +33,7 @@ app.use('/users', usersRouter);
 app.use('/locations', locationsRouter);
 app.use('/gamedetails', GameDetailsRouter);
 app.use('/event', EventRouter);
+app.use('/badge', BadgeRouter);
 
 
 // catch 404 and forward to error handler
@@ -55,5 +57,6 @@ app.use('/api/v0/users', usersRouter);
 app.use('/api/v0/locations', locationsRouter);
 app.use('/api/v0/gamedetails', GameDetailsRouter);
 app.use('/api/v0/event', EventRouter);
+app.use('/api/v0/badge', BadgeRouter);
 
 module.exports = app;

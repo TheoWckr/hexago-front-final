@@ -21,7 +21,8 @@ let EventSchema = new Schema({
         required: true
     },
     phone:String,
-    details:String
+    details:String,
+    locationID:String,
 });
 EventSchema.index({title: 'text', content: 'text', "content:encoded": 'text'});
 
