@@ -6,6 +6,7 @@ import './Header.css';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import AppBar from "@material-ui/core/AppBar";
 import Typography from "@material-ui/core/Typography";
+import {Link} from "react-router-dom";
 
 
 
@@ -24,8 +25,9 @@ const Header = () => {
                         <span className="App-title">HexaGo</span>
                     </Typography>
                     <ButtonGroup variant="text"   aria-label="text primary button group">
-                        <Button color="inherit">Create Event</Button>
-                        <Button color="inherit"> Find Event </Button>
+                        <Link to="/gamecreate">  <Button color="inherit">Create Game</Button></Link>
+                        <Link to="/gamelist">  <Button color="inherit"> Game List </Button></Link>
+                        <Link to="/gamedisplay">  <Button color="inherit"> Display Game </Button></Link>
                         <Button color="inherit">Sign In</Button>
                         <Button color="inherit">Sign Up</Button>
                     </ButtonGroup>

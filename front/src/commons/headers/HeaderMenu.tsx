@@ -2,7 +2,7 @@ import React from 'react';
 import {Box, Paper} from "@material-ui/core";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Button from "@material-ui/core/Button";
-
+import {Link} from "react-router-dom";
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 
 
@@ -12,8 +12,9 @@ const HeaderMenu = () => {
     return (
         <span className={classes.root}>
             <ButtonGroup  variant="contained" color="primary" aria-label="contained primary button group">
-                <Button>Create Event</Button>
-                <Button> Find Event </Button>
+                <Link to="/gamecreate"><Button>Create Event</Button> </Link>
+                <Link to="/gamelist"> <Button> Find Event </Button> </Link>
+                <Link to="/gamedisplay"> <Button> Show Event </Button></Link>
 
                 <ButtonGroup variant="text" color="primary" aria-label="text primary button group">
                     <Button>Sign In</Button>
