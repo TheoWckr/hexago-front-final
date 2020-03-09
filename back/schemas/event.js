@@ -6,7 +6,8 @@ let validator = require('validator');
 let EventSchema = new Schema({
     duration:{
         type: Number,
-        required: true
+        required: true,
+        min:0
     },
     date:{
         type: Date,
@@ -14,11 +15,13 @@ let EventSchema = new Schema({
     },
     minParticipant:{
         type: Number,
-        required: true
+        required: true,
+        min:2
     },
     maxParticipant:{
         type: Number,
-        required: true
+        required: true,
+        min:2
     },
     phone:String,
     details:String,

@@ -7,7 +7,8 @@ let locationsSchema = new Schema({
     openedHours: Date,
     locationType: {
         type: Number,
-        required: true
+        required: true,
+        default:0
     },
     address: {
         type: String,
@@ -26,7 +27,7 @@ let locationsSchema = new Schema({
         type: String,
         default: "France"
     }
-})
+});
 locationsSchema.index({title: 'text', content: 'text', "content:encoded": 'text'});
 
 module.exports = locationsSchema

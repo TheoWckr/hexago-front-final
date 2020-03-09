@@ -55,12 +55,20 @@ router.get('/:id', function (req, res, next) {
     if (!req.params.id) res.json({
         err: 'Please provide an id param.'
     });
+    else if (req.params.id.length !== 24)
+        res.json({
+            err: 'Please provide a valid id param.'
+        });
     else {
         GameDetails.findById(
             req.params.id, (err, location) => {
                 if (err) res.json({
                     err: err
                 });
+                else if (req.params.id.length !== 24)
+                    res.json({
+                        err: 'Please provide a valid id param.'
+                    });
                 else {
                     if (location) {
                         res.json({
@@ -90,6 +98,10 @@ router.delete('/:id', (req, res, next) => {
             if (err) res.json({
                 err: err
             });
+            else if (req.params.id.length !== 24)
+                res.json({
+                    err: 'Please provide a valid id param.'
+                });
             else
             if (location) {
                 res.json({

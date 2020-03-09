@@ -6,21 +6,36 @@ let validator = require('validator');
 let usersSchema = new Schema({
     username: {
         type: String,
-        required: true
-    },
+        required: true,
+        match: /^[a-zA-Z0-9-_]+$/ },
     phone: String,
-    firstName: String,
-    lastName: String,
+    firstName: {
+        type: String,
+        required: true,
+        match: /^[a-zA-Z0-9-_]+$/ },
+    lastName: {
+        type: String,
+        required: true,
+        match: /^[a-zA-Z0-9-_]+$/ },
     password: String,
-    salt: Date,
-    email: String,
+    salt: String,
+    email: {
+        type:String,
+        required:true,
+        validator:validator.isEmail
+    },
     isActive: {
         type: Boolean,
         default: true
     },
-    dateCreation: Date,
+    dateCreation: {
+        type:Date,
+        default:Date.now
+    },
     dateLastConnection: Date,
-    birthdate: Date,
+    dateOfBirth: {
+        type:Date,
+        default:Date.now},
     userProfileId: Number,
     roleId: Number,
 }, {
@@ -31,4 +46,4 @@ let usersSchema = new Schema({
 
 usersSchema.index({title: 'text', content: 'text', "content:encoded": 'text'});
 
-module.exports = usersSchema
+module.exports = usersSchema;

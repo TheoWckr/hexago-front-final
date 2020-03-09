@@ -15,15 +15,25 @@ let GameDetailsSchema = new Schema({
     popularity: Number,
     playerMin: {
         type: Number,
-        required: true
+        required: true,
+        min:1
     },
     playerMax: {
         type: Number,
-        required: true
+        required: true,
+        min:1
     },
     gameLengthMin: Number,
     gameLengthMax: Number,
-    minAge: Number
+    minAge: {
+        type:Number,
+        min:0
+    },
+    description: String,
+    playedAtEvent: {
+        type:Number,
+        min:0
+    }
 });
 GameDetailsSchema.index({title: 'text', content: 'text', "content:encoded": 'text'});
 
