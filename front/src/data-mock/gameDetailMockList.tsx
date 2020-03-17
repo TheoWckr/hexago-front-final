@@ -1,4 +1,3 @@
-// @ts-ignore
 let detail: ({ gameLengthMax: number; editor: string; gameDetailsId: string; releaseDate: string; author: string; gameLengthMin: number; popularity: number; minAge: number; name: string; playerMax: number; playerMin: number; distributor: string } | { gameLengthMax: number; editor: string; gameDetailsId: string; releaseDate: string; author: string; gameLengthMin: number; popularity: number; minAge: number; name: string; playerMax: number; playerMin: number; distributor: string } | { gameLengthMax: number; editor: string; gameDetailsId: string; releaseDate: string; author: string; gameLengthMin: number; popularity: number; minAge: number; name: string; playerMax: number; playerMin: number; distributor: string, description: string })[];
 detail = [{
     "gameDetailsId": "sdfbsdjbsdfjhbdsfjhsdfbjsdfk",
@@ -48,3 +47,5 @@ detail = [{
 
     }
 ];
+
+export default detail;
