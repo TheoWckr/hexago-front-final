@@ -30,6 +30,4 @@ export class GameModel {
         this.gameLengthMax = gameLengthMax;
         this.editor = editor;
     }
-
-
 };
