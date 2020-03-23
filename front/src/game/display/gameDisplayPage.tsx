@@ -5,6 +5,7 @@ import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import {GameProps} from "../../models/propsDeclaration"
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import GenderList from "../gender/GenderListComponent";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -21,6 +22,11 @@ const useStyles = makeStyles((theme: Theme) =>
             marginTop: theme.spacing(1),
             marginBottom: theme.spacing(1),
         },
+        paper:{
+          padding : theme.spacing(1),
+            marginTop : theme.spacing(2),
+            marginBottom: theme.spacing(2)
+        },
         carrousselImage: {
             maxHeight:"450px",
             maxWidth:"300px"
@@ -34,34 +40,19 @@ const GameDisplayPage = (props: GameProps) => {
         <Box component="div" m={5}>
             <Grid container spacing={3}>
                 <Grid item xs={5}>
-                    <h1>{props.game.name}</h1>
-                    <div>
-                        <Chip
-                            label="Primary clickable"
-                            clickable
-                            color="primary"
-                        />
-                        <Chip
-                            label="Primary clickable"
-                            clickable
-                            color="primary"
-                        />
-                        <Chip
-                            label="Primary clickable"
-                            clickable
-                            color="primary"
-                        />
-
-                    </div>
-                    <Paper>
-                        <Typography>Date : {props.game.releaseDate}</Typography>
+                    <Typography variant="h4" component="h2" gutterBottom>{props.game.name}</Typography>
+                     <GenderList genders={props.game.genders}/>
+                    <Paper className={classes.paper}>
+                        <Typography variant="body2">Date : {props.game.releaseDate}</Typography>
                         <Divider />
-                        <Typography>Author: {props.game.author}</Typography>
+                        <Typography variant="body2">Author: {props.game.author}</Typography>
                         <Divider />
-                        <Typography>Distributor : {props.game.distributor}</Typography>
+                        <Typography variant="body2">Distributor : {props.game.distributor}</Typography>
                         <Divider />
-                        <Typography> Editor : {props.game.editor}</Typography>
+                        <Typography variant="body2" > Editor : {props.game.editor}</Typography>
                     </Paper>
+                    <Typography variant="body2" dangerouslySetInnerHTML={{__html: props.game.description}} />
+
                 </Grid>
                 <Grid item xs={5} >
                     <Carousel showArrows={true} className={classes.carroussel}>
@@ -79,11 +70,7 @@ const GameDisplayPage = (props: GameProps) => {
                 <Grid item xs={2}> Extention</Grid>
             </Grid>
 
-            <div dangerouslySetInnerHTML={{__html: props.game.description}}>
-
-            </div>
         </Box>
     );
 };
-
 export default GameDisplayPage;

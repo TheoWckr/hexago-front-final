@@ -24,7 +24,7 @@ const Header = () => {
                     <Typography variant="h6" className={[classes.title, "App-title"].join(' ')}>
                         <span className="App-title">HexaGo</span>
                     </Typography>
-                    <ButtonGroup variant="text"   aria-label="text primary button group">
+                    <ButtonGroup variant="text"   className="text primary button group">
                         <Link to="/gamecreate">  <Button color="inherit">Create Game</Button></Link>
                         <Link to="/gamelist">  <Button color="inherit"> Game List </Button></Link>
                         <Link to="/gamedisplay">  <Button color="inherit"> Display Game </Button></Link>
