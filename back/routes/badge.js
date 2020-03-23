@@ -23,7 +23,7 @@ function logHandleError(err) {
     }
 }
 
-//get all games
+//get all badges
 router.get('/', (req, res, next) => {
     Badge.find({}, function (err, result) {
         console.log(result);
@@ -35,7 +35,7 @@ router.get('/', (req, res, next) => {
 
 });
 
-//post create a game
+//post create a badge
 
 router.post('/create', (req, res, next) => {
     Badge.create(req.body, (err, location) => {
@@ -50,7 +50,7 @@ router.post('/create', (req, res, next) => {
     })
 });
 
-//get a game
+//get a badge
 router.get('/:id', function (req, res, next) {
     if (!req.params.id) res.json({
         err: 'Please provide an id param.'
@@ -76,7 +76,7 @@ router.get('/:id', function (req, res, next) {
     }
 });
 
-//delete a game
+//delete a badge
 router.delete('/:id', (req, res, next) => {
     if (!req.params.id) res.json({
         err: 'Please provide an id param.'

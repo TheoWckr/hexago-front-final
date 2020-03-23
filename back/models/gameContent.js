@@ -5,6 +5,6 @@ mongoose.connect('mongodb://localhost:27017/hexago', { useNewUrlParser: true })
     .catch(err => console.log(err));
 
 let db = mongoose.connection
-let GenreSchema = require('../schemas/genre')
+let GameContentSchema = require('../schemas/gameContent')
 
-module.exports = db.model('genre', GenreSchema)
+module.exports = db.model('Event', GameContentSchema)
