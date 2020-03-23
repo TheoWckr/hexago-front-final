@@ -23,8 +23,8 @@ function handleError(err) {
   }
 }
 
-//get all genre
-router.get('/', (req, res, next) => {
+  //get all genre
+  router.get('/', (req, res, next) => {
     genres.find({}, function (err, result) {
       console.log(result)
       if (err) res.json({
@@ -32,7 +32,18 @@ router.get('/', (req, res, next) => {
       })
       else res.json({result})
     })
-  
+  })
+
+  //search genre
+  router.get('/search', (req, res, next) => {
+    console.log(req.body.genre);
+    genres.find({genre: { "$regex": req.body.genre, "$options": "i" }}, function (err, result) {
+      console.log(result)
+      if (err) res.json({
+        err: err
+      })
+      else res.json({result})
+    })
   })
   
   //post create a genre
