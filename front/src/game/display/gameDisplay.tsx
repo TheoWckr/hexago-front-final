@@ -42,6 +42,7 @@ const GameDisplay = () => {
                                 {value.name}
                             </Typography>
                             <Typography variant="h5" component="h2">
+
                                 {(new Intl.DateTimeFormat('fr-FR').format(new Date(value.releaseDate)))}
                             </Typography>
                             <Typography className={classes.pos} color="textSecondary">

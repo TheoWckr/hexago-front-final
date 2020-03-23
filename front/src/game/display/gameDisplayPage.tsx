@@ -6,6 +6,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import {GameProps} from "../../models/propsDeclaration"
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import GenderList from "../gender/GenderListComponent";
+import {UserService} from "../../services/userService";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -63,7 +64,7 @@ const GameDisplayPage = (props: GameProps) => {
 
                         <div>
                             <img src="assets/6.jpeg" className={classes.carrousselImage}/>
-                            <p className="legend">Legend 6</p>
+                            <p  onClick={UserService.getUser} className="legend">Legend 6</p>
                         </div>
                     </Carousel>
                 </Grid>
