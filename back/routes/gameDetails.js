@@ -28,7 +28,7 @@ router.get('/', (req, res, next) => {
     let data = {};
 
     if (req.query.name) {
-        data['name'] = { '$regex': /req.query.name*/i};
+        data['name'] = { '$regex': '/.*req.query.name.*/i'};
     }
     if (req.query.author) {
         data['author'] = req.query.author;
