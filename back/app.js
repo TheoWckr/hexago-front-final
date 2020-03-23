@@ -7,7 +7,9 @@ const jwt = require("express-jwt");
 const jwksRsa = require("jwks-rsa");
 const helmet = require('helmet');
 
-
+let cors = require('cors');
+let app = express();
+app.use(cors());
 
 let indexRouter = require('./routes/index');
 let usersRouter = require('./routes/users');
@@ -18,7 +20,7 @@ let BadgeRouter = require('./routes/badge');
 let GenreRouter = require('./routes/genre');
 
 
-let app = express();
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

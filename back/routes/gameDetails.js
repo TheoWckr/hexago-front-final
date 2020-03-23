@@ -23,14 +23,53 @@ function logHandleError(err) {
     }
 }
 
-//get all games
+// GET method http://localhost:3000/gamedetails?name=xxxx&distributor=yyyyy&author=aaaaaa or get all if empty
 router.get('/', (req, res, next) => {
-    GameDetails.find({}, function (err, result) {
-        console.log(result);
+    let data = {};
+
+    if (req.query.name) {
+        data['name'] = { '$regex': /req.query.name*/i};
+    }
+    if (req.query.author) {
+        data['author'] = req.query.author;
+    }
+    if (req.query.author) {
+        data['editor'] = req.query.editor;
+    }
+    if (req.query.distributor) {
+        data['distributor'] = req.query.distributor;
+    }
+    if (req.query.releaseDate) {
+        data['releaseDate'] = req.query.releaseDate;
+    }
+    if (req.query.popularity) {
+        data['popularity'] = req.query.popularity;
+    }
+    if (req.query.nbPlayer) {
+        data['playerMin'] = { '$gte': req.query.nbPlayer };
+        data['playerMax'] = { '$lte': req.query.nbPlayer };
+    }
+    if (req.query.gameLengthMin) {
+        data['gameLengthMin'] = req.query.gameLengthMin;
+    }
+    if (req.query.gameLengthMax) {
+        data['gameLengthMax'] = req.query.gameLengthMax;
+    }
+    if (req.query.minAge) {
+        data['minAge'] = req.query.minAge;
+    }
+    console.log(data);
+    GameDetails.find(data, function (err, result) {
         if (err) res.json({
             err: err
         });
-        else res.json({result})
+        else {
+            if (result) {
+                res.json({
+                    result
+                })
+            }
+        }
     })
 
 });
@@ -38,50 +77,53 @@ router.get('/', (req, res, next) => {
 //post create a game
 
 router.post('/create', (req, res, next) => {
-    GameDetails.create(req.body, (err, location) => {
-        if (err) res.json({err: err});
-        else {
-            if (location) {
-                res.json({user: location, msg: 'Game created successfully.'})
-            } else {
-                res.json({err: 'Unable to create this game.'})
-            }
+    // check if game already exists
+    GameDetails.findOne({ 'name':req.body.name}, function(error, gameExists) {
+        if (gameExists) {
+            res.json({msg: 'Game already exists by this name: ' + req.body.name})
         }
-    })
+        // create the game
+        else {
+            GameDetails.create(req.body, (err, location) => {
+                if (err) res.json({err: err});
+                else {
+                    if (location) {
+                        res.json({user: location, msg: 'Game created successfully.'})
+                    } else {
+                        res.json({err: 'Unable to create this game.'})
+                    }
+                }
+            })
+        }
+    });
 });
 
 //get a game
 router.get('/:id', function (req, res, next) {
-    if (!req.params.id) res.json({
-        err: 'Please provide an id param.'
-    });
-    else if (req.params.id.length !== 24)
+    // find a game by it id
+    if (req.params.id.length !== 24){
         res.json({
             err: 'Please provide a valid id param.'
-        });
-    else {
-        GameDetails.findById(
-            req.params.id, (err, location) => {
-                if (err) res.json({
-                    err: err
-                });
-                else if (req.params.id.length !== 24)
-                    res.json({
-                        err: 'Please provide a valid id param.'
+        })}
+    else {GameDetails.findById(
+                req.params.id, (err, location) => {
+                    if (err) res.json({
+                        err: err
                     });
-                else {
-                    if (location) {
-                        res.json({
-                            location
-                        })
-                    } else {
-                        res.json({
-                            err: 'No game found with this id.'
-                        })
+                    else {
+                        if (location) {
+                            res.json({
+                                location
+                            })
+                        } else {
+                            res.json({
+                                err: 'No game found with this id.'
+                            })
+                        }
                     }
-                }
-            })
-    }
+                })}
+
+
 });
 
 //delete a game
