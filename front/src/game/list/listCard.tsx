@@ -1,57 +1,72 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import {makeStyles} from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
+import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
+import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
+import Rating from '@material-ui/lab/Rating';
+import Grid from '@material-ui/core/Grid';
 
 const useStyles = makeStyles({
     root: {
         minWidth: 275,
         marginBottom: 12
     },
-    bullet: {
-        display: 'inline-block',
-        margin: '0 2px',
-        transform: 'scale(0.8)',
-    },
     title: {
-        fontSize: 14,
+        fontSize: 25,
+        fontWeight: 600
+    },
+    grid: {
+        marginTop: 12
     },
     pos: {
         marginBottom: 12,
     },
+    media: {
+        height: 300
+    }
 });
 
 const ListCard = ({data}: any) => {
     const classes = useStyles();
 
     return (
-        <div>
-            { data.map((value: any) =>
-            <Card className={classes.root}>
-                <CardContent>
-                    <Typography className={classes.title} color="textSecondary" gutterBottom>
-                        {value.name}
-                    </Typography>
-                    <Typography variant="h5" component="h2">
-                        {(new Intl.DateTimeFormat('fr-FR').format(new Date(value.releaseDate)))}
-                    </Typography>
-                    <Typography className={classes.pos} color="textSecondary">
-                        nombre de joueurs maximum: {value.playerMax}
-                    </Typography>
-                    <Typography variant="body2" component="p">
-                        {value.author}
-                    </Typography>
-                </CardContent>
-                <CardActions>
-                    <Button size="small">Plus de détails</Button>
-                </CardActions>
-            </Card>
+        <Grid container spacing={2} className={classes.grid}>
+            {data.map((value: any) =>
+                <Grid item xs={12} sm={6} xl={4}>
+                    <Card className={classes.root}>
+                        <CardActionArea component={Link} to={value.gameDetailsId}>
+                            <CardMedia
+                                className={classes.media}
+                                image={value.mainImage}
+                                title={value.name}
+                            />
+                            <CardContent>
+                                <Typography className={classes.title}>
+                                    {value.name}
+                                </Typography>
+                                <Typography>
+                                    {value.author}
+                                </Typography>
+                                <Typography>
+                                    {value.gameGenre.map((genre: string) =>
+                                        genre
+                                    ).reduce((prev:string, curr:string) => [prev, ', ', curr])}
+                                </Typography>
+                                <Typography>
+                                    {(new Intl.DateTimeFormat('fr-FR').format(new Date(value.releaseDate)))}
+                                </Typography>
+                                <Rating name="read-only" value={value.popularity} readOnly />
+                            </CardContent>
+                        </CardActionArea>
+                    </Card>
+                </Grid>
             )}
-        </div>
+        </Grid>
     )
 };
 
 export default ListCard;
+
