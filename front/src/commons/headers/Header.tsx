@@ -8,15 +8,8 @@ import AppBar from "@material-ui/core/AppBar";
 import Typography from "@material-ui/core/Typography";
 import {Link} from "react-router-dom";
 
-
-
 const Header = () => {
-   function getTitle():string {
-        return 'HexaGo';
-    }
     const classes = useStyles();
-    const date : Date = new Date();
-
     return (
         <div className={classes.root} >
             <AppBar position="static">
@@ -35,7 +28,7 @@ const Header = () => {
             </AppBar>
         </div>
     );
-}
+};
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({

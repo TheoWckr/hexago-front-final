@@ -7,6 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import Rating from "@material-ui/lab/Rating";
 import Card from "@material-ui/core/Card";
 import {makeStyles} from "@material-ui/core/styles";
+import gameDetailModel from "../../model/gameDetailModel";
 
 const useStyles = makeStyles({
     root: {
@@ -28,33 +29,33 @@ const useStyles = makeStyles({
     }
 });
 
-const GameCard = ({props}: any) => {
+const GameCard = (props: {game: gameDetailModel}) => {
     const classes = useStyles();
 
     return (
         <Card className={classes.root}>
-            <CardActionArea component={Link} to={props.gameDetailsId}>
+            <CardActionArea component={Link} to={props.game.gameDetailsId}>
                 <CardMedia
                     className={classes.media}
-                    image={props.mainImage}
-                    title={props.name}
+                    image={props.game.mainImage}
+                    title={props.game.name}
                 />
                 <CardContent>
                     <Typography className={classes.title}>
-                        {props.name}
+                        {props.game.name}
                     </Typography>
                     <Typography>
-                        {props.author}
+                        {props.game.author}
                     </Typography>
                     <Typography>
-                        {props.gameGenre.map((genre: string) =>
+                        {props.game.gameGenre.map((genre: string) =>
                             genre
-                        ).reduce((prev:string, curr:string) => [prev, ', ', curr])}
+                        ).reduce((prev:string, curr:string) => prev + ', ' +  curr)}
                     </Typography>
                     <Typography>
-                        {(new Intl.DateTimeFormat('fr-FR').format(new Date(props.releaseDate)))}
+                        {(new Intl.DateTimeFormat('fr-FR').format(new Date(props.game.releaseDate)))}
                     </Typography>
-                    <Rating name="read-only" value={props.popularity} readOnly />
+                    <Rating name="read-only" value={props.game.popularity} readOnly />
                 </CardContent>
             </CardActionArea>
         </Card>

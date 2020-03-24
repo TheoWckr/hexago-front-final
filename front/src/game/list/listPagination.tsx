@@ -12,7 +12,7 @@ const listPagination = () => {
 
     return (
         <div>
-            <ListCard data={detail}/>
+            <ListCard games={detail}/>
             <Pagination count={numberPage} onChange={handleChange}/>
         </div>
     );
