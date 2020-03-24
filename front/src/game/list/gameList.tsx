@@ -1,5 +1,5 @@
 import React from "react";
-import Pagination from "./pagination";
+import Pagination from "./listPagination";
 
 const GameList = () => {
     return (

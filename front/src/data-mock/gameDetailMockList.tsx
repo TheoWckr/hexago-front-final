@@ -90,6 +90,994 @@ detail = [
             "Stratégie",
             "Négociation"
         ]
+    },
+    {
+        "gameDetailsId": "dfgdfgsdfgkjsfgkjsdfsdf",
+        "name": "Monopoly",
+        "author": "Ray Charles",
+        "editor": "Ray Charles",
+        "distributor": "Ray Charles",
+        "releaseDate": "2016-09-15T07:21Z",
+        "popularity": 5.2,
+        "playerMin": 6,
+        "playerMax": 16,
+        "gameLengthMin": 40,
+        "gameLengthMax": 60,
+        "minAge": 10,
+        "mainImage": "https://upload.wikimedia.org/wikipedia/fr/thumb/c/ca/Monopoly.svg/1200px-Monopoly.svg.png",
+        "gameGenre": [
+            "Stratégie",
+            "Négociation"
+        ]
+    },
+    {
+        "gameDetailsId": "dfgdfgsdfgkjsfgkjsdfsdf",
+        "name": "Monopoly",
+        "author": "Ray Charles",
+        "editor": "Ray Charles",
+        "distributor": "Ray Charles",
+        "releaseDate": "2016-09-15T07:21Z",
+        "popularity": 5.2,
+        "playerMin": 6,
+        "playerMax": 16,
+        "gameLengthMin": 40,
+        "gameLengthMax": 60,
+        "minAge": 10,
+        "mainImage": "https://upload.wikimedia.org/wikipedia/fr/thumb/c/ca/Monopoly.svg/1200px-Monopoly.svg.png",
+        "gameGenre": [
+            "Stratégie",
+            "Négociation"
+        ]
+    },
+    {
+        "gameDetailsId": "dfgdfgsdfgkjsfgkjsdfsdf",
+        "name": "Monopoly",
+        "author": "Ray Charles",
+        "editor": "Ray Charles",
+        "distributor": "Ray Charles",
+        "releaseDate": "2016-09-15T07:21Z",
+        "popularity": 5.2,
+        "playerMin": 6,
+        "playerMax": 16,
+        "gameLengthMin": 40,
+        "gameLengthMax": 60,
+        "minAge": 10,
+        "mainImage": "https://upload.wikimedia.org/wikipedia/fr/thumb/c/ca/Monopoly.svg/1200px-Monopoly.svg.png",
+        "gameGenre": [
+            "Stratégie",
+            "Négociation"
+        ]
+    },
+    {
+        "gameDetailsId": "dfgdfgsdfgkjsfgkjsdfsdf",
+        "name": "Monopoly",
+        "author": "Ray Charles",
+        "editor": "Ray Charles",
+        "distributor": "Ray Charles",
+        "releaseDate": "2016-09-15T07:21Z",
+        "popularity": 5.2,
+        "playerMin": 6,
+        "playerMax": 16,
+        "gameLengthMin": 40,
+        "gameLengthMax": 60,
+        "minAge": 10,
+        "mainImage": "https://upload.wikimedia.org/wikipedia/fr/thumb/c/ca/Monopoly.svg/1200px-Monopoly.svg.png",
+        "gameGenre": [
+            "Stratégie",
+            "Négociation"
+        ]
+    },
+    {
+        "gameDetailsId": "dfgdfgsdfgkjsfgkjsdfsdf",
+        "name": "Monopoly",
+        "author": "Ray Charles",
+        "editor": "Ray Charles",
+        "distributor": "Ray Charles",
+        "releaseDate": "2016-09-15T07:21Z",
+        "popularity": 5.2,
+        "playerMin": 6,
+        "playerMax": 16,
+        "gameLengthMin": 40,
+        "gameLengthMax": 60,
+        "minAge": 10,
+        "mainImage": "https://upload.wikimedia.org/wikipedia/fr/thumb/c/ca/Monopoly.svg/1200px-Monopoly.svg.png",
+        "gameGenre": [
+            "Stratégie",
+            "Négociation"
+        ]
+    },
+    {
+        "gameDetailsId": "dfgdfgsdfgkjsfgkjsdfsdf",
+        "name": "Monopoly",
+        "author": "Ray Charles",
+        "editor": "Ray Charles",
+        "distributor": "Ray Charles",
+        "releaseDate": "2016-09-15T07:21Z",
+        "popularity": 5.2,
+        "playerMin": 6,
+        "playerMax": 16,
+        "gameLengthMin": 40,
+        "gameLengthMax": 60,
+        "minAge": 10,
+        "mainImage": "https://upload.wikimedia.org/wikipedia/fr/thumb/c/ca/Monopoly.svg/1200px-Monopoly.svg.png",
+        "gameGenre": [
+            "Stratégie",
+            "Négociation"
+        ]
+    },
+    {
+        "gameDetailsId": "dfgdfgsdfgkjsfgkjsdfsdf",
+        "name": "Monopoly",
+        "author": "Ray Charles",
+        "editor": "Ray Charles",
+        "distributor": "Ray Charles",
+        "releaseDate": "2016-09-15T07:21Z",
+        "popularity": 5.2,
+        "playerMin": 6,
+        "playerMax": 16,
+        "gameLengthMin": 40,
+        "gameLengthMax": 60,
+        "minAge": 10,
+        "mainImage": "https://upload.wikimedia.org/wikipedia/fr/thumb/c/ca/Monopoly.svg/1200px-Monopoly.svg.png",
+        "gameGenre": [
+            "Stratégie",
+            "Négociation"
+        ]
+    },
+    {
+        "gameDetailsId": "dfgdfgsdfgkjsfgkjsdfsdf",
+        "name": "Monopoly",
+        "author": "Ray Charles",
+        "editor": "Ray Charles",
+        "distributor": "Ray Charles",
+        "releaseDate": "2016-09-15T07:21Z",
+        "popularity": 5.2,
+        "playerMin": 6,
+        "playerMax": 16,
+        "gameLengthMin": 40,
+        "gameLengthMax": 60,
+        "minAge": 10,
+        "mainImage": "https://upload.wikimedia.org/wikipedia/fr/thumb/c/ca/Monopoly.svg/1200px-Monopoly.svg.png",
+        "gameGenre": [
+            "Stratégie",
+            "Négociation"
+        ]
+    },
+    {
+        "gameDetailsId": "dfgdfgsdfgkjsfgkjsdfsdf",
+        "name": "Monopoly",
+        "author": "Ray Charles",
+        "editor": "Ray Charles",
+        "distributor": "Ray Charles",
+        "releaseDate": "2016-09-15T07:21Z",
+        "popularity": 5.2,
+        "playerMin": 6,
+        "playerMax": 16,
+        "gameLengthMin": 40,
+        "gameLengthMax": 60,
+        "minAge": 10,
+        "mainImage": "https://upload.wikimedia.org/wikipedia/fr/thumb/c/ca/Monopoly.svg/1200px-Monopoly.svg.png",
+        "gameGenre": [
+            "Stratégie",
+            "Négociation"
+        ]
+    },
+    {
+        "gameDetailsId": "dfgdfgsdfgkjsfgkjsdfsdf",
+        "name": "Monopoly",
+        "author": "Ray Charles",
+        "editor": "Ray Charles",
+        "distributor": "Ray Charles",
+        "releaseDate": "2016-09-15T07:21Z",
+        "popularity": 5.2,
+        "playerMin": 6,
+        "playerMax": 16,
+        "gameLengthMin": 40,
+        "gameLengthMax": 60,
+        "minAge": 10,
+        "mainImage": "https://upload.wikimedia.org/wikipedia/fr/thumb/c/ca/Monopoly.svg/1200px-Monopoly.svg.png",
+        "gameGenre": [
+            "Stratégie",
+            "Négociation"
+        ]
+    },
+    {
+        "gameDetailsId": "dfgdfgsdfgkjsfgkjsdfsdf",
+        "name": "Monopoly",
+        "author": "Ray Charles",
+        "editor": "Ray Charles",
+        "distributor": "Ray Charles",
+        "releaseDate": "2016-09-15T07:21Z",
+        "popularity": 5.2,
+        "playerMin": 6,
+        "playerMax": 16,
+        "gameLengthMin": 40,
+        "gameLengthMax": 60,
+        "minAge": 10,
+        "mainImage": "https://upload.wikimedia.org/wikipedia/fr/thumb/c/ca/Monopoly.svg/1200px-Monopoly.svg.png",
+        "gameGenre": [
+            "Stratégie",
+            "Négociation"
+        ]
+    },
+    {
+        "gameDetailsId": "dfgdfgsdfgkjsfgkjsdfsdf",
+        "name": "Monopoly",
+        "author": "Ray Charles",
+        "editor": "Ray Charles",
+        "distributor": "Ray Charles",
+        "releaseDate": "2016-09-15T07:21Z",
+        "popularity": 5.2,
+        "playerMin": 6,
+        "playerMax": 16,
+        "gameLengthMin": 40,
+        "gameLengthMax": 60,
+        "minAge": 10,
+        "mainImage": "https://upload.wikimedia.org/wikipedia/fr/thumb/c/ca/Monopoly.svg/1200px-Monopoly.svg.png",
+        "gameGenre": [
+            "Stratégie",
+            "Négociation"
+        ]
+    },
+    {
+        "gameDetailsId": "dfgdfgsdfgkjsfgkjsdfsdf",
+        "name": "Monopoly",
+        "author": "Ray Charles",
+        "editor": "Ray Charles",
+        "distributor": "Ray Charles",
+        "releaseDate": "2016-09-15T07:21Z",
+        "popularity": 5.2,
+        "playerMin": 6,
+        "playerMax": 16,
+        "gameLengthMin": 40,
+        "gameLengthMax": 60,
+        "minAge": 10,
+        "mainImage": "https://upload.wikimedia.org/wikipedia/fr/thumb/c/ca/Monopoly.svg/1200px-Monopoly.svg.png",
+        "gameGenre": [
+            "Stratégie",
+            "Négociation"
+        ]
+    },
+    {
+        "gameDetailsId": "dfgdfgsdfgkjsfgkjsdfsdf",
+        "name": "Monopoly",
+        "author": "Ray Charles",
+        "editor": "Ray Charles",
+        "distributor": "Ray Charles",
+        "releaseDate": "2016-09-15T07:21Z",
+        "popularity": 5.2,
+        "playerMin": 6,
+        "playerMax": 16,
+        "gameLengthMin": 40,
+        "gameLengthMax": 60,
+        "minAge": 10,
+        "mainImage": "https://upload.wikimedia.org/wikipedia/fr/thumb/c/ca/Monopoly.svg/1200px-Monopoly.svg.png",
+        "gameGenre": [
+            "Stratégie",
+            "Négociation"
+        ]
+    },
+    {
+        "gameDetailsId": "dfgdfgsdfgkjsfgkjsdfsdf",
+        "name": "Monopoly",
+        "author": "Ray Charles",
+        "editor": "Ray Charles",
+        "distributor": "Ray Charles",
+        "releaseDate": "2016-09-15T07:21Z",
+        "popularity": 5.2,
+        "playerMin": 6,
+        "playerMax": 16,
+        "gameLengthMin": 40,
+        "gameLengthMax": 60,
+        "minAge": 10,
+        "mainImage": "https://upload.wikimedia.org/wikipedia/fr/thumb/c/ca/Monopoly.svg/1200px-Monopoly.svg.png",
+        "gameGenre": [
+            "Stratégie",
+            "Négociation"
+        ]
+    },
+    {
+        "gameDetailsId": "dfgdfgsdfgkjsfgkjsdfsdf",
+        "name": "Monopoly",
+        "author": "Ray Charles",
+        "editor": "Ray Charles",
+        "distributor": "Ray Charles",
+        "releaseDate": "2016-09-15T07:21Z",
+        "popularity": 5.2,
+        "playerMin": 6,
+        "playerMax": 16,
+        "gameLengthMin": 40,
+        "gameLengthMax": 60,
+        "minAge": 10,
+        "mainImage": "https://upload.wikimedia.org/wikipedia/fr/thumb/c/ca/Monopoly.svg/1200px-Monopoly.svg.png",
+        "gameGenre": [
+            "Stratégie",
+            "Négociation"
+        ]
+    },
+    {
+        "gameDetailsId": "dfgdfgsdfgkjsfgkjsdfsdf",
+        "name": "Monopoly",
+        "author": "Ray Charles",
+        "editor": "Ray Charles",
+        "distributor": "Ray Charles",
+        "releaseDate": "2016-09-15T07:21Z",
+        "popularity": 5.2,
+        "playerMin": 6,
+        "playerMax": 16,
+        "gameLengthMin": 40,
+        "gameLengthMax": 60,
+        "minAge": 10,
+        "mainImage": "https://upload.wikimedia.org/wikipedia/fr/thumb/c/ca/Monopoly.svg/1200px-Monopoly.svg.png",
+        "gameGenre": [
+            "Stratégie",
+            "Négociation"
+        ]
+    },
+    {
+        "gameDetailsId": "dfgdfgsdfgkjsfgkjsdfsdf",
+        "name": "Monopoly",
+        "author": "Ray Charles",
+        "editor": "Ray Charles",
+        "distributor": "Ray Charles",
+        "releaseDate": "2016-09-15T07:21Z",
+        "popularity": 5.2,
+        "playerMin": 6,
+        "playerMax": 16,
+        "gameLengthMin": 40,
+        "gameLengthMax": 60,
+        "minAge": 10,
+        "mainImage": "https://upload.wikimedia.org/wikipedia/fr/thumb/c/ca/Monopoly.svg/1200px-Monopoly.svg.png",
+        "gameGenre": [
+            "Stratégie",
+            "Négociation"
+        ]
+    },
+    {
+        "gameDetailsId": "dfgdfgsdfgkjsfgkjsdfsdf",
+        "name": "Monopoly",
+        "author": "Ray Charles",
+        "editor": "Ray Charles",
+        "distributor": "Ray Charles",
+        "releaseDate": "2016-09-15T07:21Z",
+        "popularity": 5.2,
+        "playerMin": 6,
+        "playerMax": 16,
+        "gameLengthMin": 40,
+        "gameLengthMax": 60,
+        "minAge": 10,
+        "mainImage": "https://upload.wikimedia.org/wikipedia/fr/thumb/c/ca/Monopoly.svg/1200px-Monopoly.svg.png",
+        "gameGenre": [
+            "Stratégie",
+            "Négociation"
+        ]
+    },
+    {
+        "gameDetailsId": "dfgdfgsdfgkjsfgkjsdfsdf",
+        "name": "Monopoly",
+        "author": "Ray Charles",
+        "editor": "Ray Charles",
+        "distributor": "Ray Charles",
+        "releaseDate": "2016-09-15T07:21Z",
+        "popularity": 5.2,
+        "playerMin": 6,
+        "playerMax": 16,
+        "gameLengthMin": 40,
+        "gameLengthMax": 60,
+        "minAge": 10,
+        "mainImage": "https://upload.wikimedia.org/wikipedia/fr/thumb/c/ca/Monopoly.svg/1200px-Monopoly.svg.png",
+        "gameGenre": [
+            "Stratégie",
+            "Négociation"
+        ]
+    },
+    {
+        "gameDetailsId": "dfgdfgsdfgkjsfgkjsdfsdf",
+        "name": "Monopoly",
+        "author": "Ray Charles",
+        "editor": "Ray Charles",
+        "distributor": "Ray Charles",
+        "releaseDate": "2016-09-15T07:21Z",
+        "popularity": 5.2,
+        "playerMin": 6,
+        "playerMax": 16,
+        "gameLengthMin": 40,
+        "gameLengthMax": 60,
+        "minAge": 10,
+        "mainImage": "https://upload.wikimedia.org/wikipedia/fr/thumb/c/ca/Monopoly.svg/1200px-Monopoly.svg.png",
+        "gameGenre": [
+            "Stratégie",
+            "Négociation"
+        ]
+    },
+    {
+        "gameDetailsId": "dfgdfgsdfgkjsfgkjsdfsdf",
+        "name": "Monopoly",
+        "author": "Ray Charles",
+        "editor": "Ray Charles",
+        "distributor": "Ray Charles",
+        "releaseDate": "2016-09-15T07:21Z",
+        "popularity": 5.2,
+        "playerMin": 6,
+        "playerMax": 16,
+        "gameLengthMin": 40,
+        "gameLengthMax": 60,
+        "minAge": 10,
+        "mainImage": "https://upload.wikimedia.org/wikipedia/fr/thumb/c/ca/Monopoly.svg/1200px-Monopoly.svg.png",
+        "gameGenre": [
+            "Stratégie",
+            "Négociation"
+        ]
+    },
+    {
+        "gameDetailsId": "dfgdfgsdfgkjsfgkjsdfsdf",
+        "name": "Monopoly",
+        "author": "Ray Charles",
+        "editor": "Ray Charles",
+        "distributor": "Ray Charles",
+        "releaseDate": "2016-09-15T07:21Z",
+        "popularity": 5.2,
+        "playerMin": 6,
+        "playerMax": 16,
+        "gameLengthMin": 40,
+        "gameLengthMax": 60,
+        "minAge": 10,
+        "mainImage": "https://upload.wikimedia.org/wikipedia/fr/thumb/c/ca/Monopoly.svg/1200px-Monopoly.svg.png",
+        "gameGenre": [
+            "Stratégie",
+            "Négociation"
+        ]
+    },
+    {
+        "gameDetailsId": "dfgdfgsdfgkjsfgkjsdfsdf",
+        "name": "Monopoly",
+        "author": "Ray Charles",
+        "editor": "Ray Charles",
+        "distributor": "Ray Charles",
+        "releaseDate": "2016-09-15T07:21Z",
+        "popularity": 5.2,
+        "playerMin": 6,
+        "playerMax": 16,
+        "gameLengthMin": 40,
+        "gameLengthMax": 60,
+        "minAge": 10,
+        "mainImage": "https://upload.wikimedia.org/wikipedia/fr/thumb/c/ca/Monopoly.svg/1200px-Monopoly.svg.png",
+        "gameGenre": [
+            "Stratégie",
+            "Négociation"
+        ]
+    },
+    {
+        "gameDetailsId": "dfgdfgsdfgkjsfgkjsdfsdf",
+        "name": "Monopoly",
+        "author": "Ray Charles",
+        "editor": "Ray Charles",
+        "distributor": "Ray Charles",
+        "releaseDate": "2016-09-15T07:21Z",
+        "popularity": 5.2,
+        "playerMin": 6,
+        "playerMax": 16,
+        "gameLengthMin": 40,
+        "gameLengthMax": 60,
+        "minAge": 10,
+        "mainImage": "https://upload.wikimedia.org/wikipedia/fr/thumb/c/ca/Monopoly.svg/1200px-Monopoly.svg.png",
+        "gameGenre": [
+            "Stratégie",
+            "Négociation"
+        ]
+    },
+    {
+        "gameDetailsId": "dfgdfgsdfgkjsfgkjsdfsdf",
+        "name": "Monopoly",
+        "author": "Ray Charles",
+        "editor": "Ray Charles",
+        "distributor": "Ray Charles",
+        "releaseDate": "2016-09-15T07:21Z",
+        "popularity": 5.2,
+        "playerMin": 6,
+        "playerMax": 16,
+        "gameLengthMin": 40,
+        "gameLengthMax": 60,
+        "minAge": 10,
+        "mainImage": "https://upload.wikimedia.org/wikipedia/fr/thumb/c/ca/Monopoly.svg/1200px-Monopoly.svg.png",
+        "gameGenre": [
+            "Stratégie",
+            "Négociation"
+        ]
+    },
+    {
+        "gameDetailsId": "dfgdfgsdfgkjsfgkjsdfsdf",
+        "name": "Monopoly",
+        "author": "Ray Charles",
+        "editor": "Ray Charles",
+        "distributor": "Ray Charles",
+        "releaseDate": "2016-09-15T07:21Z",
+        "popularity": 5.2,
+        "playerMin": 6,
+        "playerMax": 16,
+        "gameLengthMin": 40,
+        "gameLengthMax": 60,
+        "minAge": 10,
+        "mainImage": "https://upload.wikimedia.org/wikipedia/fr/thumb/c/ca/Monopoly.svg/1200px-Monopoly.svg.png",
+        "gameGenre": [
+            "Stratégie",
+            "Négociation"
+        ]
+    },
+    {
+        "gameDetailsId": "dfgdfgsdfgkjsfgkjsdfsdf",
+        "name": "Monopoly",
+        "author": "Ray Charles",
+        "editor": "Ray Charles",
+        "distributor": "Ray Charles",
+        "releaseDate": "2016-09-15T07:21Z",
+        "popularity": 5.2,
+        "playerMin": 6,
+        "playerMax": 16,
+        "gameLengthMin": 40,
+        "gameLengthMax": 60,
+        "minAge": 10,
+        "mainImage": "https://upload.wikimedia.org/wikipedia/fr/thumb/c/ca/Monopoly.svg/1200px-Monopoly.svg.png",
+        "gameGenre": [
+            "Stratégie",
+            "Négociation"
+        ]
+    },
+    {
+        "gameDetailsId": "dfgdfgsdfgkjsfgkjsdfsdf",
+        "name": "Monopoly",
+        "author": "Ray Charles",
+        "editor": "Ray Charles",
+        "distributor": "Ray Charles",
+        "releaseDate": "2016-09-15T07:21Z",
+        "popularity": 5.2,
+        "playerMin": 6,
+        "playerMax": 16,
+        "gameLengthMin": 40,
+        "gameLengthMax": 60,
+        "minAge": 10,
+        "mainImage": "https://upload.wikimedia.org/wikipedia/fr/thumb/c/ca/Monopoly.svg/1200px-Monopoly.svg.png",
+        "gameGenre": [
+            "Stratégie",
+            "Négociation"
+        ]
+    },
+    {
+        "gameDetailsId": "dfgdfgsdfgkjsfgkjsdfsdf",
+        "name": "Monopoly",
+        "author": "Ray Charles",
+        "editor": "Ray Charles",
+        "distributor": "Ray Charles",
+        "releaseDate": "2016-09-15T07:21Z",
+        "popularity": 5.2,
+        "playerMin": 6,
+        "playerMax": 16,
+        "gameLengthMin": 40,
+        "gameLengthMax": 60,
+        "minAge": 10,
+        "mainImage": "https://upload.wikimedia.org/wikipedia/fr/thumb/c/ca/Monopoly.svg/1200px-Monopoly.svg.png",
+        "gameGenre": [
+            "Stratégie",
+            "Négociation"
+        ]
+    },
+    {
+        "gameDetailsId": "dfgdfgsdfgkjsfgkjsdfsdf",
+        "name": "Monopoly",
+        "author": "Ray Charles",
+        "editor": "Ray Charles",
+        "distributor": "Ray Charles",
+        "releaseDate": "2016-09-15T07:21Z",
+        "popularity": 5.2,
+        "playerMin": 6,
+        "playerMax": 16,
+        "gameLengthMin": 40,
+        "gameLengthMax": 60,
+        "minAge": 10,
+        "mainImage": "https://upload.wikimedia.org/wikipedia/fr/thumb/c/ca/Monopoly.svg/1200px-Monopoly.svg.png",
+        "gameGenre": [
+            "Stratégie",
+            "Négociation"
+        ]
+    },
+    {
+        "gameDetailsId": "dfgdfgsdfgkjsfgkjsdfsdf",
+        "name": "Monopoly",
+        "author": "Ray Charles",
+        "editor": "Ray Charles",
+        "distributor": "Ray Charles",
+        "releaseDate": "2016-09-15T07:21Z",
+        "popularity": 5.2,
+        "playerMin": 6,
+        "playerMax": 16,
+        "gameLengthMin": 40,
+        "gameLengthMax": 60,
+        "minAge": 10,
+        "mainImage": "https://upload.wikimedia.org/wikipedia/fr/thumb/c/ca/Monopoly.svg/1200px-Monopoly.svg.png",
+        "gameGenre": [
+            "Stratégie",
+            "Négociation"
+        ]
+    },
+    {
+        "gameDetailsId": "dfgdfgsdfgkjsfgkjsdfsdf",
+        "name": "Monopoly",
+        "author": "Ray Charles",
+        "editor": "Ray Charles",
+        "distributor": "Ray Charles",
+        "releaseDate": "2016-09-15T07:21Z",
+        "popularity": 5.2,
+        "playerMin": 6,
+        "playerMax": 16,
+        "gameLengthMin": 40,
+        "gameLengthMax": 60,
+        "minAge": 10,
+        "mainImage": "https://upload.wikimedia.org/wikipedia/fr/thumb/c/ca/Monopoly.svg/1200px-Monopoly.svg.png",
+        "gameGenre": [
+            "Stratégie",
+            "Négociation"
+        ]
+    },
+    {
+        "gameDetailsId": "dfgdfgsdfgkjsfgkjsdfsdf",
+        "name": "Monopoly",
+        "author": "Ray Charles",
+        "editor": "Ray Charles",
+        "distributor": "Ray Charles",
+        "releaseDate": "2016-09-15T07:21Z",
+        "popularity": 5.2,
+        "playerMin": 6,
+        "playerMax": 16,
+        "gameLengthMin": 40,
+        "gameLengthMax": 60,
+        "minAge": 10,
+        "mainImage": "https://upload.wikimedia.org/wikipedia/fr/thumb/c/ca/Monopoly.svg/1200px-Monopoly.svg.png",
+        "gameGenre": [
+            "Stratégie",
+            "Négociation"
+        ]
+    },
+    {
+        "gameDetailsId": "dfgdfgsdfgkjsfgkjsdfsdf",
+        "name": "Monopoly",
+        "author": "Ray Charles",
+        "editor": "Ray Charles",
+        "distributor": "Ray Charles",
+        "releaseDate": "2016-09-15T07:21Z",
+        "popularity": 5.2,
+        "playerMin": 6,
+        "playerMax": 16,
+        "gameLengthMin": 40,
+        "gameLengthMax": 60,
+        "minAge": 10,
+        "mainImage": "https://upload.wikimedia.org/wikipedia/fr/thumb/c/ca/Monopoly.svg/1200px-Monopoly.svg.png",
+        "gameGenre": [
+            "Stratégie",
+            "Négociation"
+        ]
+    },
+    {
+        "gameDetailsId": "dfgdfgsdfgkjsfgkjsdfsdf",
+        "name": "Monopoly",
+        "author": "Ray Charles",
+        "editor": "Ray Charles",
+        "distributor": "Ray Charles",
+        "releaseDate": "2016-09-15T07:21Z",
+        "popularity": 5.2,
+        "playerMin": 6,
+        "playerMax": 16,
+        "gameLengthMin": 40,
+        "gameLengthMax": 60,
+        "minAge": 10,
+        "mainImage": "https://upload.wikimedia.org/wikipedia/fr/thumb/c/ca/Monopoly.svg/1200px-Monopoly.svg.png",
+        "gameGenre": [
+            "Stratégie",
+            "Négociation"
+        ]
+    },
+    {
+        "gameDetailsId": "dfgdfgsdfgkjsfgkjsdfsdf",
+        "name": "Monopoly",
+        "author": "Ray Charles",
+        "editor": "Ray Charles",
+        "distributor": "Ray Charles",
+        "releaseDate": "2016-09-15T07:21Z",
+        "popularity": 5.2,
+        "playerMin": 6,
+        "playerMax": 16,
+        "gameLengthMin": 40,
+        "gameLengthMax": 60,
+        "minAge": 10,
+        "mainImage": "https://upload.wikimedia.org/wikipedia/fr/thumb/c/ca/Monopoly.svg/1200px-Monopoly.svg.png",
+        "gameGenre": [
+            "Stratégie",
+            "Négociation"
+        ]
+    },
+    {
+        "gameDetailsId": "dfgdfgsdfgkjsfgkjsdfsdf",
+        "name": "Monopoly",
+        "author": "Ray Charles",
+        "editor": "Ray Charles",
+        "distributor": "Ray Charles",
+        "releaseDate": "2016-09-15T07:21Z",
+        "popularity": 5.2,
+        "playerMin": 6,
+        "playerMax": 16,
+        "gameLengthMin": 40,
+        "gameLengthMax": 60,
+        "minAge": 10,
+        "mainImage": "https://upload.wikimedia.org/wikipedia/fr/thumb/c/ca/Monopoly.svg/1200px-Monopoly.svg.png",
+        "gameGenre": [
+            "Stratégie",
+            "Négociation"
+        ]
+    },
+    {
+        "gameDetailsId": "dfgdfgsdfgkjsfgkjsdfsdf",
+        "name": "Monopoly",
+        "author": "Ray Charles",
+        "editor": "Ray Charles",
+        "distributor": "Ray Charles",
+        "releaseDate": "2016-09-15T07:21Z",
+        "popularity": 5.2,
+        "playerMin": 6,
+        "playerMax": 16,
+        "gameLengthMin": 40,
+        "gameLengthMax": 60,
+        "minAge": 10,
+        "mainImage": "https://upload.wikimedia.org/wikipedia/fr/thumb/c/ca/Monopoly.svg/1200px-Monopoly.svg.png",
+        "gameGenre": [
+            "Stratégie",
+            "Négociation"
+        ]
+    },
+    {
+        "gameDetailsId": "dfgdfgsdfgkjsfgkjsdfsdf",
+        "name": "Monopoly",
+        "author": "Ray Charles",
+        "editor": "Ray Charles",
+        "distributor": "Ray Charles",
+        "releaseDate": "2016-09-15T07:21Z",
+        "popularity": 5.2,
+        "playerMin": 6,
+        "playerMax": 16,
+        "gameLengthMin": 40,
+        "gameLengthMax": 60,
+        "minAge": 10,
+        "mainImage": "https://upload.wikimedia.org/wikipedia/fr/thumb/c/ca/Monopoly.svg/1200px-Monopoly.svg.png",
+        "gameGenre": [
+            "Stratégie",
+            "Négociation"
+        ]
+    },
+    {
+        "gameDetailsId": "dfgdfgsdfgkjsfgkjsdfsdf",
+        "name": "Monopoly",
+        "author": "Ray Charles",
+        "editor": "Ray Charles",
+        "distributor": "Ray Charles",
+        "releaseDate": "2016-09-15T07:21Z",
+        "popularity": 5.2,
+        "playerMin": 6,
+        "playerMax": 16,
+        "gameLengthMin": 40,
+        "gameLengthMax": 60,
+        "minAge": 10,
+        "mainImage": "https://upload.wikimedia.org/wikipedia/fr/thumb/c/ca/Monopoly.svg/1200px-Monopoly.svg.png",
+        "gameGenre": [
+            "Stratégie",
+            "Négociation"
+        ]
+    },
+    {
+        "gameDetailsId": "dfgdfgsdfgkjsfgkjsdfsdf",
+        "name": "Monopoly",
+        "author": "Ray Charles",
+        "editor": "Ray Charles",
+        "distributor": "Ray Charles",
+        "releaseDate": "2016-09-15T07:21Z",
+        "popularity": 5.2,
+        "playerMin": 6,
+        "playerMax": 16,
+        "gameLengthMin": 40,
+        "gameLengthMax": 60,
+        "minAge": 10,
+        "mainImage": "https://upload.wikimedia.org/wikipedia/fr/thumb/c/ca/Monopoly.svg/1200px-Monopoly.svg.png",
+        "gameGenre": [
+            "Stratégie",
+            "Négociation"
+        ]
+    },
+    {
+        "gameDetailsId": "dfgdfgsdfgkjsfgkjsdfsdf",
+        "name": "Monopoly",
+        "author": "Ray Charles",
+        "editor": "Ray Charles",
+        "distributor": "Ray Charles",
+        "releaseDate": "2016-09-15T07:21Z",
+        "popularity": 5.2,
+        "playerMin": 6,
+        "playerMax": 16,
+        "gameLengthMin": 40,
+        "gameLengthMax": 60,
+        "minAge": 10,
+        "mainImage": "https://upload.wikimedia.org/wikipedia/fr/thumb/c/ca/Monopoly.svg/1200px-Monopoly.svg.png",
+        "gameGenre": [
+            "Stratégie",
+            "Négociation"
+        ]
+    },
+    {
+        "gameDetailsId": "dfgdfgsdfgkjsfgkjsdfsdf",
+        "name": "Monopoly",
+        "author": "Ray Charles",
+        "editor": "Ray Charles",
+        "distributor": "Ray Charles",
+        "releaseDate": "2016-09-15T07:21Z",
+        "popularity": 5.2,
+        "playerMin": 6,
+        "playerMax": 16,
+        "gameLengthMin": 40,
+        "gameLengthMax": 60,
+        "minAge": 10,
+        "mainImage": "https://upload.wikimedia.org/wikipedia/fr/thumb/c/ca/Monopoly.svg/1200px-Monopoly.svg.png",
+        "gameGenre": [
+            "Stratégie",
+            "Négociation"
+        ]
+    },
+    {
+        "gameDetailsId": "dfgdfgsdfgkjsfgkjsdfsdf",
+        "name": "Monopoly",
+        "author": "Ray Charles",
+        "editor": "Ray Charles",
+        "distributor": "Ray Charles",
+        "releaseDate": "2016-09-15T07:21Z",
+        "popularity": 5.2,
+        "playerMin": 6,
+        "playerMax": 16,
+        "gameLengthMin": 40,
+        "gameLengthMax": 60,
+        "minAge": 10,
+        "mainImage": "https://upload.wikimedia.org/wikipedia/fr/thumb/c/ca/Monopoly.svg/1200px-Monopoly.svg.png",
+        "gameGenre": [
+            "Stratégie",
+            "Négociation"
+        ]
+    },
+    {
+        "gameDetailsId": "dfgdfgsdfgkjsfgkjsdfsdf",
+        "name": "Monopoly",
+        "author": "Ray Charles",
+        "editor": "Ray Charles",
+        "distributor": "Ray Charles",
+        "releaseDate": "2016-09-15T07:21Z",
+        "popularity": 5.2,
+        "playerMin": 6,
+        "playerMax": 16,
+        "gameLengthMin": 40,
+        "gameLengthMax": 60,
+        "minAge": 10,
+        "mainImage": "https://upload.wikimedia.org/wikipedia/fr/thumb/c/ca/Monopoly.svg/1200px-Monopoly.svg.png",
+        "gameGenre": [
+            "Stratégie",
+            "Négociation"
+        ]
+    },
+    {
+        "gameDetailsId": "dfgdfgsdfgkjsfgkjsdfsdf",
+        "name": "Monopoly",
+        "author": "Ray Charles",
+        "editor": "Ray Charles",
+        "distributor": "Ray Charles",
+        "releaseDate": "2016-09-15T07:21Z",
+        "popularity": 5.2,
+        "playerMin": 6,
+        "playerMax": 16,
+        "gameLengthMin": 40,
+        "gameLengthMax": 60,
+        "minAge": 10,
+        "mainImage": "https://upload.wikimedia.org/wikipedia/fr/thumb/c/ca/Monopoly.svg/1200px-Monopoly.svg.png",
+        "gameGenre": [
+            "Stratégie",
+            "Négociation"
+        ]
+    },
+    {
+        "gameDetailsId": "dfgdfgsdfgkjsfgkjsdfsdf",
+        "name": "Monopoly",
+        "author": "Ray Charles",
+        "editor": "Ray Charles",
+        "distributor": "Ray Charles",
+        "releaseDate": "2016-09-15T07:21Z",
+        "popularity": 5.2,
+        "playerMin": 6,
+        "playerMax": 16,
+        "gameLengthMin": 40,
+        "gameLengthMax": 60,
+        "minAge": 10,
+        "mainImage": "https://upload.wikimedia.org/wikipedia/fr/thumb/c/ca/Monopoly.svg/1200px-Monopoly.svg.png",
+        "gameGenre": [
+            "Stratégie",
+            "Négociation"
+        ]
+    },
+    {
+        "gameDetailsId": "dfgdfgsdfgkjsfgkjsdfsdf",
+        "name": "Monopoly",
+        "author": "Ray Charles",
+        "editor": "Ray Charles",
+        "distributor": "Ray Charles",
+        "releaseDate": "2016-09-15T07:21Z",
+        "popularity": 5.2,
+        "playerMin": 6,
+        "playerMax": 16,
+        "gameLengthMin": 40,
+        "gameLengthMax": 60,
+        "minAge": 10,
+        "mainImage": "https://upload.wikimedia.org/wikipedia/fr/thumb/c/ca/Monopoly.svg/1200px-Monopoly.svg.png",
+        "gameGenre": [
+            "Stratégie",
+            "Négociation"
+        ]
+    },
+    {
+        "gameDetailsId": "dfgdfgsdfgkjsfgkjsdfsdf",
+        "name": "Monopoly",
+        "author": "Ray Charles",
+        "editor": "Ray Charles",
+        "distributor": "Ray Charles",
+        "releaseDate": "2016-09-15T07:21Z",
+        "popularity": 5.2,
+        "playerMin": 6,
+        "playerMax": 16,
+        "gameLengthMin": 40,
+        "gameLengthMax": 60,
+        "minAge": 10,
+        "mainImage": "https://upload.wikimedia.org/wikipedia/fr/thumb/c/ca/Monopoly.svg/1200px-Monopoly.svg.png",
+        "gameGenre": [
+            "Stratégie",
+            "Négociation"
+        ]
+    },
+    {
+        "gameDetailsId": "dfgdfgsdfgkjsfgkjsdfsdf",
+        "name": "Monopoly",
+        "author": "Ray Charles",
+        "editor": "Ray Charles",
+        "distributor": "Ray Charles",
+        "releaseDate": "2016-09-15T07:21Z",
+        "popularity": 5.2,
+        "playerMin": 6,
+        "playerMax": 16,
+        "gameLengthMin": 40,
+        "gameLengthMax": 60,
+        "minAge": 10,
+        "mainImage": "https://upload.wikimedia.org/wikipedia/fr/thumb/c/ca/Monopoly.svg/1200px-Monopoly.svg.png",
+        "gameGenre": [
+            "Stratégie",
+            "Négociation"
+        ]
+    },
+    {
+        "gameDetailsId": "dfgdfgsdfgkjsfgkjsdfsdf",
+        "name": "Monopoly",
+        "author": "Ray Charles",
+        "editor": "Ray Charles",
+        "distributor": "Ray Charles",
+        "releaseDate": "2016-09-15T07:21Z",
+        "popularity": 5.2,
+        "playerMin": 6,
+        "playerMax": 16,
+        "gameLengthMin": 40,
+        "gameLengthMax": 60,
+        "minAge": 10,
+        "mainImage": "https://upload.wikimedia.org/wikipedia/fr/thumb/c/ca/Monopoly.svg/1200px-Monopoly.svg.png",
+        "gameGenre": [
+            "Stratégie",
+            "Négociation"
+        ]
     }
 ];
 
