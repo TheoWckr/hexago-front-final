@@ -23,26 +23,28 @@ function handleError(err) {
   }
 }
 
-  //get all genre
-  router.get('/', (req, res, next) => {
-    genres.find({}, function (err, result) {
-      console.log(result)
-      if (err) res.json({
-        err: err
-      })
-      else res.json({result})
-    })
-  })
+  // //get all genre
+  // router.get('/', (req, res, next) => {
+  //   genres.find({}, function (err, content) {
+  //     console.log(content)
+  //     if (err) res.json({
+  //       err: err
+  //     })
+  //     else res.json({content})
+  //   })
+  // })
 
-  //search genre
-  router.get('/search', (req, res, next) => {
-    console.log(req.body.genre);
-    genres.find({genre: { "$regex": req.body.genre, "$options": "i" }}, function (err, result) {
-      console.log(result)
+  //search genre by string or get all if empty
+  router.get('/', (req, res, next) => {
+    let data = {};
+    if (req.query.genre) {
+      data['genre'] = new RegExp(".*"+ req.query.genre +".*",'i');
+    }
+    genres.find(data, function (err, content) {
       if (err) res.json({
         err: err
       })
-      else res.json({result})
+      else res.json({content})
     })
   })
   
@@ -64,11 +66,11 @@ function handleError(err) {
   }
    */
   router.post('/create', (req, res, next) => {
-    genres.create(req.body, (err, genre) => {
+    genres.create(req.body, (err, content) => {
       if (err) res.json({err: err})
       else {
-        if (genre) {
-          res.json({genre: genre, msg: 'genre created successfully.'})
+        if (content) {
+          res.json({genre: content, msg: 'genre created successfully.'})
         } else {
           res.json({err: 'Unable to create this genre.'})
         }
@@ -77,11 +79,11 @@ function handleError(err) {
     })
 
     router.put('/:id', (req, res, next) => {
-        genres.update(req.body, (err, genre) => {
+        genres.update(req.body, (err, content) => {
           if (err) res.json({err: err})
           else {
-            if (genre) {
-              res.json({genre: genre, msg: 'genre updated successfully.'})
+            if (content) {
+              res.json({genre: content, msg: 'genre updated successfully.'})
             } else {
               res.json({err: 'Unable to create this genre.'})
             }
@@ -96,14 +98,14 @@ function handleError(err) {
     })
     else {
       genres.findById(
-          req.params.id, (err, genre) => {
+          req.params.id, (err, content) => {
             if (err) res.json({
               err: err
             })
             else {
-              if (genre) {
+              if (content) {
                 res.json({
-                  genre
+                  content
                 })
               } else {
                 res.json({
@@ -125,12 +127,12 @@ function handleError(err) {
         err: 'Please provide a valid id param.'
       })
     else
-      genres.findByIdAndDelete(req.params.id, (err, genre) => {
+      genres.findByIdAndDelete(req.params.id, (err, content) => {
         if (err) res.json({
           err: err
         })
         else
-        if (genre) {
+        if (content) {
           res.json({
             _id: req.params.id,
             msg: 'Genre deleted successfully.'
