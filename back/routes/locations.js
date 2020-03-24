@@ -25,12 +25,12 @@ function logHandleError(err) {
 
 //get all locations
 router.get('/', (req, res, next) => {
-    Locations.find({}, function (err, result) {
-        console.log(result);
+    Locations.find({}, function (err, content) {
+        console.log(content);
         if (err) res.json({
             err: err
         });
-        else res.json({result})
+        else res.json({content})
     })
 
 });
@@ -38,11 +38,11 @@ router.get('/', (req, res, next) => {
 //post create a location
 
 router.post('/create', (req, res, next) => {
-    Locations.create(req.body, (err, location) => {
+    Locations.create(req.body, (err, content) => {
         if (err) res.json({err: err});
         else {
-            if (location) {
-                res.json({user: location, msg: 'location created successfully.'})
+            if (content) {
+                res.json({user: content, msg: 'location created successfully.'})
             } else {
                 res.json({err: 'Unable to create this location.'})
             }
@@ -57,14 +57,14 @@ router.get('/:id', function (req, res, next) {
     });
     else {
         Locations.findById(
-            req.params.id, (err, location) => {
+            req.params.id, (err, content) => {
                 if (err) res.json({
                     err: err
                 });
                 else {
-                    if (location) {
+                    if (content) {
                         res.json({
-                            location
+                            content
                         })
                     } else {
                         res.json({
@@ -86,19 +86,19 @@ router.delete('/:id', (req, res, next) => {
             err: 'Please provide a valid id param.'
         });
     else
-        Locations.findByIdAndDelete(req.params.id, (err, location) => {
+        Locations.findByIdAndDelete(req.params.id, (err, content) => {
             if (err) res.json({
                 err: err
             });
             else
-            if (location) {
+            if (content) {
                 res.json({
                     _id: req.params.id,
-                    msg: 'User deleted successfully.'
+                    msg: 'Location deleted successfully.'
                 })
             } else {
                 res.json({
-                    err: 'No user found with this id.'
+                    err: 'No location found with this id.'
                 })
             }
         })

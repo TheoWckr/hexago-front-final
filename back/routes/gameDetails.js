@@ -27,52 +27,58 @@ function logHandleError(err) {
 router.get('/', (req, res, next) => {
     let data = {};
 
+    // search by name
     if (req.query.name) {
-        data['name'] = { '$regex': '/.*req.query.name.*/i'};
+        let toRegexp= req.query.name;
+        data['name'] = new RegExp(".*"+toRegexp+".*",'i');
     }
     if (req.query.author) {
-        data['author'] = req.query.author;
+        let toRegexp= req.query.author;
+        data['author'] = new RegExp(".*"+toRegexp+".*",'i');
     }
-    if (req.query.author) {
-        data['editor'] = req.query.editor;
+    if (req.query.editor) {
+        let toRegexp= req.query.editor;
+        data['editor'] = new RegExp(".*"+toRegexp+".*",'i');
     }
     if (req.query.distributor) {
-        data['distributor'] = req.query.distributor;
+        let toRegexp= req.query.distributor;
+        data['distributor'] = new RegExp(".*"+toRegexp+".*",'i');
     }
     if (req.query.releaseDate) {
         data['releaseDate'] = req.query.releaseDate;
     }
     if (req.query.popularity) {
-        data['popularity'] = req.query.popularity;
+        data['popularity'] = {'$gte':req.query.popularity};
     }
     if (req.query.nbPlayer) {
-        data['playerMin'] = { '$gte': req.query.nbPlayer };
-        data['playerMax'] = { '$lte': req.query.nbPlayer };
+        data['playerMin'] = { '$lte': req.query.nbPlayer };
+        data['playerMax'] = { '$gte': req.query.nbPlayer };
     }
-    if (req.query.gameLengthMin) {
-        data['gameLengthMin'] = req.query.gameLengthMin;
-    }
-    if (req.query.gameLengthMax) {
-        data['gameLengthMax'] = req.query.gameLengthMax;
+    if (req.query.gameLengthDesired){
+        data['gameLengthMin'] = { '$lte':req.query.gameLengthMin};
+        data['gameLengthMax'] = { '$gte':req.query.gameLengthMax};
     }
     if (req.query.minAge) {
-        data['minAge'] = req.query.minAge;
+        data['minAge'] = { '$gte': req.query.minAge};
     }
     console.log(data);
-    GameDetails.find(data, function (err, result) {
+    GameDetails.find(data, function (err, content) {
         if (err) res.json({
             err: err
         });
         else {
-            if (result) {
+            if (content) {
                 res.json({
-                    result
+                    content
                 })
             }
         }
     })
 
 });
+
+// TODO get hall of fame best game
+
 
 //post create a game
 
@@ -84,11 +90,11 @@ router.post('/create', (req, res, next) => {
         }
         // create the game
         else {
-            GameDetails.create(req.body, (err, location) => {
+            GameDetails.create(req.body, (err, content) => {
                 if (err) res.json({err: err});
                 else {
-                    if (location) {
-                        res.json({user: location, msg: 'Game created successfully.'})
+                    if (content) {
+                        res.json({gameDetails: content, msg: 'Game created successfully.'})
                     } else {
                         res.json({err: 'Unable to create this game.'})
                     }
@@ -106,14 +112,14 @@ router.get('/:id', function (req, res, next) {
             err: 'Please provide a valid id param.'
         })}
     else {GameDetails.findById(
-                req.params.id, (err, location) => {
+                req.params.id, (err, content) => {
                     if (err) res.json({
                         err: err
                     });
                     else {
-                        if (location) {
+                        if (content) {
                             res.json({
-                                location
+                                content
                             })
                         } else {
                             res.json({
@@ -136,7 +142,7 @@ router.delete('/:id', (req, res, next) => {
             err: 'Please provide a valid id param.'
         });
     else
-        GameDetails.findByIdAndDelete(req.params.id, (err, location) => {
+        GameDetails.findByIdAndDelete(req.params.id, (err, content) => {
             if (err) res.json({
                 err: err
             });
@@ -145,7 +151,7 @@ router.delete('/:id', (req, res, next) => {
                     err: 'Please provide a valid id param.'
                 });
             else
-            if (location) {
+            if (content) {
                 res.json({
                     _id: req.params.id,
                     msg: 'Game deleted successfully.'

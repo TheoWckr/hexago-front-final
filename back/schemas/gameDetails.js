@@ -35,6 +35,7 @@ let GameDetailsSchema = new Schema({
         min:1
     },
     gameLengthMin: Number,
+    gameLengthDesired:Number,
     gameLengthMax: Number,
     minAge: {
         type:Number,

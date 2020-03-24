@@ -25,22 +25,22 @@ function handleError(err) {
 
 //get all genre
 router.get('/', (req, res, next) => {
-    genres.find({}, function (err, result) {
-      console.log(result)
+    genres.find({}, function (err, content) {
+      console.log(content)
       if (err) res.json({
         err: err
       })
-      else res.json({result})
+      else res.json({content})
     })
-  
+
   })
-  
+
   //post create a genre
   /**
    * @api {post} /genres/create Request genre information
    * @apiName Create genre
    * @apiGroup genres
-   * 
+   *
    * @apiParam {string} genre name
    *
    * @apiSuccessExample {json} Success-Response:
@@ -53,11 +53,11 @@ router.get('/', (req, res, next) => {
   }
    */
   router.post('/create', (req, res, next) => {
-    genres.create(req.body, (err, genre) => {
+    genres.create(req.body, (err, content) => {
       if (err) res.json({err: err})
       else {
-        if (genre) {
-          res.json({genre: genre, msg: 'genre created successfully.'})
+        if (content) {
+          res.json({content: content, msg: 'genre created successfully.'})
         } else {
           res.json({err: 'Unable to create this genre.'})
         }
@@ -66,18 +66,18 @@ router.get('/', (req, res, next) => {
     })
 
     router.put('/:id', (req, res, next) => {
-        genres.update(req.body, (err, genre) => {
+        genres.update(req.body, (err, content) => {
           if (err) res.json({err: err})
           else {
-            if (genre) {
-              res.json({genre: genre, msg: 'genre updated successfully.'})
+            if (content) {
+              res.json({content: content, msg: 'genre updated successfully.'})
             } else {
               res.json({err: 'Unable to create this genre.'})
             }
           }
         })
     })
-  
+
   //get a genre
   router.get('/:id', function (req, res, next) {
     if (!req.params.id) res.json({
@@ -85,14 +85,14 @@ router.get('/', (req, res, next) => {
     })
     else {
       genres.findById(
-          req.params.id, (err, genre) => {
+          req.params.id, (err, content) => {
             if (err) res.json({
               err: err
             })
             else {
-              if (genre) {
+              if (content) {
                 res.json({
-                  genre
+                  content
                 })
               } else {
                 res.json({
@@ -103,7 +103,7 @@ router.get('/', (req, res, next) => {
           })
     }
   })
-  
+
   //delete a genre
   router.delete('/:id', (req, res, next) => {
     if (!req.params.id) res.json({
@@ -114,12 +114,12 @@ router.get('/', (req, res, next) => {
         err: 'Please provide a valid id param.'
       })
     else
-      genres.findByIdAndDelete(req.params.id, (err, genre) => {
+      genres.findByIdAndDelete(req.params.id, (err, content) => {
         if (err) res.json({
           err: err
         })
         else
-        if (genre) {
+        if (content) {
           res.json({
             _id: req.params.id,
             msg: 'Genre deleted successfully.'
@@ -131,5 +131,5 @@ router.get('/', (req, res, next) => {
         }
       })
   })
-  
+
   module.exports = router;
