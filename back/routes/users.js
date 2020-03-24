@@ -26,12 +26,12 @@ function handleError(err) {
 
 //get all user
 router.get('/', (req, res, next) => {
-  Users.find({}, function (err, result) {
-    console.log(result)
+  Users.find({}, function (err, content) {
+    console.log(content)
     if (err) res.json({
       err: err
     })
-    else res.json({result})
+    else res.json({content})
   })
 
 })
@@ -81,11 +81,11 @@ router.get('/', (req, res, next) => {
 }
  */
 router.post('/create', (req, res, next) => {
-  Users.create(req.body, (err, user) => {
+  Users.create(req.body, (err, content) => {
     if (err) res.json({err: err})
     else {
-      if (user) {
-        res.json({user: user, msg: 'User created successfully.'})
+      if (content) {
+        res.json({content: content, msg: 'User created successfully.'})
       } else {
         res.json({err: 'Unable to create this User.'})
       }
@@ -100,14 +100,14 @@ router.get('/:id', function (req, res, next) {
   })
   else {
     Users.findById(
-        req.params.id, (err, user) => {
+        req.params.id, (err, content) => {
           if (err) res.json({
             err: err
           })
           else {
-            if (user) {
+            if (content) {
               res.json({
-                user
+                content
               })
             } else {
               res.json({
@@ -129,12 +129,12 @@ router.delete('/:id', (req, res, next) => {
       err: 'Please provide a valid id param.'
     })
   else
-    Users.findByIdAndDelete(req.params.id, (err, user) => {
+    Users.findByIdAndDelete(req.params.id, (err, content) => {
       if (err) res.json({
         err: err
       })
       else
-      if (user) {
+      if (content) {
         res.json({
           _id: req.params.id,
           msg: 'User deleted successfully.'
