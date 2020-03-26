@@ -5,8 +5,13 @@ import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import {GameProps} from "../../models/propsDeclaration"
 import makeStyles from "@material-ui/core/styles/makeStyles";
-import GenderList from "../gender/GenderListComponent";
+import GenderList from "../commons/gender/GenderListComponent";
 import {UserService} from "../../services/userService";
+import Button from "@material-ui/core/Button";
+import {GameService} from "../../services/gameService";
+import {GenreService} from "../../services/genreService";
+import {UtilsAxios} from "../../utils/utilsAxios";
+import {Simulate} from "react-dom/test-utils";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -36,15 +41,22 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const GameDisplayPage = (props: GameProps) => {
+
+    function search(){
+        GenreService.searchGenres('zizi')
+            .then((response)=> UtilsAxios.console(response) )
+            .catch((error) =>console.log('error search' , error) )
+    };
+
     const classes = useStyles();
     return (
         <Box component="div" m={5}>
             <Grid container spacing={3}>
-                <Grid item xs={5}>
-                    <Typography variant="h4" component="h2" gutterBottom>{props.game.name}</Typography>
+                <Grid item xs={5} >
+                    <Typography variant="h4" component="h2" gutterBottom>{props.game.name}  </Typography>
                      <GenderList genders={props.game.genders}/>
                     <Paper className={classes.paper}>
-                        <Typography variant="body2">Date : {props.game.releaseDate}</Typography>
+                        <Typography variant="body2" > Date : {props.game.releaseDate} </Typography>
                         <Divider />
                         <Typography variant="body2">Author: {props.game.author}</Typography>
                         <Divider />
@@ -64,7 +76,7 @@ const GameDisplayPage = (props: GameProps) => {
 
                         <div>
                             <img src="assets/6.jpeg" className={classes.carrousselImage}/>
-                            <p  onClick={UserService.getUser} className="legend">Legend 6</p>
+                            <p   className="legend">Legend 6</p>
                         </div>
                     </Carousel>
                 </Grid>

@@ -5,23 +5,26 @@ import {number, object} from "yup";
 export class GameModel {
 
 
-    gameDetailsId: string;
+    _id?: string;
     releaseDate: string;
-    author: string;
-    gameLengthMin: number;
     popularity: number;
-    minAge: number;
     name: string;
-    playerMax: number;
-    playerMin: number;
-    distributor: string;
     description : string;
-    gameLengthMax: number;
-    editor: string;
+
+    minAge?: number;
+    gameLengthMin?: number;
+    author?: string;
+    gameLengthMax?: number;
+    playerMax?: number;
+    playerMin?: number;
+    distributor?: string;
+    editor?: string;
+
+
     genders: GenderModel[];
 
     constructor( author: string, gameLengthMin: number, popularity: number, minAge: number, name: string, playerMax: number, playerMin: number, distributor: string,gameDetailsId: string, releaseDate: string,  description: string, gameLengthMax: number, editor: string, genders : GenderModel[]) {
-        this.gameDetailsId = gameDetailsId;
+        this._id = gameDetailsId;
         this.releaseDate = releaseDate;
         this.author = author;
         this.gameLengthMin = gameLengthMin;
@@ -66,3 +69,23 @@ gameLengthMax: Yup.number()
     .nullable(true),
 editor: Yup.string()
 });
+
+
+export const gameAgeMinmarks = [
+    {
+        value: 3,
+        label: '3',
+    },
+    {
+        value: 10,
+        label: '10',
+    },
+    {
+        value: 18,
+        label: '18',
+    },
+    {
+        value: 21,
+        label: '21',
+    },
+];

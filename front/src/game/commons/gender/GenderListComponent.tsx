@@ -1,8 +1,11 @@
-import {GameProps, GenderProps} from "../../models/propsDeclaration";
+import {GameProps, GenderProps} from "../../../models/propsDeclaration";
 import {Box, Chip, Grid} from "@material-ui/core";
 import React from "react";
+import {GenderModel} from "../../../models/genderModel";
 
-const GenderList = (props: GenderProps) => {
+const GenderList = (props: {
+    genders : GenderModel[]
+}) => {
 
     function getSpacing(): 2 | 3 | 4 | 6 | 10 {
         if(props.genders.length == 1 ) return 10;

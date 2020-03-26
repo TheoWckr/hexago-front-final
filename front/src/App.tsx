@@ -5,7 +5,6 @@ import './App.css';
 import Header from "./commons/headers/Header";
 
 import GameCreate from "./game/create/gameCreate";
-import GameDisplay from "./game/display/gameDisplay";
 import GameList from "./game/list/gameList";
 
 import {
@@ -16,7 +15,6 @@ import {
 } from 'react-router-dom';
 import GameDisplayPage from "./game/display/gameDisplayPage";
 import gameData from "./data-mock/gameData";
-
 
 const App = () => {
   return (
