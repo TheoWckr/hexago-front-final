@@ -15,6 +15,7 @@ import {
 } from 'react-router-dom';
 import GameDisplayPage from "./game/display/gameDisplayPage";
 import gameData from "./data-mock/gameData";
+import GameCreatePage from "./game/create/gameCreatePage";
 
 const App = () => {
   return (
@@ -22,7 +23,7 @@ const App = () => {
         <Header />
           <Switch>
               <Route exact path="/gamecreate">
-                  <GameCreate />
+                  <GameCreatePage />
               </Route>
               <Route path="/gamedisplay">
                   <GameDisplayPage game={gameData} />

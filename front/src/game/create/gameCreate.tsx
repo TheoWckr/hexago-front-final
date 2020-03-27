@@ -1,75 +1,138 @@
 import React from 'react';
-import * as Yup from 'yup';
-import { withFormik, FormikProps, FormikErrors, Form, Field } from 'formik';
-import {gameAgeMinmarks, GameModel} from "../../models/gameModel";
+import {withFormik, FormikProps, FormikErrors, Form, Field} from 'formik';
+import {gameAgeMinMarks, gameDurationMarks, GameModel} from "../../models/gameModel";
 import gameData from "../../data-mock/gameData";
-import {Slider, TextField, Typography} from "@material-ui/core";
+import {Grid, Slider, TextField, Typography} from "@material-ui/core";
 
 import DragNDropImage from "../commons/dragNDrop/dragNDropImageComponent";
 import {RichTextEditor} from "../commons/richText/richText";
-import {
-
-    KeyboardDatePicker,
-} from '@material-ui/pickers';
+import {KeyboardDatePicker} from '@material-ui/pickers';
+import makeStyles from "@material-ui/core/styles/makeStyles";
+import GenderSelector from "../commons/GenderSelector";
+import {genderMockList} from "../../data-mock/GenderMock";
 
 interface FormValues {
     email: string;
     password: string;
-    game : GameModel
+    game: GameModel
 }
 
 interface OtherProps {
     message: string;
 }
 
+
+const useStyles = makeStyles({
+    root: {
+        background: 'linear-gradient(60deg, white 30%,primary 90%)',
+        border: 0,
+        borderRadius: 3,
+        margin:'3%',
+        padding: '3%',
+    },
+});
 // Aside: You may see InjectedFormikProps<OtherProps, FormValues> instead of what comes below in older code..
 // InjectedFormikProps was artifact of when Formik only exported a
 //  It is also less flexible as it MUST wrap all props (it passes them through).
 const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
-    const { values, touched, errors, isSubmitting, message } = props;
+
+    function valueLabelFormat(value: number) {
+        return gameDurationMarks[gameDurationMarks.findIndex(mark => mark.value === value)].hiddenLabel ;
+    }
+
+    const {values, touched, errors, isSubmitting, message} = props;
+    const classes = useStyles();
     return (
 
         <Form>
 
-            <h1>{errors.game}</h1>
+            <Grid container spacing={2} direction="row"
+            >
+                <Grid md={3}
+                      container item
+                      direction="column"
+                      className={classes.root}
+                >
+                    <TextField required id="standard-required" label="Titre " multiline
+                               value={values.game.name}/>
+                    {touched.game && errors.game != '' && <div>{errors.game}</div>}
 
-                <TextField required id="standard-required" label="Titre " multiline defaultValue={values.game.name} />
-                {touched.game && errors.game != '' && <div>{errors.game}</div>}
+                    <TextField id="standard" label="Author " multiline value={values.game.author}/>
+                    <TextField id="standard" label="Editor " multiline value={values.game.editor}/>
+                    <TextField id="standard" label="Distributor " multiline value={values.game.distributor}/>
+                </Grid>
 
-            <TextField required id="standard-required" label="author " multiline value={values.game.author} />
-            <TextField required id="standard-required" label="Editor " multiline value={values.game.editor} />
-            <TextField required id="standard-required" label="distributor " multiline value={values.game.distributor} />
+                <Grid md={3}
+                      item container
+                      direction="column"
+                      className={classes.root}
+                >
+                    <KeyboardDatePicker
+                        margin="normal"
+                        id="date-picker-dialog"
+                        label="Date picker dialog"
+                        format="MM/dd/yyyy"
+                        value={values.game.releaseDate}
+                        onChange={() => console.log("change ",)}
+                        KeyboardButtonProps={{
+                            'aria-label': 'change date',
+                        }}
+                    />
 
-            <KeyboardDatePicker
-                margin="normal"
-                id="date-picker-dialog"
-                label="Date picker dialog"
-                format="MM/dd/yyyy"
-                value={values.game.releaseDate}
-                onChange={()=>console.log("change ", )}
-                KeyboardButtonProps={{
-                    'aria-label': 'change date',
-                }}
-            />
-            <TextField required id="standard-required" label="Editor " multiline value={values.game.gameLengthMax} />
-            <TextField required id="standard-required" label="distributor " multiline value={values.game.distributor} />
+                    <Typography >
+                        Minimum Age
+                    </Typography>
 
-            <Typography id="discrete-slider-custom" gutterBottom>
-                Custom marks
-            </Typography>
-            <Slider
-                defaultValue={10}
-                aria-labelledby="discrete-slider-custom"
-                step={1}
-                min={3}
-                max={21}
-                valueLabelDisplay="auto"
-                marks={gameAgeMinmarks}
-            />
-            <DragNDropImage/>
-            <RichTextEditor/>
+                    <Slider
+                        defaultValue={10}
+                        aria-labelledby="discrete-slider-custom"
+                        step={1}
+                        min={3}
+                        max={21}
+                        valueLabelDisplay={"on"}
+                        marks={gameAgeMinMarks}
+                    />
+
+                    <Typography >
+                        Duration
+                    </Typography>
+
+                    <Slider
+                        defaultValue={30}
+                        valueLabelDisplay="auto"
+                        valueLabelFormat={valueLabelFormat}
+                        aria-labelledby="discrete-slider-restrict"
+                        marks={gameDurationMarks}
+                        step={null}
+                        min={15}
+                        max={180}
+                    />
+
+                    <Typography id="range-slider" gutterBottom>
+                        Number of player 
+                    </Typography>
+                    <Slider
+                        defaultValue={[5,8]}
+                        valueLabelDisplay="auto"
+                        aria-labelledby="range-slider"
+                            min={1}
+                            max={16}
+                    />
+                </Grid>
 
 
+                <Grid md={3}
+                      item
+                      container
+                      direction="column"
+                      className={classes.root}
+                >
+                    <DragNDropImage/>
+                    <RichTextEditor/>
+                    <GenderSelector genders={genderMockList}/>
+                </Grid>
+
+            </Grid>
             <button type="submit" disabled={isSubmitting}>
                 Submit
             </button>
@@ -81,7 +144,7 @@ const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
 // The type of props MyForm receives
 interface MyFormProps {
     initialEmail?: string;
-    game : GameModel;
+    game: GameModel;
     message: string; // if this passed all the way through you might do this or make a union type
 }
 
@@ -99,14 +162,14 @@ const MyForm = withFormik<MyFormProps, FormValues>({
     // Add a custom validation function (this can be async too!)
     validate: (values: FormValues) => {
         let test = 'bijour';
-        let objectif = eval("{ " + test  + ' : "chiche" }');
+        let objectif = eval("{ " + test + ' : "chiche" }');
 
         console.log('objectif', objectif);
         let errors: FormikErrors<any> = {};
         if (!(values.game.name != 'test')) {
-            errors.game = objectif.bijour ;
-        } else  {
-            errors.game =  objectif.bijour;
+            errors.game = objectif.bijour;
+        } else {
+            errors.game = objectif.bijour;
         }
         return errors;
     },
@@ -116,11 +179,12 @@ const MyForm = withFormik<MyFormProps, FormValues>({
     },
 })(InnerForm);
 
-// Use <MyForm /> wherevs
 const GameCreate = () => (
     <div>
-        <MyForm message="Sign up" game={gameData} />
+        <MyForm message="Sign up" game={gameData}/>
     </div>
 );
 
 export default GameCreate;
+
+

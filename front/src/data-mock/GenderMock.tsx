@@ -1,5 +1,4 @@
 import {GenderModel} from "../models/genderModel";
-import {GameModel} from "../models/gameModel";
 
 
 export let genderMock : GenderModel = {
@@ -9,3 +8,12 @@ export let genderMock : GenderModel = {
 export let genderMockList : GenderModel[] = [
     new GenderModel("Funny" ) , new GenderModel( "Culture" ),new GenderModel(" Quizz ")
 ];
+
+export let genderMockList2 : GenderModel[] = [
+    new GenderModel("Medieval" ) , new GenderModel( "Heroic" ),new GenderModel(" Collaboration "),
+    new GenderModel("Magic" ) , new GenderModel( "Card Game" ),new GenderModel(" Duel "),
+];
+
+genderMockList.forEach(gender => genderMockList2.push(gender));
+
+

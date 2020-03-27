@@ -1,6 +1,5 @@
 import {GenderModel} from "./genderModel";
 import * as Yup from 'yup';
-import {number, object} from "yup";
 
 export class GameModel {
 
@@ -39,7 +38,7 @@ export class GameModel {
         this.editor = editor;
         this.genders = genders;
     }
-};
+}
 
 export const GameSchema = Yup.object().shape({
     firstName: Yup.string()
@@ -71,14 +70,18 @@ editor: Yup.string()
 });
 
 
-export const gameAgeMinmarks = [
+export const gameAgeMinMarks = [
     {
         value: 3,
         label: '3',
     },
     {
-        value: 10,
-        label: '10',
+        value: 8,
+        label: '8',
+    },
+    {
+        value: 12,
+        label: '12',
     },
     {
         value: 18,
@@ -86,6 +89,48 @@ export const gameAgeMinmarks = [
     },
     {
         value: 21,
-        label: '21',
+        label: '21+',
     },
+];
+
+export const gameDurationMarks : {
+    label:string , value: number , hiddenLabel: string
+}[] = [
+    {
+        value: 15,
+        label: '-15min',
+        hiddenLabel: '-15m'
+    },
+    {
+        value: 30,
+        label: '',
+        hiddenLabel: '~30m'
+    },
+    {
+        value: 45,
+        label: '',
+        hiddenLabel: '~45m'
+    },
+    {
+        value: 60,
+        label: '~1h',
+        hiddenLabel: '~1h'
+
+    },
+    {
+        value: 90,
+        label: '',
+        hiddenLabel: '~1h30'
+
+    },
+    {
+        value: 120,
+        label: '2h',
+        hiddenLabel: '~2h'
+    },
+    {
+        value: 180,
+        label: '+3h',
+        hiddenLabel: '+3h'
+    }
 ];

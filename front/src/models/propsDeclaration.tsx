@@ -3,10 +3,10 @@ import {GenderModel} from "./genderModel";
 
 /** Fichier de déclaration des proprs utilisés dans les differents components */
 
-export type GameProps = {
+export interface GameProps {
     game: GameModel
 }
 
-export type GenderProps = {
+export interface GenderProps {
     genders: GenderModel[]
 }
