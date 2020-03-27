@@ -5,6 +5,7 @@ import {GenderModel} from "./genderModel";
 
 export interface GameProps {
     game: GameModel
+    hidden? : boolean
 }
 
 export interface GenderProps {

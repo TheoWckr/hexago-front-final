@@ -11,13 +11,13 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import GenderSelector from "../commons/GenderSelector";
 import {genderMockList} from "../../data-mock/GenderMock";
 
-interface FormValues {
+export interface FormValues {
     email: string;
     password: string;
     game: GameModel
 }
 
-interface OtherProps {
+export interface OtherProps {
     message: string;
 }
 

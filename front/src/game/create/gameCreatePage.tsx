@@ -1,119 +1,104 @@
 import React from 'react';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import MobileStepper from '@material-ui/core/MobileStepper';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import SwipeableViews from 'react-swipeable-views';
-import { autoPlay } from 'react-swipeable-views-utils';
-import GameCreate from "./gameCreate";
+import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
+import gameData from "../../data-mock/gameData";
+import {GameCreatePanel1} from "./gameCreatePanel1";
+import GameCreatePanel3 from "./gameCreatePanel3";
+import GameCreatePanel2 from "./gameCreatePanel2";
 
-const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
+interface TabPanelProps {
+    children?: React.ReactNode;
+    dir?: string;
+    index: any;
+    value: any;
+}
 
-const tutorialSteps = [
-    {
-        label: 'San Francisco – Oakland Bay Bridge, United States',
-        imgPath:
-            'https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60',
-        component : <GameCreate />
+function TabPanel(props: TabPanelProps) {
+    const { children, value, index, ...other } = props;
 
-    },
-    {
-        label: 'Bird',
-        imgPath:
-            'https://images.unsplash.com/photo-1538032746644-0212e812a9e7?auto=format&fit=crop&w=400&h=250&q=60',
-        component : <GameCreate />
-    },
-    {
-        label: 'Bali, Indonesia',
-        imgPath:
-            'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=400&h=250&q=80',
-        component : <GameCreate />
+    return (
+        <Typography
+            component="div"
+            role="tabpanel"
+            hidden={value !== index}
+            id={`full-width-tabpanel-${index}`}
+            aria-labelledby={`full-width-tab-${index}`}
+            {...other}
+        >
+            {value === index && <Box p={3}>{children}</Box>}
+        </Typography>
+    );
+}
 
-    },
-];
+function a11yProps(index: any) {
+    return {
+        id: `full-width-tab-${index}`,
+        'aria-controls': `full-width-tabpanel-${index}`,
+    };
+}
 
-const useStyles = makeStyles(theme => ({
+export const useStylesPanelCreatePage = makeStyles((theme: Theme) => ({
     root: {
-        maxWidth: 400,
-        flexGrow: 1,
+        backgroundColor: theme.palette.background.paper,
     },
-    header: {
-        display: 'flex',
-        alignItems: 'center',
-        height: 50,
-        paddingLeft: theme.spacing(4),
-        backgroundColor: theme.palette.background.default,
-    },
-    img: {
-        height: 255,
-        display: 'block',
-        maxWidth: 400,
-        overflow: 'hidden',
-        width: '100%',
-    },
+    panel:{
+        width:'90%',
+        margin:'3%',
+       paddingLeft:'20%',
+        paddingRight:'20%',
+    }
 }));
 
-function GameCreatePage() {
-    const classes = useStyles();
+export default function FullWidthTabs() {
+    const classes = useStylesPanelCreatePage();
     const theme = useTheme();
-    const [activeStep, setActiveStep] = React.useState(0);
-    const maxSteps = tutorialSteps.length;
+    const [value, setValue] = React.useState(0);
 
-    const handleNext = () => {
-        setActiveStep(prevActiveStep => prevActiveStep + 1);
+    const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
+        setValue(newValue);
     };
 
-    const handleBack = () => {
-        setActiveStep(prevActiveStep => prevActiveStep - 1);
-    };
-
-    const handleStepChange = (step: number) => {
-        setActiveStep(step);
+    const handleChangeIndex = (index: number) => {
+        setValue(index);
     };
 
     return (
         <div className={classes.root}>
-            <Paper square elevation={0} className={classes.header}>
-                <Typography>{tutorialSteps[activeStep].label}</Typography>
-            </Paper>
+            <AppBar position="static" color="default">
+                <Tabs
+                    value={value}
+                    onChange={handleChange}
+                    indicatorColor="primary"
+                    textColor="primary"
+                    centered
+                    variant="fullWidth"
+                    aria-label="full width tabs example"
+                >
+                    <Tab label="Game Définition" {...a11yProps(0)} />
+                    <Tab label="Game properties " {...a11yProps(1)} />
+                    <Tab label="Images " {...a11yProps(2)} />
+                </Tabs>
+            </AppBar>
             <SwipeableViews
                 axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-                index={activeStep}
-                onChangeIndex={handleStepChange}
-                enableMouseEvents
+                index={value}
+                onChangeIndex={handleChangeIndex}
             >
-                {tutorialSteps.map((step, index) => (
-                    <div key={step.label}>
-                        {Math.abs(activeStep - index) <= 2 ? (
-                            <img className={classes.img} src={step.imgPath} alt={step.label} />
-                        ) : null}
-                        {step.component}
-                    </div>
-                ))}
+                <TabPanel value={value} index={0} dir={theme.direction}>
+                    <GameCreatePanel1  game={gameData} key={'1dqsfsdfqsf'} />
+                </TabPanel>
+                <TabPanel value={value} index={1} dir={theme.direction}>
+                    <GameCreatePanel2 game={gameData} key={'2qsdfdfqsf'} />
+                </TabPanel>
+                <TabPanel value={value} index={2} dir={theme.direction}>
+                    <GameCreatePanel3 game={gameData} key={'2qsdfdfqsf'} />
+                </TabPanel>
             </SwipeableViews>
-            <MobileStepper
-                steps={maxSteps}
-                position="static"
-                variant="text"
-                activeStep={activeStep}
-                nextButton={
-                    <Button size="small" onClick={handleNext} disabled={activeStep === maxSteps - 1}>
-                        Next
-                        {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
-                    </Button>
-                }
-                backButton={
-                    <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
-                        {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
-                        Back
-                    </Button>
-                }
-            />
         </div>
     );
 }
-
-export default GameCreatePage;

@@ -46,8 +46,8 @@ class GenderSelector extends React.Component<GenderProps, State> {
             </Typography>
             <GenderList genders={this.state.genders} ClickHandler={this.funRemove}/>
             <Typography>
-                Gender Search <Input placeholder="Placeholder" inputProps={{'aria-label': 'description'}}/>
-            </Typography>
+                Gender Search
+            </Typography><Input placeholder="Placeholder" inputProps={{'aria-label': 'description'}}/>
             <GenderList genders={genderMockList2.filter(gender => !this.state.genders.includes(gender))} ClickHandler={this.funAdd}/>
         </div>);
     }
