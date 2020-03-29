@@ -25,12 +25,12 @@ function logHandleError(err) {
 
 //get all games
 router.get('/', (req, res, next) => {
-    Event.find({}, function (err, result) {
-        console.log(result);
+    Event.find({}, function (err, content) {
+        console.log(content);
         if (err) res.json({
             err: err
         });
-        else res.json({result})
+        else res.json({content})
     })
 
 });
@@ -38,11 +38,11 @@ router.get('/', (req, res, next) => {
 //post create a game
 
 router.post('/create', (req, res, next) => {
-    Event.create(req.body, (err, location) => {
+    Event.create(req.body, (err, content) => {
         if (err) res.json({err: err});
         else {
-            if (location) {
-                res.json({user: location, msg: 'Event created successfully.'})
+            if (content) {
+                res.json({content: content, msg: 'Event created successfully.'})
             } else {
                 res.json({err: 'Unable to create this event.'})
             }
@@ -61,14 +61,14 @@ router.get('/:id', function (req, res, next) {
         });
     else {
         Event.findById(
-            req.params.id, (err, location) => {
+            req.params.id, (err, content) => {
                 if (err) res.json({
                     err: err
                 });
                 else {
-                    if (location) {
+                    if (content) {
                         res.json({
-                            location
+                            content
                         })
                     } else {
                         res.json({
@@ -90,12 +90,12 @@ router.delete('/:id', (req, res, next) => {
             err: 'Please provide a valid id param.'
         });
     else
-        Event.findByIdAndDelete(req.params.id, (err, location) => {
+        Event.findByIdAndDelete(req.params.id, (err, content) => {
             if (err) res.json({
                 err: err
             });
             else
-            if (location) {
+            if (content) {
                 res.json({
                     _id: req.params.id,
                     msg: 'Event deleted successfully.'
