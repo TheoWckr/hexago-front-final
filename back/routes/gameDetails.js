@@ -231,9 +231,11 @@ router.get('/', (req, res, next) => {
 router.post('/create', (req, res, next) => {
     // check if game already exists
     GameDetails.findOne({ 'name':req.body.name}, function(error, gameExists) {
+        // error handling
         if (gameExists) {
             res.json({msg: 'Game already exists by this name: ' + req.body.name})
         }
+
         // create the game
         else {
             GameDetails.create(req.body, (err, content) => {
