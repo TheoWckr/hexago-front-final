@@ -45,13 +45,17 @@ function a11yProps(index: any) {
 export const useStylesPanelCreatePage = makeStyles((theme: Theme) => ({
     root: {
         backgroundColor: theme.palette.background.paper,
+        padding: '2em',
     },
     panel:{
         width:'90%',
         margin:'3%',
        paddingLeft:'20%',
         paddingRight:'20%',
-    }
+    },
+    textField: {
+        paddingBottom: '2em',
+    },
 }));
 
 export default function FullWidthTabs() {
@@ -69,7 +73,7 @@ export default function FullWidthTabs() {
 
     return (
         <div className={classes.root}>
-            <AppBar position="static" color="default">
+            <AppBar position="static" color="default" >
                 <Tabs
                     value={value}
                     onChange={handleChange}

@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme: Theme) =>
             padding :'2em',
         },
         lineHeight:{
-            lineHeight :'1.5em',
+            lineHeight :'2em',
         },
         carrousselImage: {
             maxHeight:"450px",
@@ -54,7 +54,7 @@ const GameDisplayPage = (props: GameProps) => {
 
     const classes = useStyles();
     return (
-        <Box component="div" className={classes.padding}  >
+        <Box component="div" className={classes.padding }  >
             <Grid container spacing={3}  >
                 <Grid item md={5} alignItems={"baseline"}  spacing={3}  className={classes.padding}  >
                          <Typography variant="h4" component="h2" >{props.game.name}  </Typography>
@@ -65,14 +65,14 @@ const GameDisplayPage = (props: GameProps) => {
                          />
                     <Card >
 
-                    <CardContent  className={[classes.padding, classes.lineHeight]} >
-                             <Typography variant="body2" > Released : {UtilsDate.toDisplay(props.game.releaseDate)} </Typography>
+                    <CardContent  className={classes.lineHeight} >
+                             <Typography variant="body2"  className={classes.lineHeight} > Released : {UtilsDate.toDisplay(props.game.releaseDate)} </Typography>
                         <Divider variant={"inset"}/>
-                        <Typography variant="body2">Author: {props.game.author}</Typography>
+                        <Typography variant="body2"  className={classes.lineHeight}>Author: {props.game.author}</Typography>
+                        <Divider variant={"inset"}  className={classes.lineHeight}/>
+                        <Typography variant="body2"  className={classes.lineHeight}>Distributor : {props.game.distributor}</Typography>
                         <Divider variant={"inset"}/>
-                        <Typography variant="body2">Distributor : {props.game.distributor}</Typography>
-                        <Divider variant={"inset"}/>
-                        <Typography variant="body2" > Editor : {props.game.editor}</Typography>
+                        <Typography variant="body2"  className={classes.lineHeight} > Editor : {props.game.editor}</Typography>
                          </CardContent>
                      </Card>
                     <GenderList genders={props.game.genders}/>
