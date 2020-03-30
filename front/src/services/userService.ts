@@ -1,7 +1,7 @@
 // @ts-ignore
 
-import {AxiosError, AxiosPromise, AxiosResponse} from "axios";
-import {axios, UtilsAxios} from "../utils/utilsAxios";
+import {AxiosPromise} from "axios";
+import {axios} from "../utils/utilsAxios";
 
 
 export const UserService = {

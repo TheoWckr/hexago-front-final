@@ -102,4 +102,5 @@ dist
 
 # TernJS port file
 .tern-port
-/front/package-lock.json
+front/package-lock.json
+back/apidoc

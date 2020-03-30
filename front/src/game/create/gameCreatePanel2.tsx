@@ -2,8 +2,7 @@
 import { FormControlLabel, Grid, Slider, Switch} from "@material-ui/core";
 import React from "react";
 import {GameProps} from "../../models/propsDeclaration";
-import {KeyboardDatePicker} from "@material-ui/pickers";
-import {gameAgeMinMarks, gameDurationMarks} from "../../models/gameModel";
+import {marksGameAgeMin, marksGameDuration} from "../../models/gameModel";
 import {useStylesPanelCreatePage} from "./gameCreatePage";
 import GenderSelector from "../commons/GenderSelector";
 import {genderMockList} from "../../data-mock/GenderMock";
@@ -11,7 +10,7 @@ import {genderMockList} from "../../data-mock/GenderMock";
 
 export const GameCreatePanel2 = (props:GameProps) => {
     function valueLabelFormat(value: number) {
-        return gameDurationMarks[gameDurationMarks.findIndex(mark => mark.value === value)].hiddenLabel ;
+        return marksGameDuration[marksGameDuration.findIndex(mark => mark.value === value)].hiddenLabel ;
     }
 
     const [checkedAge, setCheckedAge] = React.useState(false);
@@ -49,7 +48,7 @@ export const GameCreatePanel2 = (props:GameProps) => {
                 min={3}
                 max={21}
                 valueLabelDisplay={"on"}
-                marks={gameAgeMinMarks}
+                marks={marksGameAgeMin}
             />
 
 
@@ -64,7 +63,7 @@ export const GameCreatePanel2 = (props:GameProps) => {
                 valueLabelDisplay="auto"
                 valueLabelFormat={valueLabelFormat}
                 aria-labelledby="discrete-slider-restrict"
-                marks={gameDurationMarks}
+                marks={marksGameDuration}
                 step={null}
                 min={15}
                 max={180}

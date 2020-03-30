@@ -8,7 +8,7 @@ import {GenderModel} from "../../models/genderModel";
 
 interface State {
     genders: GenderModel[];
-};
+}
 
 /**
  * Selection system for adding or removing gender from a certain list
@@ -39,7 +39,7 @@ class GenderSelector extends React.Component<GenderProps, State> {
         console.log('porps gendders ', this.props.genders);
     };
 
-    render(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | string | number | {} | React.ReactNodeArray | React.ReactPortal | boolean | null | undefined {
+    render(): React.ReactElement | string | number | {} | React.ReactNodeArray | React.ReactPortal | boolean | null | undefined {
         return (<div>
             <Typography>
                 Gender Selected

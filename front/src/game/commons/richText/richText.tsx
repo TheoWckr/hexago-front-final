@@ -1,7 +1,7 @@
 import {Editor, EditorState, RichUtils} from 'draft-js';
 import React from "react";
 export class RichTextEditor extends React.Component {
-    private onChange: (editorState: any) => void;
+    private readonly onChange: (editorState: any) => void;
     constructor(props: Readonly<{}>) {
         super(props);
         this.state = {editorState: EditorState.createEmpty()};

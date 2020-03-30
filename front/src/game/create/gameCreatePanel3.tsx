@@ -1,13 +1,9 @@
-import {Form, FormikProps} from "formik";
-import {FormValues, OtherProps} from "./gameCreate";
-import {Grid, TextField} from "@material-ui/core";
+import {Grid} from "@material-ui/core";
 import React from "react";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import {GameProps} from "../../models/propsDeclaration";
 import DragNDropImage from "../commons/dragNDrop/dragNDropImageComponent";
 import {RichTextEditor} from "../commons/richText/richText";
-import GenderSelector from "../commons/GenderSelector";
-import {genderMockList} from "../../data-mock/GenderMock";
 import {useStylesPanelCreatePage} from "./gameCreatePage";
 
 const useStyles = makeStyles({

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Toolbar,} from "@material-ui/core";
-import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Button from "@material-ui/core/Button";
 import './Header.css';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
@@ -34,7 +33,7 @@ const Header = () => {
             </AppBar>
         </div>
     );
-}
+};
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({

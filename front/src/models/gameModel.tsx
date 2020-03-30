@@ -2,8 +2,6 @@ import {GenderModel} from "./genderModel";
 import * as Yup from 'yup';
 
 export class GameModel {
-
-
     _id?: string;
     releaseDate: string;
     popularity: number;
@@ -70,7 +68,7 @@ editor: Yup.string()
 });
 
 
-export const gameAgeMinMarks = [
+export const marksGameAgeMin = [
     {
         value: 3,
         label: '3',
@@ -93,7 +91,7 @@ export const gameAgeMinMarks = [
     },
 ];
 
-export const gameDurationMarks : {
+export const marksGameDuration : {
     label:string , value: number , hiddenLabel: string
 }[] = [
     {

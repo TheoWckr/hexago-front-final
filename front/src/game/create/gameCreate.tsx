@@ -1,6 +1,6 @@
 import React from 'react';
-import {withFormik, FormikProps, FormikErrors, Form, Field} from 'formik';
-import {gameAgeMinMarks, gameDurationMarks, GameModel} from "../../models/gameModel";
+import {withFormik, FormikProps, FormikErrors, Form} from 'formik';
+import {marksGameAgeMin, marksGameDuration, GameModel} from "../../models/gameModel";
 import gameData from "../../data-mock/gameData";
 import {Grid, Slider, TextField, Typography} from "@material-ui/core";
 
@@ -37,7 +37,7 @@ const useStyles = makeStyles({
 const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
 
     function valueLabelFormat(value: number) {
-        return gameDurationMarks[gameDurationMarks.findIndex(mark => mark.value === value)].hiddenLabel ;
+        return marksGameDuration[marksGameDuration.findIndex(mark => mark.value === value)].hiddenLabel ;
     }
 
     const {values, touched, errors, isSubmitting, message} = props;
@@ -90,7 +90,7 @@ const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
                         min={3}
                         max={21}
                         valueLabelDisplay={"on"}
-                        marks={gameAgeMinMarks}
+                        marks={marksGameAgeMin}
                     />
 
                     <Typography >
@@ -102,7 +102,7 @@ const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
                         valueLabelDisplay="auto"
                         valueLabelFormat={valueLabelFormat}
                         aria-labelledby="discrete-slider-restrict"
-                        marks={gameDurationMarks}
+                        marks={marksGameDuration}
                         step={null}
                         min={15}
                         max={180}

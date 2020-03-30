@@ -1,7 +1,7 @@
 import {AxiosPromise} from "axios";
 import {MAIN_ADRESS, axios} from "../utils/utilsAxios";
 
-const routeName = MAIN_ADRESS+'genre/'
+const routeName = MAIN_ADRESS+'genre/';
 export const GenreService = {
 
     /** Renvois tous les user */
@@ -10,8 +10,8 @@ export const GenreService = {
     },
 
     createGenre(body : any) :AxiosPromise {
-        console.log("Create game  Body : " , JSON.stringify((body)) )
-        console.log("Create game  JSON : " , JSON.stringify((body)) )
+        console.log("Create game  Body : " , JSON.stringify((body)) );
+        console.log("Create game  JSON : " , JSON.stringify((body)) );
         return axios.post(routeName + 'create', JSON.stringify(body));
     },
 

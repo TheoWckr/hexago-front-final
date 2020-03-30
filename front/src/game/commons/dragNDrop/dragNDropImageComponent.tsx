@@ -9,21 +9,21 @@ function DragNDropImage() {
 
     const onDrop = useCallback((acceptedFiles) => {
         acceptedFiles.forEach((file: Blob) => {
-            const reader = new FileReader()
+            const reader = new FileReader();
 
-            reader.onabort = () => console.log('file reading was aborted')
-            reader.onerror = () => console.log('file reading has failed')
+            reader.onabort = () => console.log('file reading was aborted');
+            reader.onerror = () => console.log('file reading has failed');
             reader.onload = () => {
                 // Do whatever you want with the file contents
-                const binaryStr = reader.result
+                const binaryStr = reader.result;
                 console.log('loaded', binaryStr)
-            }
+            };
             reader.readAsArrayBuffer(file)
         })
 
-    }, [])
-    const {getRootProps, getInputProps} = useDropzone()
-    const {ref, ...rootProps} = getRootProps()
+    }, []);
+    const {getRootProps, getInputProps} = useDropzone();
+    const {ref, ...rootProps} = getRootProps();
     return (
         <RootRef rootRef={ref}>
             <Paper {...rootProps}>
