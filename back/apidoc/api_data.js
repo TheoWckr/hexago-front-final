@@ -240,9 +240,9 @@ define({ "api": [
   },
   {
     "type": "post",
-    "url": "/genres/create",
+    "url": "/genre/create",
     "title": "Request genre information",
-    "name": "Create_genre",
+    "name": "Create_a_genre",
     "group": "genres",
     "parameter": {
       "fields": {
@@ -261,7 +261,135 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "{\n      \"genre\": {\n          \"gameGenreId\": \"5e6654ecdb12dc2e340f7680\",\n          \"genre\": \"TEST\"\n      },\n      \"msg\": \"genre created successfully.\"\n  }",
+          "content": "{\n      \"content\": {\n          \"gameGenreId\": \"5e6654ecdb12dc2e340f7680\",\n          \"genre\": \"TEST\"\n      },\n      \"msg\": \"genre created successfully.\"\n  }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/genre.js",
+    "groupTitle": "genres"
+  },
+  {
+    "type": "delete",
+    "url": "/genre/:id",
+    "title": "Request genre information",
+    "name": "Delete_a_genre",
+    "group": "genres",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "genre",
+            "description": "<p>id</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n      \"msg\": \"genre deleted successfully.\"\n  }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/genre.js",
+    "groupTitle": "genres"
+  },
+  {
+    "type": "get",
+    "url": "/genre/5e79d8996b247d4d872c67f8",
+    "title": "Request genre information",
+    "name": "Get_a_genre",
+    "group": "genres",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "genre",
+            "description": "<p>id</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n      {\n        \"_id\": \"5e79d8996b247d4d872c67f8\",\n        \"genre\": \"bombe\",\n        \"createdAt\": \"2020-03-24T09:53:29.598Z\",\n        \"updatedAt\": \"2020-03-24T09:53:29.598Z\",\n        \"__v\": 0\n      }\n    }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/genre.js",
+    "groupTitle": "genres"
+  },
+  {
+    "type": "get",
+    "url": "/genre/genre=bombede&limit=3",
+    "title": "Request genre information",
+    "name": "Get_genre_by_string_or_get_all_if_empty",
+    "group": "genres",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "genre",
+            "description": "<p>searchname</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n      \"content\": [\n        {\n            \"_id\": \"5e79d7c7999ff74c5221e07f\",\n            \"genre\": \"bombedeballe\",\n            \"createdAt\": \"2020-03-24T09:49:59.375Z\",\n            \"updatedAt\": \"2020-03-24T09:49:59.375Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"5e79d7f9e2c5394d079259e4\",\n            \"genre\": \"bombedeballe\",\n            \"createdAt\": \"2020-03-24T09:50:49.438Z\",\n            \"updatedAt\": \"2020-03-24T09:50:49.438Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"5e79d803e2c5394d079259e5\",\n            \"genre\": \"bombedeball\",\n            \"createdAt\": \"2020-03-24T09:50:59.222Z\",\n            \"updatedAt\": \"2020-03-24T09:50:59.222Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"5e79d80ae2c5394d079259e6\",\n            \"genre\": \"bombedebal\",\n            \"createdAt\": \"2020-03-24T09:51:06.525Z\",\n            \"updatedAt\": \"2020-03-24T09:51:06.525Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"5e79d8996b247d4d872c67f8\",\n            \"genre\": \"bombe\",\n            \"createdAt\": \"2020-03-24T09:53:29.598Z\",\n            \"updatedAt\": \"2020-03-24T09:53:29.598Z\",\n            \"__v\": 0\n        }\n      ]\n  }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/genre.js",
+    "groupTitle": "genres"
+  },
+  {
+    "type": "put",
+    "url": "/genre/:id",
+    "title": "Request genre information",
+    "name": "Update_a_genre",
+    "group": "genres",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "genre",
+            "description": "<p>id</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n      \"content\": {\n        \"_id\": \"5e79d8996b247d4d872c67f8\",\n        \"genre\": \"bombe\",\n        \"createdAt\": \"2020-03-24T09:53:29.598Z\",\n        \"updatedAt\": \"2020-03-24T09:53:29.598Z\",\n        \"__v\": 0\n      },\n      \"msg\": \"genre updated successfully.\"\n  }",
           "type": "json"
         }
       ]
