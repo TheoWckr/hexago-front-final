@@ -51,7 +51,7 @@ define({ "api": [
             "group": "Parameter",
             "type": "string",
             "optional": false,
-            "field": "genre",
+            "field": "id",
             "description": "<p>id</p>"
           }
         ]
@@ -83,7 +83,7 @@ define({ "api": [
             "group": "Parameter",
             "type": "string",
             "optional": false,
-            "field": "genre",
+            "field": "id",
             "description": "<p>id</p>"
           }
         ]
@@ -117,6 +117,13 @@ define({ "api": [
             "optional": false,
             "field": "genre",
             "description": "<p>searchname</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "limit",
+            "description": "<p>maxlimit</p>"
           }
         ]
       }
@@ -147,8 +154,15 @@ define({ "api": [
             "group": "Parameter",
             "type": "string",
             "optional": false,
-            "field": "genre",
+            "field": "id",
             "description": "<p>id</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "genre",
+            "description": "<p>name</p>"
           }
         ]
       }

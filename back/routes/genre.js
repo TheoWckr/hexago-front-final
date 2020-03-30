@@ -30,7 +30,7 @@ function handleError(err) {
    * @apiGroup Genres
    * 
    * @apiParam {string} genre searchname
-   * @apiParam {string} genre max limit
+   * @apiParam {string} limit maxlimit
    *
    * @apiSuccessExample {json} Success-Response:
    * {
@@ -141,7 +141,7 @@ function handleError(err) {
    * @apiName Update a genre
    * @apiGroup Genres
    * 
-   * @apiParam {string} genre id
+   * @apiParam {string} id id
    * @apiParam {string} genre name
    *
    * @apiExample {curl} Example usage:
@@ -177,7 +177,7 @@ function handleError(err) {
    * @apiName Get a genre
    * @apiGroup Genres
    * 
-   * @apiParam {string} genre id
+   * @apiParam {string} id id
    *
    * @apiSuccessExample {json} Success-Response:
    * {
@@ -221,7 +221,7 @@ function handleError(err) {
    * @apiName Delete a genre
    * @apiGroup Genres
    * 
-   * @apiParam {string} genre id
+   * @apiParam {string} id id
    *
    * @apiSuccessExample {json} Success-Response:
    * {
