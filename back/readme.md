@@ -14,5 +14,5 @@ DEBUG=backend:* npm start
 install api doc, run:
 npm install apidoc -g
 
-to run api doc:
+to run api doc and generate documentation on every files:
 apidoc -i routes/ -o apidoc/
