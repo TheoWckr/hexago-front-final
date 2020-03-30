@@ -8,7 +8,7 @@ export const GameService = {
     getAllGames() :AxiosPromise {
         return axios.get(routeName);
     },
-
+    /** formulaire pour créer un jeu */
     createGame(body : any) :AxiosPromise {
         console.log("Create game  Body : " , JSON.stringify((body)) );
 

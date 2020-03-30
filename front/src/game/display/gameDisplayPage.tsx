@@ -27,9 +27,15 @@ const useStyles = makeStyles((theme: Theme) =>
             marginBottom: theme.spacing(1),
         },
         paper:{
-          padding : theme.spacing(1),
+            padding : theme.spacing(1),
             marginTop : theme.spacing(2),
             marginBottom: theme.spacing(2)
+        },
+        padding:{
+            padding :'2em',
+        },
+        lineHeight:{
+            lineHeight :'1.5em',
         },
         carrousselImage: {
             maxHeight:"450px",
@@ -48,9 +54,9 @@ const GameDisplayPage = (props: GameProps) => {
 
     const classes = useStyles();
     return (
-        <Box component="div"  >
-            <Grid container spacing={3} >
-                <Grid item md={5} alignItems={"baseline"}  spacing={3} >
+        <Box component="div" className={classes.padding}  >
+            <Grid container spacing={3}  >
+                <Grid item md={5} alignItems={"baseline"}  spacing={3}  className={classes.padding}  >
                          <Typography variant="h4" component="h2" >{props.game.name}  </Typography>
                          <Rating
                              name="customized-empty"
@@ -59,7 +65,7 @@ const GameDisplayPage = (props: GameProps) => {
                          />
                     <Card >
 
-                    <CardContent >
+                    <CardContent  className={[classes.padding, classes.lineHeight]} >
                              <Typography variant="body2" > Released : {UtilsDate.toDisplay(props.game.releaseDate)} </Typography>
                         <Divider variant={"inset"}/>
                         <Typography variant="body2">Author: {props.game.author}</Typography>

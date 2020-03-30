@@ -7,13 +7,13 @@ export class GameModel {
     popularity: number;
     name: string;
     description : string;
+    playerMax: number;
+    playerMin: number;
 
     minAge?: number;
     gameLengthMin?: number;
     author?: string;
     gameLengthMax?: number;
-    playerMax?: number;
-    playerMin?: number;
     distributor?: string;
     editor?: string;
 
