@@ -3,7 +3,8 @@ import Pagination from '@material-ui/lab/Pagination';
 import detail from '../../data-mock/gameDetailMockList';
 import ListCard from "./listCard";
 
-const handleChange = (event: any, value: any) => {
+const handleChange = (event: any, value: number) => {
+    console.log(event);
     console.log(value);
 };
 

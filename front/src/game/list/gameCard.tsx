@@ -29,18 +29,18 @@ const useStyles = makeStyles({
     }
 });
 
-const GameCard = (props: {game: gameDetailModel}) => {
+const GameCard = (props: { game: gameDetailModel }) => {
     const classes = useStyles();
 
     return (
         <Card className={classes.root}>
             <CardActionArea component={Link} to={props.game.gameDetailsId}>
-                <CardMedia
-                    className={classes.media}
-                    image={props.game.mainImage}
-                    title={props.game.name}
-                />
                 <CardContent>
+                    <CardMedia
+                        className={classes.media}
+                        image="https://via.placeholder.com/400"
+                        title={props.game.name}
+                    />
                     <Typography className={classes.title}>
                         {props.game.name}
                     </Typography>
@@ -48,14 +48,14 @@ const GameCard = (props: {game: gameDetailModel}) => {
                         {props.game.author}
                     </Typography>
                     <Typography>
-                        {props.game.gameGenre.map((genre: string) =>
+                        {props.game.genre.map((genre: string) =>
                             genre
-                        ).reduce((prev:string, curr:string) => prev + ', ' +  curr)}
+                        ).reduce((prev: string, curr: string) => prev + ', ' + curr)}
                     </Typography>
                     <Typography>
                         {(new Intl.DateTimeFormat('fr-FR').format(new Date(props.game.releaseDate)))}
                     </Typography>
-                    <Rating name="read-only" value={props.game.popularity} readOnly />
+                    <Rating name="read-only" value={props.game.popularity} readOnly/>
                 </CardContent>
             </CardActionArea>
         </Card>

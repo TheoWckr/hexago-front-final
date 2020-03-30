@@ -11,8 +11,7 @@ type gameDetailModel = {
     playerMax: number,
     playerMin: number,
     distributor: string,
-    mainImage: string,
-    gameGenre: string[],
+    genre: string[],
     description: string
 }
 

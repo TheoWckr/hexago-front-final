@@ -16,8 +16,7 @@ detail = [
         "gameLengthMin": 30,
         "gameLengthMax": 45,
         "minAge": 12,
-        "mainImage": "https://static.fnac-static.com/multimedia/Images/FR/NR/1e/97/2b/2856734/1520-1/tsp20161013102534/Les-Loups-Garous-de-Thiercelieux-Asmodee.jpg",
-        "gameGenre": [
+        "genre": [
             "Stratégie",
             "Réfléxion"
         ],
@@ -36,8 +35,7 @@ detail = [
         "gameLengthMin": 40,
         "gameLengthMax": 60,
         "minAge": 12,
-        "mainImage": "https://static.fnac-static.com/multimedia/Images/FR/NR/1e/97/2b/2856734/1520-1/tsp20161013102534/Les-Loups-Garous-de-Thiercelieux-Asmodee.jpg",
-        "gameGenre": [
+        "genre": [
             "Stratégie",
             "Réfléxion"
         ],
@@ -56,8 +54,7 @@ detail = [
         "gameLengthMin": 40,
         "gameLengthMax": 60,
         "minAge": 10,
-        "mainImage": "https://upload.wikimedia.org/wikipedia/fr/thumb/c/ca/Monopoly.svg/1200px-Monopoly.svg.png",
-        "gameGenre": [
+        "genre": [
             "Stratégie",
             "Négociation"
         ],
