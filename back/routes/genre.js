@@ -23,22 +23,11 @@ function handleError(err) {
   }
 }
 
-  // //get all genre
-  // router.get('/', (req, res, next) => {
-  //   genres.find({}, function (err, content) {
-  //     console.log(content)
-  //     if (err) res.json({
-  //       err: err
-  //     })
-  //     else res.json({content})
-  //   })
-  // })
-
   //search genre by string or get all if empty
   /**
-   * @api {get} /genre/genre=bombede&limit=3 Request genre information
+   * @api {get} /genre/genre=bombede&limit=3 Get genres
    * @apiName Get genre by string or get all if empty
-   * @apiGroup genres
+   * @apiGroup Genres
    * 
    * @apiParam {string} genre searchname
    * @apiParam {string} genre max limit
@@ -92,21 +81,21 @@ function handleError(err) {
     if (req.query.genre) {
       data['genre'] = new RegExp(".*"+ req.query.genre +".*",'i');
     }
-    genres.find(data, function (err, content) {
-      // if (req.query.limit) {
-      //   limit = parseInt(req.query.limit);
-      //   query = query.limit(limit);
-      // }
-      // if (req.query.offset) {
-      //     offset = parseInt(req.query.offset);
-      //     query = query.skip(offset);
-      // }
-      // query.exec((err, content) => {
-        if (err) res.json({err: err});
-        else {
-            if (content) res.json({ content: content});
-            else res.send({ content: []})
-      }
+    query = genres.find(data);
+    if (req.query.limit) {
+      limit = parseInt(req.query.limit);
+      query = query.limit(limit);
+    }
+    if (req.query.offset) {
+        offset = parseInt(req.query.offset);
+        query = query.skip(offset);
+    }
+    query.exec((err, content) => {
+      if (err) res.json({err: err});
+      else {
+          if (content) res.json({ content: content});
+          else res.send({ content: []})
+    }
     //})
       // if (err) res.json({
       //   err: err
@@ -117,12 +106,14 @@ function handleError(err) {
   
   //post create a genre
   /**
-   * @api {post} /genre/create Request genre information
+   * @api {post} /genre/create Create a genre
    * @apiName Create a genre
-   * @apiGroup genres
+   * @apiGroup Genres
    * 
    * @apiParam {string} genre name
    *
+   * @apiExample {curl} Example usage:
+   *     curl -i http://localhost:3100/genre/create --data {"name": "tete"}
    * @apiSuccessExample {json} Success-Response:
    * {
       "content": {
@@ -146,13 +137,15 @@ function handleError(err) {
     })
 
   /**
-   * @api {put} /genre/:id Request genre information
+   * @api {put} /genre/:id Update a genre
    * @apiName Update a genre
-   * @apiGroup genres
+   * @apiGroup Genres
    * 
    * @apiParam {string} genre id
    * @apiParam {string} genre name
    *
+   * @apiExample {curl} Example usage:
+   *     curl -i http://localhost:3100/genre/:id --data {"name": "tete"}
    * @apiSuccessExample {json} Success-Response:
    * {
       "content": {
@@ -180,9 +173,9 @@ function handleError(err) {
   
   //get a genre
   /**
-   * @api {get} /genre/5e79d8996b247d4d872c67f8 Request genre information
+   * @api {get} /genre/5e79d8996b247d4d872c67f8 Get a genre
    * @apiName Get a genre
-   * @apiGroup genres
+   * @apiGroup Genres
    * 
    * @apiParam {string} genre id
    *
@@ -224,9 +217,9 @@ function handleError(err) {
   
   //delete a genre
   /**
-   * @api {delete} /genre/:id Request genre information
+   * @api {delete} /genre/:id Delete a genre
    * @apiName Delete a genre
-   * @apiGroup genres
+   * @apiGroup Genres
    * 
    * @apiParam {string} genre id
    *
