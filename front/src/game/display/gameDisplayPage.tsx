@@ -9,6 +9,7 @@ import CardContent from '@material-ui/core/CardContent';
 import {GenreService} from "../../services/genreService";
 import {UtilsAxios} from "../../utils/utilsAxios";
 import {UtilsDate} from "../../utils/utilsDate";
+import {Rating} from "@material-ui/lab";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -50,9 +51,15 @@ const GameDisplayPage = (props: GameProps) => {
         <Box component="div"  >
             <Grid container spacing={3} >
                 <Grid item md={5} alignItems={"baseline"}  spacing={3} >
-                     <Card >
-                         <CardContent >
-                             <Typography variant="h4" component="h2" >{props.game.name}  </Typography>
+                         <Typography variant="h4" component="h2" >{props.game.name}  </Typography>
+                         <Rating
+                             name="customized-empty"
+                             defaultValue={2}
+                             precision={0.5}
+                         />
+                    <Card >
+
+                    <CardContent >
                              <Typography variant="body2" > Released : {UtilsDate.toDisplay(props.game.releaseDate)} </Typography>
                         <Divider variant={"inset"}/>
                         <Typography variant="body2">Author: {props.game.author}</Typography>
@@ -75,7 +82,6 @@ const GameDisplayPage = (props: GameProps) => {
                 </Grid>
                 <Grid item xs={2}> Extensions</Grid>
             </Grid>
-
         </Box>
     );
 };
