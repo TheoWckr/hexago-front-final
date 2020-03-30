@@ -8,14 +8,25 @@ let GameDetailsSchema = new Schema({
         type: String,
         required: true
     },
-    author: String,
-    editor: String,
-    distributor: String,
+    author: {
+        type: String
+    },
+    editor: {
+        type: String
+    },
+    distributor: {
+        type: String
+    },
     releaseDate: Date,
     popularity: Number,
     playerMin: {
         type: Number,
         required: true,
+        min:1
+    },
+    nbPlayer:{
+        type:Number,
+        required: false,
         min:1
     },
     playerMax: {
@@ -24,6 +35,7 @@ let GameDetailsSchema = new Schema({
         min:1
     },
     gameLengthMin: Number,
+    gameLengthDesired:Number,
     gameLengthMax: Number,
     minAge: {
         type:Number,
@@ -33,8 +45,16 @@ let GameDetailsSchema = new Schema({
     playedAtEvent: {
         type:Number,
         min:0
-    }
+    },
+    genre: {
+        type:Array,
+        required:true
+    },
+    // sort handling
+    whatToSortBy:String,
+    sortValue:Number,
 });
-GameDetailsSchema.index({title: 'text', content: 'text', "content:encoded": 'text'});
 
-module.exports = GameDetailsSchema
+GameDetailsSchema.index({name: 'text', author: 'text', editor: 'text', distributor: 'text'});
+
+module.exports = GameDetailsSchema;

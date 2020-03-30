@@ -23,26 +23,26 @@ function logHandleError(err) {
     }
 }
 
-//get all games
+//get all badges
 router.get('/', (req, res, next) => {
-    Badge.find({}, function (err, result) {
-        console.log(result);
+    Badge.find({}, function (err, content) {
+        console.log(content);
         if (err) res.json({
             err: err
         });
-        else res.json({result})
+        else res.json({content})
     })
 
 });
 
-//post create a game
+//post create a badge
 
 router.post('/create', (req, res, next) => {
-    Badge.create(req.body, (err, location) => {
+    Badge.create(req.body, (err, content) => {
         if (err) res.json({err: err});
         else {
-            if (location) {
-                res.json({user: location, msg: 'Badge created successfully.'})
+            if (content) {
+                res.json({content: content, msg: 'Badge created successfully.'})
             } else {
                 res.json({err: 'Unable to create this badge.'})
             }
@@ -50,21 +50,21 @@ router.post('/create', (req, res, next) => {
     })
 });
 
-//get a game
+//get a badge
 router.get('/:id', function (req, res, next) {
     if (!req.params.id) res.json({
         err: 'Please provide an id param.'
     });
     else {
         Badge.findById(
-            req.params.id, (err, location) => {
+            req.params.id, (err, content) => {
                 if (err) res.json({
                     err: err
                 });
                 else {
-                    if (location) {
+                    if (content) {
                         res.json({
-                            location
+                            content
                         })
                     } else {
                         res.json({
@@ -76,7 +76,7 @@ router.get('/:id', function (req, res, next) {
     }
 });
 
-//delete a game
+//delete a badge
 router.delete('/:id', (req, res, next) => {
     if (!req.params.id) res.json({
         err: 'Please provide an id param.'
@@ -86,12 +86,12 @@ router.delete('/:id', (req, res, next) => {
             err: 'Please provide a valid id param.'
         });
     else
-        Badge.findByIdAndDelete(req.params.id, (err, location) => {
+        Badge.findByIdAndDelete(req.params.id, (err, content) => {
             if (err) res.json({
                 err: err
             });
             else
-            if (location) {
+            if (content) {
                 res.json({
                     _id: req.params.id,
                     msg: 'Badge deleted successfully.'

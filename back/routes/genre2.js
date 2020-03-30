@@ -37,14 +37,32 @@ function handleError(err) {
   //search genre by string or get all if empty
   router.get('/', (req, res, next) => {
     let data = {};
+    let query;
+    let limit;
+    let offset;
     if (req.query.genre) {
       data['genre'] = new RegExp(".*"+ req.query.genre +".*",'i');
     }
     genres.find(data, function (err, content) {
-      if (err) res.json({
-        err: err
-      })
-      else res.json({content})
+      if (req.query.limit) {
+        limit = parseInt(req.query.limit);
+        query = query.limit(limit)
+      }
+      if (req.query.offset) {
+          offset = parseInt(req.query.offset);
+          query = query.skip(offset)
+      }
+      query.exec((err, content) => {
+        if (err) res.json({err: err});
+        else {
+            if (content) res.json({ content: content});
+            else res.send({ content: []})
+      }
+    })
+      // if (err) res.json({
+      //   err: err
+      // })
+      // else res.json({content})
     })
   })
   
