@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import SwipeableViews from 'react-swipeable-views';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -10,7 +10,10 @@ import gameData from "../../data-mock/gameData";
 import {GameCreatePanel1} from "./gameCreatePanel1";
 import GameCreatePanel3 from "./gameCreatePanel3";
 import GameCreatePanel2 from "./gameCreatePanel2";
-import {GameModel} from "../../models/gameModel";
+import {gameFromObject, GameModel} from "../../models/gameModel";
+import {GameService} from "../../services/gameService";
+import {UtilsAxios} from "../../utils/utilsAxios";
+import {useParams} from "react-router";
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -21,7 +24,7 @@ interface TabPanelProps {
 
 function TabPanel(props: TabPanelProps) {
     const { children, value, index, ...other } = props;
-    const[gameState, setGameState] = React.useState(new GameModel());
+
 
 
     return (
@@ -66,6 +69,23 @@ export default function FullWidthTabs() {
     const theme = useTheme();
     const [value, setValue] = React.useState(0);
 
+
+
+    let game = new GameModel({});
+    const[gameState, setGameState] = React.useState(new GameModel({}));
+    let { id } = useParams();
+    const initServie = useEffect(() => {
+        if(id) {
+
+            GameService.getGame(id).then((value) => {
+                    console.log(UtilsAxios.displayReponse(value));
+                console.log(new GameModel(value.data.content));
+                    setGameState(new GameModel(value.data.content));
+                }
+            )
+        }
+    },[]);
+
     const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
         setValue(newValue);
     };
@@ -97,13 +117,13 @@ export default function FullWidthTabs() {
                 onChangeIndex={handleChangeIndex}
             >
                 <TabPanel value={value} index={0} dir={theme.direction}>
-                    <GameCreatePanel1  game={gameData} key={'1dqsfsdfqsf'} />
+                    <GameCreatePanel1  game={gameState} key={'1dqsfsdfqsf'} />
                 </TabPanel>
                 <TabPanel value={value} index={1} dir={theme.direction}>
-                    <GameCreatePanel2 game={gameData} key={'2qsdfdfqsf'} />
+                    <GameCreatePanel2 game={gameState} key={'2qsdfdfqsf'} />
                 </TabPanel>
                 <TabPanel value={value} index={2} dir={theme.direction}>
-                    <GameCreatePanel3 game={gameData} key={'2qsdfdfqsf'} />
+                    <GameCreatePanel3 game={gameState} key={'2qsdfdfqsf'} />
                 </TabPanel>
             </SwipeableViews>
         </div>

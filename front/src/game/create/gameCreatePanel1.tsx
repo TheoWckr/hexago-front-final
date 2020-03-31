@@ -45,7 +45,7 @@ export const GameCreatePanel1 = (props:GameProps) => {
         {displayExtension()}
         <TextField required id="standard-required" label="Titre " multiline
                        className={classes.textField}
-                       defaultValue={props.game.name}/>
+                       value={props.game.name}/>
 
             <TextField id="standard" className={classes.textField} label="Author " multiline value={props.game.author}/>
             <TextField id="standard" className={classes.textField} label="Editor " multiline value={props.game.editor}/>

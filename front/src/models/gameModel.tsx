@@ -56,6 +56,26 @@ export class GameModel {
     }
 }
 
+export function gameFromObject(object :any): GameModel{
+    return new GameModel({
+        author : object.author,
+        gameLengthMin :  object.gameLengthMin,
+        popularity : object.popularity,
+        minAge :  object.minAge,
+        name :  object.name,
+        playerMax :  object.playerMax,
+        playerMin :  object.playerMin,
+        distributor : object.distributor,
+        gameDetailsId : object.gameDetailsId,
+        releaseDate : object.releaseDate,
+        description : object.description,
+        gameLengthMax :object.gameLengthMax,
+        editor : object.editor ,
+        genders : object.genders
+    })
+
+}
+
 export const GameSchema = Yup.object().shape({
     firstName: Yup.string()
         .min(2, 'Name is too short')
