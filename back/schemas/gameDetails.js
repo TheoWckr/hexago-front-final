@@ -35,6 +35,7 @@ let GameDetailsSchema = new Schema({
         min:1
     },
     gameLengthMin: Number,
+    gameLengthDesired:Number,
     gameLengthMax: Number,
     minAge: {
         type:Number,
@@ -48,8 +49,12 @@ let GameDetailsSchema = new Schema({
     genre: {
         type:Array,
         required:true
-    }
+    },
+    // sort handling
+    whatToSortBy:String,
+    sortValue:Number,
 });
+
 GameDetailsSchema.index({name: 'text', author: 'text', editor: 'text', distributor: 'text'});
 
-module.exports = GameDetailsSchema
+module.exports = GameDetailsSchema;
