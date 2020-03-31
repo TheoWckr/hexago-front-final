@@ -10,6 +10,7 @@ import gameData from "../../data-mock/gameData";
 import {GameCreatePanel1} from "./gameCreatePanel1";
 import GameCreatePanel3 from "./gameCreatePanel3";
 import GameCreatePanel2 from "./gameCreatePanel2";
+import {GameModel} from "../../models/gameModel";
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -20,6 +21,8 @@ interface TabPanelProps {
 
 function TabPanel(props: TabPanelProps) {
     const { children, value, index, ...other } = props;
+    const[gameState, setGameState] = React.useState(new GameModel());
+
 
     return (
         <Typography

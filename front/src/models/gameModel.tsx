@@ -4,12 +4,11 @@ import * as Yup from 'yup';
 export class GameModel {
     _id?: string;
     releaseDate: string;
-    popularity: number;
-    name: string;
-    description : string;
-    playerMax: number;
-    playerMin: number;
-
+    popularity: number = 0;
+    name: string = '';
+    description: string = '';
+    playerMax: number = 4;
+    playerMin: number = 8;
     minAge?: number;
     gameLengthMin?: number;
     author?: string;
@@ -20,9 +19,28 @@ export class GameModel {
 
     genders: GenderModel[];
 
-    constructor( author: string, gameLengthMin: number, popularity: number, minAge: number, name: string, playerMax: number, playerMin: number, distributor: string,gameDetailsId: string, releaseDate: string,  description: string, gameLengthMax: number, editor: string, genders : GenderModel[]) {
+    constructor({
+                    author = '',
+                    gameLengthMin = 0,
+                    popularity = 0,
+                    minAge = 0,
+                    name = '',
+                    playerMax = 6,
+                    playerMin = 2,
+                    distributor = '',
+                    gameDetailsId = '',
+                    releaseDate = '',
+                    description = '',
+                    gameLengthMax =0,
+                    editor = '',
+                    genders = [] as GenderModel[]
+                } = {}) {
+
         this._id = gameDetailsId;
-        this.releaseDate = releaseDate;
+        if (releaseDate.length === 0)
+            this.releaseDate = new Date().toDateString();
+        else
+            this.releaseDate = releaseDate;
         this.author = author;
         this.gameLengthMin = gameLengthMin;
         this.popularity = popularity;
@@ -51,20 +69,20 @@ export const GameSchema = Yup.object().shape({
         .email('Invalid email')
         .required('Required'),
     gameDetailsId: Yup.string(),
-releaseDate: Yup.string(),
-author: Yup.string(),
-gameLengthMin: Yup.number()
-    .nullable(true),
-popularity: Yup.number(),
-minAge: Yup.number(),
-name: Yup.string(),
-playerMax: Yup.number(),
-playerMin: Yup.number(),
-distributor: Yup.string(),
-description : Yup.string(),
-gameLengthMax: Yup.number()
-    .nullable(true),
-editor: Yup.string()
+    releaseDate: Yup.string(),
+    author: Yup.string(),
+    gameLengthMin: Yup.number()
+        .nullable(true),
+    popularity: Yup.number(),
+    minAge: Yup.number(),
+    name: Yup.string(),
+    playerMax: Yup.number(),
+    playerMin: Yup.number(),
+    distributor: Yup.string(),
+    description: Yup.string(),
+    gameLengthMax: Yup.number()
+        .nullable(true),
+    editor: Yup.string()
 });
 
 
@@ -91,8 +109,8 @@ export const marksGameAgeMin = [
     },
 ];
 
-export const marksGameDuration : {
-    label:string , value: number , hiddenLabel: string
+export const marksGameDuration: {
+    label: string, value: number, hiddenLabel: string
 }[] = [
     {
         value: 15,
