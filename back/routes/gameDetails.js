@@ -1,8 +1,9 @@
-let async = require('async/waterfall');
+let async = require('async');
 
 let express = require('express');
 let router = express.Router();
 let GameDetails = require('../models/gameDetails');
+let Genre = require ('../models/genre');
 
 
 // let axios = require('axios')
@@ -228,27 +229,91 @@ router.get('/', (req, res, next) => {
     "msg": "Game created successfully."
 }
  */
+let genreDoNotExist = [];
+
 router.post('/create', (req, res, next) => {
     // check if game already exists
     GameDetails.findOne({ 'name':req.body.name}, function(error, gameExists) {
+        genreDoNotExist=[];
         // error handling
         if (gameExists) {
             res.json({msg: 'Game already exists by this name: ' + req.body.name})
         }
-
-        // create the game
-        else {
-            GameDetails.create(req.body, (err, content) => {
-                if (err) res.json({err: err});
-                else {
-                    if (content) {
-                        res.json({gameDetails: content, msg: 'Game created successfully.'})
-                    } else {
-                        res.json({err: 'Unable to create this game.'})
-                    }
+        else if (req.body.genre) {
+            const genresDoNotExist= async () => {
+                console.log('start');
+                try {for (let genre in req.body.genre) {
+                    const promiseList = await Genre.findOne({genre: req.body.genre[genre]}, function (err, result){
+                        if (error){
+                            console.log('err'+ error)
+                        } else
+                       if (result) {
+                           console.log ('result'+result)
+                       }
+                    }).exec();
+                    return promiseList;
+                    // console.log(req.body.genre[genre])
+                }}
+                catch(err){
+                    return err;
                 }
-            })
+            }
         }
+
+            // async.series([
+            //    async (callback) => {
+            //         const GenreNotExisting= await async.every(req.body.genre, (genre, callback2) => {
+            //             console.log('genre', genre);
+            //             Genre.findOne({genre : genre}, (error, result) => {
+            //                 if (error) {
+            //                     console.log('error', error);
+            //                     console.log('GENRE'+genre);
+            //                     return genre;
+            //                     // GenreDoNotExist.push(genre);
+            //                     callback2(error, null)
+            //                 } else {
+            //                     if (result) {
+            //                         console.log('result', result);
+            //                         callback2(null, result)
+            //                     } else {
+            //                         console.log("GENRE "+ genre)
+            //                         return genre;
+            //                         // GenreDoNotExist.push(genre);
+            //                         callback2('pas de resultat', null)
+            //                     }
+            //                 }
+            //             })
+            //         }, (err, result) => {
+            //             if (err) {
+            //                 console.log("ERROR "+err);
+            //                 callback('One genre does not exists', null)
+            //             } else {
+            //                 callback(null, result)
+            //             }
+            //         })
+            //        console.log("GENRE DONOTEXIST", GenreNotExisting)
+            //     },
+            //
+            // ], (err, result) => {
+            //     if (err) {
+            //         console.log(GenreDoNotExist);
+            //         let msg = GenreDoNotExist.toString();
+            //         // for (let genre in GenreDoesNotExists) {
+            //         //     msg = msg + genre + ','
+            //         // }
+            //         res.json(' The following genres '+ msg +' do not exist' )
+            //     } else
+            //         //create the game
+            //         {
+            //         GameDetails.create(req.body, (err, content) => {
+            //             if (err) res.json({err: err});
+            //             else {
+            //                 res.json({gameDetails: content, msg: 'Game created successfully.'})
+            //             }
+            //         })
+            //     }
+            // })
+
     });
 });
 
