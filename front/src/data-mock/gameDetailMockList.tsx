@@ -1,4 +1,4 @@
-import gameDetailModel from "../model/gameDetailModel";
+import gameDetailModel from "../models/gameDetailModel";
 
 let detail: gameDetailModel[];
 
