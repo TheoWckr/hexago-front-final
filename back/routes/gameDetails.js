@@ -1,8 +1,9 @@
-let async = require('async/waterfall');
+let async = require('async');
 
 let express = require('express');
 let router = express.Router();
 let GameDetails = require('../models/gameDetails');
+let Genre = require ('../models/genre');
 
 
 // let axios = require('axios')
@@ -29,9 +30,10 @@ function logHandleError(err) {
  * @api {get} /gamedetails?name=xxx&author=xxx&editor=xxx&distributor=xxx&releaseDate=xxx&popularity=xxx&nbPlayer=xxx&gameLengthDesired=xxx&minAge=xxx&whatToSortBy=xxx&sortValue=xxx&limit=xxx&offset=xxx Request game information
  * @apiName GET gamedetails
  * @apiGroup gamedetails
+ * @apiDescription Get a game with filters, pagination
  *
  * @apiParam {String} name Name of a game
- * @apiParam {String} author Name of the author of a game
+ * @apiParam {Array} author Name of the author of a game
  * @apiParam {String} editor Name of the editor of a game
  * @apiParam {String} distributor Name of the distributor of a game
  * @apiParam {Date} releaseDate Date of the release of a game
@@ -54,7 +56,7 @@ function logHandleError(err) {
             "genre": [],
             "_id": "5e7a26929852d524bcfdffb3",
             "name": "Terraforming Mars",
-            "author": "Jacob Fryxelius",
+            "author": ["Jacob Fryxelius"],
             "editor": "Intrafin",
             "distributor": "Intrafin",
             "releaseDate": "2016-04-01T00:00:00.000Z",
@@ -70,7 +72,7 @@ function logHandleError(err) {
             "genre": [],
             "_id": "5e7a26929852d524bcfdffb1",
             "name": "Bunny Kingdom",
-            "author": "Richard Garfield",
+            "author": ["Richard Garfield"],
             "editor": "Iello",
             "distributor": "Iello",
             "releaseDate": "2018-01-01T00:00:00.000Z",
@@ -164,55 +166,139 @@ router.get('/', (req, res, next) => {
 
 
 //post create a game
+/**
+ * @api {post} /gamedetails/ Create a game
+ * @apiName POST gamedetails
+ * @apiGroup gamedetails
+ * @apiDescription Create a game
+ *
+ * @apiParam {String} name Name of a game, REQUIRED
+ * @apiParam {Array} author Name of the author of a game
+ * @apiParam {String} editor Name of the editor of a game
+ * @apiParam {String} distributor Name of the distributor of a game
+ * @apiParam {Date} releaseDate Date of the release of a game
+ * @apiParam {String} popularity Popularity score of a game
+ * @apiParam {String} playerMin Minimum number of player required to start a game, REQUIRED
+ * @apiParam {String} playerMax Maximum number of player required to start a game, REQUIRED
+ * @apiParam {String} gameLengthMin Minimum time value in minutes that would take a game
+ * @apiParam {String} gameLengthMax Maximum time value in minutes that would take a game
+ * @apiParam {String} minAge Minimum age advised to play the game
+ * @apiParam {String} description Description of a game
+ * @apiParam {Array} genre Genre(s) of a game, REQUIRED
+ *
+ * @apiParamExample {json} Request-Example:
+ *{
+		"name": "7 Wonders Duel",
+		"author": "Bruno Cathala, Antoine Bauza",
+		"editor": "Repos Production",
+		"distributor": "Repos Production",
+		"releaseDate": "2015-10-01T07:22Z",
+		"popularity": 9,
+		"playerMin": 2,
+		"playerMax": 2,
+		"gameLengthMin": 30,
+		"gameLengthMax": 60,
+		"minAge": 10,
+		"genre":["Cartes"],
+		"description":"Triomphez de votre adversaire en développant et améliorant votre civilisation sur les plans civil, scientifique et militaire. 7 Wonders Duel est l'adaptation 2 joueurs de 7 Wonders.>"
+}
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *{
+    "gameDetails": {
+        "author": [
+            "Bruno Cathala, Antoine Bauza"
+        ],
+        "genre": [
+            "Cartes"
+        ],
+        "_id": "5e81c936d8946a24f03843e4",
+        "name": "7 Wonders Duel",
+        "editor": "Repos Production",
+        "distributor": "Repos Production",
+        "releaseDate": "2015-10-01T07:22:00.000Z",
+        "popularity": 9,
+        "playerMin": 2,
+        "playerMax": 2,
+        "gameLengthMin": 30,
+        "gameLengthMax": 60,
+        "minAge": 10,
+        "description": "Triomphez de votre adversaire en développant et améliorant votre civilisation sur les plans civil, scientifique et militaire. 7 Wonders Duel est l'adaptation 2 joueurs de 7 Wonders.>",
+        "__v": 0
+    },
+    "msg": "Game created successfully."
+}
+ */
+let genreDoNotExist = [];
 
-router.post('/create', (req, res, next) => {
+router.post('/create', async(req, res, next) => {
     // check if game already exists
-    GameDetails.findOne({ 'name':req.body.name}, function(error, gameExists) {
-        if (gameExists) {
-            res.json({msg: 'Game already exists by this name: ' + req.body.name})
+    const errorCheck = [];
+        const GameAlreadyExists = await GameDetails.findOne({'name': req.body.name}, function (error, gameExists) {
+            genreDoNotExist = [];
+            // error handling
+            if (gameExists) {
+                errorCheck.push(req.body.name)
+            }
+        });
+
+        if (errorCheck.length!==0){
+            res.json({error : 'Game already exists by this name :' + req.body.name});
+            return
         }
-        // create the game
-        else {
-            GameDetails.create(req.body, (err, content) => {
-                if (err) res.json({err: err});
-                else {
-                    if (content) {
-                        res.json({gameDetails: content, msg: 'Game created successfully.'})
-                    } else {
-                        res.json({err: 'Unable to create this game.'})
+
+        if (req.body.genre.length !== 0) {
+
+            const genrePromise = await req.body.genre.map(async (genre) =>
+                Genre.findOne({genre: genre}, async function (err, result) {
+                    if (!result) {
+                        errorCheck.push(genre);
                     }
-                }
-            })
+                }));
+
+            const resultGenre = await Promise.all(genrePromise);
+
+            if (errorCheck.length === 0) {
+                GameDetails.create(req.body, (err, content) => {
+                    if (err) res.json({err: err});
+                    else {
+                        res.json({gameDetails: content, msg: 'Game created successfully.'})
+                    }
+                })
+            } else {
+                res.json({error: 'the following genres ' + errorCheck + ' do no exist.'});
+            }
+        } else {
+            res.json({error: 'Genre is required.'})
         }
-    });
 });
 
 //get a game
 router.get('/:id', function (req, res, next) {
     // find a game by it id
-    if (req.params.id.length !== 24){
+    if (req.params.id.length !== 24) {
         res.json({
             err: 'Please provide a valid id param.'
-        })}
-    else {GameDetails.findById(
-                req.params.id, (err, content) => {
-                    if (err) res.json({
-                        err: err
-                    });
-                    else {
-                        if (content) {
-                            res.json({
-                                content
-                            })
-                        } else {
-                            res.json({
-                                err: 'No game found with this id.'
-                            })
-                        }
+        })
+    } else {
+        GameDetails.findById(
+            req.params.id, (err, content) => {
+                if (err) res.json({
+                    err: err
+                });
+                else {
+                    if (content) {
+                        res.json({
+                            content
+                        })
+                    } else {
+                        res.json({
+                            err: 'No game found with this id.'
+                        })
                     }
-                })}
-
-
+                }
+            })
+    }
 });
 
 //delete a game

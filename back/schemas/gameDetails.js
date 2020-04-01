@@ -9,7 +9,7 @@ let GameDetailsSchema = new Schema({
         required: true
     },
     author: {
-        type: String
+        type: Array
     },
     editor: {
         type: String
