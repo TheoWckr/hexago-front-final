@@ -12,7 +12,7 @@ export const GameCreatePanel2 = (props:GameProps) => {
     function valueLabelFormat(value: number) {
         return marksGameDuration[marksGameDuration.findIndex(mark => mark.value === value)].hiddenLabel ;
     }
-    const ageMin = props.game.playerMin;
+
     const [checkedAge, setCheckedAge] = React.useState(false);
     const [checkedDuration, setCheckedDuration] = React.useState(false);
     const [checkedNumPlayer, setCheckedNumPlayer] = React.useState(props.game.playerMin !== undefined);

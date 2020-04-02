@@ -91,6 +91,6 @@ const ImageCarousel = (props: ImageProps) => {
             />
         </div>
     );
-}
+};
 
 export default ImageCarousel;

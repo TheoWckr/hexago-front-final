@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import {Grid, Typography, Box, Divider, createStyles, Theme, Card, Hidden} from "@material-ui/core";
+import {Grid, Typography, Box, Divider, createStyles, Theme, Card} from "@material-ui/core";
 import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import makeStyles from "@material-ui/core/styles/makeStyles";
@@ -49,9 +49,9 @@ const GameDisplayPage = () => {
     let { id } = useParams();
     const[gameState, setGameState] = React.useState(new GameModel({}));
 
-    useEffect(() => {
+    useEffect(  () => {
         if(id) {
-            GameService.getGame(id).then((value) => {
+          GameService.getGame(id).then((value) => {
                     setGameState(new GameModel(value.data.content));
                 }
             )

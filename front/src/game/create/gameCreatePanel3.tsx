@@ -6,7 +6,7 @@ import DragNDropImage from "../commons/dragNDrop/dragNDropImageComponent";
 import {RichTextEditor} from "../commons/richText/richText";
 import {useStylesPanelCreatePage} from "./gameCreatePage";
 
-const useStyles = makeStyles({
+makeStyles({
     root: {
         background: 'linear-gradient(60deg, white 30%,primary 90%)',
         border: 0,
@@ -16,7 +16,7 @@ const useStyles = makeStyles({
     },
 });
 
-const GameCreatePanel3 = (props:GameProps) => {
+const GameCreatePanel3 = () => {
     const classes = useStylesPanelCreatePage();
     return (
         <Grid

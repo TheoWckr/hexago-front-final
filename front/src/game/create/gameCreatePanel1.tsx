@@ -5,6 +5,7 @@ import {GameProps} from "../../models/propsDeclaration";
 import {useStylesPanelCreatePage} from "./gameCreatePage";
 import {KeyboardDatePicker} from "@material-ui/pickers";
 
+// noinspection JSUnusedLocalSymbols
 const useStyles = makeStyles({
     root: {
         background: 'linear-gradient(60deg, white 30%,primary 90%)',

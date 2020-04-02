@@ -7,7 +7,7 @@ import {Paper} from "@material-ui/core";
 
 function DragNDropImage() {
 
-    const onDrop = useCallback((acceptedFiles) => {
+    useCallback((acceptedFiles) => {
         acceptedFiles.forEach((file: Blob) => {
             const reader = new FileReader();
 

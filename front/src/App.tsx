@@ -10,7 +10,6 @@ import {
     Route
 } from 'react-router-dom';
 import GameDisplayPage from "./game/display/gameDisplayPage";
-import gameData from "./data-mock/gameData";
 import GameCreatePage from "./game/create/gameCreatePage";
 
 const App = () => {
