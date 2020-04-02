@@ -152,7 +152,7 @@ router.get('/', (req, res, next) => {
     }
     if (req.query.offset) {
         offset = parseInt(req.query.offset);
-        query = query.skip(offset)
+        query = query.skip(offset*limit)
     }
     query.exec((err, content) => {
         if (err) res.json({err: err});
