@@ -53,7 +53,7 @@ function logHandleError(err) {
  * {
     "content": [
         {
-            "genre": [],
+            "genres": [],
             "_id": "5e7a26929852d524bcfdffb3",
             "name": "Terraforming Mars",
             "author": ["Jacob Fryxelius"],
@@ -69,7 +69,7 @@ function logHandleError(err) {
             "description": "L'ère de la domestication de Mars a commencé. Dans Terraforming Mars, de puissantes corporations travaillent pour rendre la Planète Rouge habitable. La température, l'oxygène et les océans sont les trois axes de développement principaux. Mais pour triompher, il faudra aussi construire des infrastructures pour les générations futures."
         },
         {
-            "genre": [],
+            "genres": [],
             "_id": "5e7a26929852d524bcfdffb1",
             "name": "Bunny Kingdom",
             "author": ["Richard Garfield"],
@@ -184,7 +184,7 @@ router.get('/', (req, res, next) => {
  * @apiParam {String} gameLengthMax Maximum time value in minutes that would take a game
  * @apiParam {String} minAge Minimum age advised to play the game
  * @apiParam {String} description Description of a game
- * @apiParam {Array} genre Genre(s) of a game, REQUIRED
+ * @apiParam {Array} genres Genre(s) of a game, REQUIRED
  *
  * @apiParamExample {json} Request-Example:
  *{
@@ -199,7 +199,7 @@ router.get('/', (req, res, next) => {
 		"gameLengthMin": 30,
 		"gameLengthMax": 60,
 		"minAge": 10,
-		"genre":["Cartes"],
+		"genres":["Cartes"],
 		"description":"Triomphez de votre adversaire en développant et améliorant votre civilisation sur les plans civil, scientifique et militaire. 7 Wonders Duel est l'adaptation 2 joueurs de 7 Wonders.>"
 }
  *
@@ -209,7 +209,7 @@ router.get('/', (req, res, next) => {
         "author": [
             "Bruno Cathala, Antoine Bauza"
         ],
-        "genre": [
+        "genres": [
             "Cartes"
         ],
         "_id": "5e81c936d8946a24f03843e4",
@@ -247,9 +247,9 @@ router.post('/create', async(req, res, next) => {
             return
         }
 
-        if (req.body.genre.length !== 0) {
+        if (req.body.genres.length !== 0) {
 
-            const genrePromise = await req.body.genre.map(async (genre) =>
+            const genrePromise = await req.body.genres.map(async (genre) =>
                 Genre.findOne({genre: genre}, async function (err, result) {
                     if (!result) {
                         errorCheck.push(genre);
