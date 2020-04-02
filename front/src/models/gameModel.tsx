@@ -33,7 +33,7 @@ export class GameModel {
                     description = '',
                     gameLengthMax =0,
                     editor = '',
-                    genders = [] as GenderModel[]
+                    genre = [] as string[]
                 } = {}) {
 
         this._id = gameDetailsId;
@@ -52,28 +52,10 @@ export class GameModel {
         this.description = description;
         this.gameLengthMax = gameLengthMax;
         this.editor = editor;
-        this.genders = genders;
+        this.genders = [] as GenderModel[];
+        if(genre.length)
+        genre.forEach((genre) => this.genders.push(new GenderModel(genre)));
     }
-}
-
-export function gameFromObject(object :any): GameModel{
-    return new GameModel({
-        author : object.author,
-        gameLengthMin :  object.gameLengthMin,
-        popularity : object.popularity,
-        minAge :  object.minAge,
-        name :  object.name,
-        playerMax :  object.playerMax,
-        playerMin :  object.playerMin,
-        distributor : object.distributor,
-        gameDetailsId : object.gameDetailsId,
-        releaseDate : object.releaseDate,
-        description : object.description,
-        gameLengthMax :object.gameLengthMax,
-        editor : object.editor ,
-        genders : object.genders
-    })
-
 }
 
 export const GameSchema = Yup.object().shape({

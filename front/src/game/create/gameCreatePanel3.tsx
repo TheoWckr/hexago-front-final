@@ -25,7 +25,7 @@ const GameCreatePanel3 = (props:GameProps) => {
               className={classes.panel}
         >
             <DragNDropImage/>
-            <RichTextEditor/>
+            <RichTextEditor />
         </Grid>
     )
 };

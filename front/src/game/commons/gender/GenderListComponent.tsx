@@ -54,6 +54,12 @@ const GenderList = (props: {
                 {genderList}
             </Grid>
         )
-    } else return <Typography variant={"body2"}>No items found </Typography> ;
+    } else
+        return(
+        <Chip
+        className={classes.chip}
+        label="No genders found"
+        color="secondary" />
+    ) ;
 };
 export default GenderList;

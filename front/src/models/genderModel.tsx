@@ -4,4 +4,5 @@ export class GenderModel {
     constructor(label: string) {
         this.label = label;
     }
+
 }

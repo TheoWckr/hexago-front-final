@@ -10,7 +10,7 @@ import gameData from "../../data-mock/gameData";
 import {GameCreatePanel1} from "./gameCreatePanel1";
 import GameCreatePanel3 from "./gameCreatePanel3";
 import GameCreatePanel2 from "./gameCreatePanel2";
-import {gameFromObject, GameModel} from "../../models/gameModel";
+import { GameModel} from "../../models/gameModel";
 import {GameService} from "../../services/gameService";
 import {UtilsAxios} from "../../utils/utilsAxios";
 import {useParams} from "react-router";
@@ -69,12 +69,9 @@ export default function FullWidthTabs() {
     const theme = useTheme();
     const [value, setValue] = React.useState(0);
 
-
-
-    let game = new GameModel({});
     const[gameState, setGameState] = React.useState(new GameModel({}));
     let { id } = useParams();
-    const initServie = useEffect(() => {
+    useEffect(() => {
         if(id) {
 
             GameService.getGame(id).then((value) => {
@@ -104,9 +101,9 @@ export default function FullWidthTabs() {
                     textColor="primary"
                     centered
                     variant="fullWidth"
-                    aria-label="full width tabs example"
+                    aria-label="Game Creation"
                 >
-                    <Tab label="Game Définition" {...a11yProps(0)} />
+                    <Tab label="Game definition" {...a11yProps(0)} />
                     <Tab label="Game properties " {...a11yProps(1)} />
                     <Tab label="Images " {...a11yProps(2)} />
                 </Tabs>

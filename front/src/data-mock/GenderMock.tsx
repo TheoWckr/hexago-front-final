@@ -14,6 +14,8 @@ export let genderMockList2 : GenderModel[] = [
     new GenderModel("Magic" ) , new GenderModel( "Card Game" ),new GenderModel(" Duel "),
 ];
 
+export let genderMockListString : string [] = ["Medieval" , "Heroic" , " Collaboration ", "Magic", "Card Game", "Duel"]
+
 genderMockList.forEach(gender => genderMockList2.push(gender));
 
 

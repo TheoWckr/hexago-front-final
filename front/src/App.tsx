@@ -22,7 +22,7 @@ const App = () => {
                   <GameCreatePage />
               </Route>
               <Route path="/gamedisplay/:id">
-                  <GameDisplayPage game={gameData} />
+                  <GameDisplayPage />
               </Route>
               <Route path="/gamelist">
                   <GameList />
