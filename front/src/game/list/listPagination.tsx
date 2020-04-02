@@ -1,22 +1,52 @@
-import React from "react";
+import * as React from "react";
 import Pagination from '@material-ui/lab/Pagination';
-import detail from '../../data-mock/gameDetailMockList';
 import ListCard from "./listCard";
+import {GameModel} from "../../models/gameModel";
+import gameService from "../../services/gameService";
+import {AxiosResponse} from "axios";
 
-const handleChange = (event: any, value: number) => {
-    console.log(event);
-    console.log(value);
-};
+type PageState = {
+    page: number,
+    detail: GameModel[]
+}
 
-const listPagination = () => {
-    const numberPage = Math.floor(detail.length / 12) < 1 ? 1 : Math.floor(detail.length / 12);
+export default class ListPagination extends React.Component<{}, PageState> {
+    getGamesByPage(page: number) {
+        gameService.getGamesPage(page).then((result: AxiosResponse) => {
+            let stock: GameModel[] = [];
 
-    return (
-        <div>
-            <ListCard games={detail}/>
-            <Pagination count={numberPage} onChange={handleChange}/>
-        </div>
-    );
-};
+            result.data.content.forEach((game: {}) => {
+                stock.push(new GameModel(game));
+            });
+            this.setState({
+                detail: stock
+            });
+        });
+    }
 
-export default listPagination;
+    handleChange = (event: any, value: number) => {
+        this.setState({
+            page: value
+        });
+    };
+
+    componentWillMount() {
+        this.setState({
+            page: 0,
+            detail: []
+        });
+    };
+
+    componentDidMount() {
+        this.getGamesByPage(this.state.page);
+    }
+
+    render() {
+        return (
+            <div>
+                <ListCard games={this.state.detail}/>
+                <Pagination count={5} onChange={this.handleChange}/>
+            </div>
+        )
+    }
+}

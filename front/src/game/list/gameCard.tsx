@@ -1,13 +1,12 @@
 import React from "react";
 import CardActionArea from "@material-ui/core/CardActionArea";
-import {Link} from "react-router-dom";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import Rating from "@material-ui/lab/Rating";
 import Card from "@material-ui/core/Card";
 import {makeStyles} from "@material-ui/core/styles";
-import gameDetailModel from "../../models/gameDetailModel";
+import {GameModel} from "../../models/gameModel";
 
 const useStyles = makeStyles({
     root: {
@@ -29,12 +28,12 @@ const useStyles = makeStyles({
     }
 });
 
-const GameCard = (props: { game: gameDetailModel }) => {
+const GameCard = (props: { game: GameModel }) => {
     const classes = useStyles();
 
     return (
         <Card className={classes.root}>
-            <CardActionArea component={Link} to={props.game.gameDetailsId}>
+            <CardActionArea>
                 <CardContent>
                     <CardMedia
                         className={classes.media}
@@ -46,11 +45,6 @@ const GameCard = (props: { game: gameDetailModel }) => {
                     </Typography>
                     <Typography>
                         {props.game.author}
-                    </Typography>
-                    <Typography>
-                        {props.game.genre.map((genre: string) =>
-                            genre
-                        ).reduce((prev: string, curr: string) => prev + ', ' + curr)}
                     </Typography>
                     <Typography>
                         {(new Intl.DateTimeFormat('fr-FR').format(new Date(props.game.releaseDate)))}

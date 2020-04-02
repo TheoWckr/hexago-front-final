@@ -1,9 +1,9 @@
 type gameDetailModel = {
+    _id: string,
     gameLengthMax: number,
     editor: string,
-    gameDetailsId: string,
     releaseDate: string,
-    author: string,
+    author: string[],
     gameLengthMin: number,
     popularity: number,
     minAge: number,

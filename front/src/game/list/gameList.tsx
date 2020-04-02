@@ -1,9 +1,9 @@
 import React from "react";
-import Pagination from "./listPagination";
+import ListPagination from "./listPagination";
 
 const GameList = () => {
     return (
-        <Pagination/>
+        <ListPagination/>
     );
 };
 

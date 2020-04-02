@@ -2,7 +2,7 @@ import React from "react";
 import {makeStyles} from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import GameCard from "./gameCard";
-import gameDetailModel from "../../models/gameDetailModel";
+import {GameModel} from "../../models/gameModel";
 
 const useStyles = makeStyles({
     root: {
@@ -24,12 +24,12 @@ const useStyles = makeStyles({
     }
 });
 
-const ListCard = (props: {games: gameDetailModel[]}) => {
+const ListCard = (props: {games: GameModel[]}) => {
     const classes = useStyles();
 
     return (
         <Grid container spacing={2} className={classes.grid}>
-            {props.games.map((value: gameDetailModel, i:number) =>
+            {props.games.map((value: GameModel, i:number) =>
                 <Grid item xs={12} sm={6} xl={4} key={i}>
                     <GameCard game={value}/>
                 </Grid>
