@@ -46,7 +46,7 @@ let GameDetailsSchema = new Schema({
         type:Number,
         min:0
     },
-    genre: {
+    genres: {
         type:Array,
         required:true
     },
