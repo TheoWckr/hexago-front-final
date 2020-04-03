@@ -7,6 +7,7 @@ import {AxiosResponse} from "axios";
 
 type PageState = {
     page: number,
+    numberGame: number,
     detail: GameModel[]
 }
 
@@ -24,9 +25,22 @@ export default class ListPagination extends React.Component<{}, PageState> {
         });
     }
 
+    countPage() {
+        gameService.getAllGames().then((result: AxiosResponse) => {
+            let calc = result.data.content.length / 12 < 1 ? 1 : Math.ceil(result.data.content.length / 12);
+
+            this.setState({
+                numberGame: calc
+            });
+        });
+    }
+
     handleChange = (event: any, value: number) => {
+        let page = value - 1;
+
+        this.getGamesByPage(page);
         this.setState({
-            page: value
+            page: page
         });
     };
 
@@ -39,13 +53,14 @@ export default class ListPagination extends React.Component<{}, PageState> {
 
     componentDidMount() {
         this.getGamesByPage(this.state.page);
+        this.countPage();
     }
 
     render() {
         return (
             <div>
                 <ListCard games={this.state.detail}/>
-                <Pagination count={5} onChange={this.handleChange}/>
+                <Pagination count={this.state.numberGame} onChange={this.handleChange}/>
             </div>
         )
     }
