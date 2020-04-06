@@ -152,7 +152,7 @@ router.get('/', (req, res, next) => {
     }
     if (req.query.offset) {
         offset = parseInt(req.query.offset);
-        query = query.skip(offset)
+        query = query.skip(offset*limit)
     }
     query.exec((err, content) => {
         if (err) res.json({err: err});
@@ -188,7 +188,7 @@ router.get('/', (req, res, next) => {
  *
  * @apiParamExample {json} Request-Example:
  *{
-		"name": "7 Wonders Duel",
+		"name": "7 Wonders Duelle 24",
 		"author": "Bruno Cathala, Antoine Bauza",
 		"editor": "Repos Production",
 		"distributor": "Repos Production",
@@ -199,7 +199,7 @@ router.get('/', (req, res, next) => {
 		"gameLengthMin": 30,
 		"gameLengthMax": 60,
 		"minAge": 10,
-		"genres":["Cartes"],
+		"genres":["bombedeballe"],
 		"description":"Triomphez de votre adversaire en développant et améliorant votre civilisation sur les plans civil, scientifique et militaire. 7 Wonders Duel est l'adaptation 2 joueurs de 7 Wonders.>"
 }
  *
@@ -210,10 +210,16 @@ router.get('/', (req, res, next) => {
             "Bruno Cathala, Antoine Bauza"
         ],
         "genres": [
-            "Cartes"
+            {
+                "_id": "5e6f7901a0d93148f48fd5ce",
+                "genre": "bombedeballe",
+                "createdAt": "2020-03-16T13:02:57.605Z",
+                "updatedAt": "2020-03-16T13:02:57.605Z",
+                "__v": 0
+            }
         ],
-        "_id": "5e81c936d8946a24f03843e4",
-        "name": "7 Wonders Duel",
+        "_id": "5e8aeffbb083cd20c42a96ab",
+        "name": "7 Wonders Duelle 24",
         "editor": "Repos Production",
         "distributor": "Repos Production",
         "releaseDate": "2015-10-01T07:22:00.000Z",
@@ -234,6 +240,8 @@ let genreDoNotExist = [];
 router.post('/create', async(req, res, next) => {
     // check if game already exists
     const errorCheck = [];
+    let gameToCreate = req.body;
+    let gameToCreateGenresId =[];
         const GameAlreadyExists = await GameDetails.findOne({'name': req.body.name}, function (error, gameExists) {
             genreDoNotExist = [];
             // error handling
@@ -254,12 +262,17 @@ router.post('/create', async(req, res, next) => {
                     if (!result) {
                         errorCheck.push(genre);
                     }
+                    else {gameToCreateGenresId.push(result)}
+
                 }));
 
             const resultGenre = await Promise.all(genrePromise);
 
             if (errorCheck.length === 0) {
-                GameDetails.create(req.body, (err, content) => {
+                // put genre id table with game to create.
+                gameToCreate.genres=gameToCreateGenresId;
+                // create game in bdd
+                GameDetails.create(gameToCreate, (err, content) => {
                     if (err) res.json({err: err});
                     else {
                         res.json({gameDetails: content, msg: 'Game created successfully.'})
