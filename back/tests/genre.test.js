@@ -1,5 +1,6 @@
 const http = require('http');
 
+
 test('Get genres return 200', () => {
     http.get('http://localhost:3100/genre/', function(res) {
         expect(res.statusCode).toBe(200);
@@ -26,22 +27,24 @@ test('Search genres return 200', () => {
 
 test('Create a genre return 200', () => {
     var post_req = http.get('http://localhost:3100/genre/create', { method: 'POST' }, function(res) {
-        expect(res.statusCode).toBe(200);
+        res.on('end', function(){
+            expect(res.statusCode).toBe(200);
+        })
     }).on('error', function(e) {
         console.error(e);
     });
-    post_req.write({genre: "bobobo"});
-    post_req.end();
+    post_req.end({genre: "bobobo"});
 });
 
 test('Update a genre return 200', () => {
     var post_req = http.get('http://localhost:3100/genre/5e79d7c7999ff74c5221e07f', { method: 'PUT' }, function(res) {
-        expect(res.statusCode).toBe(200);
+        res.on('end', function() {
+            expect(res.statusCode).toBe(200);
+        })
     }).on('error', function(e) {
         console.error(e);
     });
-    post_req.write({genre: "bobobo"});
-    post_req.end();
+    post_req.end({genre: "bobobo"});
 });
 
 test('Delete a genre return 200', () => {
