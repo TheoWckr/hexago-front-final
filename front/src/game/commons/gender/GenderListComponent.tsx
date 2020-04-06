@@ -26,14 +26,6 @@ const GenderList = (props: {
         console.log('genderList', props.genders);
     }
 
-    function getSpacing(): 2 | 3 | 4 | 6 | 10 {
-        if (props.genders.length == 1) return 10;
-        if (props.genders.length == 2) return 6;
-        if (props.genders.length == 3) return 4;
-        if (props.genders.length == 4) return 2;
-        return 2;
-    }
-
     const genderListing = props.genders;
     let genderList =genderListing.map((gender, index) => {
             if (index < 12)

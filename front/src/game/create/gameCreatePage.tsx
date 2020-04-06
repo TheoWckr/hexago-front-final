@@ -13,6 +13,7 @@ import { GameModel} from "../../models/gameModel";
 import {GameService} from "../../services/gameService";
 import {UtilsAxios} from "../../utils/utilsAxios";
 import {useParams} from "react-router";
+import {useForm} from "react-hook-form";
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -21,9 +22,14 @@ interface TabPanelProps {
     value: any;
 }
 
+export interface PanelProps{
+    game:GameModel,
+
+}
+
 function TabPanel(props: TabPanelProps) {
     const { children, value, index, ...other } = props;
-
+    const { register, setValue, handleSubmit, errors } = useForm<FormData>();
 
 
     return (

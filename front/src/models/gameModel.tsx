@@ -1,5 +1,4 @@
 import {GenderModel} from "./genderModel";
-import * as Yup from 'yup';
 
 export class GameModel {
     _id?: string;
@@ -57,36 +56,6 @@ export class GameModel {
         genre.forEach((genre) => this.genders.push(new GenderModel(genre)));
     }
 }
-
-export const GameSchema = Yup.object().shape({
-    firstName: Yup.string()
-        .min(2, 'Name is too short')
-        .max(50, 'Name is too long')
-        .required('Required'),
-    lastName: Yup.string()
-        .min(2, 'Too Short!')
-        .max(50, 'Too Long!')
-        .required('Required'),
-    email: Yup.string()
-        .email('Invalid email')
-        .required('Required'),
-    gameDetailsId: Yup.string(),
-    releaseDate: Yup.string(),
-    author: Yup.string(),
-    gameLengthMin: Yup.number()
-        .nullable(true),
-    popularity: Yup.number(),
-    minAge: Yup.number(),
-    name: Yup.string(),
-    playerMax: Yup.number(),
-    playerMin: Yup.number(),
-    distributor: Yup.string(),
-    description: Yup.string(),
-    gameLengthMax: Yup.number()
-        .nullable(true),
-    editor: Yup.string()
-});
-
 
 export const marksGameAgeMin = [
     {

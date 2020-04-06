@@ -28,7 +28,7 @@ const useStyles = makeStyles({
 
 const GameDisplay = () => {
     const classes = useStyles();
-    const bull = <span className={classes.bullet}>•</span>;
+
 
     return (
         <div>
