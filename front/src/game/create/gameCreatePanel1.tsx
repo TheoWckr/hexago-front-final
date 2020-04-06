@@ -1,9 +1,10 @@
 import {Checkbox, FormControlLabel, Grid, TextField} from "@material-ui/core";
 import React from "react";
 import makeStyles from "@material-ui/core/styles/makeStyles";
-import {GameProps} from "../../models/propsDeclaration";
+import {GameEditProps, GameProps} from "../../models/propsDeclaration";
 import {useStylesPanelCreatePage} from "./gameCreatePage";
 import {KeyboardDatePicker} from "@material-ui/pickers";
+import {useFormContext} from "react-hook-form";
 
 // noinspection JSUnusedLocalSymbols
 const useStyles = makeStyles({
@@ -19,6 +20,7 @@ const useStyles = makeStyles({
 });
 
 export const GameCreatePanel1 = (props:GameProps) => {
+    const { register } = useFormContext();
     const [isExtension, setIsExtension ] = React.useState(false);
     const displayExtension = () => {
         if (isExtension) return  <TextField required={true} className={classes.textField} label="extension of"> </TextField>;
@@ -45,8 +47,11 @@ export const GameCreatePanel1 = (props:GameProps) => {
         />
         {displayExtension()}
         <TextField required id="standard-required" label="Titre " multiline
-                       className={classes.textField}
-                       value={props.game.name}/>
+                   name ='name'
+                   className={classes.textField}
+                   defaultValue={props.game.name}
+                   inputRef={register({required : true })}
+                   />
 
             <TextField id="standard" className={classes.textField} label="Author " multiline value={props.game.author}/>
             <TextField id="standard" className={classes.textField} label="Editor " multiline value={props.game.editor}/>

@@ -1,7 +1,7 @@
 import {Grid} from "@material-ui/core";
 import React from "react";
 import makeStyles from "@material-ui/core/styles/makeStyles";
-import {GameProps} from "../../models/propsDeclaration";
+import {GameEditProps, GameProps} from "../../models/propsDeclaration";
 import DragNDropImage from "../commons/dragNDrop/dragNDropImageComponent";
 import {RichTextEditor} from "../commons/richText/richText";
 import {useStylesPanelCreatePage} from "./gameCreatePage";

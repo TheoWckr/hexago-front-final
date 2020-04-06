@@ -13,7 +13,9 @@ import { GameModel} from "../../models/gameModel";
 import {GameService} from "../../services/gameService";
 import {UtilsAxios} from "../../utils/utilsAxios";
 import {useParams} from "react-router";
-import {useForm} from "react-hook-form";
+import {FormContext, useForm} from "react-hook-form";
+import {FormContextValues} from "react-hook-form/dist/contextTypes";
+import {Grid} from "@material-ui/core";
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -29,7 +31,6 @@ export interface PanelProps{
 
 function TabPanel(props: TabPanelProps) {
     const { children, value, index, ...other } = props;
-    const { register, setValue, handleSubmit, errors } = useForm<FormData>();
 
 
     return (
@@ -72,8 +73,10 @@ export const useStylesPanelCreatePage = makeStyles((theme: Theme) => ({
 export default function FullWidthTabs() {
     const classes = useStylesPanelCreatePage();
     const theme = useTheme();
-    const [value, setValue] = React.useState(0);
+    const [valueTabs, setValueTabs] = React.useState(0);
+    const methods = useForm<GameModel>();
 
+    const onSubmit = (data: any) => { console.log(data) };
     const[gameState, setGameState] = React.useState(new GameModel({}));
     let { id } = useParams();
     useEffect(() => {
@@ -89,18 +92,19 @@ export default function FullWidthTabs() {
     },[]);
 
     const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
-        setValue(newValue);
+        console.log('Changement', newValue);
+        setValueTabs(newValue);
     };
 
     const handleChangeIndex = (index: number) => {
-        setValue(index);
+        setValueTabs(index);
     };
 
     return (
         <div className={classes.root}>
             <AppBar position="static" color="default" >
                 <Tabs
-                    value={value}
+                    value={valueTabs}
                     onChange={handleChange}
                     indicatorColor="primary"
                     textColor="primary"
@@ -113,21 +117,29 @@ export default function FullWidthTabs() {
                     <Tab label="Images " {...a11yProps(2)} />
                 </Tabs>
             </AppBar>
-            <SwipeableViews
+            <form onSubmit={methods.handleSubmit(onSubmit)}>
+                <FormContext {...methods} >
+                    {methods.errors.name && <div>'First name is required'</div>}
+
+                    <SwipeableViews
                 axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-                index={value}
+                index={valueTabs}
                 onChangeIndex={handleChangeIndex}
             >
-                <TabPanel value={value} index={0} dir={theme.direction}>
+                <TabPanel value={valueTabs} index={0} dir={theme.direction}>
                     <GameCreatePanel1  game={gameState} key={'1dqsfsdfqsf'} />
                 </TabPanel>
-                <TabPanel value={value} index={1} dir={theme.direction}>
+                <TabPanel value={valueTabs} index={1} dir={theme.direction}>
                     <GameCreatePanel2 game={gameState} key={'2qsdfdfqsf'} />
                 </TabPanel>
-                <TabPanel value={value} index={2} dir={theme.direction}>
-                    <GameCreatePanel3 game={gameState} key={'2qsdfdfqsf'} />
+                <TabPanel value={valueTabs} index={2} dir={theme.direction}>
+                    <GameCreatePanel3 game={gameState}  key={'2qsdfdfqsf'} />
                 </TabPanel>
             </SwipeableViews>
+                </FormContext>
+
+                <input type="submit" />
+            </form>
         </div>
     );
 }

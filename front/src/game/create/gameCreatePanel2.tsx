@@ -1,17 +1,19 @@
 
 import { FormControlLabel, Grid, Slider, Switch} from "@material-ui/core";
 import React, {useEffect} from "react";
-import {GameProps} from "../../models/propsDeclaration";
+import { GameProps} from "../../models/propsDeclaration";
 import {marksGameAgeMin, marksGameDuration} from "../../models/gameModel";
 import {useStylesPanelCreatePage} from "./gameCreatePage";
 import GenderSelector from "../commons/GenderSelector";
 import {genderMockList} from "../../data-mock/GenderMock";
+import {useFormContext} from "react-hook-form";
 
 
-export const GameCreatePanel2 = (props:GameProps) => {
+export const GameCreatePanel2 = (props:GameProps ) => {
     function valueLabelFormat(value: number) {
         return marksGameDuration[marksGameDuration.findIndex(mark => mark.value === value)].hiddenLabel ;
     }
+    const { register } = useFormContext();
 
     const [checkedAge, setCheckedAge] = React.useState(false);
     const [checkedDuration, setCheckedDuration] = React.useState(false);
@@ -50,6 +52,8 @@ export const GameCreatePanel2 = (props:GameProps) => {
                 label="Minimum Age"
             />
             <Slider
+                name={'age'}
+
                 disabled={!checkedAge}
                 defaultValue={10}
                 aria-labelledby="discrete-slider-custom"
