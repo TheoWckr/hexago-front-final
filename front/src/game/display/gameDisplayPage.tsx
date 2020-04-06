@@ -89,7 +89,7 @@ const GameDisplayPage = () => {
                             }
                         </CardContent>
                     </Card>
-                    <GenderList genders={gameState.genders}/>
+                    <GenderList genders={gameState.genres}/>
                     <Typography variant="body2">
 
                     </Typography>

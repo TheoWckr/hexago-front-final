@@ -14,9 +14,7 @@ export class GameModel {
     gameLengthMax?: number;
     distributor?: string;
     editor?: string;
-
-
-    genders: GenderModel[];
+    genres: GenderModel[];
 
     constructor({
                     author = '',
@@ -32,7 +30,7 @@ export class GameModel {
                     description = '',
                     gameLengthMax =0,
                     editor = '',
-                    genre = [] as string[]
+                    genres = [] as string[]
                 } = {}) {
 
         this._id = gameDetailsId;
@@ -51,9 +49,9 @@ export class GameModel {
         this.description = description;
         this.gameLengthMax = gameLengthMax;
         this.editor = editor;
-        this.genders = [] as GenderModel[];
-        if(genre.length)
-        genre.forEach((genre) => this.genders.push(new GenderModel(genre)));
+        this.genres = [] as GenderModel[];
+        if(genres.length)
+            genres.forEach((genres) => this.genres.push(new GenderModel(genres)));
     }
 }
 

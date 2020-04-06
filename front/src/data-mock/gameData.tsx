@@ -16,7 +16,7 @@ let gameData = new GameModel({
         description :     "<div> <p> Les Loups-Garous de Thiercelieux est un jeu de société d'ambiance dans lequel chaque joueur incarne un villageois ou un loup-garou, et dont le but général est : 	</p> <ul><li>Pour les villageois (dont certains ont des pouvoirs ou des particularités) : démasquer et tuer tous les loups-garous ; </li><li>Pour les loups-garous : d'éliminer tous les villageois et ne pas se faire démasquer ;</li> </ul></div>",
         gameLengthMax : 12,
         editor :  "Lui-Même",
-        genre : genderMockListString
+    genres : genderMockListString
 });
 /*let gameData = new GameModel({
     "Philippe des Pallières et Hervé Marly",
