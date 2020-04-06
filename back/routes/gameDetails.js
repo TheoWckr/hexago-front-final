@@ -143,7 +143,7 @@ router.get('/', (req, res, next) => {
     }
 
     console.log(data);
-    query = GameDetails.find(data).sort(whatToSort);
+    query = GameDetails.find(data).populate('genres').sort(whatToSort);
 
     //pagination handling
     if (req.query.limit) {
@@ -184,11 +184,11 @@ router.get('/', (req, res, next) => {
  * @apiParam {String} gameLengthMax Maximum time value in minutes that would take a game
  * @apiParam {String} minAge Minimum age advised to play the game
  * @apiParam {String} description Description of a game
- * @apiParam {Array} genres Genre(s) of a game, REQUIRED
+ * @apiParam {Array} genres Genre ID(s) of a game, REQUIRED
  *
  * @apiParamExample {json} Request-Example:
  *{
-		"name": "7 Wonders Duelle 24",
+		"name": "7 Wonders Duelle 25",
 		"author": "Bruno Cathala, Antoine Bauza",
 		"editor": "Repos Production",
 		"distributor": "Repos Production",
@@ -199,7 +199,7 @@ router.get('/', (req, res, next) => {
 		"gameLengthMin": 30,
 		"gameLengthMax": 60,
 		"minAge": 10,
-		"genres":["bombedeballe"],
+		"genres":["5e6f7901a0d93148f48fd5ce"],
 		"description":"Triomphez de votre adversaire en développant et améliorant votre civilisation sur les plans civil, scientifique et militaire. 7 Wonders Duel est l'adaptation 2 joueurs de 7 Wonders.>"
 }
  *
@@ -210,16 +210,10 @@ router.get('/', (req, res, next) => {
             "Bruno Cathala, Antoine Bauza"
         ],
         "genres": [
-            {
-                "_id": "5e6f7901a0d93148f48fd5ce",
-                "genre": "bombedeballe",
-                "createdAt": "2020-03-16T13:02:57.605Z",
-                "updatedAt": "2020-03-16T13:02:57.605Z",
-                "__v": 0
-            }
+            "5e6f7901a0d93148f48fd5ce"
         ],
-        "_id": "5e8aeffbb083cd20c42a96ab",
-        "name": "7 Wonders Duelle 24",
+        "_id": "5e8afc246e335f2230b4f3e2",
+        "name": "7 Wonders Duelle 25",
         "editor": "Repos Production",
         "distributor": "Repos Production",
         "releaseDate": "2015-10-01T07:22:00.000Z",
@@ -258,11 +252,11 @@ router.post('/create', async(req, res, next) => {
         if (req.body.genres.length !== 0) {
 
             const genrePromise = await req.body.genres.map(async (genre) =>
-                Genre.findOne({genre: genre}, async function (err, result) {
+                Genre.findOne({_id: genre}, async function (err, result) {
                     if (!result) {
                         errorCheck.push(genre);
                     }
-                    else {gameToCreateGenresId.push(result)}
+                    else {gameToCreateGenresId.push(result._id)}
 
                 }));
 
@@ -295,22 +289,22 @@ router.get('/:id', function (req, res, next) {
         })
     } else {
         GameDetails.findById(
-            req.params.id, (err, content) => {
-                if (err) res.json({
-                    err: err
-                });
-                else {
-                    if (content) {
-                        res.json({
-                            content
-                        })
-                    } else {
-                        res.json({
-                            err: 'No game found with this id.'
-                        })
-                    }
+            req.params.id).populate('genres').exec((err, content) => {
+            if (err) res.json({
+                err: err
+            });
+            else {
+                if (content) {
+                    res.json({
+                        content
+                    })
+                } else {
+                    res.json({
+                        err: 'No game found with this id.'
+                    })
                 }
-            })
+            }
+        })
     }
 });
 

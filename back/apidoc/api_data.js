@@ -526,14 +526,14 @@ define({ "api": [
             "type": "Array",
             "optional": false,
             "field": "genres",
-            "description": "<p>Genre(s) of a game, REQUIRED</p>"
+            "description": "<p>Genre ID(s) of a game, REQUIRED</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "Request-Example:",
-          "content": "{\n\t\t\"name\": \"7 Wonders Duelle 24\",\n\t\t\"author\": \"Bruno Cathala, Antoine Bauza\",\n\t\t\"editor\": \"Repos Production\",\n\t\t\"distributor\": \"Repos Production\",\n\t\t\"releaseDate\": \"2015-10-01T07:22Z\",\n\t\t\"popularity\": 9,\n\t\t\"playerMin\": 2,\n\t\t\"playerMax\": 2,\n\t\t\"gameLengthMin\": 30,\n\t\t\"gameLengthMax\": 60,\n\t\t\"minAge\": 10,\n\t\t\"genres\":[\"bombedeballe\"],\n\t\t\"description\":\"Triomphez de votre adversaire en développant et améliorant votre civilisation sur les plans civil, scientifique et militaire. 7 Wonders Duel est l'adaptation 2 joueurs de 7 Wonders.>\"\n}",
+          "content": "{\n\t\t\"name\": \"7 Wonders Duelle 25\",\n\t\t\"author\": \"Bruno Cathala, Antoine Bauza\",\n\t\t\"editor\": \"Repos Production\",\n\t\t\"distributor\": \"Repos Production\",\n\t\t\"releaseDate\": \"2015-10-01T07:22Z\",\n\t\t\"popularity\": 9,\n\t\t\"playerMin\": 2,\n\t\t\"playerMax\": 2,\n\t\t\"gameLengthMin\": 30,\n\t\t\"gameLengthMax\": 60,\n\t\t\"minAge\": 10,\n\t\t\"genres\":[\"5e6f7901a0d93148f48fd5ce\"],\n\t\t\"description\":\"Triomphez de votre adversaire en développant et améliorant votre civilisation sur les plans civil, scientifique et militaire. 7 Wonders Duel est l'adaptation 2 joueurs de 7 Wonders.>\"\n}",
           "type": "json"
         }
       ]
@@ -542,7 +542,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "{\n    \"gameDetails\": {\n        \"author\": [\n            \"Bruno Cathala, Antoine Bauza\"\n        ],\n        \"genres\": [\n            {\n                \"_id\": \"5e6f7901a0d93148f48fd5ce\",\n                \"genre\": \"bombedeballe\",\n                \"createdAt\": \"2020-03-16T13:02:57.605Z\",\n                \"updatedAt\": \"2020-03-16T13:02:57.605Z\",\n                \"__v\": 0\n            }\n        ],\n        \"_id\": \"5e8aeffbb083cd20c42a96ab\",\n        \"name\": \"7 Wonders Duelle 24\",\n        \"editor\": \"Repos Production\",\n        \"distributor\": \"Repos Production\",\n        \"releaseDate\": \"2015-10-01T07:22:00.000Z\",\n        \"popularity\": 9,\n        \"playerMin\": 2,\n        \"playerMax\": 2,\n        \"gameLengthMin\": 30,\n        \"gameLengthMax\": 60,\n        \"minAge\": 10,\n        \"description\": \"Triomphez de votre adversaire en développant et améliorant votre civilisation sur les plans civil, scientifique et militaire. 7 Wonders Duel est l'adaptation 2 joueurs de 7 Wonders.>\",\n        \"__v\": 0\n    },\n    \"msg\": \"Game created successfully.\"\n}",
+          "content": "{\n    \"gameDetails\": {\n        \"author\": [\n            \"Bruno Cathala, Antoine Bauza\"\n        ],\n        \"genres\": [\n            \"5e6f7901a0d93148f48fd5ce\"\n        ],\n        \"_id\": \"5e8afc246e335f2230b4f3e2\",\n        \"name\": \"7 Wonders Duelle 25\",\n        \"editor\": \"Repos Production\",\n        \"distributor\": \"Repos Production\",\n        \"releaseDate\": \"2015-10-01T07:22:00.000Z\",\n        \"popularity\": 9,\n        \"playerMin\": 2,\n        \"playerMax\": 2,\n        \"gameLengthMin\": 30,\n        \"gameLengthMax\": 60,\n        \"minAge\": 10,\n        \"description\": \"Triomphez de votre adversaire en développant et améliorant votre civilisation sur les plans civil, scientifique et militaire. 7 Wonders Duel est l'adaptation 2 joueurs de 7 Wonders.>\",\n        \"__v\": 0\n    },\n    \"msg\": \"Game created successfully.\"\n}",
           "type": "json"
         }
       ]
