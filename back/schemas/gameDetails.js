@@ -46,10 +46,8 @@ let GameDetailsSchema = new Schema({
         type:Number,
         min:0
     },
-    genres: {
-        type:Array,
-        required:true
-    },
+    genres: [{ type: Schema.Types.ObjectID, ref:'genre'}]
+    ,
     // sort handling
     whatToSortBy:String,
     sortValue:Number,
