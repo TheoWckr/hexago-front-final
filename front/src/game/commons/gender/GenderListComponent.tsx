@@ -1,6 +1,6 @@
 import {Chip, Grid, Typography} from "@material-ui/core";
 import React from "react";
-import {GenderModel} from "../../../models/genderModel";
+import {GenreModel} from "../../../models/genreModel";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 
 const useStyles = makeStyles({
@@ -14,12 +14,12 @@ const useStyles = makeStyles({
 });
 
 const GenderList = (props: {
-    genders: GenderModel[],
-    ClickHandler?: ((gender: GenderModel) => void) }
+    genders: GenreModel[],
+    ClickHandler?: ((gender: GenreModel) => void) }
     ) => {
 
     let classes = useStyles();
-    function clickFun(event: GenderModel) {
+    function clickFun(event: GenreModel) {
         if (props.ClickHandler)
             props.ClickHandler(event);
 
@@ -32,7 +32,7 @@ const GenderList = (props: {
                 return <Chip
                     className={classes.chip}
                     key={index}
-                    label={gender.label}
+                    label={gender.genre}
                     clickable
                     onClick={() => clickFun(gender)}
                     color="primary"

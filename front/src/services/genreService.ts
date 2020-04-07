@@ -5,8 +5,14 @@ const routeName = MAIN_ADRESS+'genre/';
 export const GenreService = {
 
     /** Renvois tous les user */
-    getAllGenres() :AxiosPromise {
-        return axios.get(routeName);
+    getGenres(genre: string, limit: number) :AxiosPromise {
+        let paramsString = '?';
+        if(genre && genre.length != 0)
+            paramsString += 'genre=' + genre+ '&';
+        if(limit && limit > 1)
+            paramsString += 'limit=' + limit;
+        else paramsString += 'limit=2';
+        return axios.get(routeName + paramsString);
     },
 
     createGenre(body : any) :AxiosPromise {

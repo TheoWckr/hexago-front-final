@@ -66,7 +66,7 @@ export const GameCreatePanel1 = (props:GameEditProps) => {
             className={classes.textField}
 
             control={<Checkbox color="primary" onChange={handleChangeExtension}/>}
-            label="Is an extension"
+            label="Is an extension "
             labelPlacement="end"
         />
         {displayExtension()}
@@ -95,6 +95,4 @@ export const GameCreatePanel1 = (props:GameEditProps) => {
             }}
         />
         </Grid>)
-
-
 };

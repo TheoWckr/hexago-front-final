@@ -1,5 +1,5 @@
 import {GameModel} from "./gameModel";
-import {GenderModel} from "./genderModel";
+import {GenreModel} from "./genreModel";
 import {imageModel} from "./shared/imageModel";
 import {FormContextValues} from "react-hook-form/dist/contextTypes";
 
@@ -12,11 +12,12 @@ export interface GameProps {
 
 export interface GameEditProps {
     game : GameModel,
-    changeGameState: any
+    changeGameState: any,
 }
 
-export interface GenderProps {
-    genders: GenderModel[]
+export interface GenreProps {
+    genres: GenreModel[]
+    changeGenderState: any
 }
 export interface ImageProps {
     images: imageModel[]

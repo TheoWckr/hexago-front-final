@@ -1,4 +1,4 @@
-import {GenderModel} from "./genderModel";
+import {GenreModel} from "./genreModel";
 
 /**
  * Model of games , refers to GameDetails in DB
@@ -19,7 +19,7 @@ export class GameModel {
     gameLengthMax?: number;
     distributor?: string;
     editor?: string;
-    genres: GenderModel[];
+    genres: GenreModel[];
 
     constructor({
                     author = '',
@@ -35,7 +35,7 @@ export class GameModel {
                     description = '',
                     gameLengthMax =0,
                     editor = '',
-                    genres = [] as string[]
+                    genres = [] as any[]
                 } = {}) {
 
         this._id = _id;
@@ -54,9 +54,9 @@ export class GameModel {
         this.description = description;
         this.gameLengthMax = gameLengthMax;
         this.editor = editor;
-        this.genres = [] as GenderModel[];
+        this.genres = [] as GenreModel[];
         if(genres.length)
-            genres.forEach((genres) => this.genres.push(new GenderModel(genres)));
+            genres.forEach((genres) => this.genres.push(new GenreModel(genres)));
     }
 }
 
