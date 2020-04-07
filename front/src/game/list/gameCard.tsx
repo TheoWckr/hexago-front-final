@@ -7,6 +7,7 @@ import Rating from "@material-ui/lab/Rating";
 import Card from "@material-ui/core/Card";
 import {makeStyles} from "@material-ui/core/styles";
 import {GameModel} from "../../models/gameModel";
+import {useHistory} from "react-router";
 
 const useStyles = makeStyles({
     root: {
@@ -30,11 +31,12 @@ const useStyles = makeStyles({
 
 const GameCard = (props: { game: GameModel }) => {
     const classes = useStyles();
-
+    console.log('props game card' ,props.game);
+    const history = useHistory();
     return (
-        <Card className={classes.root}>
+        <Card>
             <CardActionArea>
-                <CardContent>
+                <CardContent onClick={() => history.push('/gamedisplay/' + props.game._id)} >
                     <CardMedia
                         className={classes.media}
                         image="https://via.placeholder.com/400"

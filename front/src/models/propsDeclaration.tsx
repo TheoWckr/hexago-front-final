@@ -12,7 +12,7 @@ export interface GameProps {
 
 export interface GameEditProps {
     game : GameModel,
-    formValues: FormContextValues<GameModel>
+    changeGameState: any
 }
 
 export interface GenderProps {

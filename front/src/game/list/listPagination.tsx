@@ -17,6 +17,7 @@ export default class ListPagination extends React.Component<{}, PageState> {
             let stock: GameModel[] = [];
 
             result.data.content.forEach((game: {}) => {
+                console.log('gameReceived', game);
                 stock.push(new GameModel(game));
             });
             this.setState({

@@ -1,5 +1,10 @@
 import {GenderModel} from "./genderModel";
 
+/**
+ * Model of games , refers to GameDetails in DB
+ * If changed , need to update Game Create section and game create panels
+ */
+
 export class GameModel {
     _id?: string;
     releaseDate: string;
@@ -25,7 +30,7 @@ export class GameModel {
                     playerMax = 6,
                     playerMin = 2,
                     distributor = '',
-                    gameDetailsId = '',
+                    _id = '',
                     releaseDate = '',
                     description = '',
                     gameLengthMax =0,
@@ -33,7 +38,7 @@ export class GameModel {
                     genres = [] as string[]
                 } = {}) {
 
-        this._id = gameDetailsId;
+        this._id = _id;
         if (releaseDate.length === 0)
             this.releaseDate = new Date().toDateString();
         else

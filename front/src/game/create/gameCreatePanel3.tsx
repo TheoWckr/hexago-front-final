@@ -16,7 +16,7 @@ makeStyles({
     },
 });
 
-const GameCreatePanel3 = (props : GameProps) => {
+const GameCreatePanel3 = (props : GameEditProps) => {
     const classes = useStylesPanelCreatePage();
     return (
         <Grid

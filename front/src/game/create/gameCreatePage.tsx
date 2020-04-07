@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import SwipeableViews from 'react-swipeable-views';
-import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
+import {makeStyles, Theme, useTheme} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -9,13 +9,11 @@ import Box from '@material-ui/core/Box';
 import {GameCreatePanel1} from "./gameCreatePanel1";
 import GameCreatePanel3 from "./gameCreatePanel3";
 import GameCreatePanel2 from "./gameCreatePanel2";
-import { GameModel} from "../../models/gameModel";
+import {GameModel} from "../../models/gameModel";
 import {GameService} from "../../services/gameService";
 import {UtilsAxios} from "../../utils/utilsAxios";
 import {useParams} from "react-router";
 import {FormContext, useForm} from "react-hook-form";
-import {FormContextValues} from "react-hook-form/dist/contextTypes";
-import {Grid} from "@material-ui/core";
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -24,13 +22,13 @@ interface TabPanelProps {
     value: any;
 }
 
-export interface PanelProps{
-    game:GameModel,
+export interface PanelProps {
+    game: GameModel,
 
 }
 
 function TabPanel(props: TabPanelProps) {
-    const { children, value, index, ...other } = props;
+    const {children, value, index, ...other} = props;
 
 
     return (
@@ -59,11 +57,11 @@ export const useStylesPanelCreatePage = makeStyles((theme: Theme) => ({
         backgroundColor: theme.palette.background.paper,
         padding: '2em',
     },
-    panel:{
-        width:'90%',
-        margin:'3%',
-       paddingLeft:'20%',
-        paddingRight:'20%',
+    panel: {
+        width: '90%',
+        margin: '3%',
+        paddingLeft: '20%',
+        paddingRight: '20%',
     },
     textField: {
         paddingBottom: '2em',
@@ -76,20 +74,30 @@ export default function FullWidthTabs() {
     const [valueTabs, setValueTabs] = React.useState(0);
     const methods = useForm<GameModel>();
 
-    const onSubmit = (data: any) => { console.log(data) };
-    const[gameState, setGameState] = React.useState(new GameModel({}));
-    let { id } = useParams();
+    const onSubmit = (data: any) => {
+        console.log(data)
+    };
+    const [gameState, setGameState] = React.useState(new GameModel({}));
+    const changeGameState = (properties: string, value: any) => {
+        setGameState((prevState => {
+            return {
+                ...prevState,
+                [properties]: value
+            }
+        }));
+        console.log(gameState);
+    };
+    let {id} = useParams();
     useEffect(() => {
-        if(id) {
-
+        if (id) {
             GameService.getGame(id).then((value) => {
                     console.log(UtilsAxios.displayReponse(value));
-                console.log(new GameModel(value.data.content));
+                    console.log(new GameModel(value.data.content));
                     setGameState(new GameModel(value.data.content));
                 }
             )
         }
-    },[]);
+    }, []);
 
     const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
         console.log('Changement', newValue);
@@ -102,7 +110,7 @@ export default function FullWidthTabs() {
 
     return (
         <div className={classes.root}>
-            <AppBar position="static" color="default" >
+            <AppBar position="static" color="default">
                 <Tabs
                     value={valueTabs}
                     onChange={handleChange}
@@ -122,23 +130,24 @@ export default function FullWidthTabs() {
                     {methods.errors.name && <div>'First name is required'</div>}
 
                     <SwipeableViews
-                axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-                index={valueTabs}
-                onChangeIndex={handleChangeIndex}
-            >
-                <TabPanel value={valueTabs} index={0} dir={theme.direction}>
-                    <GameCreatePanel1  game={gameState} key={'1dqsfsdfqsf'} />
-                </TabPanel>
-                <TabPanel value={valueTabs} index={1} dir={theme.direction}>
-                    <GameCreatePanel2 game={gameState} key={'2qsdfdfqsf'} />
-                </TabPanel>
-                <TabPanel value={valueTabs} index={2} dir={theme.direction}>
-                    <GameCreatePanel3 game={gameState}  key={'2qsdfdfqsf'} />
-                </TabPanel>
-            </SwipeableViews>
+                        axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+                        index={valueTabs}
+                        onChangeIndex={handleChangeIndex}
+                    >
+                        <TabPanel value={valueTabs} index={0} dir={theme.direction}>
+                            <GameCreatePanel1 game={gameState} changeGameState={changeGameState}
+                                              key={'gameCreatePanel1'}/>
+                        </TabPanel>
+                        <TabPanel value={valueTabs} index={1} dir={theme.direction}>
+                            <GameCreatePanel2 game={gameState} changeGameState={changeGameState} key={'gameCreatePanel2'}/>
+                        </TabPanel>
+                        <TabPanel value={valueTabs} index={2} dir={theme.direction}>
+                            <GameCreatePanel3 game={gameState} changeGameState={changeGameState}  key={'gameCreatePanel3'}/>
+                        </TabPanel>
+                    </SwipeableViews>
                 </FormContext>
 
-                <input type="submit" />
+                <input type="submit"/>
             </form>
         </div>
     );

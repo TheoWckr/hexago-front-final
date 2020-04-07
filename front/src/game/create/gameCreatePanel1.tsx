@@ -5,6 +5,8 @@ import {GameEditProps, GameProps} from "../../models/propsDeclaration";
 import {useStylesPanelCreatePage} from "./gameCreatePage";
 import {KeyboardDatePicker} from "@material-ui/pickers";
 import {useFormContext} from "react-hook-form";
+import {MaterialUiPickersDate} from "@material-ui/pickers/typings/date";
+import {UtilsDate} from "../../utils/utilsDate";
 
 // noinspection JSUnusedLocalSymbols
 const useStyles = makeStyles({
@@ -19,9 +21,31 @@ const useStyles = makeStyles({
     },
 });
 
-export const GameCreatePanel1 = (props:GameProps) => {
+export const GameCreatePanel1 = (props:GameEditProps) => {
     const { register } = useFormContext();
     const [isExtension, setIsExtension ] = React.useState(false);
+
+    const handleChangeTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
+        props.changeGameState('name', event.target.value );
+    };
+
+    const handleChangeAuthor = (event: React.ChangeEvent<HTMLInputElement>) => {
+        props.changeGameState('author', event.target.value );
+    };
+
+    const handleChangeEditor = (event: React.ChangeEvent<HTMLInputElement>) => {
+        props.changeGameState('editor', event.target.value );
+    };
+
+    const handleChangeDistributor = (event: React.ChangeEvent<HTMLInputElement>) => {
+        props.changeGameState('distributor', event.target.value );
+    };
+
+    const handleChangeReleasedDate = (date: MaterialUiPickersDate) => {
+        props.changeGameState('releaseDate', UtilsDate.toStringFromMUIDateFormat(date));
+    };
+
+
     const displayExtension = () => {
         if (isExtension) return  <TextField required={true} className={classes.textField} label="extension of"> </TextField>;
         };
@@ -46,16 +70,17 @@ export const GameCreatePanel1 = (props:GameProps) => {
             labelPlacement="end"
         />
         {displayExtension()}
-        <TextField required id="standard-required" label="Titre " multiline
+        <TextField required id="standard-required" label="Title " multiline
                    name ='name'
+                   onChange={handleChangeTitle}
                    className={classes.textField}
                    defaultValue={props.game.name}
                    inputRef={register({required : true })}
                    />
 
-            <TextField id="standard" className={classes.textField} label="Author " multiline value={props.game.author}/>
-            <TextField id="standard" className={classes.textField} label="Editor " multiline value={props.game.editor}/>
-            <TextField id="standard" className={classes.textField} label="Distributor " multiline value={props.game.distributor}/>
+            <TextField id="standard"  onChange={handleChangeAuthor} className={classes.textField} label="Author " multiline defaultValue={props.game.author}/>
+            <TextField id="standard"  onChange={handleChangeEditor} className={classes.textField} label="Editor " multiline defaultValue={props.game.editor}/>
+            <TextField id="standard"  onChange={handleChangeDistributor} className={classes.textField} label="Distributor " multiline defaultValue={props.game.distributor}/>
 
         <KeyboardDatePicker
             className={classes.textField}
@@ -64,7 +89,7 @@ export const GameCreatePanel1 = (props:GameProps) => {
             label="Date picker dialog"
             format="MM/dd/yyyy"
             value={props.game.releaseDate}
-            onChange={() => console.log("change ",)}
+            onChange={handleChangeReleasedDate}
             KeyboardButtonProps={{
                 'aria-label': 'change date',
             }}

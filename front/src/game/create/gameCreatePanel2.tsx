@@ -1,7 +1,7 @@
 
 import { FormControlLabel, Grid, Slider, Switch} from "@material-ui/core";
 import React, {useEffect} from "react";
-import { GameProps} from "../../models/propsDeclaration";
+import {GameEditProps, GameProps} from "../../models/propsDeclaration";
 import {marksGameAgeMin, marksGameDuration} from "../../models/gameModel";
 import {useStylesPanelCreatePage} from "./gameCreatePage";
 import GenderSelector from "../commons/GenderSelector";
@@ -9,25 +9,38 @@ import {genderMockList} from "../../data-mock/GenderMock";
 import {useFormContext} from "react-hook-form";
 
 
-export const GameCreatePanel2 = (props:GameProps ) => {
+export const GameCreatePanel2 = (props:GameEditProps ) => {
     function valueLabelFormat(value: number) {
         return marksGameDuration[marksGameDuration.findIndex(mark => mark.value === value)].hiddenLabel ;
     }
-    const { register } = useFormContext();
 
     const [checkedAge, setCheckedAge] = React.useState(false);
     const [checkedDuration, setCheckedDuration] = React.useState(false);
     const [checkedNumPlayer, setCheckedNumPlayer] = React.useState(props.game.playerMin !== undefined);
 
-    const [valueNumPlayer, setValueNumPlayer] = React.useState<number[]>([props.game.playerMin, props.game.playerMax]);
-    const handleChangeNumPlayerValue = (event: any, newValue: number | number[]) => {
-        setValueNumPlayer(newValue as number[]);
+
+    const handleChangeNumberOfPlayer = (event: any, newValue: number | number[]) => {
+        if (newValue as number[]) {
+            props.changeGameState('playerMin', (newValue as number[])[0]);
+            props.changeGameState('playerMax', (newValue as number[])[1]);
+        }
     };
 
-    useEffect(() => {
-        props.game.playerMin = valueNumPlayer[0];
-    console.log('change player min ', props.game.playerMin);
-    },[valueNumPlayer]);
+    const handleChangeMinimumAge = (event: any, newValue: number | number[]) => {
+      console.log(newValue);
+        if (newValue as number) {
+            props.changeGameState('minAge',newValue );
+        }
+    };
+
+    const handleChangeGameLength= (event: any, newValue: number | number[]) => {
+        if (newValue as number[]) {
+            props.changeGameState('gameLengthMin', (newValue as number[])[0]);
+            props.changeGameState('gameLengthMax', (newValue as number[])[1]);
+        }
+    };
+
+
 
     const handleChangeAge = () => {
         setCheckedAge(prev => !prev);
@@ -53,7 +66,7 @@ export const GameCreatePanel2 = (props:GameProps ) => {
             />
             <Slider
                 name={'age'}
-
+                onChange={handleChangeMinimumAge}
                 disabled={!checkedAge}
                 defaultValue={10}
                 aria-labelledby="discrete-slider-custom"
@@ -71,7 +84,7 @@ export const GameCreatePanel2 = (props:GameProps ) => {
             />
             <Slider
                 disabled={!checkedDuration}
-
+                onChange={handleChangeGameLength}
                 defaultValue={[30,60]}
                 valueLabelDisplay="auto"
                 valueLabelFormat={valueLabelFormat}
@@ -91,14 +104,13 @@ export const GameCreatePanel2 = (props:GameProps ) => {
                 disabled={(props.game.playerMin === undefined || !checkedNumPlayer)}
 
                 defaultValue={ props.game.playerMin ? [props.game.playerMin, props.game.playerMax] : [4,8]}
-                onChange={handleChangeNumPlayerValue}
+                onChange={handleChangeNumberOfPlayer}
                 valueLabelDisplay="auto"
                 aria-labelledby="range-slider"
                 min={1}
                 max={16}
             />
-            <GenderSelector genders={genderMockList}/>
-
+            <GenderSelector genders={props.game.genres}/>
         </Grid>
 
 
