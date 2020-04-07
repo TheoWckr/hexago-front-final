@@ -14,6 +14,7 @@ import {GameService} from "../../services/gameService";
 import {UtilsAxios} from "../../utils/utilsAxios";
 import {useParams} from "react-router";
 import {FormContext, useForm} from "react-hook-form";
+import {ErrorMessagesPanel} from "../commons/errorMessages";
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -66,15 +67,21 @@ export const useStylesPanelCreatePage = makeStyles((theme: Theme) => ({
     textField: {
         paddingBottom: '2em',
     },
+    errorTab:{
+        backgroundColor:theme.palette.error.light,
+    }
 }));
 
 export default function FullWidthTabs() {
     const classes = useStylesPanelCreatePage();
     const theme = useTheme();
     const [valueTabs, setValueTabs] = React.useState(0);
+    const [errorMessages, setErrorMessage] = React.useState([] as string[]);
+
     const methods = useForm<GameModel>();
 
     const onSubmit = (data: any) => {
+        setErrorMessage(['Test', 'Bonjour']);
         console.log(data)
     };
     const [gameState, setGameState] = React.useState(new GameModel({}));
@@ -108,9 +115,10 @@ export default function FullWidthTabs() {
         setValueTabs(index);
     };
 
+
     return (
         <div className={classes.root}>
-            <AppBar position="static" color="default">
+                <AppBar position="static" color="default">
                 <Tabs
                     value={valueTabs}
                     onChange={handleChange}
@@ -119,8 +127,9 @@ export default function FullWidthTabs() {
                     centered
                     variant="fullWidth"
                     aria-label="Game Creation"
+
                 >
-                    <Tab label="Game definition" {...a11yProps(0)} />
+                    <Tab className={errorMessages.length !== 0 ? classes.errorTab :''} label="Game definition"  {...a11yProps(0)} />
                     <Tab label="Game properties " {...a11yProps(1)} />
                     <Tab label="Images " {...a11yProps(2)} />
                 </Tabs>

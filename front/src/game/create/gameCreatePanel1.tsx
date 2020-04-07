@@ -74,13 +74,13 @@ export const GameCreatePanel1 = (props:GameEditProps) => {
                    name ='name'
                    onChange={handleChangeTitle}
                    className={classes.textField}
-                   defaultValue={props.game.name}
+                   value={props.game.name}
                    inputRef={register({required : true })}
                    />
 
-            <TextField id="standard"  onChange={handleChangeAuthor} className={classes.textField} label="Author " multiline defaultValue={props.game.author}/>
-            <TextField id="standard"  onChange={handleChangeEditor} className={classes.textField} label="Editor " multiline defaultValue={props.game.editor}/>
-            <TextField id="standard"  onChange={handleChangeDistributor} className={classes.textField} label="Distributor " multiline defaultValue={props.game.distributor}/>
+            <TextField id="standard"  onChange={handleChangeAuthor} className={classes.textField} label="Author " multiline value={props.game.author}/>
+            <TextField id="standard"  onChange={handleChangeEditor} className={classes.textField} label="Editor " multiline value={props.game.editor}/>
+            <TextField id="standard"  onChange={handleChangeDistributor} className={classes.textField} label="Distributor " multiline value={props.game.distributor}/>
 
         <KeyboardDatePicker
             className={classes.textField}

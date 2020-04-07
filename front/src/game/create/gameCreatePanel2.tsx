@@ -5,8 +5,7 @@ import {GameEditProps, GameProps} from "../../models/propsDeclaration";
 import {marksGameAgeMin, marksGameDuration} from "../../models/gameModel";
 import {useStylesPanelCreatePage} from "./gameCreatePage";
 import GenderSelector from "../commons/GenderSelector";
-import {genderMockList} from "../../data-mock/GenderMock";
-import {useFormContext} from "react-hook-form";
+
 
 
 export const GameCreatePanel2 = (props:GameEditProps ) => {
@@ -14,8 +13,8 @@ export const GameCreatePanel2 = (props:GameEditProps ) => {
         return marksGameDuration[marksGameDuration.findIndex(mark => mark.value === value)].hiddenLabel ;
     }
 
-    const [checkedAge, setCheckedAge] = React.useState(false);
-    const [checkedDuration, setCheckedDuration] = React.useState(false);
+    const [checkedAge, setCheckedAge] = React.useState(props.game.minAge !== undefined);
+    const [checkedDuration, setCheckedDuration] = React.useState(props.game.gameLengthMin !== undefined);
     const [checkedNumPlayer, setCheckedNumPlayer] = React.useState(props.game.playerMin !== undefined);
 
 
@@ -40,15 +39,24 @@ export const GameCreatePanel2 = (props:GameEditProps ) => {
         }
     };
 
-
-
-    const handleChangeAge = () => {
+    const handleChangeCheckedAge = () => {
+        if(checkedAge){
+            props.changeGameState('minAge', undefined)
+        }
         setCheckedAge(prev => !prev);
     };
-    const handleChangeDuration = () => {
+    const handleChangeCheckedDuration = () => {
+        if(checkedDuration){
+            props.changeGameState('gameLengthMin', undefined);
+            props.changeGameState('gameLengthMax',undefined);
+        }
         setCheckedDuration(prev => !prev);
     };
-    const handleChangeNumPlayer = () => {
+    const handleChangeCheckedNumPlayer = () => {
+        if(checkedNumPlayer){
+            props.changeGameState('playerMin', undefined);
+            props.changeGameState('playerMax',undefined);
+        }
         setCheckedNumPlayer(prev => !prev);
     };
 
@@ -61,14 +69,14 @@ export const GameCreatePanel2 = (props:GameEditProps ) => {
               className={classes.panel}
         >
              <FormControlLabel
-                control={<Switch checked={checkedAge} onChange={handleChangeAge} />}
+                control={<Switch checked={checkedAge} onChange={handleChangeCheckedAge} />}
                 label="Minimum Age"
             />
             <Slider
                 name={'age'}
                 onChange={handleChangeMinimumAge}
                 disabled={!checkedAge}
-                defaultValue={10}
+                value={props.game.minAge ? props.game.minAge : 10}
                 aria-labelledby="discrete-slider-custom"
                 step={1}
                 min={3}
@@ -79,7 +87,7 @@ export const GameCreatePanel2 = (props:GameEditProps ) => {
 
 
             <FormControlLabel
-                control={<Switch checked={checkedDuration} onChange={handleChangeDuration} />}
+                control={<Switch checked={checkedDuration} onChange={handleChangeCheckedDuration} />}
                 label="Duration"
             />
             <Slider
@@ -97,7 +105,7 @@ export const GameCreatePanel2 = (props:GameEditProps ) => {
 
 
             <FormControlLabel
-                control={<Switch checked={(props.game.playerMin !== undefined && checkedNumPlayer)} onChange={handleChangeNumPlayer} />}
+                control={<Switch checked={(props.game.playerMin !== undefined && checkedNumPlayer)} onChange={handleChangeCheckedNumPlayer} />}
                 label="Number of player"
             />
             <Slider
