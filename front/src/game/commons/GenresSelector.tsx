@@ -1,7 +1,7 @@
 import * as React from "react";
 import {GameEditProps, GameProps, GenreProps} from "../../models/propsDeclaration";
 import {Divider, Input, Typography} from "@material-ui/core";
-import GenderList from "./gender/GenderListComponent";
+import GenreList from "./gender/GenderListComponent";
 import {genderMockList2} from "../../data-mock/GenderMock";
 import {GenreModel} from "../../models/genreModel";
 import {useEffect, useState} from "react";
@@ -19,9 +19,7 @@ interface State {
  * @constructor
  */
 const GenresSelector = (props : GenreProps) => {
-
-   const  [genres,setGenres] = useState(props.genres);
-   const  [genresInput,setGenresInput] = useState('');
+    const  [genresInput,setGenresInput] = useState('');
    const  [genresSearched, setGenresSearched] = useState([] as GenreModel[]);
    useEffect(() => {
        const updateGenreSearched = [] as GenreModel [];
@@ -33,29 +31,31 @@ const GenresSelector = (props : GenreProps) => {
     });
    },[genresInput]);
 
-    const  funAdd = (gender: GenreModel) => {
-        if(!genres.includes(gender)) {
-            genres.push(gender);
-            props.changeGenderState('genres', genres);
+    const  funAdd = (genre: GenreModel) => {
+
+        if(!props.genres.includes(genre)) {
+            let newGenres = props.genres;
+            newGenres.push(genre);
+            props.changeGenreState('genres', newGenres);
         }
-        console.log('props genres ', genres);
     };
 
-    const funRemove = (gender: GenreModel) => {
-        genres.splice(genres.indexOf(gender),1);
-        props.changeGenderState('genres', genres);
+    const funRemove = (genre: GenreModel) => {
+        let newGenres = props.genres;
+        newGenres.splice(newGenres.indexOf(genre),1);
+        props.changeGenreState('genres', newGenres);
     };
 
         return (<div>
             <Typography>
-                Gender Selected
+                Genre Selected
             </Typography>
-            <GenderList genders={genres} ClickHandler={funRemove}/>
+            <GenreList genres={props.genres} ClickHandler={funRemove}/>
             <Typography>
-                Gender Search
+                Genre Search
             </Typography><Input placeholder="Placeholder" onChange={(event)=> setGenresInput(event.target.value)} inputProps={{'aria-label': 'description'}}/>
            <Divider />
-            <GenderList genders={genresSearched.filter((genre) => props.genres.filter((genreProps) => genre._id === genreProps._id).length === 0)} ClickHandler={funAdd}/>
+            <GenreList genres={genresSearched.filter((genre) => props.genres.filter((genreProps) => genre._id === genreProps._id).length === 0)} ClickHandler={funAdd}/>
         </div>);
 };
 

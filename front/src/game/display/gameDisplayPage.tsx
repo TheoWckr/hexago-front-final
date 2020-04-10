@@ -3,7 +3,7 @@ import {Grid, Typography, Box, Divider, createStyles, Theme, Card} from "@materi
 import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import makeStyles from "@material-ui/core/styles/makeStyles";
-import GenderList from "../commons/gender/GenderListComponent";
+import GenreList from "../commons/gender/GenderListComponent";
 import CardContent from '@material-ui/core/CardContent';
 import {UtilsDate} from "../../utils/utilsDate";
 import {Rating} from "@material-ui/lab";
@@ -89,7 +89,7 @@ const GameDisplayPage = () => {
                             }
                         </CardContent>
                     </Card>
-                    <GenderList genders={gameState.genres}/>
+                    <GenreList genres={gameState.genres}/>
                     <Typography variant="body2">
 
                     </Typography>

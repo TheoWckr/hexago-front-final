@@ -13,9 +13,9 @@ const useStyles = makeStyles({
     }
 });
 
-const GenderList = (props: {
-    genders: GenreModel[],
-    ClickHandler?: ((gender: GenreModel) => void) }
+const GenreList = (props: {
+    genres: GenreModel[],
+    ClickHandler?: ((genre: GenreModel) => void) }
     ) => {
 
     let classes = useStyles();
@@ -23,35 +23,35 @@ const GenderList = (props: {
         if (props.ClickHandler)
             props.ClickHandler(event);
 
-        console.log('genderList', props.genders);
+        console.log('genreList', props.genres);
     }
 
-    const genderListing = props.genders;
-    let genderList =genderListing.map((gender, index) => {
+    const genreListing = props.genres;
+    let genreList =genreListing.map((genre, index) => {
             if (index < 12)
                 return <Chip
                     className={classes.chip}
                     key={index}
-                    label={gender.genre}
+                    label={genre.genre}
                     clickable
-                    onClick={() => clickFun(gender)}
+                    onClick={() => clickFun(genre)}
                     color="primary"
                 />
 
         }
     );
-    if (props.genders && props.genders.length > 0) {
+    if (props.genres && props.genres.length > 0) {
         return (
             <Grid container className={classes.container}>
-                {genderList}
+                {genreList}
             </Grid>
         )
     } else
         return(
         <Chip
         className={classes.chip}
-        label="No genders found"
+        label="No genres found"
         color="secondary" />
     ) ;
 };
-export default GenderList;
+export default GenreList;

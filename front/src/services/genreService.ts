@@ -4,7 +4,8 @@ import {MAIN_ADRESS, axios} from "../utils/utilsAxios";
 const routeName = MAIN_ADRESS+'genre/';
 export const GenreService = {
 
-    /** Renvois tous les user */
+    /** AxiosPromise :  Return a list of 0 - {limit} genres containing the string {genre}
+     * If genre is empty , return all possible */
     getGenres(genre: string, limit: number) :AxiosPromise {
         let paramsString = '?';
         if(genre && genre.length != 0)
@@ -27,11 +28,5 @@ export const GenreService = {
 
     deleteGenre(id: string) : AxiosPromise {
         return axios.delete(routeName+id);
-    },
-
-    searchGenres(inputSearch :string) : AxiosPromise {
-        return axios.get(routeName+'search',{
-            search : inputSearch
-        })
     }
 };
