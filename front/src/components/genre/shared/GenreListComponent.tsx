@@ -15,7 +15,7 @@ const useStyles = makeStyles({
 
 const GenreList = (props: {
     genres: GenreModel[],
-    ClickHandler?: ((genre: GenreModel) => void) }
+    ClickHandler?: any }
     ) => {
 
     let classes = useStyles();

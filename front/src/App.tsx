@@ -1,16 +1,17 @@
 import React from 'react';
 import './App.css';
-import Header from "./commons/headers/Header";
+import Header from "./components/commons/headers/Header";
 
-import GameList from "./game/list/gameList";
+import GameList from "./components/game/list/gameList";
 
 import {
     BrowserRouter as Router,
     Switch,
     Route
 } from 'react-router-dom';
-import GameDisplayPage from "./game/display/gameDisplayPage";
-import GameCreatePage from "./game/create/gameCreatePage";
+import GameDisplayPage from "./components/game/display/gameDisplayPage";
+import GameCreatePage from "./components/game/create/gameCreatePage";
+import {GenreCRUDPage} from "./components/genre/page/genreCRUDPage";
 
 const App = () => {
   return (
@@ -25,6 +26,9 @@ const App = () => {
               </Route>
               <Route path="/gamelist">
                   <GameList />
+              </Route>
+              <Route path="/">
+                  <GenreCRUDPage />
               </Route>
           </Switch>
       </Router>

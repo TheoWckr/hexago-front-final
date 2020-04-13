@@ -3,13 +3,13 @@ import {Grid, Typography, Box, Divider, createStyles, Theme, Card} from "@materi
 import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import makeStyles from "@material-ui/core/styles/makeStyles";
-import GenreList from "../commons/gender/GenderListComponent";
+import GenreList from "../../genre/shared/GenreListComponent";
 import CardContent from '@material-ui/core/CardContent';
-import {UtilsDate} from "../../utils/utilsDate";
+import {UtilsDate} from "../../../utils/utilsDate";
 import {Rating} from "@material-ui/lab";
 import {useParams} from "react-router";
-import {GameService} from "../../services/gameService";
-import {GameModel} from "../../models/gameModel";
+import {GameService} from "../../../services/gameService";
+import {GameModel} from "../../../models/gameModel";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({

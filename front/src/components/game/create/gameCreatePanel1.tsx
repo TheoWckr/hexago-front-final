@@ -1,12 +1,12 @@
 import {Checkbox, FormControlLabel, Grid, TextField} from "@material-ui/core";
 import React from "react";
 import makeStyles from "@material-ui/core/styles/makeStyles";
-import {GameEditProps, GameProps} from "../../models/propsDeclaration";
+import {GameEditProps, GameProps} from "../../../models/propsDeclaration";
 import {useStylesPanelCreatePage} from "./gameCreatePage";
 import {KeyboardDatePicker} from "@material-ui/pickers";
 import {useFormContext} from "react-hook-form";
 import {MaterialUiPickersDate} from "@material-ui/pickers/typings/date";
-import {UtilsDate} from "../../utils/utilsDate";
+import {UtilsDate} from "../../../utils/utilsDate";
 
 // noinspection JSUnusedLocalSymbols
 const useStyles = makeStyles({

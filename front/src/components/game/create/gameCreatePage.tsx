@@ -9,12 +9,12 @@ import Box from '@material-ui/core/Box';
 import {GameCreatePanel1} from "./gameCreatePanel1";
 import GameCreatePanel3 from "./gameCreatePanel3";
 import GameCreatePanel2 from "./gameCreatePanel2";
-import {GameModel} from "../../models/gameModel";
-import {GameService} from "../../services/gameService";
-import {UtilsAxios} from "../../utils/utilsAxios";
+import {GameModel} from "../../../models/gameModel";
+import {GameService} from "../../../services/gameService";
+import {UtilsAxios} from "../../../utils/utilsAxios";
 import {useParams} from "react-router";
 import {FormContext, useForm} from "react-hook-form";
-import {ErrorMessagesPanel} from "../commons/errorMessages";
+import {ErrorMessagesPanel} from "../../commons/errorMessages";
 
 interface TabPanelProps {
     children?: React.ReactNode;

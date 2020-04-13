@@ -16,7 +16,7 @@ export interface GameEditProps {
 }
 
 export interface GenreProps {
-    genres: GenreModel[]
+    genres: GenreModel[],
     changeGenreState: any
 }
 export interface ImageProps {

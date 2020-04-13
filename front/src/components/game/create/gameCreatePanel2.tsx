@@ -1,10 +1,10 @@
 
 import { FormControlLabel, Grid, Slider, Switch} from "@material-ui/core";
 import React, {useEffect} from "react";
-import {GameEditProps, GameProps} from "../../models/propsDeclaration";
-import {marksGameAgeMin, marksGameDuration} from "../../models/gameModel";
+import {GameEditProps, GameProps} from "../../../models/propsDeclaration";
+import {marksGameAgeMin, marksGameDuration} from "../../../models/gameModel";
 import {useStylesPanelCreatePage} from "./gameCreatePage";
-import GenresSelector from "../commons/GenresSelector";
+import GenresSelector from "../../genre/shared/GenresSelector";
 
 
 
@@ -118,7 +118,7 @@ export const GameCreatePanel2 = (props:GameEditProps ) => {
                 min={1}
                 max={16}
             />
-            <GenresSelector changeGenderState={props.changeGameState} genres={props.game.genres}/>
+            <GenresSelector changeGenreState={props.changeGameState} genres={props.game.genres}/>
         </Grid>
 
 

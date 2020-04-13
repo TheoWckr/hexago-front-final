@@ -1,5 +1,6 @@
 import {AxiosPromise} from "axios";
-import {MAIN_ADRESS, axios} from "../utils/utilsAxios";
+import {MAIN_ADRESS, axios, UtilsAxios} from "../utils/utilsAxios";
+import {GenreModel} from "../models/genreModel";
 
 const routeName = MAIN_ADRESS+'genre/';
 export const GenreService = {
@@ -16,10 +17,16 @@ export const GenreService = {
         return axios.get(routeName + paramsString);
     },
 
-    createGenre(body : any) :AxiosPromise {
+    createGenre(body : GenreModel) :AxiosPromise {
         console.log("Create game  Body : " , JSON.stringify((body)) );
         console.log("Create game  JSON : " , JSON.stringify((body)) );
-        return axios.post(routeName + 'create', JSON.stringify(body));
+        return axios.post(routeName + 'create',{genre : body.genre});
+    },
+
+    updateGenre(genre: GenreModel)  :AxiosPromise {
+        console.log( {genre : genre.genre} );
+
+        return axios.put(routeName + genre._id, {genre : genre.genre});
     },
 
     getGenre(id : string) :AxiosPromise {

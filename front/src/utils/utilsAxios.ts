@@ -1,7 +1,10 @@
 import {AxiosResponse} from "axios";
 
-export let axios = require('axios') ;
+export const axios = require('axios') ;
+
+
 export const MAIN_ADRESS = "http://localhost:3100/";
+let contentType = 'Content-Type';
 export const UtilsAxios = {
         /**
          * Permet un display rapide des élements d'une reponse
@@ -14,5 +17,8 @@ export const UtilsAxios = {
                 console.log('Statuts Text', response.statusText);
                 console.log('Headeres', response.headers);
                 console.log('Config', response.config);
-    }
+    },
+        axiosHeaders : {
+               [contentType] : 'application/json'
+        }
 };

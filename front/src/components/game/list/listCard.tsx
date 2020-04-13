@@ -2,7 +2,7 @@ import React from "react";
 import {makeStyles} from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import GameCard from "./gameCard";
-import {GameModel} from "../../models/gameModel";
+import {GameModel} from "../../../models/gameModel";
 
 const useStyles = makeStyles({
     root: {

@@ -1,8 +1,8 @@
 import * as React from "react";
 import Pagination from '@material-ui/lab/Pagination';
 import ListCard from "./listCard";
-import {GameModel} from "../../models/gameModel";
-import gameService from "../../services/gameService";
+import {GameModel} from "../../../models/gameModel";
+import gameService from "../../../services/gameService";
 import {AxiosResponse} from "axios";
 
 type PageState = {
