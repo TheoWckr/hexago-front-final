@@ -1,5 +1,6 @@
 import {AxiosPromise} from "axios";
 import {MAIN_ADRESS, axios} from "../utils/utilsAxios";
+import {GameModel} from "../models/gameModel";
 
 const routeName = MAIN_ADRESS+'gamedetails/';
 export const GameService = {
@@ -9,11 +10,9 @@ export const GameService = {
         return axios.get(routeName);
     },
     /** formulaire pour créer un jeu */
-    createGame(body : any) :AxiosPromise {
-        console.log("Create game  Body : " , JSON.stringify((body)) );
-
-        console.log("Create game  JSON : " , JSON.stringify((body)) );
-        return axios.post(routeName + '/create', JSON.stringify(body));
+    createGame(game : GameModel) :AxiosPromise {
+        game._id = undefined;
+        return axios.post(routeName + '/create', game);
     },
 
     getGame(id : string) :AxiosPromise {

@@ -18,6 +18,7 @@ export interface GenreProps {
     genres: GenreModel[],
     changeGenreState: any
 }
+
 export interface ImageProps {
     images: imageModel[]
 }
