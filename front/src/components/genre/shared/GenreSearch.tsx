@@ -1,12 +1,10 @@
 import * as React from "react";
-import {GameEditProps, GameProps, GenreProps} from "../../../models/propsDeclaration";
 import {Divider, Input, Typography} from "@material-ui/core";
 import GenreList from "./GenreListComponent";
-import {genderMockList2} from "../../../data-mock/GenderMock";
 import {GenreModel} from "../../../models/genreModel";
 import {useEffect, useState} from "react";
 import {GenreService} from "../../../services/genreService";
-import {AxiosAdapter, AxiosResponse} from "axios";
+import {AxiosResponse} from "axios";
 
 
 /**
@@ -33,7 +31,7 @@ const GenreSearch = (props : {
 
 
     return (<div>
-        <Typography variant={'h4'}  style={{padding: '1.3em'}}>
+        <Typography variant={'h5'}  style={{padding: '1.3em'}}>
             Genre Search
         </Typography>
         <Input placeholder="Quick Search" style={{width : '40%', margin: 'auto'}} onChange={(event)=> setGenresInput(event.target.value)} inputProps={{'aria-label': 'description'}}/>

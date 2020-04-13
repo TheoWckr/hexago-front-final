@@ -1,7 +1,6 @@
 import {GameModel} from "./gameModel";
 import {GenreModel} from "./genreModel";
 import {imageModel} from "./shared/imageModel";
-import {FormContextValues} from "react-hook-form/dist/contextTypes";
 
 /** Fichier de déclaration des proprs utilisés dans les differents components */
 

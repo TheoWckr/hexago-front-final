@@ -18,7 +18,7 @@ const App = () => {
       <Router >
         <Header />
           <Switch>
-              <Route exact path="/gamecreate/:id">
+              <Route exact path="/gamecreate/:id?">
                   <GameCreatePage />
               </Route>
               <Route path="/gamedisplay/:id">

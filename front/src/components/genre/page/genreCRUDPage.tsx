@@ -1,9 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {GenreModel} from "../../../models/genreModel";
-import {GenreService} from "../../../services/genreService";
-import {AxiosResponse} from "axios";
 import {Grid} from "@material-ui/core";
-import {GenreCreatePanel} from "../panel/genreCreate";
+import {GenreCreatePanel} from "../panel/genreCreatePanel";
 import GenreSearch from "../shared/GenreSearch";
 import {GenreUpdatePanel} from "../panel/genreUpdatePanel";
 

@@ -1,5 +1,5 @@
 import {GameModel} from "../models/gameModel";
-import {genderMockList, genderMockListString} from "./GenderMock";
+import {genderMockListString} from "./GenderMock";
 
 
 let gameData = new GameModel({

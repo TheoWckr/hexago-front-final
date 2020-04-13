@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {FormEvent, useEffect} from 'react';
 import SwipeableViews from 'react-swipeable-views';
 import {makeStyles, Theme, useTheme} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -14,7 +14,7 @@ import {GameService} from "../../../services/gameService";
 import {UtilsAxios} from "../../../utils/utilsAxios";
 import {useParams} from "react-router";
 import {FormContext, useForm} from "react-hook-form";
-import {ErrorMessagesPanel} from "../../commons/errorMessages";
+import {Button, Grid} from "@material-ui/core";
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -77,14 +77,58 @@ export default function FullWidthTabs() {
     const theme = useTheme();
     const [valueTabs, setValueTabs] = React.useState(0);
     const [errorMessages, setErrorMessage] = React.useState([] as string[]);
-
+    const [gameState, setGameState] = React.useState(new GameModel({}));
+    let {id} = useParams();
     const methods = useForm<GameModel>();
 
-    const onSubmit = (data: any) => {
-        setErrorMessage(['Test', 'Bonjour']);
-        console.log(data)
+    /**
+     * Return true if the validation is completed or send errorMessage if not
+     */
+    const validation = () :boolean => {
+        const errorList = new Array<string>();
+        if (gameState.name.trim().length === 0){
+            errorList.push('name')
+        }
+        if (gameState.genres.length === 0){
+            errorList.push('genres')
+        }
+
+        if (gameState.description.trim().length <= 15){
+            errorList.push('description')
+        }
+        console.log('Error List', errorList);
+
+        setErrorMessage(errorList);
+        return errorList.length == 0;
     };
-    const [gameState, setGameState] = React.useState(new GameModel({}));
+
+    const onCreate = () => {
+        if (validation()) {
+            GameService.createGame(gameState).then((response) => {
+                if(response.status !== 200)
+                    console.log('error' , response);
+                else
+                    console.log('Create', response);
+            });
+        }
+    };
+
+    const onUpdate = () => {
+        if(validation()){
+
+        }
+    };
+    const onDelete = () => {
+
+    };
+
+
+    const onSubmit = (data: any) => {
+        validation();
+        console.log('data', data);
+        //setErrorMessage(['Test', 'Bonjour']);
+    };
+
     const changeGameState = (properties: string, value: any) => {
         setGameState((prevState => {
             return {
@@ -94,20 +138,18 @@ export default function FullWidthTabs() {
         }));
         console.log(gameState);
     };
-    let {id} = useParams();
     useEffect(() => {
         if (id) {
             GameService.getGame(id).then((value) => {
                     console.log(UtilsAxios.displayReponse(value));
-                    console.log(new GameModel(value.data.content));
                     setGameState(new GameModel(value.data.content));
                 }
             )
         }
     }, []);
 
+    //Handle changes
     const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
-        console.log('Changement', newValue);
         setValueTabs(newValue);
     };
 
@@ -116,8 +158,19 @@ export default function FullWidthTabs() {
     };
 
 
+
     return (
         <div className={classes.root}>
+            <Grid container style={{padding : '1em'}}>
+                {gameState && gameState._id?.length === 0 && <Button variant="outlined" name='create' color="primary" style={{width: '300px', margin: 'auto'}}
+            >Create</Button> }
+                {gameState && gameState._id?.length !== 0 &&  <Button variant="outlined" name='update' color="primary" style={{width: '300px', margin: 'auto'}}
+            >Update
+            </Button> }
+                {gameState && gameState._id?.length !== 0 &&  <Button variant="outlined" name='delete' color="default" style={{width: '300px', margin: 'auto'}}
+            >Delete
+            </Button> }
+            </Grid>
                 <AppBar position="static" color="default">
                 <Tabs
                     value={valueTabs}
@@ -129,12 +182,11 @@ export default function FullWidthTabs() {
                     aria-label="Game Creation"
 
                 >
-                    <Tab className={errorMessages.length !== 0 ? classes.errorTab :''} label="Game definition"  {...a11yProps(0)} />
-                    <Tab label="Game properties " {...a11yProps(1)} />
+                    <Tab className={errorMessages.includes('description') || errorMessages.includes('name') ? classes.errorTab :''} label="Game definition"  {...a11yProps(0)} />
+                    <Tab className={errorMessages.includes('genres') ? classes.errorTab :''} label="Game properties " {...a11yProps(1)} />
                     <Tab label="Images " {...a11yProps(2)} />
                 </Tabs>
             </AppBar>
-            <form onSubmit={methods.handleSubmit(onSubmit)}>
                 <FormContext {...methods} >
                     {methods.errors.name && <div>'First name is required'</div>}
 
@@ -156,8 +208,7 @@ export default function FullWidthTabs() {
                     </SwipeableViews>
                 </FormContext>
 
-                <input type="submit"/>
-            </form>
+
         </div>
     );
 }

@@ -1,14 +1,17 @@
 import React, {useState} from "react";
 import {GenreModel} from "../../../models/genreModel";
 import {GenreService} from "../../../services/genreService";
-import {Button, Divider, Grid, Input, InputLabel, TextField, Typography} from "@material-ui/core";
+import {Button, Grid, TextField, Typography} from "@material-ui/core";
 import {useForm} from "react-hook-form";
 import {UtilsAxios} from "../../../utils/utilsAxios";
 
 type FormGenre = {
     genre: string;
 };
-
+/**
+ * Panel for creation of a
+ * @constructor
+ */
 export const GenreCreatePanel = () => {
 
     const {register, handleSubmit, errors} = useForm<FormGenre>();
@@ -26,7 +29,7 @@ export const GenreCreatePanel = () => {
         <div>
             <form onSubmit={onSubmit}>
                 <Grid container direction={"column"} >
-                    <Typography variant={'h4'} style={{padding: '1.3em'}}>
+                    <Typography variant={'h5'}  style={{padding: '1.3em'}}>
                         Genre Creation
                     </Typography>
                         <TextField name={'genre'} style={{width: '50%', margin: "auto", marginBottom:'1em'}} label="New genre"

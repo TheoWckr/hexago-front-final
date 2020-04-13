@@ -1,5 +1,5 @@
 import {AxiosPromise} from "axios";
-import {MAIN_ADRESS, axios, UtilsAxios} from "../utils/utilsAxios";
+import {MAIN_ADRESS, axios} from "../utils/utilsAxios";
 import {GenreModel} from "../models/genreModel";
 
 const routeName = MAIN_ADRESS+'genre/';

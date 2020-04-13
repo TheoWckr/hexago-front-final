@@ -27,7 +27,7 @@ const GenresSelector = (props : GenreProps) => {
     };
 
         return (<div>
-            <Typography>
+            <Typography variant={'h5'}  style={{padding: '1.3em'}}>
                 Genre Selected
             </Typography>
             <GenreList genres={props.genres} ClickHandler={funRemove}/>

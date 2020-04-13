@@ -47,7 +47,7 @@ useEffect(() => {
         <div>
             <form onSubmit={onSubmit}>
                 <Grid container direction={"column"}>
-                    <Typography variant={'h4'} style={{padding: '1.3em'}}>
+                    <Typography variant={'h5'}  style={{padding: '1.3em'}}>
                         Genre Edition
                     </Typography>
                     <Grid container direction={"row"}>
@@ -77,7 +77,7 @@ useEffect(() => {
                 </Grid>
             </form>
         </div>
-    )
+    );
 
     else if(props.genreState._id.length !== 0 && deleted) return (
        <Typography variant={'h4'} style={{padding: '1.3em'}}>
