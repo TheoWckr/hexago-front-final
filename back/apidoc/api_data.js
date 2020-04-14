@@ -304,6 +304,72 @@ define({ "api": [
     "groupTitle": "Users"
   },
   {
+    "type": "DELETE",
+    "url": "/gamedetails/_id",
+    "title": "delete a game by it id",
+    "name": "DELETE_gamedetails",
+    "group": "gamedetails",
+    "description": "<p>Delete a game by it id</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "ObjectID",
+            "optional": false,
+            "field": "_id",
+            "description": "<p>Unique ID of a game</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n    \"_id\": \"5e8afc246e335f2230b4f3e2\",\n    \"msg\": \"Game deleted successfully.\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/gameDetails.js",
+    "groupTitle": "gamedetails"
+  },
+  {
+    "type": "get",
+    "url": "/gamedetails/_id",
+    "title": "get a game by it id",
+    "name": "GET_gamedetails",
+    "group": "gamedetails",
+    "description": "<p>Get a game by it id</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "ObjectID",
+            "optional": false,
+            "field": "_id",
+            "description": "<p>Unique ID of a game</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n    \"content\": {\n        \"author\": [\n            \"Bruno Cathala, Antoine Bauza\"\n        ],\n        \"genres\": [\n            {\n                \"_id\": \"5e6f7901a0d93148f48fd5ce\",\n                \"genre\": \"proutprout\",\n                \"createdAt\": \"2020-03-16T13:02:57.605Z\",\n                \"updatedAt\": \"2020-03-16T13:02:57.605Z\",\n                \"__v\": 0\n            }\n        ],\n        \"_id\": \"5e8afc246e335f2230b4f3e2\",\n        \"name\": \"7 Wonders Duelle 25\",\n        \"editor\": \"Repos Production\",\n        \"distributor\": \"Repos Production\",\n        \"releaseDate\": \"2015-10-01T07:22:00.000Z\",\n        \"popularity\": 9,\n        \"playerMin\": 2,\n        \"playerMax\": 2,\n        \"gameLengthMin\": 30,\n        \"gameLengthMax\": 60,\n        \"minAge\": 10,\n        \"description\": \"Triomphez de votre adversaire en développant et améliorant votre civilisation sur les plans civil, scientifique et militaire. 7 Wonders Duel est l'adaptation 2 joueurs de 7 Wonders.>\",\n        \"__v\": 0\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/gameDetails.js",
+    "groupTitle": "gamedetails"
+  },
+  {
     "type": "get",
     "url": "/gamedetails?name=xxx&author=xxx&editor=xxx&distributor=xxx&releaseDate=xxx&popularity=xxx&nbPlayer=xxx&gameLengthDesired=xxx&minAge=xxx&whatToSortBy=xxx&sortValue=xxx&limit=xxx&offset=xxx",
     "title": "Request game information",
@@ -543,6 +609,137 @@ define({ "api": [
         {
           "title": "Success-Response:",
           "content": "{\n    \"gameDetails\": {\n        \"author\": [\n            \"Bruno Cathala, Antoine Bauza\"\n        ],\n        \"genres\": [\n            \"5e6f7901a0d93148f48fd5ce\"\n        ],\n        \"_id\": \"5e8afc246e335f2230b4f3e2\",\n        \"name\": \"7 Wonders Duelle 25\",\n        \"editor\": \"Repos Production\",\n        \"distributor\": \"Repos Production\",\n        \"releaseDate\": \"2015-10-01T07:22:00.000Z\",\n        \"popularity\": 9,\n        \"playerMin\": 2,\n        \"playerMax\": 2,\n        \"gameLengthMin\": 30,\n        \"gameLengthMax\": 60,\n        \"minAge\": 10,\n        \"description\": \"Triomphez de votre adversaire en développant et améliorant votre civilisation sur les plans civil, scientifique et militaire. 7 Wonders Duel est l'adaptation 2 joueurs de 7 Wonders.>\",\n        \"__v\": 0\n    },\n    \"msg\": \"Game created successfully.\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/gameDetails.js",
+    "groupTitle": "gamedetails"
+  },
+  {
+    "type": "put",
+    "url": "/gamedetails/_id",
+    "title": "Modify a game",
+    "name": "PUT_gamedetails",
+    "group": "gamedetails",
+    "description": "<p>Modify a game</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "ObjectID",
+            "optional": false,
+            "field": "_id",
+            "description": "<p>Unique ID of a game, make reference to id via the request param, NOT PART OF THE REQUEST BODY</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "name",
+            "description": "<p>Name of a game, REQUIRED</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Array",
+            "optional": false,
+            "field": "author",
+            "description": "<p>Name of the author of a game</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "editor",
+            "description": "<p>Name of the editor of a game</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "distributor",
+            "description": "<p>Name of the distributor of a game</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Date",
+            "optional": false,
+            "field": "releaseDate",
+            "description": "<p>Date of the release of a game</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "popularity",
+            "description": "<p>Popularity score of a game</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "playerMin",
+            "description": "<p>Minimum number of player required to start a game, REQUIRED</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "playerMax",
+            "description": "<p>Maximum number of player required to start a game, REQUIRED</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "gameLengthMin",
+            "description": "<p>Minimum time value in minutes that would take a game</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "gameLengthMax",
+            "description": "<p>Maximum time value in minutes that would take a game</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "minAge",
+            "description": "<p>Minimum age advised to play the game</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "description",
+            "description": "<p>Description of a game</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Array",
+            "optional": false,
+            "field": "genres",
+            "description": "<p>Genre ID(s) of a game, REQUIRED</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n\t\t\"name\": \"7 Wonders Duelle 55\",\n\t\t\"author\": \"Bruno Cathastrophe, Antoine Bozar\",\n\t\t\"editor\": \"En marche Production\",\n\t\t\"distributor\": \"Garde à vous Production\",\n\t\t\"releaseDate\": \"2015-10-01T07:22Z\",\n\t\t\"popularity\": 9,\n\t\t\"playerMin\": 2,\n\t\t\"playerMax\": 2,\n\t\t\"gameLengthMin\": 30,\n\t\t\"gameLengthMax\": 60,\n\t\t\"minAge\": 10,\n\t\t\"genres\":[\"5e6f7901a0d93148f48fd5ce\"],\n\t\t\"description\":\"Triomphez de votre adversaire en développant et améliorant votre civilisation sur les plans civil, scientifique et militaire. 7 Wonders Duel est l'adaptation 2 joueurs de 7 Wonders.>\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n    \"gameDetails\": {\n        \"n\": 1,\n        \"nModified\": 0,\n        \"ok\": 1\n    },\n    \"msg\": \"Game updated successfully.\"\n}",
           "type": "json"
         }
       ]
