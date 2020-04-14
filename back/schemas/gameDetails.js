@@ -51,6 +51,9 @@ let GameDetailsSchema = new Schema({
     // sort handling
     whatToSortBy:String,
     sortValue:Number,
+    baseGameId:{
+        type: Schema.Types.ObjectID, ref:'GameDetails'
+    }
 });
 
 GameDetailsSchema.index({name: 'text', author: 'text', editor: 'text', distributor: 'text'});

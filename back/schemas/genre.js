@@ -6,8 +6,8 @@ let validator = require('validator');
 let genresSchema = new Schema({
     genre: {
         type: String,
-        required: true,
-        match: /^[a-zA-Z0-9-_]+$/ }
+        required: true
+    }
 }, {
     collection: 'genres',
     categories: Array,

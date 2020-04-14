@@ -29,4 +29,4 @@ let EventSchema = new Schema({
 });
 EventSchema.index({title: 'text', content: 'text', "content:encoded": 'text'});
 
-module.exports = EventSchema
+module.exports = EventSchema;

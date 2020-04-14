@@ -30,4 +30,4 @@ let locationsSchema = new Schema({
 });
 locationsSchema.index({title: 'text', content: 'text', "content:encoded": 'text'});
 
-module.exports = locationsSchema
+module.exports = locationsSchema;

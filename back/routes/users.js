@@ -1,8 +1,8 @@
-let async = require('async/waterfall')
+let async = require('async/waterfall');
 
-let express = require('express')
-let router = express.Router()
-let Users = require('../models/users')
+let express = require('express');
+let router = express.Router();
+let Users = require('../models/users');
 
 // let axios = require('axios')
 // axios.defaults.baseURL = `${process.env.AUTH0_AUDIENCE}`
@@ -27,14 +27,14 @@ function handleError(err) {
 //get all user
 router.get('/', (req, res, next) => {
   Users.find({}, function (err, content) {
-    console.log(content)
+    console.log(content);
     if (err) res.json({
       err: err
-    })
+    });
     else res.json({content})
   })
 
-})
+});
 
 //post create a user
 /**
@@ -82,7 +82,7 @@ router.get('/', (req, res, next) => {
  */
 router.post('/create', (req, res, next) => {
   Users.create(req.body, (err, content) => {
-    if (err) res.json({err: err})
+    if (err) res.json({err: err});
     else {
       if (content) {
         res.json({content: content, msg: 'User created successfully.'})
@@ -91,19 +91,19 @@ router.post('/create', (req, res, next) => {
       }
     }
   })
-  })
+  });
 
 //get a user
 router.get('/:id', function (req, res, next) {
   if (!req.params.id) res.json({
     err: 'Please provide an id param.'
-  })
+  });
   else {
     Users.findById(
         req.params.id, (err, content) => {
           if (err) res.json({
             err: err
-          })
+          });
           else {
             if (content) {
               res.json({
@@ -117,22 +117,22 @@ router.get('/:id', function (req, res, next) {
           }
         })
   }
-})
+});
 
 //delete a user
 router.delete('/:id', (req, res, next) => {
   if (!req.params.id) res.json({
     err: 'Please provide an id param.'
-  })
+  });
   else if (req.params.id.length !== 24)
     res.json({
       err: 'Please provide a valid id param.'
-    })
+    });
   else
     Users.findByIdAndDelete(req.params.id, (err, content) => {
       if (err) res.json({
         err: err
-      })
+      });
       else
       if (content) {
         res.json({
@@ -145,6 +145,6 @@ router.delete('/:id', (req, res, next) => {
         })
       }
     })
-})
+});
 
 module.exports = router;

@@ -1,8 +1,8 @@
-let async = require('async/waterfall')
+let async = require('async/waterfall');
 
-let express = require('express')
-let router = express.Router()
-let genres = require('../models/genre')
+let express = require('express');
+let router = express.Router();
+let genres = require('../models/genre');
 
 // let axios = require('axios')
 // axios.defaults.baseURL = `${process.env.AUTH0_AUDIENCE}`
@@ -28,7 +28,7 @@ function handleError(err) {
    * @api {get} /genre/genre=bombede&limit=3 Get genres
    * @apiName Get genre by string or get all if empty
    * @apiGroup Genres
-   * 
+   *
    * @apiParam {string} genre searchname
    * @apiParam {string} limit maxlimit
    *
@@ -102,14 +102,14 @@ function handleError(err) {
       // })
       // else res.json({content})
     })
-  })
-  
+  });
+
   //post create a genre
   /**
    * @api {post} /genre/create Create a genre
    * @apiName Create a genre
    * @apiGroup Genres
-   * 
+   *
    * @apiParam {string} genre name
    *
    * @apiExample {curl} Example usage:
@@ -125,7 +125,7 @@ function handleError(err) {
    */
   router.post('/create', (req, res, next) => {
     genres.create(req.body, (err, content) => {
-      if (err) res.json({err: err})
+      if (err) res.json({err: err});
       else {
         if (content) {
           res.json({content: content, msg: 'genre created successfully.'})
@@ -134,13 +134,13 @@ function handleError(err) {
         }
       }
     })
-    })
+    });
 
   /**
    * @api {put} /genre/:id Update a genre
    * @apiName Update a genre
    * @apiGroup Genres
-   * 
+   *
    * @apiParam {string} id id
    * @apiParam {string} genre name
    *
@@ -160,7 +160,7 @@ function handleError(err) {
   */
   router.put('/:id', (req, res, next) => {
       genres.update(req.body, (err, content) => {
-        if (err) res.json({err: err})
+        if (err) res.json({err: err});
         else {
           if (content) {
             res.json({content: content, msg: 'genre updated successfully.'})
@@ -169,14 +169,14 @@ function handleError(err) {
           }
         }
       })
-  })
-  
+  });
+
   //get a genre
   /**
    * @api {get} /genre/5e79d8996b247d4d872c67f8 Get a genre
    * @apiName Get a genre
    * @apiGroup Genres
-   * 
+   *
    * @apiParam {string} id id
    *
    * @apiSuccessExample {json} Success-Response:
@@ -193,13 +193,13 @@ function handleError(err) {
   router.get('/:id', function (req, res, next) {
     if (!req.params.id) res.json({
       err: 'Please provide an id param.'
-    })
+    });
     else {
       genres.findById(
           req.params.id, (err, content) => {
             if (err) res.json({
               err: err
-            })
+            });
             else {
               if (content) {
                 res.json({
@@ -213,14 +213,14 @@ function handleError(err) {
             }
           })
     }
-  })
-  
+  });
+
   //delete a genre
   /**
    * @api {delete} /genre/:id Delete a genre
    * @apiName Delete a genre
    * @apiGroup Genres
-   * 
+   *
    * @apiParam {string} id id
    *
    * @apiSuccessExample {json} Success-Response:
@@ -231,16 +231,16 @@ function handleError(err) {
   router.delete('/:id', (req, res, next) => {
     if (!req.params.id) res.json({
       err: 'Please provide an id param.'
-    })
+    });
     else if (req.params.id.length !== 24)
       res.json({
         err: 'Please provide a valid id param.'
-      })
+      });
     else
       genres.findByIdAndDelete(req.params.id, (err, content) => {
         if (err) res.json({
           err: err
-        })
+        });
         else
         if (content) {
           res.json({
@@ -253,6 +253,6 @@ function handleError(err) {
           })
         }
       })
-  })
-  
+  });
+
   module.exports = router;

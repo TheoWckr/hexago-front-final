@@ -37,7 +37,7 @@ function logHandleError(err) {
  * @apiParam {String} editor Name of the editor of a game
  * @apiParam {String} distributor Name of the distributor of a game
  * @apiParam {Date} releaseDate Date of the release of a game
- * @apiParam {String} popularity Popularity score of a game
+ * @apiParam {Number} popularity Popularity score of a game
  * @apiParam {String} nbPlayer Number of player desired which will compare playerMin and playerMax values
  * @apiParam {String} gameLengthDesired Time value in minutes which will compare gameLengthMin and gameLengthMax values
  * @apiParam {String} minAge Minimum age advised to play the game
@@ -45,6 +45,8 @@ function logHandleError(err) {
  * @apiParam {Number} sortValue 1 for ascending sort or -1 for descending sort
  * @apiParam {Number} limit Required for pagination, set the number of entries per page
  * @apiParam {Number} offset Required for pagination, select the page desired (first one is 0)
+ * @apiParam {String} genres Array of genres of a game separated by a comma
+ * @apiParam {ObjectId} baseGameId Base game id if the game is an extension
  *
  * @apiExample {curl} Example usage:
  *     curl -i http://localhost:3100/gamedetails?limit=2&offset=1&whatToSortBy=popularity&sortValue=-1
@@ -136,13 +138,20 @@ router.get('/', (req, res, next) => {
     if (req.query.minAge) {
         data['minAge'] = { '$gte': req.query.minAge};
     }
+    // search by genre
+    if (req.query.genres){
+        data['genres']= { '$all': req.query.genres.split(",")}
+    }
+    // get only extension
+    if (req.query.baseGameId){
+        data['baseGameId']= req.query.baseGameId;
+    }
     // sort handling
     if (req.query.whatToSortBy && !req.query.sortValue || !req.query.whatToSortBy && req.query.sortValue){
         res.send({error: 'If you want to sort the results, you must provide what to sort(whatToSortBy) AND how to sort it(sortValue)'})
     }
     else if (req.query.whatToSortBy && req.query.sortValue){
         whatToSort[req.query.whatToSortBy] = req.query.sortValue;
-        console.log(whatToSort)
     }
 
     console.log(data);
@@ -157,6 +166,8 @@ router.get('/', (req, res, next) => {
         offset = parseInt(req.query.offset);
         query = query.skip(offset*limit)
     }
+
+    //execute query
     query.exec((err, content) => {
         if (err) res.json({err: err});
         else {
@@ -188,6 +199,7 @@ router.get('/', (req, res, next) => {
  * @apiParam {String} minAge Minimum age advised to play the game
  * @apiParam {String} description Description of a game
  * @apiParam {Array} genres Genre ID(s) of a game, REQUIRED
+ * @apiParam {ObjectId} baseGameId the Id of the base game(s) if the game to be created is an extension
  *
  * @apiParamExample {json} Request-Example:
  *{
@@ -251,9 +263,8 @@ router.post('/create', async(req, res, next) => {
             res.json({error : 'Game already exists by this name :' + req.body.name});
             return
         }
-
+        // check if genre exists
         if (req.body.genres.length !== 0) {
-
             const genrePromise = await req.body.genres.map(async (genre) =>
                 Genre.findOne({_id: genre}, async function (err, result) {
                     if (!result) {
@@ -283,10 +294,13 @@ router.post('/create', async(req, res, next) => {
         }
 });
 
+// TODO get a game, quick search .select() or projection
+
+
 //get a game by it id
 /**
  * @api {get} /gamedetails/_id get a game by it id
- * @apiName GET gamedetails
+ * @apiName GET gamedetails by id
  * @apiGroup gamedetails
  * @apiDescription Get a game by it id
  *
