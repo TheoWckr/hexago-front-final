@@ -1,38 +1,38 @@
 import React from 'react';
-import logo from './logo.svg';
-import Box from '@material-ui/core/Box';
 import './App.css';
-import Header from "./commons/headers/Header";
+import Header from "./components/commons/headers/Header";
 
-import GameCreate from "./game/create/gameCreate";
-import GameDisplay from "./game/display/gameDisplay";
-import GameList from "./game/list/gameList";
+import GameList from "./components/game/list/gameList";
 
 import {
     BrowserRouter as Router,
     Switch,
-    Route,
-    Link
+    Route
 } from 'react-router-dom';
-
+import GameDisplayPage from "./components/game/display/gameDisplayPage";
+import GameCreatePage from "./components/game/create/gameCreatePage";
+import {GenreCRUDPage} from "./components/genre/page/genreCRUDPage";
 
 const App = () => {
   return (
       <Router >
         <Header />
           <Switch>
-              <Route exact path="/gamecreate">
-                  <GameCreate />
+              <Route exact path="/gamecreate/:id?">
+                  <GameCreatePage />
               </Route>
-              <Route path="/gamedisplay">
-                  <GameDisplay />
+              <Route path="/gamedisplay/:id">
+                  <GameDisplayPage />
               </Route>
               <Route path="/gamelist">
                   <GameList />
               </Route>
+              <Route path="/">
+                  <GenreCRUDPage />
+              </Route>
           </Switch>
       </Router>
   );
-}
+};
 
 export default App;
