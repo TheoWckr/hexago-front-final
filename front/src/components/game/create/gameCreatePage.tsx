@@ -1,4 +1,4 @@
-import React, {FormEvent, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import SwipeableViews from 'react-swipeable-views';
 import {makeStyles, Theme, useTheme} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -14,18 +14,13 @@ import {GameService} from "../../../services/gameService";
 import {UtilsAxios} from "../../../utils/utilsAxios";
 import {useParams} from "react-router";
 import {FormContext, useForm} from "react-hook-form";
-import {Button, Grid} from "@material-ui/core";
+import {Button, Grid, List, ListItem, ListItemText, Paper} from "@material-ui/core";
 
 interface TabPanelProps {
     children?: React.ReactNode;
     dir?: string;
     index: any;
     value: any;
-}
-
-export interface PanelProps {
-    game: GameModel,
-
 }
 
 function TabPanel(props: TabPanelProps) {
@@ -78,13 +73,16 @@ export default function FullWidthTabs() {
     const [valueTabs, setValueTabs] = React.useState(0);
     const [errorMessages, setErrorMessage] = React.useState([] as string[]);
     const [gameState, setGameState] = React.useState(new GameModel({}));
+    const [gameStatut, setGameStatut] = React.useState('');
+
+
     let {id} = useParams();
     const methods = useForm<GameModel>();
 
     /**
      * Return true if the validation is completed or send errorMessage if not
      */
-    const validation = () :boolean => {
+    const validation = ():boolean => {
         const errorList = new Array<string>();
         if (gameState.name.trim().length === 0){
             errorList.push('name')
@@ -109,25 +107,59 @@ export default function FullWidthTabs() {
                     console.log('error' , response);
                 else
                     console.log('Create', response);
+                    setGameStatut('Game successfully created');
             });
         }
     };
 
     const onUpdate = () => {
         if(validation()){
+            GameService.updateGame(gameState).then((response: any) => {
+                    console.log('On Update ', response );
+                    setGameStatut('Game successfully updated');
 
+                }
+            )
         }
     };
+
     const onDelete = () => {
-
+        if(gameState._id) {
+            GameService.deleteGame(gameState._id).then((response) => {
+                console.log(response);
+                setGameState(new GameModel());
+                setGameStatut('Game successfully deleted');
+            })
+        }
     };
 
 
-    const onSubmit = (data: any) => {
-        validation();
-        console.log('data', data);
-        //setErrorMessage(['Test', 'Bonjour']);
-    };
+    const errorDisplay = (
+        <Paper>
+        <List>
+            {errorMessages.includes('name') &&
+            <ListItem>
+                <ListItemText>Name is mandatory</ListItemText>
+            </ListItem>
+            }
+            {errorMessages.includes('description') &&
+            <ListItem>
+                <ListItemText>Description is mandatory</ListItemText>
+            </ListItem>
+            }
+            {errorMessages.includes('genres') &&
+            <ListItem>
+                <ListItemText>The game need at least one genre</ListItemText>
+            </ListItem>
+            }
+    </List>
+
+    </Paper>);
+    const displayGameStatut = (
+        <Paper >
+            <Typography variant={"h6"} style={{padding: '2em'}}> {gameStatut} </Typography>
+        </Paper>);
+
 
     const changeGameState = (properties: string, value: any) => {
         setGameState((prevState => {
@@ -164,13 +196,15 @@ export default function FullWidthTabs() {
             <Grid container style={{padding : '1em'}}>
                 {gameState && gameState._id?.length === 0 && <Button variant="outlined" name='create' onClick={onCreate} color="primary" style={{width: '300px', margin: 'auto'}}
             >Create</Button> }
-                {gameState && gameState._id?.length !== 0 &&  <Button variant="outlined" name='update' color="primary" style={{width: '300px', margin: 'auto'}}
+                {gameState && gameState._id?.length !== 0 &&  <Button variant="outlined"  onClick={onUpdate} name='update' color="primary" style={{width: '300px', margin: 'auto'}}
             >Update
             </Button> }
-                {gameState && gameState._id?.length !== 0 &&  <Button variant="outlined" name='delete' color="default" style={{width: '300px', margin: 'auto'}}
+                {gameState && gameState._id?.length !== 0 &&  <Button variant="outlined"  onClick={onDelete} name='delete' color="default" style={{width: '300px', margin: 'auto'}}
             >Delete
             </Button> }
             </Grid>
+            {errorMessages.length !== 0 && errorDisplay}
+            { gameStatut.length !== 0 && displayGameStatut}
                 <AppBar position="static" color="default">
                 <Tabs
                     value={valueTabs}
@@ -188,8 +222,6 @@ export default function FullWidthTabs() {
                 </Tabs>
             </AppBar>
                 <FormContext {...methods} >
-                    {methods.errors.name && <div>'First name is required'</div>}
-
                     <SwipeableViews
                         axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
                         index={valueTabs}
@@ -207,8 +239,6 @@ export default function FullWidthTabs() {
                         </TabPanel>
                     </SwipeableViews>
                 </FormContext>
-
-
         </div>
     );
 }

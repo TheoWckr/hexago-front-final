@@ -25,6 +25,11 @@ export const GameService = {
 
     deleteGame(id: string) : AxiosPromise {
         return axios.delete(routeName+id);
+    },
+    updateGame(gameToEdit :GameModel) : AxiosPromise{
+        const gameID = gameToEdit._id;
+        gameToEdit._id = undefined;
+        return axios.put(routeName+gameID, gameToEdit);
     }
 };
 
