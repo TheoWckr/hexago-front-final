@@ -96,11 +96,6 @@ function handleError(err) {
           if (content) res.json({ content: content});
           else res.send({ content: []})
     }
-    //})
-      // if (err) res.json({
-      //   err: err
-      // })
-      // else res.json({content})
     })
   })
   
