@@ -1,5 +1,4 @@
 import React from 'react';
-import {Box, Paper} from "@material-ui/core";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Button from "@material-ui/core/Button";
 import {Link} from "react-router-dom";
@@ -25,7 +24,7 @@ const HeaderMenu = () => {
 
 
     );
-}
+};
 
 export default HeaderMenu;
 

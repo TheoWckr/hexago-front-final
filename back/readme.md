@@ -16,3 +16,8 @@ npm install apidoc -g
 
 to run api doc and generate documentation on every files:
 apidoc -i routes/ -o apidoc/
+
+#Jest
+
+to run tests, run:
+npm run tests
