@@ -1,5 +1,5 @@
 import {Chip, Grid} from "@material-ui/core";
-import React from "react";
+import React, {useEffect} from "react";
 import {GenreModel} from "../../../models/genreModel";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 
@@ -24,34 +24,55 @@ const GenreList = (props: {
             props.ClickHandler(event);
 
         console.log('genreList', props.genres);
-    }
-
-    const genreListing = props.genres;
-    let genreList =genreListing.map((genre, index) => {
+    };
+    let genreList = props.genres.map((genre, index) => {
             if (index < 12)
                 return <Chip
                     className={classes.chip}
-                    key={index}
+                    id={genre.genre}
+                    key={genre.genre}
                     label={genre.genre}
                     clickable
                     onClick={() => clickFun(genre)}
                     color="primary"
                 />
-
         }
     );
-    if (props.genres && props.genres.length > 0) {
-        return (
-            <Grid container className={classes.container}>
+    useEffect(() => {
+        genreList = props.genres.map((genre, index) => {
+                if (index < 12)
+                    return <Chip
+                        className={classes.chip}
+                        id={genre.genre}
+                        key={genre.genre}
+                        label={genre.genre}
+                        clickable
+                        onClick={() => clickFun(genre)}
+                        color="primary"
+                    />
+
+            }
+        )}, [props.genres]
+
+    );
+
+    return(
+        <>
+    {props.genres && props.genres.length > 0 &&
+         (
+            <Grid container className={classes.container} id={'genre-list-grid-container'}>
                 {genreList}
             </Grid>
-        )
-    } else
-        return(
-        <Chip
+        )}
+
+{(!props.genres || props.genres.length ===0) &&
+(<Chip
+            id={'genre-list-chip-no-container'}
         className={classes.chip}
         label="No genres found"
         color="secondary" />
+        )}
+            </>
     ) ;
 };
 export default GenreList;

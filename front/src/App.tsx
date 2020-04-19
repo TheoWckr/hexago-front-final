@@ -18,16 +18,16 @@ const App = () => {
       <Router >
         <Header />
           <Switch>
-              <Route exact path="/gamecreate/:id?">
+              <Route exact path="/GameCreate/:id?">
                   <GameCreatePage />
               </Route>
-              <Route path="/gamedisplay/:id">
+              <Route path="/GameDisplay/:id">
                   <GameDisplayPage />
               </Route>
-              <Route path="/gamelist">
+              <Route path="/GameSearch/">
                   <GameList />
               </Route>
-              <Route path="/">
+              <Route path="/GenreManagement/">
                   <GenreCRUDPage />
               </Route>
           </Switch>

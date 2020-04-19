@@ -2,7 +2,7 @@ import * as React from "react";
 import Pagination from '@material-ui/lab/Pagination';
 import ListCard from "./listCard";
 import {GameModel} from "../../../models/gameModel";
-import gameService from "../../../services/gameService";
+import GameService from "../../../services/gameService";
 import {AxiosResponse} from "axios";
 
 type PageState = {
@@ -13,7 +13,7 @@ type PageState = {
 
 export default class ListPagination extends React.Component<{}, PageState> {
     getGamesByPage(page: number) {
-        gameService.getGamesPage(page).then((result: AxiosResponse) => {
+        GameService.getGamesPage(page).then((result: AxiosResponse) => {
             let stock: GameModel[] = [];
 
             result.data.content.forEach((game: {}) => {
@@ -23,11 +23,11 @@ export default class ListPagination extends React.Component<{}, PageState> {
             this.setState({
                 detail: stock
             });
-        });
+        }).catch((message: any) => console.log( 'error' , message));
     }
 
     countPage() {
-        gameService.getAllGames().then((result: AxiosResponse) => {
+        GameService.getAllGames().then((result: AxiosResponse) => {
             let calc = result.data.content.length / 12 < 1 ? 1 : Math.ceil(result.data.content.length / 12);
 
             this.setState({

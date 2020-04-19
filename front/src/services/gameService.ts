@@ -19,8 +19,17 @@ export const GameService = {
         return axios.get(routeName+'/'+id);
     },
 
-    getGamesPage(page: number) {
-        return axios.get(routeName+'?limit=12&offset='+ page +'&whatToSortBy=popularity&sortValue=-1');
+    getGamesPage(page: number, sortBy?: string, sortOrder?: string, popularity?: number ) {
+        let sortValue = '-1';
+        let whatToSortBy = 'popularity';
+        if (sortOrder && sortOrder){
+            sortValue = sortOrder;
+        }
+        if(sortBy){
+            sortValue = sortBy;
+        }
+
+        return axios.get(routeName+'?limit=12&offset='+ page +'&whatToSortBy='+ whatToSortBy +'&sortValue='+sortValue);
     },
 
     deleteGame(id: string) : AxiosPromise {

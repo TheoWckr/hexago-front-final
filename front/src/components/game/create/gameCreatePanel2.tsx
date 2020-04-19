@@ -5,6 +5,7 @@ import {GameEditProps} from "../../../models/propsDeclaration";
 import {marksGameAgeMin, marksGameDuration} from "../../../models/gameModel";
 import {useStylesPanelCreatePage} from "./gameCreatePage";
 import GenresSelector from "../../genre/shared/GenresSelector";
+import {GenreModel} from "../../../models/genreModel";
 
 
 
@@ -58,6 +59,9 @@ export const GameCreatePanel2 = (props:GameEditProps ) => {
             props.changeGameState('playerMax',undefined);
         }
         setCheckedNumPlayer(prev => !prev);
+    };
+    const setGenres  = (genres : GenreModel []) => {
+        props.changeGameState('genres', genres);
     };
 
 
@@ -118,7 +122,7 @@ export const GameCreatePanel2 = (props:GameEditProps ) => {
                 min={1}
                 max={16}
             />
-            <GenresSelector changeGenreState={props.changeGameState} genres={props.game.genres}/>
+            <GenresSelector changeGenreState={setGenres} genres={props.game.genres}/>
         </Grid>
 
 

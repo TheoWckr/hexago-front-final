@@ -97,7 +97,7 @@ export default function FullWidthTabs() {
         console.log('Error List', errorList);
 
         setErrorMessage(errorList);
-        return errorList.length == 0;
+        return errorList.length === 0;
     };
 
     const onCreate = () => {
@@ -178,7 +178,7 @@ export default function FullWidthTabs() {
                 }
             )
         }
-    }, []);
+    }, [id]);
 
     //Handle changes
     const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {

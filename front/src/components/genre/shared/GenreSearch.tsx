@@ -9,13 +9,14 @@ import {AxiosResponse} from "axios";
 
 /**
  *  Selection system for searching genre and applying th clickHandler function in it
- *  genres a list of genres that does not appear in the display
+ *  genresHidden a list of genres that does not appear in the display
  *  clickHandler
  * @constructor
  */
 const GenreSearch = (props : {
-    genres: GenreModel[],
-    clickHandler?: ((genre: GenreModel) => void) }
+    genresHidden: GenreModel[],
+    clickHandler?: ((genre: GenreModel) => void),
+     inline? : boolean}
     ) => {
     const  [genresInput,setGenresInput] = useState('');
     const  [genresSearched, setGenresSearched] = useState([] as GenreModel[]);
@@ -31,12 +32,12 @@ const GenreSearch = (props : {
 
 
     return (<div>
-        <Typography variant={'h5'}  style={{padding: '1.3em'}}>
+        <Typography variant={props.inline ? 'body1' : 'h5' }  style={props.inline ? {} :  {padding: '1.3em'}}>
             Genre Search
         </Typography>
         <Input placeholder="Quick Search" style={{width : '40%', margin: 'auto'}} onChange={(event)=> setGenresInput(event.target.value)} inputProps={{'aria-label': 'description'}}/>
         <Divider  light={true} style={ { width : '40%', marginBottom: '1.5em'}} />
-        <GenreList genres={genresSearched.filter((genre) => props.genres.filter((genreProps) => genre._id === genreProps._id).length === 0)} ClickHandler={props.clickHandler}/>
+        <GenreList genres={genresSearched.filter((genre) => props.genresHidden.filter((genreProps) => genre._id === genreProps._id).length === 0)} ClickHandler={props.clickHandler}/>
     </div>);
 };
 
