@@ -33,7 +33,7 @@ test('Create a genre return 200', () => {
     }).on('error', function(e) {
         console.error(e);
     });
-    post_req.end({genre: "bobobo"});
+    post_req.end({genre: "bobobotestv2"});
 });
 
 test('Update a genre return 200', () => {
@@ -44,11 +44,11 @@ test('Update a genre return 200', () => {
     }).on('error', function(e) {
         console.error(e);
     });
-    post_req.end({genre: "bobobo"});
+    post_req.end({genre: "bobobotestv22"});
 });
 
 test('Delete a genre return 200', () => {
-    http.get('http://localhost:3100/genre/2', { method: 'DELETE' }, function(res) {
+    http.get('http://localhost:3100/genre/5e95ce2f77682228ef0c2240', { method: 'DELETE' }, function(res) {
         expect(res.statusCode).toBe(200);
     }).on('error', function(e) {
         console.error(e);

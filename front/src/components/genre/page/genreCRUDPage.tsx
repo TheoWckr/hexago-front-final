@@ -21,7 +21,7 @@ export const GenreCRUDPage = () => {
                     <GenreCreatePanel/>
                 </Grid>
                 <Grid item xs={12} sm={4}>
-                    <GenreSearch genres={genresList} clickHandler={(genre: GenreModel) => {
+                    <GenreSearch genresHidden={genresList} clickHandler={(genre: GenreModel) => {
                         setGenreToEdit(genre)
                     }}/>
                 </Grid>

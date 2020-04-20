@@ -91,16 +91,19 @@ function handleError(err) {
         query = query.skip(offset);
     }
     query.exec((err, content) => {
-      if (err) res.json({err: err});
+      if (err) {
+        res.status(400).send({err: err});
+        res.end();
+      }
       else {
-          if (content) res.json({ content: content});
-          else res.send({ content: []})
-    }
-    //})
-      // if (err) res.json({
-      //   err: err
-      // })
-      // else res.json({content})
+        if (content) {
+          res.status(200).json({ content: content});
+        }
+        else {
+          res.status(204).send({ content: []})
+        }
+        res.end()
+      }
     })
   });
 
@@ -123,18 +126,39 @@ function handleError(err) {
       "msg": "genre created successfully."
   }
    */
-  router.post('/create', (req, res, next) => {
+  router.post('/create', async(req, res, next) => {
+    //Check if genre already exist
+    const errorCheck = [];
+    if (req.body.genre.length === 0) {
+      res.status(400).send({error : 'Genre is required ! It can\'t be an empty string...' + req.body.genre});
+      res.end()
+    }
+    const GenreAlreadyExists = await genres.findOne({'genre': req.body.genre}, function (error, genreExists) {
+        // error handling
+        if (genreExists) {
+          errorCheck.push(req.body.genre)
+        }
+    });
+
     genres.create(req.body, (err, content) => {
-      if (err) res.json({err: err});
+      if (err) {
+        res.status(400).send({err: err})
+        res.end()
+      }
+      else if (errorCheck.length !== 0) {
+        res.status(403).send({error : 'Genre already exists by this Genre Name: ' + req.body.genre});
+        res.end()
+      }
       else {
         if (content) {
-          res.json({content: content, msg: 'genre created successfully.'})
+          res.status(200).send({content: content, msg: 'genre created successfully.'})
         } else {
-          res.json({err: 'Unable to create this genre.'})
+          res.status(200).send({err: 'Unable to create this genre.'})
         }
+        res.end()
       }
     })
-    });
+  })
 
   /**
    * @api {put} /genre/:id Update a genre
@@ -158,18 +182,42 @@ function handleError(err) {
       "msg": "genre updated successfully."
   }
   */
-  router.put('/:id', (req, res, next) => {
-      genres.update(req.body, (err, content) => {
-        if (err) res.json({err: err});
-        else {
-          if (content) {
-            res.json({content: content, msg: 'genre updated successfully.'})
-          } else {
-            res.json({err: 'Unable to create this genre.'})
-          }
+  router.put('/:id', async(req, res, next) => {
+    if (!req.params.id) {
+      res.status(400).send({err: 'Please provide an id param.'})
+      res.end()
+    }
+    else if (req.params.id.length !== 24) {
+      res.status(422).send({err: 'Please provide a valid id param.'})
+      res.end()
+    }
+    const errorCheck = [];
+    const GenreAlreadyExists = await genres.findOne({'genre': req.body.genre}, function (error, genreExists) {
+      // error handling
+      if (genreExists) {
+        errorCheck.push(req.body.genre)
+      }
+    });
+
+    genres.updateOne(req.body, (err, content) => {
+      if (err) {
+        res.status(400).send({err: err})
+        res.end()
+      }
+      else if (errorCheck.length !== 0) {
+        res.status(403).send({error : 'Genre already exists by this Genre Name :' + req.body.genre});
+        res.end()
+      }
+      else {
+        if (content) {
+          res.status(200).send({content: content, msg: 'genre updated successfully.'})
+        } else {
+          res.status(400).send({err: 'Unable to create this genre.'})
         }
-      })
-  });
+        res.end()
+      }
+    })
+  })
 
   //get a genre
   /**
@@ -191,29 +239,33 @@ function handleError(err) {
     }
   */
   router.get('/:id', function (req, res, next) {
-    if (!req.params.id) res.json({
-      err: 'Please provide an id param.'
-    });
-    else {
-      genres.findById(
-          req.params.id, (err, content) => {
-            if (err) res.json({
-              err: err
-            });
-            else {
-              if (content) {
-                res.json({
-                  content
-                })
-              } else {
-                res.json({
-                  err: 'No genre found with this id.'
-                })
-              }
-            }
-          })
+    if (!req.params.id) {
+      res.status(400).send({err: 'Please provide an id param.'})
+      res.end()
     }
-  });
+    else if (req.params.id.length !== 24) {
+      res.status(422).send({err: 'Please provide a valid id param.'})
+      res.end()
+    }
+    else {
+      genres.findById(req.params.id, (err, content) => {
+        if (err) {
+          res.status(400).send({err: err})
+          res.end()
+        }
+        else {
+          if (content) {
+            res.status(200).send({content})
+          } else {
+            res.status(404).send({
+              err: 'No genre found with this id.'
+            })
+          }
+          res.end()
+        }
+      })
+    }
+  })
 
   //delete a genre
   /**
@@ -229,30 +281,34 @@ function handleError(err) {
   }
   */
   router.delete('/:id', (req, res, next) => {
-    if (!req.params.id) res.json({
-      err: 'Please provide an id param.'
-    });
-    else if (req.params.id.length !== 24)
-      res.json({
-        err: 'Please provide a valid id param.'
-      });
-    else
+    if (!req.params.id) {
+      res.status(400).send({err: 'Please provide an id param.'})
+      res.end()
+    }
+    else if (req.params.id.length !== 24) {
+      res.status(422).send({err: 'Please provide a valid id param.'})
+      res.end()
+    }
+    else {
       genres.findByIdAndDelete(req.params.id, (err, content) => {
-        if (err) res.json({
-          err: err
-        });
+        if (err) {
+          res.status(400).send({err: err})
+          res.end()
+        }
         else
         if (content) {
-          res.json({
+          res.status(200).send({
             _id: req.params.id,
             msg: 'Genre deleted successfully.'
           })
         } else {
-          res.json({
+          res.status(404).send({
             err: 'No genre found with this id.'
           })
         }
+        res.end()
       })
-  });
+    }
+  })
 
   module.exports = router;
