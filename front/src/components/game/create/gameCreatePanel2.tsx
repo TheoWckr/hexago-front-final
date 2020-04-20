@@ -1,8 +1,8 @@
 
-import { FormControlLabel, Grid, Slider, Switch} from "@material-ui/core";
+import {FormControlLabel, Grid, Slider, Switch, Typography} from "@material-ui/core";
 import React from "react";
 import {GameEditProps} from "../../../models/propsDeclaration";
-import {marksGameAgeMin, marksGameDuration} from "../../../models/gameModel";
+import {marksGameAgeMin, marksGameDuration, marksGameNumPlayer} from "../../../models/gameModel";
 import {useStylesPanelCreatePage} from "./gameCreatePage";
 import GenresSelector from "../../genre/shared/GenresSelector";
 import {GenreModel} from "../../../models/genreModel";
@@ -16,7 +16,6 @@ export const GameCreatePanel2 = (props:GameEditProps ) => {
 
     const [checkedAge, setCheckedAge] = React.useState(props.game.minAge !== undefined);
     const [checkedDuration, setCheckedDuration] = React.useState(props.game.gameLengthMin !== undefined);
-    const [checkedNumPlayer, setCheckedNumPlayer] = React.useState(props.game.playerMin !== undefined);
 
 
     const handleChangeNumberOfPlayer = (event: any, newValue: number | number[]) => {
@@ -53,13 +52,7 @@ export const GameCreatePanel2 = (props:GameEditProps ) => {
         }
         setCheckedDuration(prev => !prev);
     };
-    const handleChangeCheckedNumPlayer = () => {
-        if(checkedNumPlayer){
-            props.changeGameState('playerMin', undefined);
-            props.changeGameState('playerMax',undefined);
-        }
-        setCheckedNumPlayer(prev => !prev);
-    };
+
     const setGenres  = (genres : GenreModel []) => {
         props.changeGameState('genres', genres);
     };
@@ -72,6 +65,16 @@ export const GameCreatePanel2 = (props:GameEditProps ) => {
               direction="column"
               className={classes.panel}
         >
+            <Typography>Number of player</Typography>
+            <Slider
+                value={ props.game.playerMin ? [props.game.playerMin, props.game.playerMax] : [4,8]}
+                onChange={handleChangeNumberOfPlayer}
+                valueLabelDisplay="auto"
+                aria-labelledby="range-slider"
+                min={1}
+                max={16}
+                marks={marksGameNumPlayer}
+            />
              <FormControlLabel
                 control={<Switch checked={checkedAge} onChange={handleChangeCheckedAge} />}
                 label="Minimum Age"
@@ -105,22 +108,6 @@ export const GameCreatePanel2 = (props:GameEditProps ) => {
                 step={null}
                 min={15}
                 max={180}
-            />
-
-
-            <FormControlLabel
-                control={<Switch checked={(props.game.playerMin !== undefined && checkedNumPlayer)} onChange={handleChangeCheckedNumPlayer} />}
-                label="Number of player"
-            />
-            <Slider
-                disabled={(props.game.playerMin === undefined || !checkedNumPlayer)}
-
-                defaultValue={ props.game.playerMin ? [props.game.playerMin, props.game.playerMax] : [4,8]}
-                onChange={handleChangeNumberOfPlayer}
-                valueLabelDisplay="auto"
-                aria-labelledby="range-slider"
-                min={1}
-                max={16}
             />
             <GenresSelector changeGenreState={setGenres} genres={props.game.genres}/>
         </Grid>

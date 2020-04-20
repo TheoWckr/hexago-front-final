@@ -11,9 +11,9 @@ export const GenreCRUDPage = () => {
     genresList.push(genreToEdit);
 
     useEffect(() => {
-        if (genresList.length != 0)
+        if (genresList.length !== 0)
             genresList[0] = genreToEdit;
-    }, [genreToEdit]);
+    }, [genreToEdit,genresList]);
     return (
         <div>
             <Grid container>

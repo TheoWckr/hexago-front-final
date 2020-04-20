@@ -124,3 +124,27 @@ export const marksGameDuration: {
         hiddenLabel: '+3h'
     }
 ];
+
+
+export const marksGameNumPlayer = [
+    {
+        value: 1,
+        label: '1',
+    },
+    {
+        value: 4,
+        label: '4',
+    },
+    {
+        value: 8,
+        label: '8',
+    },
+    {
+        value: 12,
+        label: '12',
+    },
+    {
+        value: 16,
+        label: '16+',
+    },
+];
