@@ -16,10 +16,10 @@ const Header = () => {
                     <Typography variant="h6" className={[classes.title, "App-title"].join(' ')}>
                         <span className="App-title">HexaGo</span>
                     </Typography>
-
-                        <Link to="/gamecreate">  <Button color="inherit">Create Game</Button></Link>
-                        <Link to="/gamelist">  <Button color="inherit"> Game List </Button></Link>
-                        <Link to="/gamedisplay">  <Button color="inherit"> Display Game </Button></Link>
+                        <Link to="/GenreManagement/">  <Button color="inherit">Genre Management</Button></Link>
+                        <Link to="/GameCreate/">  <Button color="inherit">Create Game</Button></Link>
+                        <Link to="/GameSearch/">  <Button color="inherit"> Game List </Button></Link>
+                        <Link to="/GameDisplay/">  <Button color="inherit"> Display Game </Button></Link>
                         <Button color="inherit">Sign In</Button>
                         <Button color="inherit">Sign Up</Button>
                 </Toolbar>

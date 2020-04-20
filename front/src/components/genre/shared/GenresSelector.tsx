@@ -10,28 +10,30 @@ import GenreSearch from "./GenreSearch";
  * @param props the list to modify
  * @constructor
  */
-const GenresSelector = (props : GenreProps) => {
+const   GenresSelector = (props : {
+    genres: GenreModel[],
+    changeGenreState: ((genre: GenreModel[]) => void),
+    inline? : boolean} ) => {
     const  funAdd = (genre: GenreModel) => {
-
         if(!props.genres.includes(genre)) {
             let newGenres = props.genres;
             newGenres.push(genre);
-            props.changeGenreState('genres', newGenres);
+            props.changeGenreState(newGenres);
         }
     };
 
     const funRemove = (genre: GenreModel) => {
         let newGenres = props.genres;
         newGenres.splice(newGenres.indexOf(genre),1);
-        props.changeGenreState('genres', newGenres);
+        props.changeGenreState(newGenres);
     };
 
         return (<div>
-            <Typography variant={'h5'}  style={{padding: '1.3em'}}>
+            <Typography variant={props.inline ? 'body1' : 'h5' }  style={props.inline ? {} :  {padding: '1.3em'}}>
                 Genre Selected
             </Typography>
-            <GenreList genres={props.genres} ClickHandler={funRemove}/>
-            <GenreSearch genres={props.genres} clickHandler={funAdd}/>
+            <GenreList genres={props.genres} ClickHandler={funRemove} />
+            <GenreSearch genresHidden={props.genres} clickHandler={funAdd} inline={props.inline}/>
              </div>);
 };
 
