@@ -3,7 +3,6 @@ import { TextField} from "@material-ui/core";
 import {KeyboardDatePicker} from "@material-ui/pickers";
 import {GenreModel} from "../../../models/genreModel";
 import GenresSelector from "../../genre/shared/GenresSelector";
-import {genreMockList2} from "../../../data-mock/GenreMock";
 
 export const GameSearchPanel = () => {
     const [date, setDate] = useState(new Date);
