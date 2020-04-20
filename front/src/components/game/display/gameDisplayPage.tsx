@@ -10,6 +10,14 @@ import {Rating} from "@material-ui/lab";
 import {useParams} from "react-router";
 import {GameService} from "../../../services/gameService";
 import {GameModel} from "../../../models/gameModel";
+import FaceIcon from '@material-ui/icons/Face';
+import TimerIcon from '@material-ui/icons/Timer';
+import ChildCareIcon from '@material-ui/icons/ChildCare';
+
+
+
+
+
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -45,8 +53,8 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const GameDisplayPage = () => {
-
     let { id } = useParams();
+    const classes = useStyles();
     const[gameState, setGameState] = React.useState(new GameModel({}));
 
     useEffect(  () => {
@@ -58,7 +66,18 @@ const GameDisplayPage = () => {
         }
     },[]);
 
-    const classes = useStyles();
+    const duration = (<Typography variant="body1" id="duration">
+            <TimerIcon  color="primary"/>
+            {gameState.gameLengthMin === gameState.gameLengthMax && gameState.gameLengthMin + 'min '}
+            {gameState.gameLengthMin !== gameState.gameLengthMax && gameState.gameLengthMin + 'min - ' +  gameState.gameLengthMax +'min'}
+        </Typography>
+    );
+
+    const age = (<Typography variant="body1" id="age">
+            <ChildCareIcon  color="primary"/>
+            {gameState.minAge +' and + '}
+        </Typography>
+    );
     return (
         <Box component="div" className={classes.padding }  >
             <Grid container spacing={3}  >
@@ -91,8 +110,13 @@ const GameDisplayPage = () => {
                     </Card>
                     <GenreList genres={gameState.genres}/>
                     <Typography variant="body2">
-
+                        <FaceIcon  color="primary"/>
+                        {gameState.playerMin === 1 && 'Solo' }
+                        {gameState.playerMin === gameState.playerMax && gameState.playerMin+ ' players'}
+                        {gameState.playerMin !== gameState.playerMax && gameState.playerMin + ' - ' + gameState.playerMax+ ' players' }
                     </Typography>
+                    {gameState.gameLengthMin !== 0 && duration}
+                    {gameState.minAge !== 0  && age}
                 </Grid>
                 <Grid item md={5} >
                     <Carousel showArrows={true} className={classes.carroussel}>
