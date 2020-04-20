@@ -66,7 +66,7 @@ export const useStylesPanelCreatePage = makeStyles((theme: Theme) => ({
     }
 }));
 
-export default function GameCreatePage() {
+const  GameCreatePage = () => {
     const classes = useStylesPanelCreatePage();
     const theme = useTheme();
     const [valueTabs, setValueTabs] = React.useState(0);
@@ -89,7 +89,6 @@ export default function GameCreatePage() {
         if (gameState.genres.length === 0) {
             errorList.push('genres')
         }
-
         if (gameState.description.trim().length <= 15) {
             errorList.push('description')
         }
@@ -102,11 +101,14 @@ export default function GameCreatePage() {
     const onCreate = () => {
         if (validation()) {
             GameService.createGame(gameState).then((response) => {
-                if (response.status !== 200)
+                if (response.status !== 200 || response.data.error) {
                     console.log('error', response);
-                else
+                    setErrorMessage(['nameAlreadyExist']);
+                }
+                else {
                     console.log('Create', response);
-                setGameStatus('Game successfully created');
+                    setGameStatus('Game successfully created');
+                }
             });
         }
     };
@@ -134,8 +136,9 @@ export default function GameCreatePage() {
 
 
     const errorDisplay = (
-        <Paper>
-            <List>
+        <Paper style={{padding : '0.5em'}} >
+            <Typography variant={'h5'} style={{padding : '0.5em'}}> Errors</Typography>
+            <List style={{color : theme.palette.text.secondary}}>
                 {errorMessages.includes('name') &&
                 <ListItem>
                     <ListItemText>Name is mandatory</ListItemText>
@@ -226,7 +229,7 @@ export default function GameCreatePage() {
 
                 >
                     <Tab
-                        className={errorMessages.includes('description') || errorMessages.includes('name') ? classes.errorTab : ''}
+                        className={errorMessages.includes('description')  || errorMessages.includes('description')  || errorMessages.includes('name') ? classes.errorTab : ''}
                         label="Game definition"  {...a11yProps(0)} />
                     <Tab className={errorMessages.includes('genres') ? classes.errorTab : ''}
                          label="Game properties " {...a11yProps(1)} />
@@ -254,3 +257,5 @@ export default function GameCreatePage() {
         </div>
     );
 };
+
+export default GameCreatePage;

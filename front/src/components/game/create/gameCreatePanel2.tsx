@@ -9,7 +9,7 @@ import {GenreModel} from "../../../models/genreModel";
 
 
 
-export const GameCreatePanel2 = (props:GameEditProps ) => {
+const GameCreatePanel2 = (props:GameEditProps ) => {
     function valueLabelFormat(value: number) {
         return marksGameDuration[marksGameDuration.findIndex(mark => mark.value === value)].hiddenLabel ;
     }
@@ -114,7 +114,5 @@ export const GameCreatePanel2 = (props:GameEditProps ) => {
 
 
 )
-
-
 };
 export default GameCreatePanel2;

@@ -11,8 +11,9 @@ export const GameService = {
     },
     /** formulaire pour créer un jeu */
     createGame(game : GameModel) :AxiosPromise {
-        game._id = undefined;
-        return axios.post(routeName + '/create', game);
+        let gameRequest = new GameModel(game);
+        gameRequest._id = undefined;
+        return axios.post(routeName + '/create', gameRequest);
     },
 
     getGame(id : string) :AxiosPromise {
