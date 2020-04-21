@@ -1,4 +1,4 @@
-import {AxiosPromise} from "axios";
+import {AxiosPromise, AxiosResponse} from "axios";
 import {MAIN_ADRESS, axios} from "../utils/utilsAxios";
 import {GameModel} from "../models/gameModel";
 
@@ -20,7 +20,7 @@ export const GameService = {
         return axios.get(routeName+'/'+id);
     },
 
-    getGamesPage(page: number, sortBy?: string, sortOrder?: string, popularity?: number ) {
+    getGamesPage(page: number, sortBy?: string, sortOrder?: string, popularity?: number,baseGameId? : string ) :AxiosPromise {
         let sortValue = '-1';
         let whatToSortBy = 'popularity';
         if (sortOrder && sortOrder){
@@ -29,8 +29,13 @@ export const GameService = {
         if(sortBy){
             sortValue = sortBy;
         }
+        //Every non essential elements
+        let additionalElements = '';
+        if(baseGameId){
+            additionalElements += '&baseGameId='+baseGameId;
+        }
 
-        return axios.get(routeName+'?limit=12&offset='+ page +'&whatToSortBy='+ whatToSortBy +'&sortValue='+sortValue);
+        return axios.get(routeName+'?limit=12&offset='+ page +'&whatToSortBy='+ whatToSortBy +'&sortValue='+sortValue+additionalElements);
     },
 
     deleteGame(id: string) : AxiosPromise {
