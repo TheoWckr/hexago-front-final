@@ -19,6 +19,7 @@ export class GameModel {
     gameLengthMax?: number;
     distributor?: string;
     editor?: string;
+    baseGameId? :string;
     genres: GenreModel[];
 
     constructor({
@@ -33,27 +34,29 @@ export class GameModel {
                     _id = '',
                     releaseDate = '',
                     description = '',
-                    gameLengthMax =0,
+                    gameLengthMax=0,
                     editor = '',
-                    genres = [] as any[]
+                    baseGameId  = '',
+    genres = [] as any[]
                 } = {}) {
 
-        this._id = _id;
+        this._id = _id.length === 0  ? undefined : _id;
         if (releaseDate.length === 0)
             this.releaseDate = new Date().toDateString();
         else
             this.releaseDate = releaseDate;
-        this.author = author;
-        this.gameLengthMin = gameLengthMin;
+        this.author =  author.length !== 0  ? author : undefined;
+        this.gameLengthMin = gameLengthMin !== 0 ? gameLengthMin : undefined;
         this.popularity = popularity;
-        this.minAge = minAge;
+        this.minAge = minAge !== 0 ? minAge : undefined;
         this.name = name;
         this.playerMax = playerMax;
         this.playerMin = playerMin;
-        this.distributor = distributor;
+        this.distributor = distributor.length !== 0  ? distributor : undefined;
         this.description = description;
-        this.gameLengthMax = gameLengthMax;
-        this.editor = editor;
+        this.gameLengthMax = gameLengthMax !== 0 ? gameLengthMax : undefined;
+        this.baseGameId = baseGameId.length !== 0  ? baseGameId : undefined;
+        this.editor = editor.length !== 0  ? editor : undefined;
         this.genres = [] as GenreModel[];
         if(genres.length)
             genres.forEach((genres) => this.genres.push(new GenreModel(genres)));

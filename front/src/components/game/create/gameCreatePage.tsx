@@ -200,16 +200,16 @@ const  GameCreatePage = () => {
     return (
         <div className={classes.root}>
             <Grid container style={{padding: '1em'}}>
-                {gameState && gameState._id?.length === 0 &&
+                {!gameState._id &&
                 <Button variant="outlined" name='create' onClick={onCreate} color="primary"
                         style={{width: '300px', margin: 'auto'}}
                 >Create</Button>}
-                {gameState && gameState._id?.length !== 0 &&
+                {gameState._id &&
                 <Button variant="outlined" onClick={onUpdate} name='update' color="primary"
                         style={{width: '300px', margin: 'auto'}}
                 >Update
                 </Button>}
-                {gameState && gameState._id?.length !== 0 &&
+                {gameState._id &&
                 <Button variant="outlined" onClick={onDelete} name='delete' color="default"
                         style={{width: '300px', margin: 'auto'}}
                 >Delete
