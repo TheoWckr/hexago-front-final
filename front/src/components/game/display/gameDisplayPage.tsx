@@ -10,9 +10,9 @@ import {Rating} from "@material-ui/lab";
 import {useParams} from "react-router";
 import {GameService} from "../../../services/gameService";
 import {GameModel} from "../../../models/gameModel";
-import FaceIcon from '@material-ui/icons/Face';
-import TimerIcon from '@material-ui/icons/Timer';
-import ChildCareIcon from '@material-ui/icons/ChildCare';
+import PlayerNumber from "../shared/PlayerNumber";
+import GameDuration from "../shared/GameDuration";
+import GameAgeMin from "../shared/GameAgeMin";
 
 
 
@@ -65,19 +65,6 @@ const GameDisplayPage = () => {
             )
         }
     },[]);
-
-    const duration = (<Typography variant="body1" id="duration">
-            <TimerIcon  color="primary"/>
-            {gameState.gameLengthMin === gameState.gameLengthMax && gameState.gameLengthMin + 'min '}
-            {gameState.gameLengthMin !== gameState.gameLengthMax && gameState.gameLengthMin + 'min - ' +  gameState.gameLengthMax +'min'}
-        </Typography>
-    );
-
-    const age = (<Typography variant="body1" id="age">
-            <ChildCareIcon  color="primary"/>
-            {gameState.minAge +' and + '}
-        </Typography>
-    );
     return (
         <Box component="div" className={classes.padding }  >
             <Grid container spacing={3}  >
@@ -89,34 +76,28 @@ const GameDisplayPage = () => {
                         precision={0.5}
                     />
                     <Card >
-
                         <CardContent  className={classes.lineHeight} >
                             <Typography variant="body2"  className={classes.lineHeight} > Released : {UtilsDate.toDisplay(gameState.releaseDate)} </Typography>
                             <Divider variant={"inset"}/>
                             <Typography variant="body2"  className={classes.lineHeight}>Author: {gameState.author}</Typography>
                             {gameState.distributor &&
-                                <div>
+                                <>
                                     <Divider variant={"inset"}  className={classes.lineHeight}/>
                                 <Typography variant="body2"  className={classes.lineHeight} > Distributor : {gameState.distributor}</Typography>
-                                </div>
+                                </>
                             }
                             {gameState.editor &&
-                            <div>
+                            <>
                                 <Divider variant={"inset"}  className={classes.lineHeight}/>
                                 <Typography variant="body2"  className={classes.lineHeight} > Editor : {gameState.editor}</Typography>
-                            </div>
+                            </>
                             }
                         </CardContent>
                     </Card>
                     <GenreList genres={gameState.genres}/>
-                    <Typography variant="body2">
-                        <FaceIcon  color="primary"/>
-                        {gameState.playerMin === 1 && 'Solo' }
-                        {gameState.playerMin === gameState.playerMax && gameState.playerMin+ ' players'}
-                        {gameState.playerMin !== gameState.playerMax && gameState.playerMin + ' - ' + gameState.playerMax+ ' players' }
-                    </Typography>
-                    {gameState.gameLengthMin !== 0 && duration}
-                    {gameState.minAge !== 0  && age}
+                    <PlayerNumber playerMin={gameState.playerMin } playerMax={gameState.playerMax}/>
+                    <GameDuration gameLengthMin={gameState.gameLengthMin} gameLengthMax={gameState.gameLengthMax}/>
+                    <GameAgeMin minAge={gameState.minAge} />
                 </Grid>
                 <Grid item md={5} >
                     <Carousel showArrows={true} className={classes.carroussel}>
