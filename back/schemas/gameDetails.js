@@ -56,6 +56,6 @@ let GameDetailsSchema = new Schema({
     }
 });
 
-GameDetailsSchema.index({name: 'text', author: 'text', editor: 'text', distributor: 'text'});
+GameDetailsSchema.index({name: 'text'});
 
 module.exports = GameDetailsSchema;
