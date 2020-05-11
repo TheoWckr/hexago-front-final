@@ -295,7 +295,6 @@ router.post('/create', async(req, res, next) => {
 });
 
 // get a game, quick search only displays name and id
-//TODO: select between base game and extension
 /**
  * @api {get} /gamedetails/quicksearch?name=xxxx&basegame=xxxx Quicksearch game name
  * @apiName GET gamedetails
