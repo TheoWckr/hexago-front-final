@@ -296,13 +296,13 @@ router.post('/create', async(req, res, next) => {
 
 // get a game, quick search only displays name and id
 /**
- * @api {get} /gamedetailshttp://localhost:3100/gamedetails/name?name=xxxx Quicksearch game name
+ * @api {get} /gamedetails/quicksearch?name=xxxx&basegame=xxxx Quicksearch game name
  * @apiName GET gamedetails
  * @apiGroup gamedetails
  * @apiDescription Quicksearch a game and id
  *
  * @apiParam {String} name Name of a game
- *
+ * @apiParam {String} basegame If the game is a base game (true or false expected)
  *
  * @apiSuccessExample {json} Success-Response:
  * {
@@ -354,10 +354,27 @@ router.post('/create', async(req, res, next) => {
     ]
 }
  */
-router.get('/name', cors(), function (req, res, next) {
+router.get('/quicksearch', cors(), function (req, res, next) {
     let query= req.query.name;
-if(req.query.name){
-    console.log(req.query.name);
+if(req.query.name && req.query.basegame==="true"){
+    GameDetails.find({$text : { $search : query }, baseGameId:null}).select('name').exec((err, content) => {
+        if (err) res.json({
+            err: err
+        });
+        else {
+            if (content) {
+                res.json({
+                    content
+                })
+            } else {
+                res.json({
+                    err: 'No game found with this name.'
+                })
+            }
+        }
+    })
+}
+else if(req.query.name && req.query.basegame==="false"){
     GameDetails.find({$text : { $search : query }}).select('name').exec((err, content) => {
         if (err) res.json({
             err: err
@@ -374,8 +391,9 @@ if(req.query.name){
             }
         }
     })
-} else {
-    res.json({err: 'Please specify a name.'})
+}
+else {
+    res.json({err: 'Please specify a name and basegame param (true or false).'})
 }
 });
 
