@@ -338,6 +338,39 @@
   },
   {
     "type": "get",
+    "url": "/gamedetailshttp://localhost:3100/gamedetails/name?name=xxxx",
+    "title": "Quicksearch game name",
+    "name": "GET_gamedetails",
+    "group": "gamedetails",
+    "description": "<p>Quicksearch a game and id</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "name",
+            "description": "<p>Name of a game</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n    \"content\": [\n        {\n            \"_id\": \"5e81f6d0d747b30af813ad0b\",\n            \"name\": \"7 Wonders Duelle\"\n        },\n        {\n            \"_id\": \"5e81f5d71ec448554c7396bd\",\n            \"name\": \"7 Wonders Duelle\"\n        },\n        {\n            \"_id\": \"5e95c3eae39f5227dc0533be\",\n            \"name\": \"7 Wonders Duelle 75\"\n        },\n        {\n            \"_id\": \"5e8b46e5894b794d8c7cf45a\",\n            \"name\": \"7 Wonders Duelle 55\"\n        },\n        {\n            \"_id\": \"5e8aeffbb083cd20c42a96ab\",\n            \"name\": \"7 Wonders Duelle 24\"\n        },\n        {\n            \"_id\": \"5e8aefe0dad3274b383ac384\",\n            \"name\": \"7 Wonders Duelle 23\"\n        },\n        {\n            \"_id\": \"5e8210e3ade65a55981f7687\",\n            \"name\": \"7 Wonders Duelle 6\"\n        },\n        {\n            \"_id\": \"5e81fc5651a7294e80dc1e46\",\n            \"name\": \"7 Wonders Duelle 5\"\n        },\n        {\n            \"_id\": \"5e81f7656f0e574d38d61de0\",\n            \"name\": \"7 Wonders Duelle 3\"\n        },\n        {\n            \"_id\": \"5e81f7336044533ae071daa4\",\n            \"name\": \"7 Wonders Duelle 1\"\n        },\n        {\n            \"_id\": \"5e81c236aa716e2c0c5aa422\",\n            \"name\": \"7 Wonders Duelle 55\"\n        }\n    ]\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/gameDetails.js",
+    "groupTitle": "gamedetails"
+  },
+  {
+    "type": "get",
     "url": "/gamedetails?name=xxx&author=xxx&editor=xxx&distributor=xxx&releaseDate=xxx&popularity=xxx&nbPlayer=xxx&gameLengthDesired=xxx&minAge=xxx&whatToSortBy=xxx&sortValue=xxx&limit=xxx&offset=xxx",
     "title": "Request game information",
     "name": "GET_gamedetails",

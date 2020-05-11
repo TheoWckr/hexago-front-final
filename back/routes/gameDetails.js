@@ -1,5 +1,5 @@
 let async = require('async');
-
+let cors = require('cors');
 let express = require('express');
 let router = express.Router();
 let GameDetails = require('../models/gameDetails');
@@ -294,8 +294,90 @@ router.post('/create', async(req, res, next) => {
         }
 });
 
-// TODO get a game, quick search .select() or projection
-
+// get a game, quick search only displays name and id
+/**
+ * @api {get} /gamedetailshttp://localhost:3100/gamedetails/name?name=xxxx Quicksearch game name
+ * @apiName GET gamedetails
+ * @apiGroup gamedetails
+ * @apiDescription Quicksearch a game and id
+ *
+ * @apiParam {String} name Name of a game
+ *
+ *
+ * @apiSuccessExample {json} Success-Response:
+ * {
+    "content": [
+        {
+            "_id": "5e81f6d0d747b30af813ad0b",
+            "name": "7 Wonders Duelle"
+        },
+        {
+            "_id": "5e81f5d71ec448554c7396bd",
+            "name": "7 Wonders Duelle"
+        },
+        {
+            "_id": "5e95c3eae39f5227dc0533be",
+            "name": "7 Wonders Duelle 75"
+        },
+        {
+            "_id": "5e8b46e5894b794d8c7cf45a",
+            "name": "7 Wonders Duelle 55"
+        },
+        {
+            "_id": "5e8aeffbb083cd20c42a96ab",
+            "name": "7 Wonders Duelle 24"
+        },
+        {
+            "_id": "5e8aefe0dad3274b383ac384",
+            "name": "7 Wonders Duelle 23"
+        },
+        {
+            "_id": "5e8210e3ade65a55981f7687",
+            "name": "7 Wonders Duelle 6"
+        },
+        {
+            "_id": "5e81fc5651a7294e80dc1e46",
+            "name": "7 Wonders Duelle 5"
+        },
+        {
+            "_id": "5e81f7656f0e574d38d61de0",
+            "name": "7 Wonders Duelle 3"
+        },
+        {
+            "_id": "5e81f7336044533ae071daa4",
+            "name": "7 Wonders Duelle 1"
+        },
+        {
+            "_id": "5e81c236aa716e2c0c5aa422",
+            "name": "7 Wonders Duelle 55"
+        }
+    ]
+}
+ */
+router.get('/name', cors(), function (req, res, next) {
+    let query= req.query.name;
+if(req.query.name){
+    console.log(req.query.name);
+    GameDetails.find({$text : { $search : query }}).select('name').exec((err, content) => {
+        if (err) res.json({
+            err: err
+        });
+        else {
+            if (content) {
+                res.json({
+                    content
+                })
+            } else {
+                res.json({
+                    err: 'No game found with this name.'
+                })
+            }
+        }
+    })
+} else {
+    res.json({err: 'Please specify a name.'})
+}
+});
 
 //get a game by it id
 /**
