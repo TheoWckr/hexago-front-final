@@ -338,7 +338,7 @@ define({ "api": [
   },
   {
     "type": "get",
-    "url": "/gamedetailshttp://localhost:3100/gamedetails/name?name=xxxx",
+    "url": "/gamedetails/quicksearch?name=xxxx&basegame=xxxx",
     "title": "Quicksearch game name",
     "name": "GET_gamedetails",
     "group": "gamedetails",
@@ -352,6 +352,13 @@ define({ "api": [
             "optional": false,
             "field": "name",
             "description": "<p>Name of a game</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "basegame",
+            "description": "<p>If the game is a base game (true or false expected)</p>"
           }
         ]
       }
