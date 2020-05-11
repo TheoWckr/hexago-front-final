@@ -9,7 +9,10 @@ export const GameService = {
     getAllGames() :AxiosPromise {
         return axios.get(routeName);
     },
-    /** formulaire pour créer un jeu */
+
+    getGamesForQuickSearch(search :string ) :AxiosPromise {
+        return axios.get(routeName+'?limit=12'+'&offset=0&name='+ search);
+    },    /** formulaire pour créer un jeu */
     createGame(game : GameModel) :AxiosPromise {
         let gameRequest = new GameModel(game);
         gameRequest._id = undefined;
