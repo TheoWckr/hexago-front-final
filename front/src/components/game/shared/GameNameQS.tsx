@@ -11,13 +11,19 @@ const GameNameQS = () =>  {
     const [options, setOptions] = useState<GameModel[]>([]);
 
     useEffect(()=>{
+            console.log('test', search);
+
+            if(search.trim().length !== 0) {
+            console.log('test', search);
             GameService.getGamesForQuickSearch(search).then((result => {
+                console.log('result QS', result);
                 let stock: GameModel[] = [];
                 result.data.content.forEach((game: {}) => {
                     stock.push(new GameModel(game));
                 });
                 setOptions(stock);
             }))
+        }
     }
 
     , [search]);
@@ -27,7 +33,7 @@ const GameNameQS = () =>  {
                 options={options}
                 getOptionLabel={(option) => option.name}
                 style={{ width: 300 }}
-                renderInput={(params) => <TextField {...params} onChange={(event => setSearch(''))} label="Combo box" variant="outlined" />}
+                renderInput={(params) => <TextField {...params} onChange={(event) => setSearch(event.target.value)} label="Combo box" variant="outlined" />}
             />
         );
 };

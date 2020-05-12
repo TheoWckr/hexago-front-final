@@ -5,14 +5,15 @@ import {GameModel} from "../models/gameModel";
 const routeName = MAIN_ADRESS+'gamedetails/';
 export const GameService = {
 
-    /** Renvois tous les user */
+    /** Renvois tous les jeux */
     getAllGames() :AxiosPromise {
         return axios.get(routeName);
     },
-
     getGamesForQuickSearch(search :string ) :AxiosPromise {
-        return axios.get(routeName+'?limit=12'+'&offset=0&name='+ search);
-    },    /** formulaire pour créer un jeu */
+        return axios.get(routeName+'/name?name='+ search);
+    },
+
+    /** formulaire pour créer un jeu */
     createGame(game : GameModel) :AxiosPromise {
         let gameRequest = new GameModel(game);
         gameRequest._id = undefined;
