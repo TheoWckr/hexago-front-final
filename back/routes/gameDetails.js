@@ -356,44 +356,66 @@ router.post('/create', async(req, res, next) => {
  */
 router.get('/quicksearch', cors(), function (req, res, next) {
     let query= req.query.name;
-if(req.query.name && req.query.basegame==="true"){
-    GameDetails.find({$text : { $search : query }, baseGameId:null}).select('name').exec((err, content) => {
-        if (err) res.json({
-            err: err
-        });
+    let solution  = 1;
+    let data={};
+
+if (solution ===1){
+    //solution 1 - should be temporary and replace with tuned solution 2
+    let toRegexp= req.query.name;
+    data['name'] = new RegExp(".*"+toRegexp+".*",'i');
+    if (req.query.basegame === "true") {
+        query = GameDetails.find({name: data['name'], baseGameId:null}).select('name').limit(10);
+    }
+    else  {query = GameDetails.find(data).select('name').limit(10);}
+    //execute query
+    query.exec((err, content) => {
+        if (err) res.json({err: err});
         else {
-            if (content) {
-                res.json({
-                    content
-                })
-            } else {
-                res.json({
-                    err: 'No game found with this name.'
-                })
-            }
+            if (content) res.send({content: content});
+            else res.send({content: []})
         }
+
     })
-}
-else if(req.query.name && req.query.basegame==="false"){
-    GameDetails.find({$text : { $search : query }}).select('name').exec((err, content) => {
-        if (err) res.json({
-            err: err
-        });
-        else {
-            if (content) {
-                res.json({
-                    content
-                })
-            } else {
-                res.json({
-                    err: 'No game found with this name.'
-                })
-            }
-        }
-    })
-}
+    }
 else {
-    res.json({err: 'Please specify a name and basegame param (true or false).'})
+    //solution 2
+    if (req.query.name && req.query.basegame === "true") {
+        GameDetails.find({$text: {$search: query}, baseGameId: null}).select('name').limit(10).exec((err, content) => {
+            if (err) res.json({
+                err: err
+            });
+            else {
+                if (content) {
+                    res.json({
+                        content
+                    })
+                } else {
+                    res.json({
+                        err: 'No game found with this name.'
+                    })
+                }
+            }
+        })
+    } else if (req.query.name && req.query.basegame === "false") {
+        GameDetails.find({$text: {$search: query}}).select('name').exec((err, content) => {
+            if (err) res.json({
+                err: err
+            });
+            else {
+                if (content) {
+                    res.json({
+                        content
+                    })
+                } else {
+                    res.json({
+                        err: 'No game found with this name.'
+                    })
+                }
+            }
+        })
+    } else {
+        res.json({err: 'Please specify a name and basegame param (true or false).'})
+    }
 }
 });
 
