@@ -118,7 +118,11 @@ router.get('/', (req, res, next) => {
     }
     // search by release date
     if (req.query.releaseDate) {
-        data['releaseDate'] = req.query.releaseDate;
+        let releaseDate = new Date( req.query.releaseDate);
+        data['releaseDate'] = {
+            $gte: new Date(new Date(0).setFullYear(releaseDate.getFullYear(), 0, 1)),
+            $lt: new Date(new Date(0).setFullYear(releaseDate.getFullYear(), 11, 31))
+        }
     }
     // search by popularity
     if (req.query.popularity) {
