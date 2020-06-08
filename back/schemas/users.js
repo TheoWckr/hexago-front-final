@@ -9,15 +9,18 @@ let usersSchema = new Schema({
         required: true,
         match: /^[a-zA-Z0-9-_]+$/ },
     phone: String,
-    firstName: {
+    firstname: {
         type: String,
         required: true,
         match: /^[a-zA-Z0-9-_]+$/ },
-    lastName: {
+    lastname: {
         type: String,
         required: true,
         match: /^[a-zA-Z0-9-_]+$/ },
-    password: String,
+    password: {
+        type: String,
+        required: true
+    },
     salt: String,
     email: {
         type:String,

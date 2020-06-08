@@ -1,8 +1,12 @@
 let async = require('async/waterfall');
-
+const { check, validationResult} = require("express-validator");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 let express = require('express');
 let router = express.Router();
-let Users = require('../models/users');
+let User = require('../models/users');
+const auth = require("../middleware/auth");
+
 
 // let axios = require('axios')
 // axios.defaults.baseURL = `${process.env.AUTH0_AUDIENCE}`
@@ -26,7 +30,7 @@ function handleError(err) {
 
 //get all user
 router.get('/', (req, res, next) => {
-  Users.find({}, function (err, content) {
+  User.find({}, function (err, content) {
     console.log(content);
     if (err) res.json({
       err: err
@@ -40,7 +44,7 @@ router.get('/', (req, res, next) => {
 /**
  * @api {post} /users/create Request User information
  * @apiName Create User
- * @apiGroup Users
+ * @apiGroup User
  *
  * @apiParam {boolean} isActive User account is active or not
  * @apiParam {String} _id User unique ID
@@ -80,44 +84,195 @@ router.get('/', (req, res, next) => {
     "msg": "User created successfully."
 }
  */
-router.post('/create', (req, res, next) => {
-  Users.create(req.body, (err, content) => {
-    if (err) res.json({err: err});
-    else {
-      if (content) {
-        res.json({content: content, msg: 'User created successfully.'})
-      } else {
-        res.json({err: 'Unable to create this User.'})
-      }
-    }
-  })
-  });
-
-//get a user
-router.get('/:id', function (req, res, next) {
-  if (!req.params.id) res.json({
-    err: 'Please provide an id param.'
-  });
-  else {
-    Users.findById(
-        req.params.id, (err, content) => {
-          if (err) res.json({
-            err: err
+router.post(
+  "/signup",
+  [
+      check("username", "Please Enter a Valid Firstname").not().isEmpty(),
+      check("firstname", "Please Enter a Valid Firstname").not().isEmpty(),
+      check("lastname", "Please Enter a Valid Lastname").not().isEmpty(),
+      check("email", "Please enter a valid email").isEmail(),
+      check("password", "Please enter a valid password").isLength({ min: 6 })
+  ],
+  async (req, res) => {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+          return res.status(400).json({
+              errors: errors.array()
           });
-          else {
-            if (content) {
-              res.json({
-                content
-              })
-            } else {
-              res.json({
-                err: 'No user found with this id.'
-              })
-            }
+      }
+
+      const {
+          username,
+          firstname,
+          lastname,
+          email,
+          password
+      } = req.body;
+      try {
+          let user = await User.findOne({
+              email
+          });
+          if (user) {
+              return res.status(400).json({
+                  msg: "User Already Exists"
+              });
           }
-        })
+
+          user = new User({
+              username,
+              firstname,
+              lastname,
+              email,
+              password
+          });
+
+          const salt = await bcrypt.genSalt(10);
+          user.password = await bcrypt.hash(password, salt);
+
+          await user.save();
+
+          const payload = {
+              user: {
+                  id: user.id
+              }
+          };
+
+          jwt.sign(
+              payload,
+              "randomString", {
+                  expiresIn: 10000
+              },
+              (err, token) => {
+                  if (err) throw err;
+                  res.status(200).json({
+                      token
+                  });
+              }
+          );
+      } catch (err) {
+          console.log(err.message);
+          res.status(500).send("Error in Saving");
+      }
+  }
+);
+
+
+router.post(
+  "/login",
+  [
+    check("email", "Please enter a valid email").isEmail(),
+    check("password", "Please enter a valid password").isLength({ min: 6 })
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        errors: errors.array()
+      });
+    }
+
+    const { email, password } = req.body;
+    try {
+      let user = await User.findOne({
+        email
+      });
+      if (!user)
+        return res.status(400).json({
+          message: "User Not Exist"
+        });
+
+      const isMatch = await bcrypt.compare(password, user.password);
+      if (!isMatch)
+        return res.status(400).json({
+          message: "Incorrect Password !"
+        });
+
+      const payload = {
+        user: {
+          id: user.id
+        }
+      };
+
+      jwt.sign(
+        payload,
+        "randomString",
+        {
+          expiresIn: 3600
+        },
+        (err, token) => {
+          if (err) throw err;
+          res.status(200).json({
+            token
+          });
+        }
+      );
+    } catch (e) {
+      console.error(e);
+      res.status(500).json({
+        message: "Server Error"
+      });
+    }
+  }
+);
+
+router.patch("/update", 
+  [
+    check("username", "Please Enter a Valid Firstname").not().isEmpty(),
+    check("firstname", "Please Enter a Valid Firstname").not().isEmpty(),
+    check("lastname", "Please Enter a Valid Lastname").not().isEmpty(),
+    check("email", "Please enter a valid email").isEmail(),
+    check("password", "Please enter a valid password").isLength({ min: 6 })
+  ], auth, async (req, res) => {
+  try {
+    // request.user is getting fetched from Middleware after token authentication
+    const user = await User.findById(req.user.id);
+
+    if (req.body.username) {
+      user.username = req.body.username
+    }
+
+    if (req.body.firstname) {
+      user.firstname = req.body.firstname
+    }
+    if (req.body.lastname) {
+      user.lastname = req.body.lastname
+    }
+
+    if (req.body.email) {
+      user.email = req.body.email
+    }
+    if (req.body.password) {
+      const salt = await bcrypt.genSalt(10);
+      user.password = await bcrypt.hash(req.body.password, salt);
+    }
+
+    await user.save();
+
+    const payload = {
+        user: {
+            id: user.id
+        }
+    };
+
+    jwt.sign(
+        payload,
+        "randomString", {
+            expiresIn: 10000
+        },
+        (err, token) => {
+            if (err) throw err;
+            res.status(200).json({
+                token
+            });
+        }
+    );
+  } catch (e) {
+    res.send({ message: "Error in Fetching user" });
   }
 });
+
+
 
 //delete a user
 router.delete('/:id', (req, res, next) => {
@@ -129,7 +284,7 @@ router.delete('/:id', (req, res, next) => {
       err: 'Please provide a valid id param.'
     });
   else
-    Users.findByIdAndDelete(req.params.id, (err, content) => {
+    User.findByIdAndDelete(req.params.id, (err, content) => {
       if (err) res.json({
         err: err
       });
@@ -145,6 +300,16 @@ router.delete('/:id', (req, res, next) => {
         })
       }
     })
+});
+
+router.get("/me", auth, async (req, res) => {
+  try {
+    // request.user is getting fetched from Middleware after token authentication
+    const user = await User.findById(req.user.id);
+    res.json(user);
+  } catch (e) {
+    res.send({ message: "Error in Fetching user" });
+  }
 });
 
 module.exports = router;
