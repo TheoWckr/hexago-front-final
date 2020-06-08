@@ -21,7 +21,6 @@ let usersSchema = new Schema({
         type: String,
         required: true
     },
-    salt: String,
     email: {
         type:String,
         required:true,
@@ -38,7 +37,8 @@ let usersSchema = new Schema({
     dateLastConnection: Date,
     dateOfBirth: {
         type:Date,
-        default:Date.now},
+        default:Date.now
+    },
     userProfileId: Number,
     roleId: Number,
 }, {

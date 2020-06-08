@@ -42,7 +42,7 @@ router.get('/', (req, res, next) => {
 
 //post create a user
 /**
- * @api {post} /users/create Request User information
+ * @api {post} /users/signup Sign Up User
  * @apiName Create User
  * @apiGroup User
  *
@@ -52,7 +52,6 @@ router.get('/', (req, res, next) => {
  * @apiParam {String} firstName User first name
  * @apiParam {String} lastName User last name
  * @apiParam {String} password User's password
- * @apiParam {String} salt Password encryption key
  * @apiParam {String} email User email
  * @apiParam {date} dateCreation User account creation date
  * @apiParam {date} dateLastConnection User last connection to account date
@@ -61,28 +60,9 @@ router.get('/', (req, res, next) => {
  * @apiParam {String} roleId Id which determines what roles user has
  *
  * @apiSuccessExample {json} Success-Response:
- * {
-    "user": {
-        "isActive": true,
-        "_id": "5e6654ecdb12dc2e340f7680",
-        "username": "Pip",
-        "phone": "000000000",
-        "firstName": "bob",
-        "lastName": "Bobby",
-        "password": "baboulinet",
-        "salt": "jjjj",
-        "email": "bob@bob.fr",
-        "dateCreation": "2020-03-09T14:37:56.192Z",
-        "dateLastConnection": "2020-03-09T14:37:56.192Z",
-        "userProfileId": 12345,
-        "roleId": 123456,
-        "birthdate": "2020-03-09T14:38:36.495Z",
-        "createdAt": "2020-03-09T14:38:36.497Z",
-        "updatedAt": "2020-03-09T14:38:36.497Z",
-        "__v": 0
-    },
-    "msg": "User created successfully."
-}
+ *  {
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWVkZTE1MTAxZDEzOWEwMzZiNzlmNWE5In0sImlhdCI6MTU5MTYxMjY4OCwiZXhwIjoxNTkxNjIyNjg4fQ.dI-Emc4EM24Pw1KFAWJi8sOKPFusgXn_BvODpxBAV70"
+    }
  */
 router.post(
   "/signup",
@@ -156,7 +136,21 @@ router.post(
   }
 );
 
-
+/**
+ * @api {post} /users/login Sign In User
+ * @apiName Login User
+ * @apiGroup User
+ *
+ * 
+ * 
+ * @apiParam {String} email User email
+ * @apiParam {String} password User's password
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *  {
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWVkZTE1MTAxZDEzOWEwMzZiNzlmNWE5In0sImlhdCI6MTU5MTYxMjY4OCwiZXhwIjoxNTkxNjIyNjg4fQ.dI-Emc4EM24Pw1KFAWJi8sOKPFusgXn_BvODpxBAV70"
+    }
+ */
 router.post(
   "/login",
   [
@@ -216,6 +210,35 @@ router.post(
   }
 );
 
+
+/**
+ * @api {post} /users/update Update User
+ * @apiName Update User
+ * @apiGroup User
+ *
+ * @apiHeaderExample {json} Header-Example:
+ *     {
+ *       "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWVkZTE1MTAxZDEzOWEwMzZiNzlmNWE5In0sImlhdCI6MTU5MTYxMjY4OCwiZXhwIjoxNTkxNjIyNjg4fQ.dI-Emc4EM24Pw1KFAWJi8sOKPFusgXn_BvODpxBAV70"
+ *     }
+ * 
+ * @apiParam {boolean} isActive User account is active or not
+ * @apiParam {String} _id User unique ID
+ * @apiParam {String} username User nickname for the service
+ * @apiParam {String} firstName User first name
+ * @apiParam {String} lastName User last name
+ * @apiParam {String} password User's password
+ * @apiParam {String} email User email
+ * @apiParam {date} dateCreation User account creation date
+ * @apiParam {date} dateLastConnection User last connection to account date
+ * @apiParam {date} dateOfBirth User date of birth
+ * @apiParam {String} userProfileId Id which links to user profile table entry
+ * @apiParam {String} roleId Id which determines what roles user has
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *  {
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWVkZTE1MTAxZDEzOWEwMzZiNzlmNWE5In0sImlhdCI6MTU5MTYxMjY4OCwiZXhwIjoxNTkxNjIyNjg4fQ.dI-Emc4EM24Pw1KFAWJi8sOKPFusgXn_BvODpxBAV70"
+    }
+ */
 router.patch("/update", 
   [
     check("username", "Please Enter a Valid Firstname").not().isEmpty(),
@@ -272,8 +295,22 @@ router.patch("/update",
   }
 });
 
-
-
+/**
+ * @api {post} /users/delete/:id Delete User
+ * @apiName Delete User
+ * @apiGroup User
+ *
+ * @apiHeaderExample {json} Header-Example:
+ *     {
+ *       "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWVkZTE1MTAxZDEzOWEwMzZiNzlmNWE5In0sImlhdCI6MTU5MTYxMjY4OCwiZXhwIjoxNTkxNjIyNjg4fQ.dI-Emc4EM24Pw1KFAWJi8sOKPFusgXn_BvODpxBAV70"
+ *     }
+ * 
+ * @apiSuccessExample {json} Success-Response:
+ *  {
+      "_id": "5ede13241d139a036b79f5a8",
+      "msg": "User deleted successfully."
+    }
+ */
 //delete a user
 router.delete('/:id', (req, res, next) => {
   if (!req.params.id) res.json({
@@ -302,6 +339,32 @@ router.delete('/:id', (req, res, next) => {
     })
 });
 
+/**
+ * @api {post} /users/me Get User information
+ * @apiName Get User Information
+ * @apiGroup User
+ *
+ * @apiHeaderExample {json} Header-Example:
+ *     {
+ *       "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWVkZTE1MTAxZDEzOWEwMzZiNzlmNWE5In0sImlhdCI6MTU5MTYxMjY4OCwiZXhwIjoxNTkxNjIyNjg4fQ.dI-Emc4EM24Pw1KFAWJi8sOKPFusgXn_BvODpxBAV70"
+ *     }
+ * 
+ * @apiSuccessExample {json} Success-Response:
+ *  {
+      "isActive": true,
+      "_id": "5ede15101d139a036b79f5a9",
+      "username": "Pip",
+      "firstname": "bob",
+      "lastname": "Bobby",
+      "email": "bob@bob.fr",
+      "password": "$2a$10$vz/zn82oA9FeJ15gveCEbe7Mw/OhKjx18EFPG2XtFJLz49eFWDLw2",
+      "dateCreation": "2020-06-08T10:38:08.548Z",
+      "dateOfBirth": "2020-06-08T10:38:08.548Z",
+      "createdAt": "2020-06-08T10:38:08.818Z",
+      "updatedAt": "2020-06-08T10:38:08.818Z",
+      "__v": 0
+    }
+ */
 router.get("/me", auth, async (req, res) => {
   try {
     // request.user is getting fetched from Middleware after token authentication
