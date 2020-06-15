@@ -1,5 +1,5 @@
 import React from 'react';
-import { Toolbar,} from "@material-ui/core";
+import {Toolbar, useTheme,} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import './Header.css';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
@@ -12,16 +12,16 @@ const Header = () => {
     return (
         <div className={classes.root} >
             <AppBar position="static">
-                <Toolbar>
+                <Toolbar >
                     <Typography variant="h6" className={[classes.title, "App-title"].join(' ')}>
                         <span className="App-title">HexaGo</span>
                     </Typography>
-                        <Link to="/GenreManagement/">  <Button color="inherit">Genre Management</Button></Link>
-                        <Link to="/GameCreate/">  <Button color="inherit">Create Game</Button></Link>
-                        <Link to="/GameSearch/">  <Button color="inherit"> Game List </Button></Link>
-                        <Link to="/GameDisplay/">  <Button color="inherit"> Display Game </Button></Link>
-                        <Button color="inherit">Sign In</Button>
-                        <Button color="inherit">Sign Up</Button>
+                        <Link to="/GenreManagement/">  <Button className={classes.menuButton} >Genre Management</Button></Link>
+                        <Link to="/GameCreate/">  <Button className={classes.menuButton} >Create Game</Button></Link>
+                        <Link to="/GameSearch/">  <Button className={classes.menuButton} > Game List </Button></Link>
+                        <Link to="/GameDisplay/">  <Button className={classes.menuButton} > Display Game </Button></Link>
+                        <Link to="/register"><Button className={classes.menuButton} >Sign In</Button></Link>
+                        <Link to="/login"> <Button className={classes.menuButton} >Sign Up</Button></Link>
                 </Toolbar>
             </AppBar>
         </div>
@@ -35,6 +35,7 @@ const useStyles = makeStyles((theme: Theme) =>
             },
             menuButton: {
                 marginRight: theme.spacing(2),
+                color:theme.palette.common.white
             },
             title: {
                 flexGrow: 1,
@@ -49,7 +50,7 @@ const useStyles = makeStyles((theme: Theme) =>
                     margin: theme.spacing(1),
                 },
             },
-        }
+        },
     ),
 );
 
