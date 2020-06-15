@@ -7,6 +7,7 @@ export class UserModel {
     firstName: string;
     lastName: string;
     email: string;
+    phoneNumber: string;
     dateOfCreation: Date;
     dateLastConnection: Date;
     dateOfBirth: Date;
@@ -21,6 +22,7 @@ export class UserModel {
             firstName= "",
             lastName= "",
             email= "",
+            phoneNumber = "",
             dateOfCreation = new Date,
             dateLastConnection = new Date,
             dateOfBirth= new Date,
@@ -32,6 +34,7 @@ export class UserModel {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.phoneNumber = phoneNumber;
         this.dateOfCreation = dateOfCreation;
         this.dateLastConnection = dateLastConnection;
         this.dateOfBirth = dateOfBirth;
