@@ -1,8 +1,12 @@
 let async = require('async/waterfall');
-
+const { check, validationResult} = require("express-validator");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 let express = require('express');
 let router = express.Router();
-let Users = require('../models/users');
+let User = require('../models/users');
+const auth = require("../middleware/auth");
+
 
 // let axios = require('axios')
 // axios.defaults.baseURL = `${process.env.AUTH0_AUDIENCE}`
@@ -26,7 +30,7 @@ function handleError(err) {
 
 //get all user
 router.get('/', (req, res, next) => {
-  Users.find({}, function (err, content) {
+  User.find({}, function (err, content) {
     console.log(content);
     if (err) res.json({
       err: err
@@ -38,9 +42,9 @@ router.get('/', (req, res, next) => {
 
 //post create a user
 /**
- * @api {post} /users/create Request User information
+ * @api {post} /users/signup Sign Up User
  * @apiName Create User
- * @apiGroup Users
+ * @apiGroup User
  *
  * @apiParam {boolean} isActive User account is active or not
  * @apiParam {String} _id User unique ID
@@ -48,7 +52,6 @@ router.get('/', (req, res, next) => {
  * @apiParam {String} firstName User first name
  * @apiParam {String} lastName User last name
  * @apiParam {String} password User's password
- * @apiParam {String} salt Password encryption key
  * @apiParam {String} email User email
  * @apiParam {date} dateCreation User account creation date
  * @apiParam {date} dateLastConnection User last connection to account date
@@ -57,68 +60,257 @@ router.get('/', (req, res, next) => {
  * @apiParam {String} roleId Id which determines what roles user has
  *
  * @apiSuccessExample {json} Success-Response:
- * {
-    "user": {
-        "isActive": true,
-        "_id": "5e6654ecdb12dc2e340f7680",
-        "username": "Pip",
-        "phone": "000000000",
-        "firstName": "bob",
-        "lastName": "Bobby",
-        "password": "baboulinet",
-        "salt": "jjjj",
-        "email": "bob@bob.fr",
-        "dateCreation": "2020-03-09T14:37:56.192Z",
-        "dateLastConnection": "2020-03-09T14:37:56.192Z",
-        "userProfileId": 12345,
-        "roleId": 123456,
-        "birthdate": "2020-03-09T14:38:36.495Z",
-        "createdAt": "2020-03-09T14:38:36.497Z",
-        "updatedAt": "2020-03-09T14:38:36.497Z",
-        "__v": 0
-    },
-    "msg": "User created successfully."
-}
- */
-router.post('/create', (req, res, next) => {
-  Users.create(req.body, (err, content) => {
-    if (err) res.json({err: err});
-    else {
-      if (content) {
-        res.json({content: content, msg: 'User created successfully.'})
-      } else {
-        res.json({err: 'Unable to create this User.'})
-      }
+ *  {
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWVkZTE1MTAxZDEzOWEwMzZiNzlmNWE5In0sImlhdCI6MTU5MTYxMjY4OCwiZXhwIjoxNTkxNjIyNjg4fQ.dI-Emc4EM24Pw1KFAWJi8sOKPFusgXn_BvODpxBAV70"
     }
-  })
-  });
-
-//get a user
-router.get('/:id', function (req, res, next) {
-  if (!req.params.id) res.json({
-    err: 'Please provide an id param.'
-  });
-  else {
-    Users.findById(
-        req.params.id, (err, content) => {
-          if (err) res.json({
-            err: err
+ */
+router.post(
+  "/signup",
+  [
+      check("username", "Please Enter a Valid Firstname").not().isEmpty(),
+      check("firstname", "Please Enter a Valid Firstname").not().isEmpty(),
+      check("lastname", "Please Enter a Valid Lastname").not().isEmpty(),
+      check("email", "Please enter a valid email").isEmail(),
+      check("password", "Please enter a valid password").isLength({ min: 6 })
+  ],
+  async (req, res) => {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+          return res.status(400).json({
+              errors: errors.array()
           });
-          else {
-            if (content) {
-              res.json({
-                content
-              })
-            } else {
-              res.json({
-                err: 'No user found with this id.'
-              })
-            }
+      }
+
+      const {
+          username,
+          firstname,
+          lastname,
+          email,
+          password
+      } = req.body;
+      try {
+          let user = await User.findOne({
+              email
+          });
+          if (user) {
+              return res.status(400).json({
+                  msg: "User Already Exists"
+              });
           }
-        })
+
+          user = new User({
+              username,
+              firstname,
+              lastname,
+              email,
+              password
+          });
+
+          const salt = await bcrypt.genSalt(10);
+          user.password = await bcrypt.hash(password, salt);
+
+          await user.save();
+
+          const payload = {
+              user: {
+                  id: user.id
+              }
+          };
+
+          jwt.sign(
+              payload,
+              "randomString", {
+                  expiresIn: 10000
+              },
+              (err, token) => {
+                  if (err) throw err;
+                  res.status(200).json({
+                      token
+                  });
+              }
+          );
+      } catch (err) {
+          console.log(err.message);
+          res.status(500).send("Error in Saving");
+      }
+  }
+);
+
+/**
+ * @api {post} /users/login Sign In User
+ * @apiName Login User
+ * @apiGroup User
+ *
+ * 
+ * 
+ * @apiParam {String} email User email
+ * @apiParam {String} password User's password
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *  {
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWVkZTE1MTAxZDEzOWEwMzZiNzlmNWE5In0sImlhdCI6MTU5MTYxMjY4OCwiZXhwIjoxNTkxNjIyNjg4fQ.dI-Emc4EM24Pw1KFAWJi8sOKPFusgXn_BvODpxBAV70"
+    }
+ */
+router.post(
+  "/login",
+  [
+    check("email", "Please enter a valid email").isEmail(),
+    check("password", "Please enter a valid password").isLength({ min: 6 })
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        errors: errors.array()
+      });
+    }
+
+    const { email, password } = req.body;
+    try {
+      let user = await User.findOne({
+        email
+      });
+      if (!user)
+        return res.status(400).json({
+          message: "User Not Exist"
+        });
+
+      const isMatch = await bcrypt.compare(password, user.password);
+      if (!isMatch)
+        return res.status(400).json({
+          message: "Incorrect Password !"
+        });
+
+      const payload = {
+        user: {
+          id: user.id
+        }
+      };
+
+      jwt.sign(
+        payload,
+        "randomString",
+        {
+          expiresIn: 3600
+        },
+        (err, token) => {
+          if (err) throw err;
+          res.status(200).json({
+            token
+          });
+        }
+      );
+    } catch (e) {
+      console.error(e);
+      res.status(500).json({
+        message: "Server Error"
+      });
+    }
+  }
+);
+
+
+/**
+ * @api {post} /users/update Update User
+ * @apiName Update User
+ * @apiGroup User
+ *
+ * @apiHeaderExample {json} Header-Example:
+ *     {
+ *       "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWVkZTE1MTAxZDEzOWEwMzZiNzlmNWE5In0sImlhdCI6MTU5MTYxMjY4OCwiZXhwIjoxNTkxNjIyNjg4fQ.dI-Emc4EM24Pw1KFAWJi8sOKPFusgXn_BvODpxBAV70"
+ *     }
+ * 
+ * @apiParam {boolean} isActive User account is active or not
+ * @apiParam {String} _id User unique ID
+ * @apiParam {String} username User nickname for the service
+ * @apiParam {String} firstName User first name
+ * @apiParam {String} lastName User last name
+ * @apiParam {String} password User's password
+ * @apiParam {String} email User email
+ * @apiParam {date} dateCreation User account creation date
+ * @apiParam {date} dateLastConnection User last connection to account date
+ * @apiParam {date} dateOfBirth User date of birth
+ * @apiParam {String} userProfileId Id which links to user profile table entry
+ * @apiParam {String} roleId Id which determines what roles user has
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *  {
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWVkZTE1MTAxZDEzOWEwMzZiNzlmNWE5In0sImlhdCI6MTU5MTYxMjY4OCwiZXhwIjoxNTkxNjIyNjg4fQ.dI-Emc4EM24Pw1KFAWJi8sOKPFusgXn_BvODpxBAV70"
+    }
+ */
+router.patch("/update", 
+  [
+    check("username", "Please Enter a Valid Firstname").not().isEmpty(),
+    check("firstname", "Please Enter a Valid Firstname").not().isEmpty(),
+    check("lastname", "Please Enter a Valid Lastname").not().isEmpty(),
+    check("email", "Please enter a valid email").isEmail(),
+    check("password", "Please enter a valid password").isLength({ min: 6 })
+  ], auth, async (req, res) => {
+  try {
+    // request.user is getting fetched from Middleware after token authentication
+    const user = await User.findById(req.user.id);
+
+    if (req.body.username) {
+      user.username = req.body.username
+    }
+
+    if (req.body.firstname) {
+      user.firstname = req.body.firstname
+    }
+    if (req.body.lastname) {
+      user.lastname = req.body.lastname
+    }
+
+    if (req.body.email) {
+      user.email = req.body.email
+    }
+    if (req.body.password) {
+      const salt = await bcrypt.genSalt(10);
+      user.password = await bcrypt.hash(req.body.password, salt);
+    }
+
+    await user.save();
+
+    const payload = {
+        user: {
+            id: user.id
+        }
+    };
+
+    jwt.sign(
+        payload,
+        "randomString", {
+            expiresIn: 10000
+        },
+        (err, token) => {
+            if (err) throw err;
+            res.status(200).json({
+                token
+            });
+        }
+    );
+  } catch (e) {
+    res.send({ message: "Error in Fetching user" });
   }
 });
 
+/**
+ * @api {post} /users/delete/:id Delete User
+ * @apiName Delete User
+ * @apiGroup User
+ *
+ * @apiHeaderExample {json} Header-Example:
+ *     {
+ *       "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWVkZTE1MTAxZDEzOWEwMzZiNzlmNWE5In0sImlhdCI6MTU5MTYxMjY4OCwiZXhwIjoxNTkxNjIyNjg4fQ.dI-Emc4EM24Pw1KFAWJi8sOKPFusgXn_BvODpxBAV70"
+ *     }
+ * 
+ * @apiSuccessExample {json} Success-Response:
+ *  {
+      "_id": "5ede13241d139a036b79f5a8",
+      "msg": "User deleted successfully."
+    }
+ */
 //delete a user
 router.delete('/:id', (req, res, next) => {
   if (!req.params.id) res.json({
@@ -129,7 +321,7 @@ router.delete('/:id', (req, res, next) => {
       err: 'Please provide a valid id param.'
     });
   else
-    Users.findByIdAndDelete(req.params.id, (err, content) => {
+    User.findByIdAndDelete(req.params.id, (err, content) => {
       if (err) res.json({
         err: err
       });
@@ -145,6 +337,42 @@ router.delete('/:id', (req, res, next) => {
         })
       }
     })
+});
+
+/**
+ * @api {post} /users/me Get User information
+ * @apiName Get User Information
+ * @apiGroup User
+ *
+ * @apiHeaderExample {json} Header-Example:
+ *     {
+ *       "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWVkZTE1MTAxZDEzOWEwMzZiNzlmNWE5In0sImlhdCI6MTU5MTYxMjY4OCwiZXhwIjoxNTkxNjIyNjg4fQ.dI-Emc4EM24Pw1KFAWJi8sOKPFusgXn_BvODpxBAV70"
+ *     }
+ * 
+ * @apiSuccessExample {json} Success-Response:
+ *  {
+      "isActive": true,
+      "_id": "5ede15101d139a036b79f5a9",
+      "username": "Pip",
+      "firstname": "bob",
+      "lastname": "Bobby",
+      "email": "bob@bob.fr",
+      "password": "$2a$10$vz/zn82oA9FeJ15gveCEbe7Mw/OhKjx18EFPG2XtFJLz49eFWDLw2",
+      "dateCreation": "2020-06-08T10:38:08.548Z",
+      "dateOfBirth": "2020-06-08T10:38:08.548Z",
+      "createdAt": "2020-06-08T10:38:08.818Z",
+      "updatedAt": "2020-06-08T10:38:08.818Z",
+      "__v": 0
+    }
+ */
+router.get("/me", auth, async (req, res) => {
+  try {
+    // request.user is getting fetched from Middleware after token authentication
+    const user = await User.findById(req.user.id);
+    res.json(user);
+  } catch (e) {
+    res.send({ message: "Error in Fetching user" });
+  }
 });
 
 module.exports = router;

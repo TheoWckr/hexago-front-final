@@ -9,16 +9,18 @@ let usersSchema = new Schema({
         required: true,
         match: /^[a-zA-Z0-9-_]+$/ },
     phone: String,
-    firstName: {
+    firstname: {
         type: String,
         required: true,
         match: /^[a-zA-Z0-9-_]+$/ },
-    lastName: {
+    lastname: {
         type: String,
         required: true,
         match: /^[a-zA-Z0-9-_]+$/ },
-    password: String,
-    salt: String,
+    password: {
+        type: String,
+        required: true
+    },
     email: {
         type:String,
         required:true,
@@ -35,7 +37,8 @@ let usersSchema = new Schema({
     dateLastConnection: Date,
     dateOfBirth: {
         type:Date,
-        default:Date.now},
+        default:Date.now
+    },
     userProfileId: Number,
     roleId: Number,
 }, {
