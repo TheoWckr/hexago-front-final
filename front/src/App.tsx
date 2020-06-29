@@ -12,6 +12,8 @@ import {
 import GameDisplayPage from "./components/game/display/gameDisplayPage";
 import GameCreatePage from "./components/game/create/gameCreatePage";
 import {GenreCRUDPage} from "./components/genre/page/genreCRUDPage";
+import {LoginPage} from "./components/user/login/loginPage";
+import {RegisterPage} from "./components/user/register/registerPage";
 
 const App = () => {
   return (
@@ -29,6 +31,14 @@ const App = () => {
               </Route>
               <Route path="/GenreManagement/">
                   <GenreCRUDPage />
+              </Route>
+
+              <Route exact path="/login">
+                  <LoginPage />
+              </Route>
+
+              <Route exact path="/register">
+                  <RegisterPage />
               </Route>
           </Switch>
       </Router>
