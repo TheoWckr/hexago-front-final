@@ -39,7 +39,11 @@ let usersSchema = new Schema({
         type:Date,
         default:Date.now
     },
-    userProfileId: Number,
+    userProfile: {
+        Schema: mongoose.Schema.userProfile,
+        type: Object,
+        required: true
+    },
     roleId: Number,
 }, {
     collection: 'users',

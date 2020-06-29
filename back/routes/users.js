@@ -37,7 +37,6 @@ router.get('/', (req, res, next) => {
     });
     else res.json({content})
   })
-
 });
 
 //post create a user
@@ -76,17 +75,20 @@ router.post(
   async (req, res) => {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
+        console.log("testnon");
+        console.log(errors)
           return res.status(400).json({
               errors: errors.array()
           });
       }
-
+      console.log("test");
       const {
           username,
           firstname,
           lastname,
           email,
-          password
+          password,
+          userProfile
       } = req.body;
       try {
           let user = await User.findOne({
@@ -103,12 +105,14 @@ router.post(
               firstname,
               lastname,
               email,
-              password
+              password,
+              userProfile
           });
 
           const salt = await bcrypt.genSalt(10);
           user.password = await bcrypt.hash(password, salt);
-
+          user.dateLastConnection = Date.now();
+          user.isActive = true;
           await user.save();
 
           const payload = {
@@ -172,22 +176,31 @@ router.post(
         email
       });
       if (!user)
-        return res.status(400).json({
+        return res.status(404).json({
           message: "User Not Exist"
-        });
+      });
+      if (user.isActive == false) {
+        return res.status(400).json({
+          message: "User is not Active"
+        })
+      }
 
+      
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch)
         return res.status(400).json({
           message: "Incorrect Password !"
         });
 
+      user.dateLastConnection = new Date(Date.now())
+      await user.save()
+
       const payload = {
         user: {
           id: user.id
         }
       };
-
+     
       jwt.sign(
         payload,
         "randomString",
@@ -196,6 +209,7 @@ router.post(
         },
         (err, token) => {
           if (err) throw err;
+          
           res.status(200).json({
             token
           });
@@ -370,6 +384,17 @@ router.get("/me", auth, async (req, res) => {
     // request.user is getting fetched from Middleware after token authentication
     const user = await User.findById(req.user.id);
     res.json(user);
+  } catch (e) {
+    res.send({ message: "Error in Fetching user" });
+  }
+});
+
+router.get("/unactive", auth, async (req, res) => {
+  try {
+    // request.user is getting fetched from Middleware after token authentication
+    const user = await User.findById(req.user.id);
+    user.isActive = false;
+    await user.save()
   } catch (e) {
     res.send({ message: "Error in Fetching user" });
   }

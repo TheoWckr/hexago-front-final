@@ -14,6 +14,7 @@ app.use(cors());
 let indexRouter = require('./routes/index');
 let usersRouter = require('./routes/users');
 let locationsRouter = require('./routes/locations');
+let userProfile = require('./routes/userProfile');
 let GameDetailsRouter = require('./routes/gameDetails');
 let EventRouter = require('./routes/event');
 let BadgeRouter = require('./routes/badge');
@@ -34,6 +35,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/userProfile', userProfile);
 app.use('/locations', locationsRouter);
 app.use('/gamedetails', GameDetailsRouter);
 app.use('/event', EventRouter);
