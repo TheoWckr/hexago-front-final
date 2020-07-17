@@ -1,33 +1,49 @@
 import React, {useState, useEffect} from 'react';
+import './login.css';
 import TextField from '@material-ui/core/TextField';
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
-import CardHeader from '@material-ui/core/CardHeader';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
-        container: {
-            display: 'flex',
-            flexWrap: 'wrap',
-            width: 400,
-            margin: `${theme.spacing(0)} auto`
+        containerBtn: {
+            marginTop: 25
         },
         loginBtn: {
-            marginTop: theme.spacing(2),
-            flexGrow: 1
+            color: '#312783',
+            borderWidth: 2,
+            borderStyle: 'solid',
+            width: 200,
+            borderRadius: 50,
+            backgroundColor: 'rgba(0,0,0,0)',
+            '&:hover': {
+                backgroundColor: 'rgba(0,0,0,0)',
+            },
         },
-        header: {
-            textAlign: 'center',
-            background: '#212121',
-            color: '#fff'
+        loginContainer: {
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: '100%'
         },
-        card: {
-            marginTop: theme.spacing(10)
+        formContainer: {
+            width: '100%'
+        },
+        formBox: {
+            display: 'flex',
+            justifyContent: 'center',
+            width: '100%'
+        },
+        formInput: {
+            width: '45%'
+        },
+        username: {
+            marginRight: 10
+        },
+        password: {
+            marginLeft: 10
         }
-
     }),
 );
 
@@ -64,48 +80,45 @@ export const LoginForm = () => {
     };
 
     return (
-        <form className={classes.container} noValidate autoComplete="off">
-            <Card className={classes.card}>
-                <CardHeader className={classes.header} title="Login App"/>
-                <CardContent>
-                    <div>
-                        <TextField
-                            error={error}
-                            fullWidth
-                            id="username"
-                            type="email"
-                            label="Username"
-                            placeholder="Username"
-                            margin="normal"
-                            onChange={(e) => setUsername(e.target.value)}
-                            onKeyPress={(e) => handleKeyPress(e)}
-                        />
-                        <TextField
-                            error={error}
-                            fullWidth
-                            id="password"
-                            type="password"
-                            label="Password"
-                            placeholder="Password"
-                            margin="normal"
-                            helperText={helperText}
-                            onChange={(e) => setPassword(e.target.value)}
-                            onKeyPress={(e) => handleKeyPress(e)}
-                        />
-                    </div>
-                </CardContent>
-                <CardActions>
-                    <Button
-                        variant="contained"
-                        size="large"
-                        color="secondary"
-                        className={classes.loginBtn}
-                        onClick={() => handleLogin()}
-                        disabled={isButtonDisabled}>
-                        Login
-                    </Button>
-                </CardActions>
-            </Card>
-        </form>
+        <div className="loginContainer">
+            <span className="userLogo"></span>
+            <div className={classes.formContainer}>
+                <form noValidate autoComplete="off" className={classes.formBox}>
+                    <TextField
+                        error={error}
+                        id="username"
+                        className={`${classes.formInput} ${classes.username}`}
+                        type="email"
+                        label="Username"
+                        placeholder="Username"
+                        margin="normal"
+                        onChange={(e) => setUsername(e.target.value)}
+                        onKeyPress={(e) => handleKeyPress(e)}
+                        variant="outlined"
+                    />
+                    <TextField
+                        error={error}
+                        id="password"
+                        className={`${classes.formInput} ${classes.password}`}
+                        type="password"
+                        label="Password"
+                        placeholder="Password"
+                        margin="normal"
+                        helperText={helperText}
+                        onChange={(e) => setPassword(e.target.value)}
+                        onKeyPress={(e) => handleKeyPress(e)}
+                        variant="outlined"
+                    />
+                </form>
+            </div>
+            <div className={classes.containerBtn}>
+                <Button
+                    className={classes.loginBtn}
+                    onClick={() => handleLogin()}
+                    disabled={isButtonDisabled}>
+                    Login
+                </Button>
+            </div>
+        </div>
     );
 };

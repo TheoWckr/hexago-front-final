@@ -16,33 +16,33 @@ import {LoginPage} from "./components/user/login/loginPage";
 import {RegisterPage} from "./components/user/register/registerPage";
 
 const App = () => {
-  return (
-      <Router >
-        <Header />
-          <Switch>
-              <Route exact path="/GameCreate/:id?">
-                  <GameCreatePage />
-              </Route>
-              <Route path="/GameDisplay/:id">
-                  <GameDisplayPage />
-              </Route>
-              <Route path="/GameSearch/">
-                  <GameList />
-              </Route>
-              <Route path="/GenreManagement/">
-                  <GenreCRUDPage />
-              </Route>
+    return (
+        <Router>
+            <Header/>
+            <Switch>
+                <Route exact path="/GameCreate/:id?">
+                    <GameCreatePage/>
+                </Route>
+                <Route path="/GameDisplay/:id">
+                    <GameDisplayPage/>
+                </Route>
+                <Route path="/GameSearch/">
+                    <GameList/>
+                </Route>
+                <Route path="/GenreManagement/">
+                    <GenreCRUDPage/>
+                </Route>
 
-              <Route exact path="/login">
-                  <LoginPage />
-              </Route>
+                <Route exact path="/login">
+                    <LoginPage/>
+                </Route>
 
-              <Route exact path="/register">
-                  <RegisterPage />
-              </Route>
-          </Switch>
-      </Router>
-  );
+                <Route exact path="/register">
+                    <RegisterPage/>
+                </Route>
+            </Switch>
+        </Router>
+    );
 };
 
 export default App;
