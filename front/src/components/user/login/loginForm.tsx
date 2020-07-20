@@ -3,6 +3,7 @@ import './login.css';
 import TextField from '@material-ui/core/TextField';
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import {LoginProvider} from "./loginProvider";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -119,6 +120,7 @@ export const LoginForm = () => {
                     Login
                 </Button>
             </div>
+            <LoginProvider/>
         </div>
     );
 };
