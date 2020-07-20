@@ -1,11 +1,7 @@
 import React from 'react';
 import './login.css';
-import Button from "@material-ui/core/Button";
-import DeleteIcon from '@material-ui/icons/Delete';
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
-import Hidden from "@material-ui/core/Hidden";
 import {Grid} from "@material-ui/core";
-import {LoginForm} from "./loginForm";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -31,14 +27,14 @@ export const LoginProvider = () => {
 
     return (
         <Grid container className={classes.providerContainer}>
-            <Grid item xs={12} sm={12} md={4} lg={4} className={classes.providerItem}>
-                <Button className={classes.loginBtn} startIcon={<DeleteIcon/>}>Sign in with Facebook</Button>
+            <Grid item xs={12} sm={12} md={12} lg={4} className={classes.providerItem}>
+                <img alt="facebook" src="facebook.png"/>
             </Grid>
-            <Grid item xs={12} sm={12} md={4} lg={4} className={classes.providerItem}>
-                <Button className={classes.loginBtn} startIcon={<DeleteIcon/>}>Sign in with Google</Button>
+            <Grid item xs={12} sm={12} md={12} lg={4} className={classes.providerItem}>
+                <img alt="google" src="google.png"/>
             </Grid>
-            <Grid item xs={12} sm={12} md={4} lg={4} className={classes.providerItem}>
-                <Button className={classes.loginBtn} startIcon={<DeleteIcon/>}>Sign in with Apple</Button>
+            <Grid item xs={12} sm={12} md={12} lg={4} className={classes.providerItem}>
+                <img alt="apple" src="apple.png"/>
             </Grid>
         </Grid>
     )
