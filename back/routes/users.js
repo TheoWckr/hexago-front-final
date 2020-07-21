@@ -31,7 +31,6 @@ function handleError(err) {
 //get all user
 router.get('/', (req, res, next) => {
   User.find({}, function (err, content) {
-    console.log(content);
     if (err) res.json({
       err: err
     });
@@ -75,13 +74,11 @@ router.post(
   async (req, res) => {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        console.log("testnon");
         console.log(errors)
           return res.status(400).json({
               errors: errors.array()
           });
       }
-      console.log("test");
       const {
           username,
           firstname,
@@ -135,7 +132,7 @@ router.post(
           );
       } catch (err) {
           console.log(err.message);
-          res.status(500).send("Error in Saving");
+          res.status(500).send("Error in Saving " + err.message);
       }
   }
 );
@@ -395,6 +392,7 @@ router.get("/unactive", auth, async (req, res) => {
     const user = await User.findById(req.user.id);
     user.isActive = false;
     await user.save()
+    res.json({msg: "User unactive"})
   } catch (e) {
     res.send({ message: "Error in Fetching user" });
   }
