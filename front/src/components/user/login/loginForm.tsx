@@ -4,6 +4,7 @@ import TextField from '@material-ui/core/TextField';
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import {LoginProvider} from "./loginProvider";
+import {UserService} from "../../../services/userService";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -65,13 +66,10 @@ export const LoginForm = () => {
     }, [username, password]);
 
     const handleLogin = () => {
-        if (username === 'abc@email.com' && password === 'password') {
-            setError(false);
-            setHelperText('Login Successfully');
-        } else {
-            setError(true);
-            setHelperText('Incorrect username or password')
-        }
+        UserService.login({
+            username: username,
+            password: password
+        }).then((value =>  console.log("logged", value )))
     };
 
     const handleKeyPress = (e: any) => {
