@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme: Theme) =>
         formInput: {
             width: '45%'
         },
-        username: {
+        email: {
             marginRight: 10
         },
         password: {
@@ -51,25 +51,25 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const LoginForm = () => {
     const classes = useStyles();
-    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isButtonDisabled, setIsButtonDisabled] = useState(true);
     const [helperText, setHelperText] = useState('');
     const [error, setError] = useState(false);
 
     useEffect(() => {
-        if (username.trim() && password.trim()) {
+        if (email.trim() && password.trim()) {
             setIsButtonDisabled(false);
         } else {
             setIsButtonDisabled(true);
         }
-    }, [username, password]);
+    }, [email, password]);
 
     const handleLogin = () => {
         UserService.login({
-            username: username,
+            email: email,
             password: password
-        }).then((value =>  console.log("logged", value )))
+        }).then((value =>  console.log("logged", value ))).catch(reason => console.log('error', reason))
     };
 
     const handleKeyPress = (e: any) => {
@@ -85,13 +85,13 @@ export const LoginForm = () => {
                 <form noValidate autoComplete="off" className={classes.formBox}>
                     <TextField
                         error={error}
-                        id="username"
-                        className={`${classes.formInput} ${classes.username}`}
+                        id="email"
+                        className={`${classes.formInput} ${classes.email}`}
                         type="email"
-                        label="Username"
-                        placeholder="Username"
+                        label="Email"
+                        placeholder="Email"
                         margin="normal"
-                        onChange={(e) => setUsername(e.target.value)}
+                        onChange={(e) => setEmail(e.target.value)}
                         onKeyPress={(e) => handleKeyPress(e)}
                         variant="outlined"
                     />
