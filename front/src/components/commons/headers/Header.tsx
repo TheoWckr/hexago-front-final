@@ -6,9 +6,14 @@ import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import AppBar from "@material-ui/core/AppBar";
 import Typography from "@material-ui/core/Typography";
 import {Link} from "react-router-dom";
+import { useLocation } from 'react-router-dom'
 
 const Header = () => {
     const classes = useStyles();
+
+    const currentLocation = useLocation();
+    if (currentLocation.pathname.match('/login'))
+        return null;
     return (
         <div className={classes.root} >
             <AppBar position="static">

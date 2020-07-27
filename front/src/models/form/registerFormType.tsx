@@ -1,4 +1,4 @@
-export interface LoginFormType {
+export interface RegisterFormType {
     username: string;
     firstName: string;
     lastName: string;
