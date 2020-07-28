@@ -210,6 +210,7 @@ function handleError(err) {
       }
       else {
         if (content) {
+          console.log(content)
           res.status(200).send({content: content, msg: 'genre updated successfully.'})
         } else {
           res.status(400).send({err: 'Unable to create this genre.'})
