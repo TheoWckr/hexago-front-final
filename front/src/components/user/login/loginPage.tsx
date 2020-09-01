@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme: Theme) =>
             backgroundColor: '#312783'
         },
         fullHeight: {
-            height: '100vh'
+            height: 'calc(100vh - 64px)'
         }
     }),
 );
