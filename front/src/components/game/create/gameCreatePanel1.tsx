@@ -6,6 +6,7 @@ import {KeyboardDatePicker} from "@material-ui/pickers";
 import {useFormContext} from "react-hook-form";
 import {MaterialUiPickersDate} from "@material-ui/pickers/typings/date";
 import {UtilsDate} from "../../../utils/utilsDate";
+import GameNameQS from "../shared/GameNameQS";
 
 export const GameCreatePanel1 = (props: GameEditProps) => {
     const {register} = useFormContext();
@@ -37,8 +38,7 @@ export const GameCreatePanel1 = (props: GameEditProps) => {
 
 
     const displayExtension = () => {
-        if (isExtension) return <TextField required={true} className={classes.textField}
-                                           label="extension of"> </TextField>;
+        if (isExtension) return <GameNameQS/>;
     };
 
     const handleChangeExtension = (event: React.ChangeEvent<HTMLInputElement>) => {
