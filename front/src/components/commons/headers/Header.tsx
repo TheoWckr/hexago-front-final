@@ -20,8 +20,8 @@ const Header = () => {
                         <Link to="/GameCreate/">  <Button className={classes.menuButton} >Create Game</Button></Link>
                         <Link to="/GameSearch/">  <Button className={classes.menuButton} > Game List </Button></Link>
                         <Link to="/GameDisplay/">  <Button className={classes.menuButton} > Display Game </Button></Link>
-                        <Link to="/register"><Button className={classes.menuButton} >Sign In</Button></Link>
-                        <Link to="/login"> <Button className={classes.menuButton} >Sign Up</Button></Link>
+                        <Link to="/login"><Button className={classes.menuButton} >Sign In</Button></Link>
+                        <Link to="/register"> <Button className={classes.menuButton} >Sign Up</Button></Link>
                 </Toolbar>
             </AppBar>
         </div>

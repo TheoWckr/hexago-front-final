@@ -22,10 +22,10 @@ export const GameSearchPanel = () => {
     useEffect(() => console.log('change genre list' , genreList), [genreList]);
 
     return(
-        <div>
+        <div className="iflx mx-2-childs mt-2 px-2 w-100">
             <TextField id="outlined-search" label="Name" type="search" variant="outlined" onChange={(event => setName(event.target.value))}/>
             <KeyboardDatePicker
-                margin="normal"
+                margin="none"
                 id="date-picker-dialog"
                 label="Year of released"
                 format="yyyy"
