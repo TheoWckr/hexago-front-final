@@ -6,6 +6,9 @@ import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import {KeyboardDatePicker} from "@material-ui/pickers";
 import {MaterialUiPickersDate} from "@material-ui/pickers/typings/date";
+import {AxiosPromise} from "axios";
+import {axios} from "../../../utils/utilsAxios";
+import {UserService} from "../../../services/userService";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -50,7 +53,7 @@ export const RegisterForm = () => {
     const [username, setUsername] = useState('');
     const [email, setMail] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
-    var [birth, setBirth] = useState('');
+    const [birth, setBirth] = useState(new Date().toString());
     const [password, setPassword] = useState('');
     const [passwordConfirm, setPasswordConfirm] = useState(''); 
     const [isButtonDisabled, setIsButtonDisabled] = useState(true);
@@ -66,13 +69,20 @@ export const RegisterForm = () => {
     }, [firstName, lastName, email, phoneNumber, birth, username, password, passwordConfirm]);
 
     const handleRegister = () => {
-        if (username === 'abc@email.com' && password === 'password') {
-            setError(false);
-            setHelperText('Register Successfully');
-        } else {
-            setError(true);
-            setHelperText('Incorrect username or password')
-        }
+    	if (password != passwordConfirm) {
+    		return;
+    		console.log("passwords don't match");
+    	}
+    	const user = {
+    		username: username,
+    		firstname: firstName,
+    		lastname: lastName,
+    		password: password,
+    		email: email,
+    		phone: phoneNumber,
+    		dateOfBirth: birth
+    	}
+        UserService.createUser(user);
     };
 
     const handleKeyPress = (e: any) => {
