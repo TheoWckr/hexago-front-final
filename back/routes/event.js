@@ -1,5 +1,5 @@
 let async = require('async/waterfall');
-
+var unirest = require('unirest');
 let express = require('express');
 let router = express.Router();
 let Event = require('../models/event');
@@ -61,7 +61,16 @@ router.post('/create', async (req, res, next) => {
     if (errorCheck.length === 0) {
         // put game id list with event to create
         eventToCreate.listGames = eventToCreateGameDetailsId;
-        // TODO set owner as current user
+        // TODO changer le localhost:3100 par url en production
+        var me_req = unirest('GET', 'https://localhost:3100/users/me')
+        .headers({
+            'token': me_req.params.token
+        })
+        .end(function (res) { 
+            if (res.error) throw new Error(res.error); 
+            console.log(res);
+            eventToCreate.owner = res.body._id //check le console log de res peut etre raw_body à la place de body
+        });
         eventToCreate.owner = "5e78ab08122bd31750df8c90" ;
         // create event in bdd
         Event.create(eventToCreate, (err, content) => {
