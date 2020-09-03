@@ -5,6 +5,8 @@ let router = express.Router();
 let Event = require('../models/event');
 let GameDetails = require('../models/gameDetails');
 let Users = require ('../models/users');
+let moment = require('moment');
+moment().format();
 
 // let axios = require('axios')
 // axios.defaults.baseURL = `${process.env.AUTH0_AUDIENCE}`
@@ -91,13 +93,15 @@ router.get('/searchlist', async (req, res, next) => {
     let limit = 0;
     let whatToSort= {};
 
-    //TODO search by date
+    //search by event date and up to 7 days later
     if (req.query.date){
+        let laterDate= new Date(moment(req.query.date).add(7,'days').format());
         let date = new Date( req.query.date);
         data['date'] = {
-            $gte: new Date(new Date(0).setFullYear(date.getFullYear(), 0, 1)),
-            $lt: new Date(new Date(0).setFullYear(date.getFullYear(), 11, 31))
+            $gte: new Date(date),
+            $lt: new Date(laterDate)
         }
+        console.log(data);
     }
     //search by localisation
     if (req.query.locationId){
