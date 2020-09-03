@@ -32,10 +32,10 @@ export const UserService = {
         return axios.post('http://localhost:3100/users/login', loginData)
 
     },
-    me(): AxiosPromise{
+    me(token : String): AxiosPromise{
         const header = {
             header : {
-                token: 'dfglkjdfkljdfgklfgkdfjgldk'
+                token: 'token'
             }
         }
         return axios.get('http://localhost:3100/users/me', header);
