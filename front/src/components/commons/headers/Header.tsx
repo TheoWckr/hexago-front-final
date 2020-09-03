@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Toolbar, useTheme,} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import './Header.css';
@@ -7,13 +7,25 @@ import AppBar from "@material-ui/core/AppBar";
 import Typography from "@material-ui/core/Typography";
 import {Link} from "react-router-dom";
 import { useLocation } from 'react-router-dom'
+import {AuthContext} from "../../../services/hooks/useAuth";
 
 const Header = () => {
     const classes = useStyles();
-
+    const {disconnect, isLogged} = useContext(AuthContext);
     const currentLocation = useLocation();
-    if (currentLocation.pathname.match('/login'))
-        return null;
+    const logged = () => {
+        if(!isLogged)
+            return (
+                <>
+                    <Link to="/register"><Button className={classes.menuButton} >Sign In</Button></Link>
+                    <Link to="/login"> <Button className={classes.menuButton} >Sign Up</Button></Link>
+                </>
+            );
+        else
+            return  <Button onClick={disconnect} className={classes.menuButton} >Disconnect</Button>;
+    };
+
+
     return (
         <div className={classes.root} >
             <AppBar position="static">
@@ -25,8 +37,7 @@ const Header = () => {
                         <Link to="/GameCreate/">  <Button className={classes.menuButton} >Create Game</Button></Link>
                         <Link to="/GameSearch/">  <Button className={classes.menuButton} > Game List </Button></Link>
                         <Link to="/GameDisplay/">  <Button className={classes.menuButton} > Display Game </Button></Link>
-                        <Link to="/register"><Button className={classes.menuButton} >Sign In</Button></Link>
-                        <Link to="/login"> <Button className={classes.menuButton} >Sign Up</Button></Link>
+                        {logged()}
                 </Toolbar>
             </AppBar>
         </div>

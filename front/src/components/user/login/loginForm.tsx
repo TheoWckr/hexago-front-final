@@ -1,10 +1,11 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import './login.css';
 import TextField from '@material-ui/core/TextField';
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import {LoginProvider} from "./loginProvider";
 import {UserService} from "../../../services/userService";
+import {AuthContext, useAuth} from "../../../services/hooks/useAuth";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -56,6 +57,7 @@ export const LoginForm = () => {
     const [isButtonDisabled, setIsButtonDisabled] = useState(true);
     const [helperText, setHelperText] = useState('');
     const [error, setError] = useState(false);
+    const {signIn} = useContext(AuthContext);
 
     useEffect(() => {
         if (email.trim() && password.trim()) {
@@ -66,10 +68,11 @@ export const LoginForm = () => {
     }, [email, password]);
 
     const handleLogin = () => {
-        UserService.login({
+       /* UserService.login({
             email: email,
             password: password
-        }).then((value =>  console.log("logged", value ))).catch(reason => console.log('error', reason))
+        }).then((value =>  console.log("logged", value ))).catch(reason => console.log('error', reason)*/
+       signIn(email, password).catch((reason: any) => console.log(reason));
     };
 
     const handleKeyPress = (e: any) => {
