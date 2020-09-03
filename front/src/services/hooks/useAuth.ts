@@ -18,7 +18,7 @@ export function useAuth() {
         })
     };
 
-    const setToken = ( newToken : string | undefined) => {
+    const setToken = ( newToken : string | null) => {
         setAuth(prevState => {
             if(newToken) {
                 prevState.token = newToken;
@@ -37,11 +37,7 @@ export function useAuth() {
     };
 
     const disconnect = () => {
-        setAuth(prevState => {
-            prevState.token = undefined;
-            setIsLogged(false);
-            return prevState;
-        });
+       setToken(null);
     };
 
     const token = () => {
@@ -51,8 +47,14 @@ export function useAuth() {
         return auth.user
     };
 
+    const autoLogin = () => {
+        setToken(localStorage.getItem('token'));
+
+    };
+
    useEffect(() => {
                 setAuth(auth);
+                autoLogin()
         },[]);
 
     return {
