@@ -3,6 +3,8 @@ let async = require('async/waterfall');
 let express = require('express');
 let router = express.Router();
 let Event = require('../models/event');
+let GameDetails = require('../models/gameDetails');
+let Users = require ('../models/users');
 
 // let axios = require('axios')
 // axios.defaults.baseURL = `${process.env.AUTH0_AUDIENCE}`
@@ -23,7 +25,7 @@ function logHandleError(err) {
     }
 }
 
-//get all games
+//get all events
 router.get('/', (req, res, next) => {
     Event.find({}, function (err, content) {
         console.log(content);
@@ -35,51 +37,119 @@ router.get('/', (req, res, next) => {
 
 });
 
-//post create a game
+//post create an event http://localhost:3100/event/create?token=xxxxxxx
 
-router.post('/create', (req, res, next) => {
-    Event.create(req.body, (err, content) => {
-        if (err) res.json({err: err});
-        else {
-            if (content) {
-                res.json({content: content, msg: 'Event created successfully.'})
-            } else {
-                res.json({err: 'Unable to create this event.'})
-            }
-        }
-    })
-});
-
-//get a game
-router.get('/:id', function (req, res, next) {
-    if (!req.params.id) res.json({
-        err: 'Please provide an id param.'
-    });
-    else if (req.params.id.length !== 24)
-        res.json({
-            err: 'Please provide a valid id param.'
-        });
-    else {
-        Event.findById(
-            req.params.id, (err, content) => {
-                if (err) res.json({
-                    err: err
-                });
-                else {
-                    if (content) {
-                        res.json({
-                            content
-                        })
-                    } else {
-                        res.json({
-                            err: 'No event found with this id.'
-                        })
-                    }
+router.post('/create', async (req, res, next) => {
+    const errorCheck = [];
+    let eventToCreate = req.body;
+    let eventToCreateGameDetailsId = [];
+    // TODO in the future, check agenda conflict
+    // check if games within listGames exist
+    if (req.body.listGames.length !== 0) {
+        const listGamesPromise = await req.body.listGames.map(async (game, res,next ) =>
+            GameDetails.findOne( {_id: game}, async function (err, result){
+                if (!result){
+                    errorCheck.push(game);
                 }
-            })
+                else {eventToCreateGameDetailsId.push(result._id)}
+            } )
+
+        );
+        const resultGameDetails = await Promise.all(listGamesPromise);
+    if (errorCheck.length === 0) {
+        // put game id list with event to create
+        eventToCreate.listGames = eventToCreateGameDetailsId;
+        // TODO set owner as current user
+        eventToCreate.owner = "5e78ab08122bd31750df8c90" ;
+        // create event in bdd
+        Event.create(eventToCreate, (err, content) => {
+            if (err) res.json({err: err});
+            else {
+                if (content) {
+                    res.json({content: content, msg: 'Event created successfully.'})
+                } else {
+                    res.json({err: 'Unable to create this event.'})
+                }
+            }
+        })
+    } else {
+        res.json({error: 'the following games ' + errorCheck + ' do no exist.'});
+    }
+    } else {
+        res.json({error: 'listGames is required.'})
     }
 });
 
+
+
+//--------------------------------------------------
+//get events and return display list required field /gamedetails/quicksearch?date=xxxx&locationId=xxxx&listGames=xxxxx&limit=20&offset=xxxx&showEventFull=xxxx
+router.get('/searchlist', async (req, res, next) => {
+    let data= {};
+    let query= {};
+    let offset= 0;
+    let limit = 0;
+    let whatToSort= {};
+
+    //TODO search by date
+    if (req.query.date){
+        let date = new Date( req.query.date);
+        data['date'] = {
+            $gte: new Date(new Date(0).setFullYear(date.getFullYear(), 0, 1)),
+            $lt: new Date(new Date(0).setFullYear(date.getFullYear(), 11, 31))
+        }
+    }
+    //search by localisation
+    if (req.query.locationId){
+        let toRegexp= req.query.locationId;
+        data['locationId'] = new RegExp(".*"+toRegexp+".*",'i');
+    }
+    //search by game within list
+    if (req.query.listGames){
+        data['listGames']= { '$all': req.query.listGames.split(",")}
+    }
+    // return full event or not
+    if (req.query.showEventFull){
+        if (req.query.showEventFull===false){
+            data['maxPlayers']= { '$ne': this.listPlayers.length};
+        }
+    }
+    query= Event.find(data).populate('owner', 'username').populate('listGames', 'name').select('listGames date owner maxPlayers locationId listPlayers');
+
+
+    //pagination handling
+
+    if (req.query.limit) {
+        limit = parseInt(req.query.limit);
+        query = query.limit(limit)
+    }
+    if (req.query.offset) {
+        offset = parseInt(req.query.offset);
+        query = query.skip(offset*limit)
+    }
+
+        query.exec(function (err, content){
+            let data = [];
+            for (let current=0; current < content.length; current++)
+            {
+                data.push({
+                    listPlayers: content[current].listPlayers.length,
+                    listGames: content[current].listGames,
+                    maxPlayers: content[current].maxPlayers,
+                    locationId: content[current].locationId,
+                    owner: content[current].owner,
+                    date: content[current].date
+                });
+                console.log(data);
+            }
+            res.send({content:data});
+        });
+});
+
+
+
+
+//------------------------------------------------------------
 //delete a game
 router.delete('/:id', (req, res, next) => {
     if (!req.params.id) res.json({
