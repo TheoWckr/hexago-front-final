@@ -17,10 +17,10 @@ import {RegisterPage} from "./components/user/register/registerPage";
 import {AuthContext, useAuth} from './services/hooks/useAuth';
 
 const App = () => {
-    const {isLogged,signIn, setToken,token,user, disconnect} = useAuth();
+    const {isLogged,signIn, updateToken,token,currentUser, disconnect} = useAuth();
 
     return (
-        <AuthContext.Provider value ={ {isLogged,signIn, setToken,token,user, disconnect}}>
+        <AuthContext.Provider value ={ {isLogged,signIn, updateToken,token,currentUser, disconnect}}>
             <Router>
                 <Header/>
                 <Switch>

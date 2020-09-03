@@ -1,34 +1,44 @@
 // Hook (use-auth.js)
 import {useState, createContext, useEffect} from "react";
 import {UserService} from "../userService";
-import {AuthModel} from "../../models/authModel";
+import {UserModel} from "../../models/userModel";
 
 // Provider hook that creates auth object and handles state
 export const AuthContext =  createContext(undefined as any );
 
 export function useAuth() {
-    const [auth, setAuth] = useState(new AuthModel());
+    const [token, setToken] = useState(null as String | undefined | null)
+    const [currentUser, setCurrentUser] = useState(undefined as UserModel |undefined);
     const [isLogged, setIsLogged] = useState(false);
-
+    /**
+     * Fonction called on login
+     * @param email
+     * @param password
+     */
     const signIn = (email :string , password : string) => {
        return UserService.login({
             email : email,
             password: password}).then(result => {
-                setToken(result.data.token)
+                updateToken(result.data.token)
         })
     };
 
-    const setToken = ( newToken : string | null) => {
-        setAuth(prevState => {
+    /**
+     * function used to change token
+     * leading to set the others values
+     * @param newToken, if null , remove all datas
+     */
+    const updateToken = (newToken : string | null) => {
+        setToken(prevState => {
             if(newToken) {
-                prevState.token = newToken;
+                prevState = newToken;
                 localStorage.setItem('token', newToken);
                 setIsLogged(true);
                 console.log(isLogged);
             }
             else {
                 localStorage.removeItem('token');
-                prevState.token = undefined;
+                prevState = undefined;
                 setIsLogged(false);
             }
                 return prevState;
@@ -36,32 +46,29 @@ export function useAuth() {
         )
     };
 
+    /**
+     * hook to log out at any moment
+     */
     const disconnect = () => {
-       setToken(null);
+       updateToken(null);
     };
-
-    const token = () => {
-        return auth.token
-    };
-    const user =() => {
-        return auth.user
-    };
-
+    /**
+     *
+     */
     const autoLogin = () => {
-        setToken(localStorage.getItem('token'));
+        updateToken(localStorage.getItem('token'));
 
     };
 
    useEffect(() => {
-                setAuth(auth);
                 autoLogin()
         },[]);
 
     return {
-        user,
+        currentUser,
         isLogged,
         token,
-        setToken,
+        updateToken,
         signIn,
         disconnect
     };
