@@ -18,6 +18,11 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         fullHeight: {
             height: 'calc(100vh - 64px)'
+        },
+        [theme.breakpoints.down('xs')]: {
+            fullHeight: {
+                height: 'calc(100vh - 56px)'
+            }
         }
     }),
 );
@@ -29,7 +34,7 @@ export const LoginPage = () => {
         <Grid container className={classes.fullHeight}>
             <Hidden only={['xs', 'sm']}>
                 <Grid item md={4} lg={4} className={classes.leftContain}>
-                    CONNEXION
+                    SIGN IN
                 </Grid>
             </Hidden>
             <Grid item xs={12} sm={12} md={8} lg={8}>

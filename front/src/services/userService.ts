@@ -30,7 +30,6 @@ export const UserService = {
     },
     login(loginData: LoginFormType): AxiosPromise{
         return axios.post('http://localhost:3100/users/login', loginData)
-
     },
     me(): AxiosPromise{
         const header = {
