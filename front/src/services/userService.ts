@@ -36,7 +36,7 @@ export const UserService = {
             header : {
                 token: 'token'
             }
-        }
+        };
         return axios.get('http://localhost:3100/users/me', header);
 
     },

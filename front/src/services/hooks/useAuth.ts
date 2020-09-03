@@ -14,7 +14,6 @@ export function useAuth() {
        return UserService.login({
             email : email,
             password: password}).then(result => {
-                console.log(result);
                 setToken(result.data.token)
         })
     };
@@ -23,10 +22,12 @@ export function useAuth() {
         setAuth(prevState => {
             if(newToken) {
                 prevState.token = newToken;
+                localStorage.setItem('token', newToken);
                 setIsLogged(true);
                 console.log(isLogged);
             }
             else {
+                localStorage.removeItem('token');
                 prevState.token = undefined;
                 setIsLogged(false);
             }

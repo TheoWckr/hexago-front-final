@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import './login.css';
 import TextField from '@material-ui/core/TextField';
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
@@ -10,6 +10,7 @@ import {Box} from "@material-ui/core";
 import {useHistory} from "react-router";
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from "@material-ui/core/CircularProgress";
+import {AuthContext, useAuth} from "../../../services/hooks/useAuth";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -56,6 +57,7 @@ export const LoginForm = () => {
     const [helperText, setHelperText] = useState('');
     const [error, setError] = useState(false);
     const [load, setLoad] = useState(false);
+    const {signIn} = useContext(AuthContext);
     const history = useHistory();
 
     useEffect(() => {
@@ -73,20 +75,16 @@ export const LoginForm = () => {
     const handleLogin = async () => {
         setLoad(true);
         await sleep(1000);
-        UserService.login({
-            email: email,
-            password: password
-        })
-            .then(value => {
+        signIn(email, password)
+            .then(() => {
                 setError(false);
                 setLoad(false);
-                localStorage.setItem('token', value.data.token);
                 history.push("/");
-            })
-            .catch(reason => {
-                setError(true);
-                setHelperText('Incorrect username or password');
-            });
+            }).catch(() => {
+            setError(true);
+            setLoad(false);
+            setHelperText('Incorrect username or password');
+        })
     };
 
     const handleKeyPress = (e: any) => {

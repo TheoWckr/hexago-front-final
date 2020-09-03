@@ -1,24 +1,22 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Toolbar, useTheme,} from "@material-ui/core";
-import Button from "@material-ui/core/Button";
 import './Header.css';
 import {makeStyles, createStyles, Theme} from '@material-ui/core/styles';
 import AppBar from "@material-ui/core/AppBar";
 import Typography from "@material-ui/core/Typography";
 import {Link, useHistory} from "react-router-dom";
-import {useLocation} from 'react-router-dom';
 import IconButton from "@material-ui/core/IconButton";
 import DehazeRoundedIcon from '@material-ui/icons/DehazeRounded';
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
+import {AuthContext} from "../../../services/hooks/useAuth";
 
 const Header = () => {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
-    const currentLocation = useLocation();
+    const {isLogged, disconnect } = useContext(AuthContext);
     const history = useHistory();
-    const token = localStorage.getItem('token');
 
     const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
@@ -30,7 +28,7 @@ const Header = () => {
 
     const logout = () => {
         setAnchorEl(null);
-        localStorage.removeItem('token');
+        disconnect();
         history.push("/");
     };
 
@@ -66,7 +64,7 @@ const Header = () => {
                     open={open}
                     onClose={handleClose}
                 >
-                    {token && (
+                    {isLogged && (
                         [
                             <MenuItem key={0} onClick={handleClose} component={Link} to={'/GenreManagement/'}>Genre management</MenuItem>,
                             <MenuItem key={1} onClick={handleClose} component={Link} to={'/GameCreate/'}>Create Game</MenuItem>,
@@ -75,7 +73,7 @@ const Header = () => {
                             <MenuItem key={4} onClick={logout}>Logout</MenuItem>
                         ]
                     )}
-                    {!token && (
+                    {!isLogged && (
                         [
                             <MenuItem key={0} onClick={handleClose} component={Link} to={'/login'}>Log In</MenuItem>,
                             <MenuItem key={1} onClick={handleClose} component={Link} to={'/register'}>Register</MenuItem>
