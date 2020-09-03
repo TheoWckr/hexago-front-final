@@ -1,47 +1,89 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {Toolbar, useTheme,} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import './Header.css';
 import {makeStyles, createStyles, Theme} from '@material-ui/core/styles';
 import AppBar from "@material-ui/core/AppBar";
 import Typography from "@material-ui/core/Typography";
-import {Link} from "react-router-dom";
-import {AuthContext} from "../../../services/hooks/useAuth";
+import {Link, useHistory} from "react-router-dom";
+import {useLocation} from 'react-router-dom';
+import IconButton from "@material-ui/core/IconButton";
+import DehazeRoundedIcon from '@material-ui/icons/DehazeRounded';
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
 
 const Header = () => {
     const classes = useStyles();
-    const {disconnect, isLogged} = useContext(AuthContext);
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const open = Boolean(anchorEl);
     const currentLocation = useLocation();
+    const history = useHistory();
+    const token = localStorage.getItem('token');
 
-    const logged = () => {
-        if(!isLogged)
-            return (
-                <>
-                    <Link to="/register"><Button className={classes.menuButton} >Sign In</Button></Link>
-                    <Link to="/login"> <Button className={classes.menuButton} >Sign Up</Button></Link>
-                </>
-            );
-        else
-            return  <Button onClick={disconnect} className={classes.menuButton} >Disconnect</Button>;
+    const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorEl(event.currentTarget);
     };
 
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
+    const logout = () => {
+        setAnchorEl(null);
+        localStorage.removeItem('token');
+        history.push("/");
+    };
+
+    const push_login = () => {
+        setAnchorEl(null);
+        history.push("/login");
+    }
+
+    const push_register = () => {
+        setAnchorEl(null);
+        history.push("/register");
+    }
 
     return (
-        <div className={classes.root}>
-            <AppBar className={classes.background} position="static" elevation={0}>
-                <Toolbar>
-                    <Typography variant="h6" className={[classes.title, "App-title"].join(' ')}>
-                        <span className="App-title">HexaGo</span>
-                    </Typography>
-                    <Link to="/GenreManagement/"> <Button className={classes.menuButton}>Genre
-                        Management</Button></Link>
-                    <Link to="/GameCreate/"> <Button className={classes.menuButton}>Create Game</Button></Link>
-                    <Link to="/GameSearch/"> <Button className={classes.menuButton}> Game List </Button></Link>
-                    <Link to="/GameDisplay/"> <Button className={classes.menuButton}> Display Game </Button></Link>
-                       {logged()}
-                </Toolbar>
-            </AppBar>
-        </div>
+        <AppBar className={classes.background} position="static" elevation={0}>
+            <Toolbar>
+                <Typography variant="h6" className={[classes.title, "App-title"].join(' ')}>
+                    <span className="App-title">HexaGo</span>
+                </Typography>
+                <IconButton
+                    aria-label="menu"
+                    aria-controls="menu-appbar"
+                    aria-haspopup="true"
+                    onClick={handleMenu}
+                    color="inherit"
+                >
+                    <DehazeRoundedIcon/>
+                </IconButton>
+                <Menu
+                    id="menu-appbar"
+                    anchorEl={anchorEl}
+                    keepMounted
+                    open={open}
+                    onClose={handleClose}
+                >
+                    {token && (
+                        [
+                            <MenuItem key={0} onClick={handleClose} component={Link} to={'/GenreManagement/'}>Genre management</MenuItem>,
+                            <MenuItem key={1} onClick={handleClose} component={Link} to={'/GameCreate/'}>Create Game</MenuItem>,
+                            <MenuItem key={2} onClick={handleClose} component={Link} to={'/GameSearch/'}>Game List</MenuItem>,
+                            <MenuItem key={3} onClick={handleClose} component={Link} to={'/GameDisplay/'}>Display game</MenuItem>,
+                            <MenuItem key={4} onClick={logout}>Logout</MenuItem>
+                        ]
+                    )}
+                    {!token && (
+                        [
+                            <MenuItem key={0} onClick={handleClose} component={Link} to={'/login'}>Log In</MenuItem>,
+                            <MenuItem key={1} onClick={handleClose} component={Link} to={'/register'}>Register</MenuItem>
+                        ]
+                    )}
+                </Menu>
+            </Toolbar>
+        </AppBar>
     );
 };
 
@@ -49,6 +91,11 @@ const useStyles = makeStyles((theme: Theme) =>
     createStyles({
             root: {
                 flexGrow: 1,
+            },
+            menuLink: {
+                marginRight: theme.spacing(2),
+                color: theme.palette.common.white,
+                textDecoration: 'none'
             },
             menuButton: {
                 marginRight: theme.spacing(2),
@@ -73,6 +120,5 @@ const useStyles = makeStyles((theme: Theme) =>
         },
     ),
 );
-
 
 export default Header;

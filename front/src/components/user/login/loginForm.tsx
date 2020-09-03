@@ -1,11 +1,15 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useState, useEffect} from 'react';
 import './login.css';
 import TextField from '@material-ui/core/TextField';
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import {LoginProvider} from "./loginProvider";
 import {UserService} from "../../../services/userService";
-import {AuthContext, useAuth} from "../../../services/hooks/useAuth";
+import Grid from '@material-ui/core/Grid';
+import {Box} from "@material-ui/core";
+import {useHistory} from "react-router";
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -39,14 +43,8 @@ const useStyles = makeStyles((theme: Theme) =>
             width: '100%'
         },
         formInput: {
-            width: '45%'
+            width: '100%'
         },
-        email: {
-            marginRight: 10
-        },
-        password: {
-            marginLeft: 10
-        }
     }),
 );
 
@@ -57,7 +55,8 @@ export const LoginForm = () => {
     const [isButtonDisabled, setIsButtonDisabled] = useState(true);
     const [helperText, setHelperText] = useState('');
     const [error, setError] = useState(false);
-    const {signIn} = useContext(AuthContext);
+    const [load, setLoad] = useState(false);
+    const history = useHistory();
 
     useEffect(() => {
         if (email.trim() && password.trim()) {
@@ -67,12 +66,27 @@ export const LoginForm = () => {
         }
     }, [email, password]);
 
-    const handleLogin = () => {
-       /* UserService.login({
+    const sleep = (milliseconds: number) => {
+        return new Promise(resolve => setTimeout(resolve, milliseconds))
+    }
+
+    const handleLogin = async () => {
+        setLoad(true);
+        await sleep(1000);
+        UserService.login({
             email: email,
             password: password
-        }).then((value =>  console.log("logged", value ))).catch(reason => console.log('error', reason)*/
-       signIn(email, password).catch((reason: any) => console.log(reason));
+        })
+            .then(value => {
+                setError(false);
+                setLoad(false);
+                localStorage.setItem('token', value.data.token);
+                history.push("/");
+            })
+            .catch(reason => {
+                setError(true);
+                setHelperText('Incorrect username or password');
+            });
     };
 
     const handleKeyPress = (e: any) => {
@@ -86,31 +100,41 @@ export const LoginForm = () => {
             <span className="userLogo"></span>
             <div className={classes.formContainer}>
                 <form noValidate autoComplete="off" className={classes.formBox}>
-                    <TextField
-                        error={error}
-                        id="email"
-                        className={`${classes.formInput} ${classes.email}`}
-                        type="email"
-                        label="Email"
-                        placeholder="Email"
-                        margin="normal"
-                        onChange={(e) => setEmail(e.target.value)}
-                        onKeyPress={(e) => handleKeyPress(e)}
-                        variant="outlined"
-                    />
-                    <TextField
-                        error={error}
-                        id="password"
-                        className={`${classes.formInput} ${classes.password}`}
-                        type="password"
-                        label="Password"
-                        placeholder="Password"
-                        margin="normal"
-                        helperText={helperText}
-                        onChange={(e) => setPassword(e.target.value)}
-                        onKeyPress={(e) => handleKeyPress(e)}
-                        variant="outlined"
-                    />
+                    <Grid container>
+                        <Grid item xs={12} sm={12} md={6}>
+                            <Box pl={2} pr={2}>
+                                <TextField
+                                    error={error}
+                                    id="email"
+                                    className={`${classes.formInput}`}
+                                    type="email"
+                                    label="Email"
+                                    placeholder="Email"
+                                    margin="normal"
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    onKeyPress={(e) => handleKeyPress(e)}
+                                    variant="outlined"
+                                />
+                            </Box>
+                        </Grid>
+                        <Grid item xs={12} sm={12} md={6}>
+                            <Box pl={2} pr={2}>
+                                <TextField
+                                    error={error}
+                                    id="password"
+                                    className={`${classes.formInput}`}
+                                    type="password"
+                                    label="Password"
+                                    placeholder="Password"
+                                    margin="normal"
+                                    helperText={helperText}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    onKeyPress={(e) => handleKeyPress(e)}
+                                    variant="outlined"
+                                />
+                            </Box>
+                        </Grid>
+                    </Grid>
                 </form>
             </div>
             <div className={classes.containerBtn}>
@@ -122,6 +146,9 @@ export const LoginForm = () => {
                 </Button>
             </div>
             <LoginProvider/>
+            <Backdrop open={load}>
+                <CircularProgress color="inherit"/>
+            </Backdrop>
         </div>
     );
 };
