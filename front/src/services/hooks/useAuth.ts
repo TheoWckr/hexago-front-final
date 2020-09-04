@@ -3,7 +3,7 @@ import {useState, createContext, useEffect} from "react";
 import {UserService} from "../userService";
 import {UserModel} from "../../models/userModel";
 
-// Provider hook that creates auth object and handles state
+// Provider empty because we can't create hook outside of component
 export const AuthContext =  createContext(undefined as any );
 
 export function useAuth() {
@@ -34,7 +34,6 @@ export function useAuth() {
                 prevState = newToken;
                 localStorage.setItem('token', newToken);
                 setIsLogged(true);
-                console.log(isLogged);
             }
             else {
                 localStorage.removeItem('token');
@@ -53,11 +52,10 @@ export function useAuth() {
        updateToken(null);
     };
     /**
-     *
+     * lauch at the start to allow
      */
     const autoLogin = () => {
         updateToken(localStorage.getItem('token'));
-
     };
 
    useEffect(() => {
