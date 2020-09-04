@@ -15,12 +15,16 @@ import {GenreCRUDPage} from "./components/genre/page/genreCRUDPage";
 import {LoginPage} from "./components/user/login/loginPage";
 import {RegisterPage} from "./components/user/register/registerPage";
 import {AuthContext, useAuth} from './services/hooks/useAuth';
+import EventListPage from "./components/event/list/eventListPage";
+import EventDisplayPage from "./components/event/display/eventDisplayPage";
+import EventCreatePage from "./components/event/create/eventCreatePage";
+import EventUpdatePage from "./components/event/update/eventUpdatePage";
 
 const App = () => {
-    const {isLogged,signIn, updateToken,token,currentUser, disconnect} = useAuth();
+    const {isLogged, signIn, updateToken, token, currentUser, disconnect} = useAuth();
 
     return (
-        <AuthContext.Provider value ={ {isLogged,signIn, updateToken,token,currentUser, disconnect}}>
+        <AuthContext.Provider value={{isLogged, signIn, updateToken, token, currentUser, disconnect}}>
             <Router>
                 <Header/>
                 <Switch>
@@ -36,12 +40,22 @@ const App = () => {
                     <Route path="/GenreManagement/">
                         <GenreCRUDPage/>
                     </Route>
-
-                    <Route exact path="/login">
+                    <Route exact path="/event">
+                        <EventListPage/>
+                    </Route>
+                    <Route path="/event/create">
+                        <EventCreatePage/>
+                    </Route>
+                    <Route path="/event/update/:id">
+                        <EventUpdatePage/>
+                    </Route>
+                    <Route path="/event/:id">
+                        <EventDisplayPage/>
+                    </Route>
+                    <Route path="/login">
                         <LoginPage/>
                     </Route>
-
-                    <Route exact path="/register">
+                    <Route path="/register">
                         <RegisterPage/>
                     </Route>
                 </Switch>

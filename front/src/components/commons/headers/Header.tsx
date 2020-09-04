@@ -34,16 +34,6 @@ const Header = () => {
         history.push("/");
     };
 
-    const push_login = () => {
-        setAnchorEl(null);
-        history.push("/login");
-    }
-
-    const push_register = () => {
-        setAnchorEl(null);
-        history.push("/register");
-    }
-
     return (
         <AppBar className={classes.background} position="static" elevation={0}>
             <Toolbar>
@@ -72,13 +62,21 @@ const Header = () => {
                             <MenuItem key={1} onClick={handleClose} component={Link} to={'/GameCreate/'}>Create Game</MenuItem>,
                             <MenuItem key={2} onClick={handleClose} component={Link} to={'/GameSearch/'}>Game List</MenuItem>,
                             <MenuItem key={3} onClick={handleClose} component={Link} to={'/GameDisplay/'}>Display game</MenuItem>,
-                            <MenuItem key={4} onClick={logout}>Logout</MenuItem>
+                            <MenuItem key={4} onClick={handleClose} component={Link} to={'/event'}>Event list</MenuItem>,
+                            <MenuItem key={5} onClick={handleClose} component={Link} to={'/event/create'}>Event create</MenuItem>,
+                            <MenuItem key={6} onClick={handleClose} component={Link} to={'/event/update/1'}>Event update</MenuItem>,
+                            <MenuItem key={7} onClick={handleClose} component={Link} to={'/event/1'}>Event display</MenuItem>,
+                            <MenuItem key={8} onClick={logout}>Logout</MenuItem>
                         ]
                     )}
                     {!isLogged && (
                         [
                             <MenuItem key={0} onClick={handleClose} component={Link} to={'/login'}>Log In</MenuItem>,
-                            <MenuItem key={1} onClick={handleClose} component={Link} to={'/register'}>Register</MenuItem>
+                            <MenuItem key={1} onClick={handleClose} component={Link} to={'/register'}>Register</MenuItem>,
+                            <MenuItem key={2} onClick={handleClose} component={Link} to={'/event'}>Event list</MenuItem>,
+                            <MenuItem key={3} onClick={handleClose} component={Link} to={'/event/create'}>Event create</MenuItem>,
+                            <MenuItem key={4} onClick={handleClose} component={Link} to={'/event/update/1'}>Event update</MenuItem>,
+                            <MenuItem key={5} onClick={handleClose} component={Link} to={'/event/1'}>Event display</MenuItem>,
                         ]
                     )}
                 </Menu>
