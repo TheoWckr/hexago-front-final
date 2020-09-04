@@ -32,16 +32,6 @@ const Header = () => {
         history.push("/");
     };
 
-    const push_login = () => {
-        setAnchorEl(null);
-        history.push("/login");
-    }
-
-    const push_register = () => {
-        setAnchorEl(null);
-        history.push("/register");
-    }
-
     return (
         <AppBar className={classes.background} position="static" elevation={0}>
             <Toolbar>
@@ -76,7 +66,11 @@ const Header = () => {
                     {!isLogged && (
                         [
                             <MenuItem key={0} onClick={handleClose} component={Link} to={'/login'}>Log In</MenuItem>,
-                            <MenuItem key={1} onClick={handleClose} component={Link} to={'/register'}>Register</MenuItem>
+                            <MenuItem key={1} onClick={handleClose} component={Link} to={'/register'}>Register</MenuItem>,
+                            <MenuItem key={2} onClick={handleClose} component={Link} to={'/event'}>Event list</MenuItem>,
+                            <MenuItem key={3} onClick={handleClose} component={Link} to={'/event/create'}>Event create</MenuItem>,
+                            <MenuItem key={4} onClick={handleClose} component={Link} to={'/event/update/1'}>Event update</MenuItem>,
+                            <MenuItem key={5} onClick={handleClose} component={Link} to={'/event/1'}>Event display</MenuItem>,
                         ]
                     )}
                 </Menu>
