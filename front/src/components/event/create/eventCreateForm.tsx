@@ -4,7 +4,6 @@ import {EventModel} from "../../../models/eventModel";
 import {Slider} from "@material-ui/core";
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
-import "./textfield.css"
 import {marksGameDuration, marksGameNumPlayer} from "../../../models/gameModel";
 import {RichTextEditor} from "../../commons/richText/RichTextEditor";
 import {KeyboardDateTimePicker} from "@material-ui/pickers";

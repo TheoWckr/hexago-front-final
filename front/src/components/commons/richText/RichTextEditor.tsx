@@ -1,6 +1,15 @@
 import React from "react";
 import {Editor} from "@tinymce/tinymce-react";
+import "./textfield.css"
 
+/**
+ *
+ * @param props
+ *  - handleEditorChange content = HTML written by user
+ *  - initialValue = HTML set by defaults
+ *  - height = default height
+ * @constructor
+ */
 export const RichTextEditor = (props: {
                                    handleEditorChange : (content : string, editor :any) => void ,
                                    initialValue? : string,
