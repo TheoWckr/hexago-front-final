@@ -25,6 +25,7 @@
     "morgan": "~1.9.1",
     "pug": "2.0.0-beta11",
     "supertest": "^4.0.2",
+    "unirest": "^0.6.0",
     "validator": "^12.2.0"
   },
   "devDependencies": {

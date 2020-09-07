@@ -31,6 +31,8 @@ let EventSchema = new Schema({
     },
     // liste de participants
     listPlayers:[{type: Schema.Types.ObjectID, ref:'Users'}],
+    // nombre de particpants
+    currentPlayers: Number,
     // owner de l'event
     owner:{
         type: Schema.Types.ObjectID, ref:'Users',

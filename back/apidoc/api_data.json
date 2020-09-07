@@ -510,6 +510,210 @@
     "groupTitle": "User"
   },
   {
+    "type": "get",
+    "url": "/event/searchid/_id",
+    "title": "get a game by it id",
+    "name": "GET_event_by_id",
+    "group": "event",
+    "description": "<p>Get an event by it id</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "ObjectID",
+            "optional": false,
+            "field": "_id",
+            "description": "<p>Unique ID of an event</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n    \"content\": {\n        \"listPlayers\": [\n            \"5e78ab08122bd31750df8c90\"\n        ],\n        \"listGames\": [\n            {\n                \"_id\": \"5e95c3eae39f5227dc0533be\",\n                \"name\": \"7 Wonders Duelle 75\"\n            }\n        ],\n        \"_id\": \"5f523e68de91022c1028886c\",\n        \"duration\": 90,\n        \"date\": \"2015-10-01T07:22:00.000Z\",\n        \"minPlayers\": 2,\n        \"maxPlayers\": 4,\n        \"phone\": \"+330000000\",\n        \"details\": \"bobibobou\",\n        \"locationId\": \"Montpellier\",\n        \"owner\": {\n            \"_id\": \"5e78ab08122bd31750df8c90\",\n            \"username\": \"Pip\"\n        },\n        \"__v\": 0,\n        \"currentPlayers\": 1\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/event.js",
+    "groupTitle": "event"
+  },
+  {
+    "type": "get",
+    "url": "/event/searchlist",
+    "title": "search list of event",
+    "name": "GET_event_searchlist",
+    "group": "event",
+    "description": "<p>search a list of events</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Date",
+            "optional": false,
+            "field": "date",
+            "description": "<p>start date to search for events, return all event within startdate until 7 days after</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "locationId",
+            "description": "<p>the place of the event</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "ObjectId",
+            "optional": false,
+            "field": "listGames",
+            "description": "<p>search a game within the array of games within the event</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Boolean",
+            "optional": false,
+            "field": "showEventFull",
+            "description": "<p>return contains event which are full of player if set to true</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "limit",
+            "description": "<p>Required for pagination, set the number of entries per page</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "offset",
+            "description": "<p>Required for pagination, select the page desired (first one is 0)</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n    \"content\": {\n        \"listPlayers\": [\n            \"5e78ab08122bd31750df8c90\"\n        ],\n        \"listGames\": [\n            {\n                \"_id\": \"5e95c3eae39f5227dc0533be\",\n                \"name\": \"7 Wonders Duelle 75\"\n            }\n        ],\n        \"_id\": \"5f523e68de91022c1028886c\",\n        \"duration\": 90,\n        \"date\": \"2015-10-01T07:22:00.000Z\",\n        \"minPlayers\": 2,\n        \"maxPlayers\": 4,\n        \"phone\": \"+330000000\",\n        \"details\": \"bobibobou\",\n        \"locationId\": \"Montpellier\",\n        \"owner\": {\n            \"_id\": \"5e78ab08122bd31750df8c90\",\n            \"username\": \"Pip\"\n        },\n        \"__v\": 0,\n        \"currentPlayers\": 1\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/event.js",
+    "groupTitle": "event"
+  },
+  {
+    "type": "post",
+    "url": "/event/",
+    "title": "Create an event",
+    "name": "POST_event",
+    "group": "event",
+    "description": "<p>event</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Date",
+            "optional": false,
+            "field": "date",
+            "description": "<p>Date of an event (iso8601)</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "duration",
+            "description": "<p>duration of the event in minutes</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "minPlayers",
+            "description": "<p>minimum number of players to start an event</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "maxPlayers",
+            "description": "<p>Maximum number of players for an event</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Array",
+            "optional": false,
+            "field": "listGames",
+            "description": "<p>list of games (gameDetails Object ID)</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Array",
+            "optional": false,
+            "field": "listPlayers",
+            "description": "<p>list of current players (users ObjectId)</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "locationId",
+            "description": "<p>location of the event informations</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "phone",
+            "description": "<p>phone number</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "ObjectId",
+            "optional": false,
+            "field": "owner",
+            "description": "<p>owner of the event</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "details",
+            "description": "<p>details or description of the event</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n\t\t\"duration\": 90,\n        \"date\": \"2015-10-01T07:22Z\",\n        \"minPlayers\": 2,\n        \"maxPlayers\": 4,\n        \"phone\": \"+330000000\",\n        \"details\": \"bobibobou\",\n        \"locationId\": \"Montpellier\",\n        \"listPlayers\": [\"5e78ab08122bd31750df8c90\"],\n        \"listGames\": [\"5e95c3eae39f5227dc0533be\"]\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n    \"content\": {\n        \"listPlayers\": [\n            \"5e78ab08122bd31750df8c90\"\n        ],\n        \"listGames\": [\n            \"5e95c3eae39f5227dc0533be\"\n        ],\n        \"_id\": \"5f55f408c263b75484e416a8\",\n        \"duration\": 90,\n        \"date\": \"2015-10-01T07:22:00.000Z\",\n        \"minPlayers\": 2,\n        \"maxPlayers\": 4,\n        \"phone\": \"+330000000\",\n        \"details\": \"bobibobou\",\n        \"locationId\": \"Montpellier\",\n        \"owner\": \"5e78ab08122bd31750df8c90\",\n        \"__v\": 0\n    },\n    \"msg\": \"Event created successfully.\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/event.js",
+    "groupTitle": "event"
+  },
+  {
     "type": "DELETE",
     "url": "/gamedetails/_id",
     "title": "delete a game by it id",

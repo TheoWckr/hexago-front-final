@@ -30,7 +30,7 @@ function logHandleError(err) {
 //get all events
 router.get('/', (req, res, next) => {
     Event.find({}, function (err, content) {
-        console.log(content);
+
         if (err) res.json({
             err: err
         });
@@ -39,8 +39,62 @@ router.get('/', (req, res, next) => {
 
 });
 
-//post create an event http://localhost:3100/event/create?token=xxxxxxx
 
+
+//post create an event http://localhost:3100/event/create?token=xxxxxxx
+/**
+ * @api {post} /event/ Create an event
+ * @apiName POST event
+ * @apiGroup event
+ * @apiDescription event
+ *
+ * @apiParam {Date} date Date of an event (iso8601)
+ * @apiParam {Number} duration duration of the event in minutes
+ * @apiParam {Number} minPlayers minimum number of players to start an event
+ * @apiParam {Number} maxPlayers Maximum number of players for an event
+ * @apiParam {Array} listGames list of games (gameDetails Object ID)
+ * @apiParam {Array} listPlayers list of current players (users ObjectId)
+ * @apiParam {String} locationId location of the event informations
+ * @apiParam {String} phone phone number
+ * @apiParam {ObjectId} owner owner of the event
+ * @apiParam {String} details details or description of the event
+ *
+ * @apiParamExample {json} Request-Example:
+ *{
+		"duration": 90,
+        "date": "2015-10-01T07:22Z",
+        "minPlayers": 2,
+        "maxPlayers": 4,
+        "phone": "+330000000",
+        "details": "bobibobou",
+        "locationId": "Montpellier",
+        "listPlayers": ["5e78ab08122bd31750df8c90"],
+        "listGames": ["5e95c3eae39f5227dc0533be"]
+}
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *{
+    "content": {
+        "listPlayers": [
+            "5e78ab08122bd31750df8c90"
+        ],
+        "listGames": [
+            "5e95c3eae39f5227dc0533be"
+        ],
+        "_id": "5f55f408c263b75484e416a8",
+        "duration": 90,
+        "date": "2015-10-01T07:22:00.000Z",
+        "minPlayers": 2,
+        "maxPlayers": 4,
+        "phone": "+330000000",
+        "details": "bobibobou",
+        "locationId": "Montpellier",
+        "owner": "5e78ab08122bd31750df8c90",
+        "__v": 0
+    },
+    "msg": "Event created successfully."
+}
+ */
 router.post('/create', async (req, res, next) => {
     const errorCheck = [];
     let eventToCreate = req.body;
@@ -66,12 +120,12 @@ router.post('/create', async (req, res, next) => {
         .headers({
             'token': me_req.params.token
         })
-        .end(function (res) { 
-            if (res.error) throw new Error(res.error); 
+        .end(function (res) {
+            if (res.error) throw new Error(res.error);
             console.log(res);
             eventToCreate.owner = res.body._id //check le console log de res peut etre raw_body à la place de body
         });
-        eventToCreate.owner = "5e78ab08122bd31750df8c90" ;
+        // eventToCreate.owner = "5e78ab08122bd31750df8c90" ;
         // create event in bdd
         Event.create(eventToCreate, (err, content) => {
             if (err) res.json({err: err});
@@ -94,7 +148,50 @@ router.post('/create', async (req, res, next) => {
 
 
 //--------------------------------------------------
-//get events and return display list required field /gamedetails/quicksearch?date=xxxx&locationId=xxxx&listGames=xxxxx&limit=20&offset=xxxx&showEventFull=xxxx
+//get events and return display list required field /event/quicksearch?date=xxxx&locationId=xxxx&listGames=xxxxx&limit=20&offset=xxxx&showEventFull=xxxx
+/**
+ * @api {get} /event/searchlist search list of event
+ * @apiName GET event searchlist
+ * @apiGroup event
+ * @apiDescription search a list of events
+ *
+ * @apiParam {Date} date start date to search for events, return all event within startdate until 7 days after
+ * @apiParam {String} locationId the place of the event
+ * @apiParam {ObjectId} listGames search a game within the array of games within the event
+ * @apiParam {Boolean} showEventFull return contains event which are full of player if set to true
+ * @apiParam {Number} limit Required for pagination, set the number of entries per page
+ * @apiParam {Number} offset Required for pagination, select the page desired (first one is 0)
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *{
+    "content": {
+        "listPlayers": [
+            "5e78ab08122bd31750df8c90"
+        ],
+        "listGames": [
+            {
+                "_id": "5e95c3eae39f5227dc0533be",
+                "name": "7 Wonders Duelle 75"
+            }
+        ],
+        "_id": "5f523e68de91022c1028886c",
+        "duration": 90,
+        "date": "2015-10-01T07:22:00.000Z",
+        "minPlayers": 2,
+        "maxPlayers": 4,
+        "phone": "+330000000",
+        "details": "bobibobou",
+        "locationId": "Montpellier",
+        "owner": {
+            "_id": "5e78ab08122bd31750df8c90",
+            "username": "Pip"
+        },
+        "__v": 0,
+        "currentPlayers": 1
+    }
+}
+ */
+
 router.get('/searchlist', async (req, res, next) => {
     let data= {};
     let query= {};
@@ -153,13 +250,78 @@ router.get('/searchlist', async (req, res, next) => {
                     owner: content[current].owner,
                     date: content[current].date
                 });
-                console.log(data);
             }
             res.send({content:data});
         });
 });
 
-
+//-----------------------------------------------------------------------------------------
+//get an event by it id
+/**
+ * @api {get} /event/searchid/_id get a game by it id
+ * @apiName GET event by id
+ * @apiGroup event
+ * @apiDescription Get an event by it id
+ *
+ * @apiParam {ObjectID} _id Unique ID of an event
+ *
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *{
+    "content": {
+        "listPlayers": [
+            "5e78ab08122bd31750df8c90"
+        ],
+        "listGames": [
+            {
+                "_id": "5e95c3eae39f5227dc0533be",
+                "name": "7 Wonders Duelle 75"
+            }
+        ],
+        "_id": "5f523e68de91022c1028886c",
+        "duration": 90,
+        "date": "2015-10-01T07:22:00.000Z",
+        "minPlayers": 2,
+        "maxPlayers": 4,
+        "phone": "+330000000",
+        "details": "bobibobou",
+        "locationId": "Montpellier",
+        "owner": {
+            "_id": "5e78ab08122bd31750df8c90",
+            "username": "Pip"
+        },
+        "__v": 0,
+        "currentPlayers": 1
+    }
+}
+ */
+router.get('/searchid/:id', function (req, res, next) {
+    // find a game by it id
+    if (req.params.id.length !== 24) {
+        res.json({
+            err: 'Please provide a valid id param.'
+        })
+    } else {
+        Event.findById(
+            req.params.id).populate('owner', 'username').populate('listGames', 'name').exec((err, content) => {
+            if (err) res.json({
+                err: err
+            });
+            else {
+                if (content) {
+                    content.currentPlayers=content.listPlayers.length;
+                    res.json({
+                        content
+                    })
+                } else {
+                    res.json({
+                        err: 'No event found with this id.'
+                    })
+                }
+            }
+        })
+    }
+});
 
 
 //------------------------------------------------------------
@@ -192,3 +354,4 @@ router.delete('/:id', (req, res, next) => {
 });
 
 module.exports = router;
+
