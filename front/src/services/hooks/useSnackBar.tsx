@@ -1,6 +1,7 @@
 import {useState} from "react";
 import React from "react";
-import {Button, Snackbar} from "@material-ui/core";
+import {Button, IconButton, Snackbar} from "@material-ui/core";
+import CloseIcon from '@material-ui/icons/Close';
 
 
 export function useSnack(message : string) {
@@ -26,9 +27,17 @@ export function useSnack(message : string) {
                         horizontal: 'left',
                     }}
                     open={open}
-                    autoHideDuration={6000}
+                    autoHideDuration={4000}
                     onClose={handleClose}
                     message={message}
+
+                    action={
+                        <React.Fragment>
+                            <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>
+                                <CloseIcon fontSize="small" />
+                            </IconButton>
+                        </React.Fragment>
+                    }
                 />
             </div>);
     }

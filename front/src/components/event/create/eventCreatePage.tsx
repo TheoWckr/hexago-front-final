@@ -35,7 +35,7 @@ const EventCreatePage = () => {
               {snack()}
           <Button
               onClick={()=> openSnack()}
-              disabled={isButtonDisabled}
+              disabled={false}
           >
               Create Event
           </Button>
