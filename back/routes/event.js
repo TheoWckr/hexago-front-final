@@ -7,6 +7,7 @@ let GameDetails = require('../models/gameDetails');
 let Users = require ('../models/users');
 let moment = require('moment');
 moment().format();
+const auth = require("../middleware/auth");
 
 // let axios = require('axios')
 // axios.defaults.baseURL = `${process.env.AUTH0_AUDIENCE}`
@@ -258,7 +259,7 @@ router.get('/searchlist', async (req, res, next) => {
 //-----------------------------------------------------------------------------------------
 //get an event by it id
 /**
- * @api {get} /event/searchid/_id get a game by it id
+ * @api {get} /event/searchid/_id get an event by it id
  * @apiName GET event by id
  * @apiGroup event
  * @apiDescription Get an event by it id
@@ -325,7 +326,22 @@ router.get('/searchid/:id', function (req, res, next) {
 
 
 //------------------------------------------------------------
-//delete a game
+//delete an event
+/**
+ * @api {delete} /event/_id delete an event by it id
+ * @apiName DELETE event by id
+ * @apiGroup event
+ * @apiDescription Delete an event by it id
+ *
+ * @apiParam {ObjectID} _id Unique ID of an event
+ *
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *{
+    "_id": "5f55f408c263b75484e416a8",
+    "msg": "Event deleted successfully."
+}
+ */
 router.delete('/:id', (req, res, next) => {
     if (!req.params.id) res.json({
         err: 'Please provide an id param.'
@@ -352,6 +368,118 @@ router.delete('/:id', (req, res, next) => {
             }
         })
 });
+
+//--------------------------------------------------------------------------------------------------
+// modify an event (details, duration, phone)
+/**
+ * @api {put} /event/_id Modify an event
+ * @apiName PUT event
+ * @apiGroup event
+ * @apiDescription Modify an event
+ *
+ * @apiParam {ObjectID} _id Unique ID of an event, make reference to id via the request param, NOT PART OF THE REQUEST BODY
+ *
+ * @apiParam {Number} duration duration of the event in minutes
+ * @apiParam {String} phone phone number
+ * @apiParam {String} details details or description of the event
+ *
+ * @apiParamExample {json} Request-Example:
+ *{
+    "duration": 120,
+    "phone": "+33354648797",
+    "details": "bababababababababababa"
+}
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *{
+    "event": {
+        "n": 1,
+        "nModified": 1,
+        "ok": 1
+    },
+    "msg": "Event updated successfully."
+}
+ */
+router.put('/:id', async (req, res, next) =>{
+    const errorCheck = [];
+    let eventToModify={};
+    eventToModify.duration = req.body.duration;
+    eventToModify.phone = req.body.phone;
+    eventToModify.details = req.body.details;
+
+    if (!req.params.id) res.json({
+        err: 'Please provide an id param.'
+    });
+    else if (req.params.id.length !== 24)
+        res.json({
+            err: 'Please provide a valid id param, 24 digits.'
+        });
+    // check if event already exists
+    else { const EventDoesNotExists = await Event.findById(req.params.id, function (error, eventExists) {
+        // error handling
+        if (!eventExists) {
+            errorCheck.push(req.params.id)
+        }
+    });
+
+    }
+    if (errorCheck.length!==0){
+        res.json({error : 'Event Does not exists by this id : ' + req.params._id+ '. Please create it first!'});
+    } else {
+        Event.updateOne({_id: req.params.id}, eventToModify, (err, content) => {
+            if (err) res.json({err: err});
+            else {
+                res.json({event: content, msg: 'Event updated successfully.'})
+            }
+        })
+    }
+});
+
+//--------------------------------------------------------------------------------------------------
+// subscribe/unsubscribe player from an event
+router.put('/subscribe', async (req, res, next) =>{
+    const errorCheck = [];
+    if (!req.params.id) res.json({
+        err: 'Please provide an id param.'
+    });
+    else if (req.params.id.length !== 24)
+        res.json({
+            err: 'Please provide a valid id param, 24 digits.'
+        });
+    else { const EventDoesNotExists = await Event.findById(req.params.id, function (error, eventExists) {
+        // error handling
+        if (!eventExists) {
+            errorCheck.push(req.params.id)
+        }
+        else {
+
+        }
+    });
+
+    }
+    if (errorCheck.length!==0){
+        res.json({error : 'Event Does not exists by this id : ' + req.params._id});
+    }
+    // verify if requester is owner of event, admin or part of the event
+
+    // TODO j'en suis ici!
+    // verify incoming data
+    let userToBeModified = req.body.userId;
+    // select subscribe or unsubscribe
+    if (req.params.subscribe) {
+        //subscribe player to event
+        if (req.params.subscribe === true) {
+
+        } else {
+            //unsubscribe player from event
+
+        }
+    } else {
+        res.json({error : 'subscribe param is required.'})
+    }
+
+});
+
 
 module.exports = router;
 
