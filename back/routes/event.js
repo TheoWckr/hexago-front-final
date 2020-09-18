@@ -1,10 +1,10 @@
 let async = require('async/waterfall');
-var unirest = require('unirest');
 let express = require('express');
 let router = express.Router();
 let Event = require('../models/event');
 let GameDetails = require('../models/gameDetails');
 let Users = require ('../models/users');
+const auth = require("../middleware/auth");
 let moment = require('moment');
 moment().format();
 
@@ -41,12 +41,13 @@ router.get('/', (req, res, next) => {
 
 //post create an event http://localhost:3100/event/create?token=xxxxxxx
 
-router.post('/create', async (req, res, next) => {
+router.post('/create', auth, async (req, res, next) => {
     const errorCheck = [];
     let eventToCreate = req.body;
     let eventToCreateGameDetailsId = [];
     // TODO in the future, check agenda conflict
     // check if games within listGames exist
+    console.log(req.user.id)
     if (req.body.listGames.length !== 0) {
         const listGamesPromise = await req.body.listGames.map(async (game, res,next ) =>
             GameDetails.findOne( {_id: game}, async function (err, result){
@@ -62,16 +63,7 @@ router.post('/create', async (req, res, next) => {
         // put game id list with event to create
         eventToCreate.listGames = eventToCreateGameDetailsId;
         // TODO changer le localhost:3100 par url en production
-        var me_req = unirest('GET', 'https://localhost:3100/users/me')
-        .headers({
-            'token': me_req.params.token
-        })
-        .end(function (res) { 
-            if (res.error) throw new Error(res.error); 
-            console.log(res);
-            eventToCreate.owner = res.body._id //check le console log de res peut etre raw_body à la place de body
-        });
-        eventToCreate.owner = "5e78ab08122bd31750df8c90" ;
+        eventToCreate.owner = req.user.id ;
         // create event in bdd
         Event.create(eventToCreate, (err, content) => {
             if (err) res.json({err: err});
@@ -159,6 +151,59 @@ router.get('/searchlist', async (req, res, next) => {
         });
 });
 
+router.put('/subscribe/:id', auth, async (req, res) => {
+    try {
+        if (!req.params.id) res.json({
+            err: 'Please provide an id param.'
+        });
+        else if (req.params.id.length !== 24) {
+            res.json({
+                err: 'Please provide a valid id param.'
+            });
+        }
+        else {
+            const event = await Event.findById(req.params.id);
+            console.log(event.listPlayers.indexOf(req.user.id))
+            if (event.listPlayers.indexOf(req.user.id) == -1 && event.owner != req.user.id)  {
+                event.listPlayers.push(req.user.id);
+                await event.save()
+            }
+            
+            res.json({content: event});
+        }
+    } catch (e) {
+        res.send({ message: "Error in subscribe" });
+    }
+});
+
+router.put('/unsubscribe/:id', auth, async (req, res) => {
+    try {
+        if (!req.params.id) res.json({
+            err: 'Please provide an id param.'
+        });
+        else if (req.params.id.length !== 24) {
+            res.json({
+                err: 'Please provide a valid id param.'
+            });
+        }
+        else {
+            const event = await Event.findById(req.params.id);
+            console.log()
+            if (event.listPlayers.indexOf(req.user.id) != -1)  {
+                event.listPlayers.splice(event.listPlayers.indexOf(req.user.id), 1);
+                await event.save()
+            }
+            if (event.owner == req.user.id && req.body.playerId) {
+                event.listPlayers.splice(event.listPlayers.indexOf(req.params.playerId), 1);
+                await event.save()
+            }
+            
+            res.json({content: event});
+        }
+    } catch (e) {
+        res.send({ message: "Error in subscribe" });
+    }
+});
 
 
 
