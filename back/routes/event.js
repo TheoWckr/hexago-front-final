@@ -49,6 +49,8 @@ router.get('/', (req, res, next) => {
  * @apiGroup event
  * @apiDescription event
  *
+ * @apiHeader {String} token user's authentication token
+ *
  * @apiParam {Date} date Date of an event (iso8601)
  * @apiParam {Number} duration duration of the event in minutes
  * @apiParam {Number} minPlayers minimum number of players to start an event
@@ -157,6 +159,8 @@ router.post('/create', auth, async (req, res, next) => {
  * @apiName GET event searchlist
  * @apiGroup event
  * @apiDescription search a list of events
+ *
+ * @apiHeader {String} token user's authentication token
  *
  * @apiParam {Date} date start date to search for events, return all event within startdate until 7 days after
  * @apiParam {String} locationId the place of the event
@@ -267,7 +271,9 @@ router.get('/searchlist', auth, async (req, res, next) => {
  * @apiGroup event
  * @apiDescription Get an event by it id
  *
- * @apiParam {ObjectID} _id Unique ID of an event
+ * @apiHeader {String} token user's authentication token
+ *
+ * @apiHeader {ObjectID} _id Unique ID of an event
  *
  *
  * @apiSuccessExample {json} Success-Response:
@@ -393,7 +399,9 @@ router.put('/unsubscribe/:id', auth, async (req, res) => {
  * @apiGroup event
  * @apiDescription Delete an event by it id
  *
- * @apiParam {ObjectID} _id Unique ID of an event
+ * @apiHeader {String} token user's authentication token
+ *
+ * @apiHeader {ObjectID} _id Unique ID of an event
  *
  *
  * @apiSuccessExample {json} Success-Response:
@@ -437,7 +445,8 @@ router.delete('/:id', auth, (req, res, next) => {
  * @apiGroup event
  * @apiDescription Modify an event
  *
- * @apiParam {ObjectID} _id Unique ID of an event, make reference to id via the request param, NOT PART OF THE REQUEST BODY
+ * @apiHeader {ObjectID} _id Unique ID of an event, make reference to id via the request param, NOT PART OF THE REQUEST BODY
+ * @apiHeader {String} token user's authentication token
  *
  * @apiParam {Number} duration duration of the event in minutes
  * @apiParam {String} phone phone number
