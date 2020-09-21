@@ -31,7 +31,7 @@ function logHandleError(err) {
 //get all events
 router.get('/', (req, res, next) => {
     Event.find({}, function (err, content) {
-
+        console.log(content);
         if (err) res.json({
             err: err
         });
@@ -96,12 +96,14 @@ router.get('/', (req, res, next) => {
     "msg": "Event created successfully."
 }
  */
-router.post('/create', async (req, res, next) => {
+
+router.post('/create', auth, async (req, res, next) => {
     const errorCheck = [];
     let eventToCreate = req.body;
     let eventToCreateGameDetailsId = [];
     // TODO in the future, check agenda conflict
     // check if games within listGames exist
+    console.log(req.user.id)
     if (req.body.listGames.length !== 0) {
         const listGamesPromise = await req.body.listGames.map(async (game, res,next ) =>
             GameDetails.findOne( {_id: game}, async function (err, result){
@@ -193,7 +195,7 @@ router.post('/create', async (req, res, next) => {
 }
  */
 
-router.get('/searchlist', async (req, res, next) => {
+router.get('/searchlist', auth, async (req, res, next) => {
     let data= {};
     let query= {};
     let offset= 0;
@@ -251,6 +253,7 @@ router.get('/searchlist', async (req, res, next) => {
                     owner: content[current].owner,
                     date: content[current].date
                 });
+                console.log(data);
             }
             res.send({content:data});
         });
@@ -296,7 +299,7 @@ router.get('/searchlist', async (req, res, next) => {
     }
 }
  */
-router.get('/searchid/:id', function (req, res, next) {
+router.get('/searchid/:id', auth, function (req, res, next) {
     // find a game by it id
     if (req.params.id.length !== 24) {
         res.json({
@@ -325,6 +328,63 @@ router.get('/searchid/:id', function (req, res, next) {
 });
 
 
+// subscribe to an event route
+router.put('/subscribe/:id', auth, async (req, res) => {
+    try {
+        if (!req.params.id) res.json({
+            err: 'Please provide an id param.'
+        });
+        else if (req.params.id.length !== 24) {
+            res.json({
+                err: 'Please provide a valid id param.'
+            });
+        }
+        else {
+            const event = await Event.findById(req.params.id);
+            console.log(event.listPlayers.indexOf(req.user.id))
+            if (event.listPlayers.indexOf(req.user.id) == -1 && event.owner != req.user.id)  {
+                event.listPlayers.push(req.user.id);
+                await event.save()
+            }
+
+            res.json({content: event});
+        }
+    } catch (e) {
+        res.send({ message: "Error in subscribe" });
+    }
+});
+
+// unsubscribe from an event route
+router.put('/unsubscribe/:id', auth, async (req, res) => {
+    try {
+        if (!req.params.id) res.json({
+            err: 'Please provide an id param.'
+        });
+        else if (req.params.id.length !== 24) {
+            res.json({
+                err: 'Please provide a valid id param.'
+            });
+        }
+        else {
+            const event = await Event.findById(req.params.id);
+            if (event.listPlayers.indexOf(req.user.id) != -1)  {
+                event.listPlayers.splice(event.listPlayers.indexOf(req.user.id), 1);
+                await event.save()
+            }
+            if (event.owner == req.user.id && req.body.playerId) {
+                event.listPlayers.splice(event.listPlayers.indexOf(req.params.playerId), 1);
+                await event.save()
+            }
+
+            res.json({content: event});
+        }
+    } catch (e) {
+        res.send({ message: "Error in subscribe" });
+    }
+});
+
+
+
 //------------------------------------------------------------
 //delete an event
 /**
@@ -342,7 +402,7 @@ router.get('/searchid/:id', function (req, res, next) {
     "msg": "Event deleted successfully."
 }
  */
-router.delete('/:id', (req, res, next) => {
+router.delete('/:id', auth, (req, res, next) => {
     if (!req.params.id) res.json({
         err: 'Please provide an id param.'
     });
@@ -400,7 +460,7 @@ router.delete('/:id', (req, res, next) => {
     "msg": "Event updated successfully."
 }
  */
-router.put('/:id', async (req, res, next) =>{
+router.put('/:id', auth, async (req, res, next) =>{
     const errorCheck = [];
     let eventToModify={};
     eventToModify.duration = req.body.duration;
@@ -435,51 +495,5 @@ router.put('/:id', async (req, res, next) =>{
     }
 });
 
-//--------------------------------------------------------------------------------------------------
-// subscribe/unsubscribe player from an event
-router.put('/subscribe', async (req, res, next) =>{
-    const errorCheck = [];
-    if (!req.params.id) res.json({
-        err: 'Please provide an id param.'
-    });
-    else if (req.params.id.length !== 24)
-        res.json({
-            err: 'Please provide a valid id param, 24 digits.'
-        });
-    else { const EventDoesNotExists = await Event.findById(req.params.id, function (error, eventExists) {
-        // error handling
-        if (!eventExists) {
-            errorCheck.push(req.params.id)
-        }
-        else {
-
-        }
-    });
-
-    }
-    if (errorCheck.length!==0){
-        res.json({error : 'Event Does not exists by this id : ' + req.params._id});
-    }
-    // verify if requester is owner of event, admin or part of the event
-
-    // TODO j'en suis ici!
-    // verify incoming data
-    let userToBeModified = req.body.userId;
-    // select subscribe or unsubscribe
-    if (req.params.subscribe) {
-        //subscribe player to event
-        if (req.params.subscribe === true) {
-
-        } else {
-            //unsubscribe player from event
-
-        }
-    } else {
-        res.json({error : 'subscribe param is required.'})
-    }
-
-});
-
 
 module.exports = router;
-

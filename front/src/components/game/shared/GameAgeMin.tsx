@@ -13,4 +13,4 @@ const GameAgeMin = (props : {minAge?: number}) => {
     else return (<></>)
 };
 
-export default GameAgeMin;
+export default GameAgeMin;  

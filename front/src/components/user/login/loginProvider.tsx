@@ -19,6 +19,10 @@ const useStyles = makeStyles((theme: Theme) =>
             display: 'flex',
             justifyContent: 'center'
         },
+        providerBtn: {
+            width: 200,
+            margin: 2
+        }
     }),
 );
 
@@ -28,13 +32,13 @@ export const LoginProvider = () => {
     return (
         <Grid container className={classes.providerContainer}>
             <Grid item xs={12} sm={12} md={12} lg={4} className={classes.providerItem}>
-                <img alt="facebook" src="facebook.png"/>
+                <img alt="facebook" src="facebook.png" className={classes.providerBtn}/>
             </Grid>
             <Grid item xs={12} sm={12} md={12} lg={4} className={classes.providerItem}>
-                <img alt="google" src="google.png"/>
+                <img alt="google" src="google.png" className={classes.providerBtn}/>
             </Grid>
             <Grid item xs={12} sm={12} md={12} lg={4} className={classes.providerItem}>
-                <img alt="apple" src="apple.png"/>
+                <img alt="apple" src="apple.png" className={classes.providerBtn}/>
             </Grid>
         </Grid>
     )

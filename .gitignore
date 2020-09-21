@@ -104,3 +104,4 @@ dist
 .tern-port
 front/package-lock.json
 back/apidoc
+/front/storybook-static/
