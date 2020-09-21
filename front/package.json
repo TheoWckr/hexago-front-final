@@ -70,5 +70,9 @@
     "@storybook/react": "^5.3.18",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2"
-  }
+  },
+  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
+  "main": "index.js",
+  "author": "",
+  "license": "ISC"
 }
