@@ -119,6 +119,7 @@ router.get('/', (req, res, next) => {
     // search by release date
     if (req.query.releaseDate) {
         let releaseDate = new Date( req.query.releaseDate);
+        console.log(releaseDate);
         data['releaseDate'] = {
             $gte: new Date(new Date(0).setFullYear(releaseDate.getFullYear(), 0, 1)),
             $lt: new Date(new Date(0).setFullYear(releaseDate.getFullYear(), 11, 31))
@@ -516,6 +517,7 @@ router.delete('/:id', (req, res, next) => {
             err: 'Please provide a valid id param, 24 digits.'
         });
     else
+        //TODO - verify if game id is present within event
         GameDetails.findByIdAndDelete(req.params.id, (err, content) => {
             if (err) res.json({
                 err: err
