@@ -1,6 +1,8 @@
 // @ts-ignore
 
 import {AxiosPromise} from "axios";
+import {MAIN_ADRESS, axios} from "../utils/utilsAxios";
+import {UserModel} from "../models/userModel";
 import {axios} from "../utils/utilsAxios";
 import {LoginFormType} from "../models/form/loginFormType";
 import {RegisterFormType} from "../models/form/registerFormType";
@@ -17,7 +19,7 @@ const empyUserProfil = {
 }
 };
 
-
+const routeName = MAIN_ADRESS+'users/';
 export const UserService = {
 
     /** Renvois tous les users */
@@ -41,4 +43,12 @@ export const UserService = {
 
     },
 
+    },
+
+    /** Crée un joueur */
+    createUser(user : any) : AxiosPromise {
+        let userRequest = new UserModel(user);
+        userRequest._id = undefined;
+        return axios.post(routeName + 'signup', userRequest);
+    },
 };
