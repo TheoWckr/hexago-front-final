@@ -510,17 +510,64 @@
     "groupTitle": "User"
   },
   {
+    "type": "delete",
+    "url": "/event/_id",
+    "title": "delete an event by it id",
+    "name": "DELETE_event_by_id",
+    "group": "event",
+    "description": "<p>Delete an event by it id</p>",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>user's authentication token</p>"
+          },
+          {
+            "group": "Header",
+            "type": "ObjectID",
+            "optional": false,
+            "field": "_id",
+            "description": "<p>Unique ID of an event</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n    \"_id\": \"5f55f408c263b75484e416a8\",\n    \"msg\": \"Event deleted successfully.\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/event.js",
+    "groupTitle": "event"
+  },
+  {
     "type": "get",
     "url": "/event/searchid/_id",
-    "title": "get a game by it id",
+    "title": "get an event by it id",
     "name": "GET_event_by_id",
     "group": "event",
     "description": "<p>Get an event by it id</p>",
-    "parameter": {
+    "header": {
       "fields": {
-        "Parameter": [
+        "Header": [
           {
-            "group": "Parameter",
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>user's authentication token</p>"
+          },
+          {
+            "group": "Header",
             "type": "ObjectID",
             "optional": false,
             "field": "_id",
@@ -549,6 +596,19 @@
     "name": "GET_event_searchlist",
     "group": "event",
     "description": "<p>search a list of events</p>",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>user's authentication token</p>"
+          }
+        ]
+      }
+    },
     "parameter": {
       "fields": {
         "Parameter": [
@@ -617,6 +677,19 @@
     "name": "POST_event",
     "group": "event",
     "description": "<p>event</p>",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>user's authentication token</p>"
+          }
+        ]
+      }
+    },
     "parameter": {
       "fields": {
         "Parameter": [
@@ -714,6 +787,80 @@
     "groupTitle": "event"
   },
   {
+    "type": "put",
+    "url": "/event/_id",
+    "title": "Modify an event",
+    "name": "PUT_event",
+    "group": "event",
+    "description": "<p>Modify an event</p>",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "ObjectID",
+            "optional": false,
+            "field": "_id",
+            "description": "<p>Unique ID of an event, make reference to id via the request param, NOT PART OF THE REQUEST BODY</p>"
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>user's authentication token</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "duration",
+            "description": "<p>duration of the event in minutes</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "phone",
+            "description": "<p>phone number</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "details",
+            "description": "<p>details or description of the event</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n    \"duration\": 120,\n    \"phone\": \"+33354648797\",\n    \"details\": \"bababababababababababa\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n    \"event\": {\n        \"n\": 1,\n        \"nModified\": 1,\n        \"ok\": 1\n    },\n    \"msg\": \"Event updated successfully.\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/event.js",
+    "groupTitle": "event"
+  },
+  {
     "type": "DELETE",
     "url": "/gamedetails/_id",
     "title": "delete a game by it id",
@@ -738,46 +885,6 @@
         {
           "title": "Success-Response:",
           "content": "{\n    \"_id\": \"5e8afc246e335f2230b4f3e2\",\n    \"msg\": \"Game deleted successfully.\"\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "version": "0.0.0",
-    "filename": "routes/gameDetails.js",
-    "groupTitle": "gamedetails"
-  },
-  {
-    "type": "get",
-    "url": "/gamedetails/quicksearch?name=xxxx&basegame=xxxx",
-    "title": "Quicksearch game name",
-    "name": "GET_gamedetails",
-    "group": "gamedetails",
-    "description": "<p>Quicksearch a game and id</p>",
-    "parameter": {
-      "fields": {
-        "Parameter": [
-          {
-            "group": "Parameter",
-            "type": "String",
-            "optional": false,
-            "field": "name",
-            "description": "<p>Name of a game</p>"
-          },
-          {
-            "group": "Parameter",
-            "type": "String",
-            "optional": false,
-            "field": "basegame",
-            "description": "<p>If the game is a base game (true or false expected)</p>"
-          }
-        ]
-      }
-    },
-    "success": {
-      "examples": [
-        {
-          "title": "Success-Response:",
-          "content": "{\n    \"content\": [\n        {\n            \"_id\": \"5e81f6d0d747b30af813ad0b\",\n            \"name\": \"7 Wonders Duelle\"\n        },\n        {\n            \"_id\": \"5e81f5d71ec448554c7396bd\",\n            \"name\": \"7 Wonders Duelle\"\n        },\n        {\n            \"_id\": \"5e95c3eae39f5227dc0533be\",\n            \"name\": \"7 Wonders Duelle 75\"\n        },\n        {\n            \"_id\": \"5e8b46e5894b794d8c7cf45a\",\n            \"name\": \"7 Wonders Duelle 55\"\n        },\n        {\n            \"_id\": \"5e8aeffbb083cd20c42a96ab\",\n            \"name\": \"7 Wonders Duelle 24\"\n        },\n        {\n            \"_id\": \"5e8aefe0dad3274b383ac384\",\n            \"name\": \"7 Wonders Duelle 23\"\n        },\n        {\n            \"_id\": \"5e8210e3ade65a55981f7687\",\n            \"name\": \"7 Wonders Duelle 6\"\n        },\n        {\n            \"_id\": \"5e81fc5651a7294e80dc1e46\",\n            \"name\": \"7 Wonders Duelle 5\"\n        },\n        {\n            \"_id\": \"5e81f7656f0e574d38d61de0\",\n            \"name\": \"7 Wonders Duelle 3\"\n        },\n        {\n            \"_id\": \"5e81f7336044533ae071daa4\",\n            \"name\": \"7 Wonders Duelle 1\"\n        },\n        {\n            \"_id\": \"5e81c236aa716e2c0c5aa422\",\n            \"name\": \"7 Wonders Duelle 55\"\n        }\n    ]\n}",
           "type": "json"
         }
       ]
@@ -916,6 +1023,46 @@
         {
           "title": "Success-Response:",
           "content": "{\n    \"content\": [\n        {\n            \"genres\": [],\n            \"_id\": \"5e7a26929852d524bcfdffb3\",\n            \"name\": \"Terraforming Mars\",\n            \"author\": [\"Jacob Fryxelius\"],\n            \"editor\": \"Intrafin\",\n            \"distributor\": \"Intrafin\",\n            \"releaseDate\": \"2016-04-01T00:00:00.000Z\",\n            \"popularity\": 13,\n            \"playerMin\": 1,\n            \"playerMax\": 5,\n            \"gameLengthMin\": 60,\n            \"gameLengthMax\": 120,\n            \"minAge\": 12,\n            \"description\": \"L'ère de la domestication de Mars a commencé. Dans Terraforming Mars, de puissantes corporations travaillent pour rendre la Planète Rouge habitable. La température, l'oxygène et les océans sont les trois axes de développement principaux. Mais pour triompher, il faudra aussi construire des infrastructures pour les générations futures.\"\n        },\n        {\n            \"genres\": [],\n            \"_id\": \"5e7a26929852d524bcfdffb1\",\n            \"name\": \"Bunny Kingdom\",\n            \"author\": [\"Richard Garfield\"],\n            \"editor\": \"Iello\",\n            \"distributor\": \"Iello\",\n            \"releaseDate\": \"2018-01-01T00:00:00.000Z\",\n            \"popularity\": 12,\n            \"playerMin\": 2,\n            \"playerMax\": 4,\n            \"gameLengthMin\": 30,\n            \"gameLengthMax\": 60,\n            \"minAge\": 14,\n            \"description\": \"Incarnez des seigneurs lapins et partez à la conquête d’un nouveau monde pour le compte du roi des lapins. Installez vos fiefs aux endroits stratégiques, exploitez les Ressources, bâtissez des Cités et préparez vos Missions secrètes pour voler à vos adversaires la victoire à la dernière minute. Chaque choix peut vous apporter les lauriers de la victoire ou l’ ombre de la défaite. Bunny Kingdom est un jeu de draft(sélection de cartes) et de placement qui se joue en 4 manches. Lors de chaque manche, les joueurs vont étendre leurs fiefs, augmenter leur Puissance et leur Richesse en construisant des Cités et en exploitant de nouvelles Ressources.Choisissez vos actions de chaque tour parmi les cartes que vous avez en main, avant de passer celles que vous ne jouez pas à vos adversaires. Chaque Manche se termine par un décompte de points dépendant de la Puissance et de la Richesse de vos Fiefs.Des Missions secrètes commandées par le roi des lapins au cours de la partie viendront sans doute perturber ce qui vous semblait établi avant le décompte final. À la fin de la partie, le joueur qui aura le plus fait prospérer son territoire sera nommé gouverneur du Nouveau Monde par le roi des lapins. Contient le plateau de jeu en version XL.\"\n        }\n    ]\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/gameDetails.js",
+    "groupTitle": "gamedetails"
+  },
+  {
+    "type": "get",
+    "url": "/gamedetails/quicksearch?name=xxxx&basegame=xxxx",
+    "title": "Quicksearch game name",
+    "name": "GET_gamedetails",
+    "group": "gamedetails",
+    "description": "<p>Quicksearch a game and id</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "name",
+            "description": "<p>Name of a game</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "basegame",
+            "description": "<p>If the game is a base game (true or false expected)</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n    \"content\": [\n        {\n            \"_id\": \"5e81f6d0d747b30af813ad0b\",\n            \"name\": \"7 Wonders Duelle\"\n        },\n        {\n            \"_id\": \"5e81f5d71ec448554c7396bd\",\n            \"name\": \"7 Wonders Duelle\"\n        },\n        {\n            \"_id\": \"5e95c3eae39f5227dc0533be\",\n            \"name\": \"7 Wonders Duelle 75\"\n        },\n        {\n            \"_id\": \"5e8b46e5894b794d8c7cf45a\",\n            \"name\": \"7 Wonders Duelle 55\"\n        },\n        {\n            \"_id\": \"5e8aeffbb083cd20c42a96ab\",\n            \"name\": \"7 Wonders Duelle 24\"\n        },\n        {\n            \"_id\": \"5e8aefe0dad3274b383ac384\",\n            \"name\": \"7 Wonders Duelle 23\"\n        },\n        {\n            \"_id\": \"5e8210e3ade65a55981f7687\",\n            \"name\": \"7 Wonders Duelle 6\"\n        },\n        {\n            \"_id\": \"5e81fc5651a7294e80dc1e46\",\n            \"name\": \"7 Wonders Duelle 5\"\n        },\n        {\n            \"_id\": \"5e81f7656f0e574d38d61de0\",\n            \"name\": \"7 Wonders Duelle 3\"\n        },\n        {\n            \"_id\": \"5e81f7336044533ae071daa4\",\n            \"name\": \"7 Wonders Duelle 1\"\n        },\n        {\n            \"_id\": \"5e81c236aa716e2c0c5aa422\",\n            \"name\": \"7 Wonders Duelle 55\"\n        }\n    ]\n}",
           "type": "json"
         }
       ]
