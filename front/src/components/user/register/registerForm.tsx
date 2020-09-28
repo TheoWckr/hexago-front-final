@@ -9,6 +9,8 @@ import {MaterialUiPickersDate} from "@material-ui/pickers/typings/date";
 import {AxiosPromise} from "axios";
 import {axios} from "../../../utils/utilsAxios";
 import {UserService} from "../../../services/userService";
+import {useSnack} from "../../../services/hooks/useSnackBar";
+import {useHistory} from "react-router";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -58,7 +60,11 @@ export const RegisterForm = () => {
     const [passwordConfirm, setPasswordConfirm] = useState(''); 
     const [isButtonDisabled, setIsButtonDisabled] = useState(true);
     const [helperText, setHelperText] = useState('');
-    const [error, setError] = useState({
+	const {snack,openSnack} = useSnack()
+	const history = useHistory();
+
+
+	const [error, setError] = useState({
     	firstname: false,
     	lastname: false,
     	username: false,
@@ -91,7 +97,14 @@ export const RegisterForm = () => {
     		"dateOfBirth": birth
     	}
     	console.log("user : ", user);
-        UserService.createUser(user);
+        UserService.createUser(user).then(
+			() => {
+				openSnack("Register validated, an email will be send to you")
+				history.push("/");
+			}
+		).catch(()=>
+			openSnack("Error in entered datas")
+		);
     };
 
     const handleKeyPress = (e: any) => {
@@ -122,6 +135,7 @@ export const RegisterForm = () => {
 
     return (
         <div className={classes.registerContainer}>
+			{snack()}
             <span className="userLogo"></span>
             <div style={{width: '76%'}}>
                 <form noValidate autoComplete="off">
