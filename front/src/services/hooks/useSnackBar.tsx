@@ -1,12 +1,16 @@
 import {useState} from "react";
 import React from "react";
-import {Button, IconButton, Snackbar} from "@material-ui/core";
+import {IconButton, Snackbar} from "@material-ui/core";
 import CloseIcon from '@material-ui/icons/Close';
 
 
-export function useSnack(message : string) {
+export function useSnack(messageProvided? : string) {
     const [open,setOpen] = useState(false);
-    const openSnack = () => {
+    const [message,setMessage] = useState(messageProvided);
+
+    const openSnack = (messageProvided? : string) => {
+        if(messageProvided)
+            setMessage(messageProvided);
         setOpen(true);
     }
 

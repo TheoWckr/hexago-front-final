@@ -31,12 +31,11 @@ const GenreSearch = (props : {
     },[genresInput]);
 
 
-    return (<div>
+    return (<div className="iflx mx-2-childs">
         <Typography variant={props.inline ? 'body1' : 'h5' }  style={props.inline ? {} :  {padding: '1.3em'}}>
             Genre Search
         </Typography>
         <Input placeholder="Quick Search" style={{width : '40%', margin: 'auto'}} onChange={(event)=> setGenresInput(event.target.value)} inputProps={{'aria-label': 'description'}}/>
-        <Divider  light={true} style={ { width : '40%', marginBottom: '1.5em'}} />
         <GenreList genres={genresSearched.filter((genre) => props.genresHidden.filter((genreProps) => genre._id === genreProps._id).length === 0)} ClickHandler={props.clickHandler}/>
     </div>);
 };
