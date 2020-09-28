@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 let express = require('express');
 let router = express.Router();
 let User = require('../models/users');
+let UserProfile = require('../models/userProfile');
 const auth = require("../middleware/auth");
 const parseImageUpload = require('../middleware/cloudinary');
 const uploadImage = require('../cloudinary');
@@ -105,13 +106,24 @@ router.post(
                   msg: "User Already Exists"
               });
           }
+          user = await User.findOne({
+            username
+          });
+          if (user) {
+            return res.status(400).json({
+                msg: "User Already Exists"
+            });
+          }
+          const newUserProfile = new UserProfile(userProfile);
+          console.log(newUserProfile);
+          const userProfileId = newUserProfile._id;
           user = new User({
             username,
             firstname,
             lastname,
             email,
             password,
-            userProfile,
+            userProfile: userProfileId,
             img: {
               url: "",
               id: ""
@@ -121,7 +133,6 @@ router.post(
           const salt = await bcrypt.genSalt(10);
           user.password = await bcrypt.hash(password, salt);
           user.dateLastConnection = Date.now();
-          user.isActive = true;
           if (req.file) {
             await uploadImage(req.file)
               .then((result) => {
@@ -366,7 +377,9 @@ router.delete('/:id', async (req, res, next) => {
       });
     else {
       const user = await User.findById(req.params.id);
-      await cloudinary.v2.uploader.destroy(user.img.id, { invalidate: true, resource_type: "raw" }, function(result, error) { if (error) { console.log(error)} else {console.log(result)} });
+      if (user.img.id != "") {
+        await cloudinary.v2.uploader.destroy(user.img.id, { invalidate: true, resource_type: "raw" }, function(result, error) { if (error) { console.log(error)} else {console.log(result)} });
+      }
       await User.findByIdAndDelete(req.params.id, (err, content) => {
           if (err) res.json({
             err: err

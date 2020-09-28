@@ -40,8 +40,7 @@ let usersSchema = new Schema({
         default:Date.now
     },
     userProfile: {
-        Schema: mongoose.Schema.userProfile,
-        type: Object,
+        type: Schema.Types.ObjectID, ref:'userProfile',
         required: true
     },
     img: {
