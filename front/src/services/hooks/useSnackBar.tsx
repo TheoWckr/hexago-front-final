@@ -50,5 +50,4 @@ export function useSnack(messageProvided? : string) {
         openSnack,
         snack
     }
-
 }

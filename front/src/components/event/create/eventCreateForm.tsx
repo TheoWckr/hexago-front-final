@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import TextField from "@material-ui/core/TextField";
 import {EventModel} from "../../../models/eventModel";
-import {Container, createStyles, Grid, Slider, Theme} from "@material-ui/core";
+import {Container, createStyles, Grid, Slider, Theme, Typography} from "@material-ui/core";
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 import {marksGameDuration, marksGameNumPlayer} from "../../../models/gameModel";
@@ -14,11 +14,6 @@ const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
             flexGrow: 1,
-        },
-        paper: {
-            padding: theme.spacing(2),
-            textAlign: 'center',
-            color: theme.palette.text.secondary,
         },
     }),
 );
@@ -109,11 +104,15 @@ const EventCreateForm = (props: {
                 justify="center"
             >
             <Grid
+                item
                 container
                 sm={6}
                 xs={6}
-                //direction={"row"}
+                direction={"column"}
+                justify="center"
+
             >
+
                 <TextField
                     id="title"
                     label="Donnez un nom à votre évènement"
@@ -123,6 +122,7 @@ const EventCreateForm = (props: {
                     //onKeyPress={(e) => handleKeyPress(e)}
                     variant="outlined"
                 />
+
 
                 <TextField
                     id="localisation"
@@ -134,7 +134,7 @@ const EventCreateForm = (props: {
                     //onKeyPress={(e) => handleKeyPress(e)}
                     variant="outlined"
                 />
-
+                <Typography variant={"body1"}> Nombre de joueurs</Typography>
                 <Slider
                     onChange={setNumPlayers}
                     defaultValue={[4, 6]}
@@ -151,23 +151,26 @@ const EventCreateForm = (props: {
                 item-container
                 xs={6}
                 sm={6}
-                spacing={2}
+                direction={"column"}
             >
+
                 <KeyboardDateTimePicker
                     margin="normal"
                     id="date-picker-dialog"
-                    label="Date picker dialog"
-                    format="dd/MM/yyyy"
+                    label="Date de l'évènement"
+                    format="dd/MM/yyyy - hh:mm:ss"
                     value={event.date}
                     onChange={setDate}
                 />
 
+                <Typography variant={"body1"}> Téléphone</Typography>
 
                 <PhoneInput
                     country={'fr'}
                     value={event.phoneNumber}
                     onChange={setPhoneNumber}
                 />
+                <Typography variant={"body1"}> Durée de l'évènement</Typography>
 
                 <Slider
                     onChange={setDuration}
@@ -180,7 +183,7 @@ const EventCreateForm = (props: {
                     min={15}
                     max={180}
                 />
-
+                <Typography variant={"body1"}> Description de l'évènement</Typography>
                 <RichTextEditor
                     handleEditorChange={handleEditorChange}
                     initialValue={"<p>Details</p>"}
