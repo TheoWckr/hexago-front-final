@@ -6,7 +6,15 @@ let express = require('express');
 let router = express.Router();
 let User = require('../models/users');
 const auth = require("../middleware/auth");
+const parseImageUpload = require('../middleware/cloudinary');
+const uploadImage = require('../cloudinary');
+const cloudinary = require('cloudinary');
 
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SERCRET,
+});
 
 // let axios = require('axios')
 // axios.defaults.baseURL = `${process.env.AUTH0_AUDIENCE}`
@@ -63,15 +71,16 @@ router.get('/', (req, res, next) => {
     }
  */
 router.post(
-  "/signup",
+  "/signup", parseImageUpload(),
   [
-      check("username", "Please Enter a Valid Firstname").not().isEmpty(),
+      check("username", "Please Enter a Valid Username").not().isEmpty(),
       check("firstname", "Please Enter a Valid Firstname").not().isEmpty(),
       check("lastname", "Please Enter a Valid Lastname").not().isEmpty(),
       check("email", "Please enter a valid email").isEmail(),
       check("password", "Please enter a valid password").isLength({ min: 6 })
   ],
   async (req, res) => {
+    console.log(req.body);
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         console.log(errors)
@@ -96,22 +105,36 @@ router.post(
                   msg: "User Already Exists"
               });
           }
-
           user = new User({
-              username,
-              firstname,
-              lastname,
-              email,
-              password,
-              userProfile
+            username,
+            firstname,
+            lastname,
+            email,
+            password,
+            userProfile,
+            img: {
+              url: "",
+              id: ""
+            }
           });
 
           const salt = await bcrypt.genSalt(10);
           user.password = await bcrypt.hash(password, salt);
           user.dateLastConnection = Date.now();
           user.isActive = true;
+          if (req.file) {
+            await uploadImage(req.file)
+              .then((result) => {
+                console.log(user.img)
+                user.img.url = result.url
+                user.img.id = result.public_id
+              })
+              .catch((error) => { /* If there is an error uploading the image */
+                  console.log(error.message)
+              });
+          }
           await user.save();
-
+          console.log(user)
           const payload = {
               user: {
                   id: user.id
@@ -280,7 +303,17 @@ router.patch("/update",
       const salt = await bcrypt.genSalt(10);
       user.password = await bcrypt.hash(req.body.password, salt);
     }
-
+    if (req.file) {
+      await cloudinary.v2.uploader.destroy(user.img.id, { invalidate: true, resource_type: "raw" }, function(result, error) { if (error) { console.log(error)} else {console.log(result)} });
+      await uploadImage(req.file)
+          .then((result) => {
+            user.img.url = result.url
+            user.img.id = result.public_id
+          })
+          .catch((error) => { /* If there is an error uploading the image */
+              console.log(error.message)
+          });
+    }
     await user.save();
 
     const payload = {
@@ -323,31 +356,34 @@ router.patch("/update",
     }
  */
 //delete a user
-router.delete('/:id', (req, res, next) => {
-  if (!req.params.id) res.json({
-    err: 'Please provide an id param.'
-  });
-  else if (req.params.id.length !== 24)
-    res.json({
-      err: 'Please provide a valid id param.'
+router.delete('/:id', async (req, res, next) => {
+    if (!req.params.id) res.json({
+      err: 'Please provide an id param.'
     });
-  else
-    User.findByIdAndDelete(req.params.id, (err, content) => {
-      if (err) res.json({
-        err: err
+    else if (req.params.id.length !== 24)
+      res.json({
+        err: 'Please provide a valid id param.'
       });
-      else
-      if (content) {
-        res.json({
-          _id: req.params.id,
-          msg: 'User deleted successfully.'
-        })
-      } else {
-        res.json({
-          err: 'No user found with this id.'
-        })
-      }
-    })
+    else {
+      const user = await User.findById(req.params.id);
+      await cloudinary.v2.uploader.destroy(user.img.id, { invalidate: true, resource_type: "raw" }, function(result, error) { if (error) { console.log(error)} else {console.log(result)} });
+      await User.findByIdAndDelete(req.params.id, (err, content) => {
+          if (err) res.json({
+            err: err
+          });
+          else
+          if (content) {
+            res.json({
+              _id: req.params.id,
+              msg: 'User deleted successfully.'
+            })
+          } else {
+            res.json({
+              err: 'No user found with this id.'
+            })
+          }
+      })
+    }
 });
 
 /**

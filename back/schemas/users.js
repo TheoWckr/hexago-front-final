@@ -44,6 +44,9 @@ let usersSchema = new Schema({
         type: Object,
         required: true
     },
+    img: {
+        type: Object,
+    },
     roleId: Number,
 }, {
     collection: 'users',
