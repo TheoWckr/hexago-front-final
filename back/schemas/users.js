@@ -12,11 +12,11 @@ let usersSchema = new Schema({
     firstname: {
         type: String,
         required: true,
-        match: /^[a-zA-Z0-9-_]+$/ },
+        match: /^[a-zA-Z0-9-_"  *"]+$/ },
     lastname: {
         type: String,
         required: true,
-        match: /^[a-zA-Z0-9-_]+$/ },
+        match: /^[a-zA-Z0-9-_"  *"]+$/ },
     password: {
         type: String,
         required: true
