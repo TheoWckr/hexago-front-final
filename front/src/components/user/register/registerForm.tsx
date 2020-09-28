@@ -48,8 +48,8 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const RegisterForm = () => {
     const classes = useStyles();
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
+    const [firstname, setFirstName] = useState('');
+    const [lastname, setLastName] = useState('');
     const [username, setUsername] = useState('');
     const [email, setMail] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
@@ -58,15 +58,23 @@ export const RegisterForm = () => {
     const [passwordConfirm, setPasswordConfirm] = useState(''); 
     const [isButtonDisabled, setIsButtonDisabled] = useState(true);
     const [helperText, setHelperText] = useState('');
-    const [error, setError] = useState(false);
+    const [error, setError] = useState({
+    	firstname: false,
+    	lastname: false,
+    	username: false,
+    	email: false,
+    	phone: false,
+    	pwd: false,
+    	pwdconfirm: false
+    });
 
     useEffect(() => {
-        if (firstName.trim() && lastName.trim() && email.trim() && phoneNumber.trim() && birth.trim() && username.trim() && password.trim() && passwordConfirm.trim()) {
+        if (firstname.trim() && lastname.trim() && email.trim() && phoneNumber.trim() && birth.trim() && username.trim() && password.trim() && passwordConfirm.trim()) {
             setIsButtonDisabled(false);
         } else {
             setIsButtonDisabled(true);
         }
-    }, [firstName, lastName, email, phoneNumber, birth, username, password, passwordConfirm]);
+    }, [firstname, lastname, email, phoneNumber, birth, username, password, passwordConfirm, error]);
 
     const handleRegister = () => {
     	if (password != passwordConfirm) {
@@ -74,14 +82,15 @@ export const RegisterForm = () => {
     		console.log("passwords don't match");
     	}
     	const user = {
-    		username: username,
-    		firstname: firstName,
-    		lastname: lastName,
-    		password: password,
-    		email: email,
-    		phone: phoneNumber,
-    		dateOfBirth: birth
+    		"username": username,
+    		"firstname": firstname,
+    		"lastname": lastname,
+    		"password": password,
+    		"email": email,
+    		"phone": phoneNumber,
+    		"dateOfBirth": birth
     	}
+    	console.log("user : ", user);
         UserService.createUser(user);
     };
 
@@ -96,15 +105,30 @@ export const RegisterForm = () => {
     		setBirth(date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear());
     };
 
+    const checkPasswords = (pwdconfirm: string) => {
+    	console.log("pwdconfirm : ", error.pwdconfirm);
+    	let newError = error;
+    	if (pwdconfirm != password) {
+    		newError.pwdconfirm = true;
+    		newError.pwd = true
+    	}
+    	else {
+    		newError.pwdconfirm = false;
+    		newError.pwd = false;
+    		setPasswordConfirm(pwdconfirm);
+    	}
+    	setError({...newError});
+    };
+
     return (
         <div className={classes.registerContainer}>
             <span className="userLogo"></span>
             <div style={{width: '76%'}}>
                 <form noValidate autoComplete="off">
                 	<Grid container>
-                		<Grid container sm={12} md={6}>
+                		<Grid container item sm={12} md={6}>
 		                    <TextField
-		                        error={error}
+		                        error={error.firstname}
 		                        id="first-name"
 		                        className={classes.formInputs}
 		                        type="text"
@@ -116,9 +140,9 @@ export const RegisterForm = () => {
 		                        variant="outlined"
 		                    />
 			            </Grid>
-			            <Grid container sm={12} md={6}>
+			            <Grid container item sm={12} md={6}>
 		                    <TextField
-		                        error={error}
+		                        error={error.lastname}
 		                        id="last-name"
 		                        className={classes.formInputs}
 		                        type="text"
@@ -131,9 +155,9 @@ export const RegisterForm = () => {
 		                        variant="outlined"
 		                    />
 		                </Grid>
-		                <Grid container sm={12}>
+		                <Grid container item sm={12}>
 		                    <TextField
-		                        error={error}
+		                        error={error.username}
 		                        id="username"
 		                        className={classes.formInputs}
 		                        type="text"
@@ -146,9 +170,9 @@ export const RegisterForm = () => {
 		                        variant="outlined"
 		                    />
 		                </Grid>
-		                <Grid container sm={12}>
+		                <Grid container item sm={12}>
 		                    <TextField
-		                        error={error}
+		                        error={error.email}
 		                        id="email"
 		                        className={classes.formInputs}
 		                        type="email"
@@ -161,9 +185,9 @@ export const RegisterForm = () => {
 		                        variant="outlined"
 		                    />
 		                </Grid>
-		                <Grid container sm={12} md={6}>
+		                <Grid container item sm={12} md={6}>
 		                    <TextField
-		                        error={error}
+		                        error={error.phone}
 		                        id="phone"
 		                        className={classes.formInputs}
 		                        type="text"
@@ -176,7 +200,7 @@ export const RegisterForm = () => {
 		                        variant="outlined"
 		                    />
 		                </Grid>
-		                <Grid container sm={12} md={6}>
+		                <Grid container item sm={12} md={6}>
 		                    <KeyboardDatePicker
 					            className={classes.formInputs}
 					            margin="normal"
@@ -191,9 +215,9 @@ export const RegisterForm = () => {
 					            }}
 					        />
 		                </Grid>
-		                <Grid container sm={12} md={6}>
+		                <Grid container item sm={12} md={6}>
 		                    <TextField
-		                        error={error}
+		                        error={error.pwd}
 		                        id="pwd"
 		                        className={classes.formInputs}
 		                        type="password"
@@ -206,9 +230,9 @@ export const RegisterForm = () => {
 		                        variant="outlined"
 		                    />
 		                </Grid>
-		                <Grid container sm={12} md={6}>
+		                <Grid container item sm={12} md={6}>
 		                    <TextField
-		                        error={error}
+		                        error={error.pwdconfirm}
 		                        id="pwd-confirm"
 		                        className={classes.formInputs}
 		                        type="password"
@@ -216,7 +240,7 @@ export const RegisterForm = () => {
 		                        placeholder="Confirmation du mot de passe"
 		                        margin="normal"
 		                        helperText={helperText}
-		                        onChange={(e) => setPasswordConfirm(e.target.value)}
+		                        onChange={(e) => checkPasswords(e.target.value)}
 		                        onKeyPress={(e) => handleKeyPress(e)}
 		                        variant="outlined"
 		                    />
