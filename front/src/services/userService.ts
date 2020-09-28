@@ -43,9 +43,10 @@ export const UserService = {
     },
 
     /** Crée un joueur */
-    createUser(user : any) : AxiosPromise {
+    createUser(user: any) : AxiosPromise {
         let userRequest = new UserModel(user);
         userRequest._id = undefined;
+        console.log("userRequest :", userRequest);
         return axios.post(routeName + 'signup', userRequest);
     },
 };
