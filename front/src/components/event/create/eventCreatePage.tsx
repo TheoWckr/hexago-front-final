@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import EventCreateForm from "./eventCreateForm";
 import Button from "@material-ui/core/Button";
-import {Grid} from "@material-ui/core";
+import {Container, Grid, Typography} from "@material-ui/core";
 import {EventModel} from "../../../models/eventModel";
 import {useSnack} from "../../../services/hooks/useSnackBar";
 
@@ -20,17 +20,14 @@ const EventCreatePage = () => {
     }, [event]);
 
     return (
-      <div >
-          Event create page
-
+      <Container>
+          <Typography variant={'h2'}>Création d'un évènement</Typography>
           <Grid
               container
-              sm={6}
+             // sm={6}
               direction="column"
               justify="center"
-              alignItems="center"
-
-          >
+              >
           <EventCreateForm event={event} />
               {snack()}
           <Button
@@ -40,9 +37,7 @@ const EventCreatePage = () => {
               Create Event
           </Button>
           </Grid>
-          <Grid
-              sm={3} />
-      </div>
+      </Container>
     );
 };
 
