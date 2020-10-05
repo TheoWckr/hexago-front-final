@@ -5,22 +5,24 @@ import "./textfield.css"
 /**
  *
  * @param props
- *  - handleEditorChange content = HTML written by user
+ *  - handleEditorChange content = handler for HTML written by user
  *  - initialValue = HTML set by defaults
  *  - height = default height
+ *  - width = default width
+
  * @constructor
  */
 export const RichTextEditor = (props: {
-                                   handleEditorChange : (content : string, editor :any) => void ,
-                                   initialValue? : string,
-                                    height? : string
+                                    handleEditorChange : (content : string, editor :any) => void ,
+                                    initialValue? : string,
+                                    height? : string,
+                                    width?: string
                                }) => {
-    console.log("initial value", props.initialValue);
-
     return (
         <Editor
             initialValue={props.initialValue ? props.initialValue : "Description"}
             init={{
+                width: props.width ? props.width : "auto",
                 height: props.height ? props.height : "250",
                 menubar: false,
                 toolbar:
@@ -31,4 +33,4 @@ export const RichTextEditor = (props: {
             onEditorChange={props.handleEditorChange}
         />
     )
-}
+};

@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
             flexGrow: 1,
+            padding: "4em",
         },
     }),
 );
@@ -101,97 +102,109 @@ const EventCreateForm = (props: {
         <div className={classes.root}>
             <Grid
                 container
-                justify="center"
+                spacing={8}
             >
-            <Grid
-                item
-                container
-                sm={6}
-                xs={6}
-                direction={"column"}
-                justify="center"
+                <Grid
+                    container
+                    item
+                    md={6}
+                    sm={12}
+                    direction={"column"}
+                    alignContent={"space-around"}
+                    spacing={4}
+                >
+                    <Grid item>
+                        <TextField
+                            id="title"
+                            label="Donnez un nom à votre évènement"
+                            margin="normal"
+                            multiline={false}
+                            onChange={event => setTitle(event.target.value)}
+                            //onKeyPress={(e) => handleKeyPress(e)}
+                            variant="outlined"
+                        />
+                    </Grid>
+                    <Grid item>
+                        <TextField
+                            id="localisation"
+                            // className={`${classes.formInput}`}
+                            //type={Localization}
+                            label="Localisation"
+                            margin="normal"
+                            onChange={event => setLocalization(event.target.value)}
+                            //onKeyPress={(e) => handleKeyPress(e)}
+                            variant="outlined"
+                        />
+                    </Grid>
+                    <Grid item>
+                        <Typography align={"center"} variant={"body1"}> Nombre de joueurs</Typography>
+                        <Slider
+                            onChange={setNumPlayers}
+                            defaultValue={[4, 6]}
+                            valueLabelDisplay="auto"
+                            //valueLabelFormat={valueLabelFormat}
+                            aria-labelledby="discrete-slider-restrict"
+                            // aria-labelledby="range-slider"
+                            min={1}
+                            max={16}
+                            marks={marksGameNumPlayer}
+                        />
+                    </Grid>
+                </Grid>
+                <Grid
+                    container
+                    item
+                    md={6}
+                    sm={12}
+                    direction={"column"}
+                    alignContent={"space-around"}
+                    spacing={4}
+                >
+                    <Grid item>
+                        <KeyboardDateTimePicker
+                            margin="normal"
+                            id="date-picker-dialog"
+                            label="Date de l'évènement"
+                            format="dd/MM/yyyy - hh:mm:ss"
+                            value={event.date}
+                            onChange={setDate}
+                        />
+                    </Grid>
+                    <Grid item>
+                        <Typography variant={"body1"}> Téléphone</Typography>
+                        <PhoneInput
+                            country={'fr'}
+                            value={event.phoneNumber}
+                            onChange={setPhoneNumber}
+                        />
+                    </Grid>
+                    <Grid item>
+                        <Typography variant={"body1"}> Durée de l'évènement</Typography>
+                        <Slider
+                            onChange={setDuration}
+                            defaultValue={[60]}
+                            valueLabelDisplay="auto"
+                            valueLabelFormat={valueLabelFormat}
+                            aria-labelledby="discrete-slider-restrict"
+                            marks={marksGameDuration}
+                            step={null}
+                            min={15}
+                            max={180}
+                        />
+                    </Grid>
 
-            >
 
-                <TextField
-                    id="title"
-                    label="Donnez un nom à votre évènement"
-                    margin="normal"
-                    multiline={false}
-                    onChange={event => setTitle(event.target.value)}
-                    //onKeyPress={(e) => handleKeyPress(e)}
-                    variant="outlined"
-                />
-
-
-                <TextField
-                    id="localisation"
-                    // className={`${classes.formInput}`}
-                    //type={Localization}
-                    label="Localisation"
-                    margin="normal"
-                    onChange={event => setLocalization(event.target.value)}
-                    //onKeyPress={(e) => handleKeyPress(e)}
-                    variant="outlined"
-                />
-                <Typography variant={"body1"}> Nombre de joueurs</Typography>
-                <Slider
-                    onChange={setNumPlayers}
-                    defaultValue={[4, 6]}
-                    valueLabelDisplay="auto"
-                    //valueLabelFormat={valueLabelFormat}
-                    aria-labelledby="discrete-slider-restrict"
-                    // aria-labelledby="range-slider"
-                    min={1}
-                    max={16}
-                    marks={marksGameNumPlayer}
-                />
+                </Grid>
             </Grid>
-            <Grid
-                item-container
-                xs={6}
-                sm={6}
-                direction={"column"}
-            >
-
-                <KeyboardDateTimePicker
-                    margin="normal"
-                    id="date-picker-dialog"
-                    label="Date de l'évènement"
-                    format="dd/MM/yyyy - hh:mm:ss"
-                    value={event.date}
-                    onChange={setDate}
-                />
-
-                <Typography variant={"body1"}> Téléphone</Typography>
-
-                <PhoneInput
-                    country={'fr'}
-                    value={event.phoneNumber}
-                    onChange={setPhoneNumber}
-                />
-                <Typography variant={"body1"}> Durée de l'évènement</Typography>
-
-                <Slider
-                    onChange={setDuration}
-                    defaultValue={[60]}
-                    valueLabelDisplay="auto"
-                    valueLabelFormat={valueLabelFormat}
-                    aria-labelledby="discrete-slider-restrict"
-                    marks={marksGameDuration}
-                    step={null}
-                    min={15}
-                    max={180}
-                />
-                <Typography variant={"body1"}> Description de l'évènement</Typography>
+            <Grid spacing={10}>
+                <Typography align={"center"} variant={"body1"}> Description de l'évènement</Typography>
                 <RichTextEditor
                     handleEditorChange={handleEditorChange}
                     initialValue={"<p>Details</p>"}
                     height={"300"}
                 />
             </Grid>
-            </Grid>
-        </div   >
+        </div>
     )
 };
 

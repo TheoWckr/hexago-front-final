@@ -21,18 +21,19 @@ const EventCreatePage = () => {
 
     return (
       <Container>
-          <Typography variant={'h2'}>Création d'un évènement</Typography>
+          <Typography align={"center"} variant={'h3'}>Création d'un évènement</Typography>
           <Grid
               container
-             // sm={6}
               direction="column"
-              justify="center"
               >
           <EventCreateForm event={event} />
               {snack()}
           <Button
               onClick={()=> openSnack()}
               disabled={false}
+              variant={"contained"}
+              size={"small"}
+              color={"primary"}
           >
               Create Event
           </Button>
