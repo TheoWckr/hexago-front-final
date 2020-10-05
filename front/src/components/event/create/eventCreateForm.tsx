@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
             flexGrow: 1,
-            padding: "4em",
+            padding: theme.spacing(2),
         },
     }),
 );
@@ -102,7 +102,7 @@ const EventCreateForm = (props: {
         <div className={classes.root}>
             <Grid
                 container
-                spacing={8}
+                spacing={2}
             >
                 <Grid
                     container
