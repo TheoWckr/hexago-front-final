@@ -137,7 +137,7 @@ const EventCreateForm = (props: {
                         />
                     </Grid>
                     <Grid item>
-                        <Typography align={"center"} variant={"body1"}> Nombre de joueurs</Typography>
+                        <Typography variant={"caption"} color={"textSecondary"}> Nombre de joueurs</Typography>
                         <Slider
                             onChange={setNumPlayers}
                             defaultValue={[4, 6]}
@@ -171,7 +171,7 @@ const EventCreateForm = (props: {
                         />
                     </Grid>
                     <Grid item>
-                        <Typography variant={"body1"}> Téléphone</Typography>
+                        <Typography variant={"caption"} color={"textSecondary"}> Téléphone</Typography>
                         <PhoneInput
                             country={'fr'}
                             value={event.phoneNumber}
@@ -179,7 +179,7 @@ const EventCreateForm = (props: {
                         />
                     </Grid>
                     <Grid item>
-                        <Typography variant={"body1"}> Durée de l'évènement</Typography>
+                        <Typography variant={"caption"} color={"textSecondary"}> Durée de l'évènement</Typography>
                         <Slider
                             onChange={setDuration}
                             defaultValue={[60]}
