@@ -7,22 +7,24 @@ import {createEventForm, searchEvent} from "../models/service/eventServiceType";
 const routeName = MAIN_ADRESS+'event/';
 
 export const EventService = {
-
-    //
+    
     createEvent(event : createEventForm) :AxiosPromise {
         return axios.post(routeName, event);
     },
-    //http://localhost:3100?/event/searchid/_id
     getEvent(id : string) :AxiosPromise {
         return axios.get(routeName+'/searchid/'+id);
     },
 
     searchEvent(params : searchEvent){
-        let args =''
-        if(params.date)  args +='?date='
+        let paramsString ='?'
+        if(params.date)  paramsString +=`date=${params.date}&`
+        if(params.listGames)  paramsString +=`listGames=${params.listGames.toString().replace('[','').replace(']','')}&`
+        if(params.locationId) paramsString +=`locationId=${params.locationId}&`
+        if(params.limit) paramsString +=`limit=${params.limit}&`
+        else paramsString +=`limit=5&`
+        if(params.offset) paramsString +=`offset=${params.offset}&`
+        else paramsString +=`offset=0`
 
-
-        return axios.get(routeName+'/')
-
+        return axios.get(routeName+'/searchlist'+paramsString)
     }
 }
