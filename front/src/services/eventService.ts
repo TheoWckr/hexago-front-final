@@ -7,7 +7,7 @@ import {createEventForm, searchEvent} from "../models/service/eventServiceType";
 const routeName = MAIN_ADRESS+'event/';
 
 export const EventService = {
-    
+
     createEvent(event : createEventForm) :AxiosPromise {
         return axios.post(routeName, event);
     },
