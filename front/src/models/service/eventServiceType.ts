@@ -14,13 +14,12 @@ export interface getEvent{
     _id: string;
 }
 
-export interface searchEvent{
+export interface searchEvent {
     date?: Date;
     locationId?: String;
     listGames?: String[];
     showEventFull?: boolean;
     limit: number;
-    offset:number;
-
+    offset: number;
 }
 
