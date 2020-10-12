@@ -1,13 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import './register.css';
-import { Typography, Grid} from "@material-ui/core";
+import {Grid} from "@material-ui/core";
 import TextField from '@material-ui/core/TextField';
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import {KeyboardDatePicker} from "@material-ui/pickers";
 import {MaterialUiPickersDate} from "@material-ui/pickers/typings/date";
-import {AxiosPromise} from "axios";
-import {axios} from "../../../utils/utilsAxios";
+
 import {UserService} from "../../../services/userService";
 import {useSnack} from "../../../services/hooks/useSnackBar";
 import {useHistory} from "react-router";
