@@ -1,7 +1,6 @@
-import React, {Dispatch, SetStateAction, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import TextField from "@material-ui/core/TextField";
-import {EventModel} from "../../../models/eventModel";
-import {Container, createStyles, Grid, Slider, Theme, Typography} from "@material-ui/core";
+import { createStyles, Grid, Slider, Theme, Typography} from "@material-ui/core";
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 import {marksGameDuration, marksGameNumPlayer} from "../../../models/gameModel";
@@ -21,90 +20,48 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 
-let eventFormValue : createEventForm = {
-    minPlayers: 4,
-    maxPlayers: 8,
-    date: new Date(),
-    locationId:"",
-    details:'',
-    duration:90,
-    listGames: [],
-    phone:''
-}
-
 
 const EventCreateForm = (props: {
     setButtonDisabled : (arg0: boolean) => void
 }) => {
-    const [event,setEvent] = useState(eventFormValue)
+    const [eventDetail, setEventDetail] = useState(`<h2>Details</h2>`)
+    const [eventDate,setEventDate] = useState(new Date())
+    const [eventMinPlayers,setEventMinPlayers] = useState(4)
+    const [eventMaxPlayers,setEventMaxPlayers] = useState(6)
+    const [eventDuration,setEventDuration] = useState(90)
+    const [eventLocationid, setEventLocationId] = useState('')
+    const [eventListGames, setEventListGames] = useState<string[]>([])
+    const [eventPhone, setEventPhone] = useState('')
+    const  eventFormValue : createEventForm = {
+        minPlayers: eventMinPlayers,
+        maxPlayers: eventMaxPlayers,
+        date: eventDate,
+        locationId:eventLocationid,
+        details: eventDetail,
+        duration:eventDuration,
+        listGames: eventListGames,
+        phone:eventPhone
+    }
     useEffect(() => {
-        console.log('Test ',event )
-        if(event.date && event.details.trim().length > 0
-            && event.phone.trim().length > 8 && event.locationId.trim().length > 0 )
+        console.log('Test ',eventFormValue )
+        if(eventDate && eventDetail.trim().length > 0
+            && eventPhone.trim().length > 8 && eventLocationid.trim().length > 0 )
             props.setButtonDisabled(false)
         else             props.setButtonDisabled(true)
-    }, [event.details]);
-    
+    }, [eventDetail, eventDate,eventDuration,eventListGames,eventLocationid,eventMaxPlayers,eventPhone]);
     const classes = useStyles();
-    const handleEditorChange = (content: string) => {
-        setEvent(prevState => {
-                prevState.details = content;
-                return prevState;
-            }
-        )
-        setEvent({ ...eventFormValue})
-    };
-
-    const setLocalization = (value: string) => {
-        setEvent(prevState => {
-            prevState.locationId = value;
-            return prevState;
-        });
-    };
-    const setPhoneNumber = (value: string) => {
-        setEvent(prevState => {
-            prevState.phone = value;
-            return prevState;
-        });
-    };
-
-    const setDate = (value: MaterialUiPickersDate) => {
-        if (value) {
-            setEvent(prevState => {
-                prevState.date = new Date(value.getDate());
-                return prevState;
-            });
-        }
-    };
 
     const setNumPlayers = (event: any, value: number | number[]) => {
         if (typeof value === "number") {
-            setEvent(prevState => {
-                    prevState.minPlayers = value;
-                    prevState.maxPlayers = value;
-                    return prevState
-                }
-            );
+            setEventMinPlayers(value)
+            setEventMaxPlayers(value)
         } else {
-            setEvent(prevState => {
-                    prevState.minPlayers = value[0];
-                    prevState.maxPlayers = value[1];
-                    return prevState;
-                }
-            );
+            setEventMinPlayers(value[0])
+            setEventMaxPlayers(value[1])
         }
     };
-
     function valueLabelFormat(value: number) {
         return marksGameDuration[marksGameDuration.findIndex(mark => mark.value === value)].hiddenLabel;
-    }
-
-    function setDuration(event: React.ChangeEvent<{}>, value: (number | number[])) {
-        if (typeof value == "number")
-            setEvent(prevState => {
-                prevState.duration = value;
-                return prevState;
-            });
     }
 
     return (
@@ -140,7 +97,7 @@ const EventCreateForm = (props: {
                             //type={Localization}
                             label="Localisation"
                             margin="normal"
-                            onChange={event => setLocalization(event.target.value)}
+                            onChange={event => setEventLocationId(event.target.value)}
                             //onKeyPress={(e) => handleKeyPress(e)}
                             variant="outlined"
                         />
@@ -175,23 +132,23 @@ const EventCreateForm = (props: {
                             id="date-picker-dialog"
                             label="Date de l'évènement"
                             format="dd/MM/yyyy - hh:mm:ss"
-                            value={event.date}
-                            onChange={setDate}
+                            value={eventDate}
+                            onChange={value => setEventDate(new Date(value!.getDate()))}
                         />
                     </Grid>
                     <Grid item>
                         <Typography variant={"caption"} color={"textSecondary"}> Téléphone</Typography>
                         <PhoneInput
                             country={'fr'}
-                            value={event.phone}
-                            onChange={setPhoneNumber}
+                            value={eventPhone}
+                            onChange={((value) =>  setEventPhone(value))}
                         />
                     </Grid>
                     <Grid item>
                         <Typography variant={"caption"} color={"textSecondary"}> Durée de l'évènement</Typography>
                         <Slider
-                            onChange={setDuration}
-                            defaultValue={[60]}
+                            onChange={((event1, value) => setEventDuration(value as number  ))}
+                            defaultValue={60}
                             valueLabelDisplay="auto"
                             valueLabelFormat={valueLabelFormat}
                             aria-labelledby="discrete-slider-restrict"
@@ -201,15 +158,13 @@ const EventCreateForm = (props: {
                             max={180}
                         />
                     </Grid>
-
-
                 </Grid>
             </Grid>
             <Grid >
                 <Typography align={"center"} variant={"body1"}> Description de l'évènement</Typography>
                 <RichTextEditor
-                    handleEditorChange={handleEditorChange}
-                    initialValue={"<p>Details</p>"}
+                    handleEditorChange={((content, editor) =>  setEventDetail(content))}
+                    initialValue={eventDetail}
                     height={"300"}
                 />
             </Grid>

@@ -1,10 +1,9 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import EventCreateForm from "./eventCreateForm";
 import Button from "@material-ui/core/Button";
 import {Container, createStyles, Grid, Paper, Theme, Typography} from "@material-ui/core";
 import {useSnack} from "../../../services/hooks/useSnackBar";
 import {makeStyles} from "@material-ui/core/styles";
-import {createEventForm} from "../../../models/service/eventServiceType";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -23,10 +22,11 @@ const EventCreatePage = () => {
         setButtonDisabled(newButtonDisabled)
     };
 
-    const {openSnack, snack} = useSnack("Bonjour")
+    const {openSnack, snack} = useSnack("Sortie validée ")
 
     const sendForm = () => {
         console.log("Send")
+        openSnack()
     }
 
 
