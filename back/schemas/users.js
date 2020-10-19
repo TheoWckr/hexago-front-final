@@ -44,7 +44,9 @@ let usersSchema = new Schema({
         required: true
     },
     img: {
-        type: Object,
+        url: {type: String},
+        id: {type: String}
+
     },
     roleId: Number,
 }, {
