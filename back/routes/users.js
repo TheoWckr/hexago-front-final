@@ -284,7 +284,7 @@ router.post(
       "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWVkZTE1MTAxZDEzOWEwMzZiNzlmNWE5In0sImlhdCI6MTU5MTYxMjY4OCwiZXhwIjoxNTkxNjIyNjg4fQ.dI-Emc4EM24Pw1KFAWJi8sOKPFusgXn_BvODpxBAV70"
     }
  */
-router.patch("/update", 
+router.patch("/update", parseImageUpload(), 
   [
     check("username", "Please Enter a Valid Firstname").not().isEmpty(),
     check("firstname", "Please Enter a Valid Firstname").not().isEmpty(),

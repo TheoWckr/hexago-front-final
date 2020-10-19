@@ -53,6 +53,9 @@ let GameDetailsSchema = new Schema({
     sortValue:Number,
     baseGameId:{
         type: Schema.Types.ObjectID, ref:'GameDetails'
+    },
+    img: {
+        type: Object
     }
 });
 
