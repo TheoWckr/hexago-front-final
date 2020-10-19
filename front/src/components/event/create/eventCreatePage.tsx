@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import EventCreateForm from "./eventCreateForm";
 import Button from "@material-ui/core/Button";
 import {Container, createStyles, Grid, Paper, Theme, Typography} from "@material-ui/core";
-import {EventModel} from "../../../models/eventModel";
 import {useSnack} from "../../../services/hooks/useSnackBar";
 import {makeStyles} from "@material-ui/core/styles";
+import {createEventForm} from "../../../models/service/eventServiceType";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -15,34 +15,34 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-
 const EventCreatePage = () => {
     const classes = useStyles();
     const [isButtonDisabled,setButtonDisabled] = useState(false);
-    const [event, setEvent] = useState(new EventModel());
+    const eventChangeHandler = (newButtonDisabled: boolean) => {
+        console.log(newButtonDisabled , isButtonDisabled)
+        setButtonDisabled(newButtonDisabled)
+    };
+
     const {openSnack, snack} = useSnack("Bonjour")
 
-    useEffect(() => {
-        if(event.date && event.details.trim().length > 0
-            && event.phoneNumber.trim().length > 8 && event.localization.trim().length > 0 )
-            setButtonDisabled(false)
-        else             setButtonDisabled(true)
+    const sendForm = () => {
+        console.log("Send")
+    }
 
-    }, [event]);
 
     return (
       <Container>
           <Paper className={classes.paper} >
-          <Typography align={"center"} variant={'h3'}>Création d'un évènement</Typography>
+          <Typography align={"center"} variant={'h3'} >Création d'un évènement</Typography>
           <Grid
               container
               direction="column"
               >
-          <EventCreateForm event={event} />
+          <EventCreateForm setButtonDisabled={eventChangeHandler} />
               {snack()}
           <Button
-              onClick={()=> openSnack()}
-              disabled={false}
+              onClick={()=> sendForm()}
+              disabled={isButtonDisabled}
               variant={"contained"}
               size={"small"}
               color={"primary"}

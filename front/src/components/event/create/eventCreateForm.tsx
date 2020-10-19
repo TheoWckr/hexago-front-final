@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {Dispatch, SetStateAction, useEffect, useState} from "react";
 import TextField from "@material-ui/core/TextField";
 import {EventModel} from "../../../models/eventModel";
 import {Container, createStyles, Grid, Slider, Theme, Typography} from "@material-ui/core";
@@ -9,6 +9,7 @@ import {RichTextEditor} from "../../commons/richText/RichTextEditor";
 import {KeyboardDateTimePicker} from "@material-ui/pickers";
 import {MaterialUiPickersDate} from "@material-ui/pickers/typings/date";
 import {makeStyles} from "@material-ui/core/styles";
+import {createEventForm} from "../../../models/service/eventServiceType";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -20,71 +21,79 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 
-const EventCreateForm = (props: {
-    event: EventModel
-}) => {
-    const [event, setEvent] = useState(props.event);
-    const classes = useStyles();
+let eventFormValue : createEventForm = {
+    minPlayers: 4,
+    maxPlayers: 8,
+    date: new Date(),
+    locationId:"",
+    details:'',
+    duration:90,
+    listGames: [],
+    phone:''
+}
 
+
+const EventCreateForm = (props: {
+    setButtonDisabled : (arg0: boolean) => void
+}) => {
+    const [event,setEvent] = useState(eventFormValue)
+    useEffect(() => {
+        console.log('Test ',event )
+        if(event.date && event.details.trim().length > 0
+            && event.phone.trim().length > 8 && event.locationId.trim().length > 0 )
+            props.setButtonDisabled(false)
+        else             props.setButtonDisabled(true)
+    }, [event.details]);
+    
+    const classes = useStyles();
     const handleEditorChange = (content: string) => {
-        console.log('Content was updated:', event.details);
-        setEvent((prevState => {
+        setEvent(prevState => {
                 prevState.details = content;
                 return prevState;
             }
-        ))
-    }
+        )
+        setEvent({ ...eventFormValue})
+    };
 
     const setLocalization = (value: string) => {
-        setEvent((prevState: EventModel) => {
-            prevState.localization = value;
+        setEvent(prevState => {
+            prevState.locationId = value;
             return prevState;
         });
     };
-
-    const setTitle = (value: string) => {
-        setEvent((prevState: EventModel) => {
-            //prevState. = value;
-            return prevState;
-        });
-    };
-
     const setPhoneNumber = (value: string) => {
         setEvent(prevState => {
-            prevState.phoneNumber = value;
+            prevState.phone = value;
             return prevState;
         });
-    }
+    };
 
     const setDate = (value: MaterialUiPickersDate) => {
-        console.log(value);
         if (value) {
-            console.log(value.toUTCString());
-
             setEvent(prevState => {
-                prevState.date = value.toUTCString();
+                prevState.date = new Date(value.getDate());
                 return prevState;
             });
         }
-    }
+    };
 
     const setNumPlayers = (event: any, value: number | number[]) => {
         if (typeof value === "number") {
             setEvent(prevState => {
-                    prevState.playerMin = value;
-                    prevState.playerMin = value;
+                    prevState.minPlayers = value;
+                    prevState.maxPlayers = value;
                     return prevState
                 }
             );
         } else {
             setEvent(prevState => {
-                    prevState.playerMin = value[0];
-                    prevState.playerMin = value[1];
+                    prevState.minPlayers = value[0];
+                    prevState.maxPlayers = value[1];
                     return prevState;
                 }
             );
         }
-    }
+    };
 
     function valueLabelFormat(value: number) {
         return marksGameDuration[marksGameDuration.findIndex(mark => mark.value === value)].hiddenLabel;
@@ -119,7 +128,7 @@ const EventCreateForm = (props: {
                             label="Donnez un nom à votre évènement"
                             margin="normal"
                             multiline={false}
-                            onChange={event => setTitle(event.target.value)}
+                            onChange={event => event}
                             //onKeyPress={(e) => handleKeyPress(e)}
                             variant="outlined"
                         />
@@ -174,7 +183,7 @@ const EventCreateForm = (props: {
                         <Typography variant={"caption"} color={"textSecondary"}> Téléphone</Typography>
                         <PhoneInput
                             country={'fr'}
-                            value={event.phoneNumber}
+                            value={event.phone}
                             onChange={setPhoneNumber}
                         />
                     </Grid>
@@ -196,7 +205,7 @@ const EventCreateForm = (props: {
 
                 </Grid>
             </Grid>
-            <Grid spacing={10}>
+            <Grid >
                 <Typography align={"center"} variant={"body1"}> Description de l'évènement</Typography>
                 <RichTextEditor
                     handleEditorChange={handleEditorChange}
