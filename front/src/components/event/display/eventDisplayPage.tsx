@@ -3,6 +3,9 @@ import {useParams} from "react-router";
 import {Button, Grid, Typography} from "@material-ui/core";
 import './EventDisplay.css';
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
+import Avatar from "@material-ui/core/Avatar";
+import eventData from "../../../data-mock/eventData";
+import {GameModel} from "../../../models/gameModel";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -27,25 +30,40 @@ const useStyles = makeStyles((theme: Theme) =>
 const EventDisplayPage = () => {
     let {id} = useParams();
     const classe = useStyles();
-
+    let data = eventData;
     return (
         <Grid container className="main">
-            <Grid item xs={12} className="box">
-                <Typography className="event-title">
-                    Nom de l'évènement
-                </Typography>
-            </Grid>
             <Grid item xs={6} className="box">
                 <div className="box-detail">
                     <Grid container>
                         <Grid item xs={12} className="title-detail">
-                            <Typography>Le 25 novembre 2020</Typography>
+                            <Typography>{data.date}</Typography>
                         </Grid>
                         <Grid item xs={12}>
                             <Typography>A l'affiche:</Typography>
-                            <Button variant="outlined" className={classe.btnDetail}>Monopoly</Button>
-                            <Button variant="outlined" className={classe.btnDetail}>Time's Up</Button>
-                            <Button variant="outlined" className={classe.btnDetail}>Dominos</Button>
+                            {data.listGames.map((item: GameModel) =>
+                                <Button variant="outlined" color="primary">
+                                    {item.name}
+                                </Button>
+                            )}
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Typography>{data.duration}</Typography>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Typography>Nombre de participants: {data.nbPlayers}/{data.maxPlayers}</Typography>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Grid container>
+                                <Grid item xs={4}>
+                                    <Typography>
+                                        Créé par:
+                                    </Typography>
+                                </Grid>
+                                <Grid item xs={8}>
+                                    {data.owner} <Avatar alt="user" src="https://placekitten.com/300/200"/>
+                                </Grid>
+                            </Grid>
                         </Grid>
                     </Grid>
                 </div>
