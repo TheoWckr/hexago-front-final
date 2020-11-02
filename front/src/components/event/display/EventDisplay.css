@@ -24,6 +24,11 @@
     text-align: center;
 }
 
+.title-detail .bold {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
 .box-map {
     width: 40vw;
     height: 50vh;
@@ -38,4 +43,22 @@
 
 .box-button {
     text-align: center;
+}
+
+.inline {
+    display: flex;
+    justify-content: space-between;
+}
+
+.inline-nospace {
+    display: flex;
+    align-items: center;
+}
+
+.title {
+    text-decoration: underline;
+}
+
+.inline .bold-text {
+    font-weight: bold;
 }

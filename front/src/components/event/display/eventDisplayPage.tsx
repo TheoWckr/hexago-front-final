@@ -37,33 +37,33 @@ const EventDisplayPage = () => {
                 <div className="box-detail">
                     <Grid container>
                         <Grid item xs={12} className="title-detail">
-                            <Typography>{data.date}</Typography>
+                            <Typography className={'bold'}>Le {data.date}</Typography>
                         </Grid>
                         <Grid item xs={12}>
-                            <Typography>A l'affiche:</Typography>
+                            <Typography className={'title'}>A l'affiche:</Typography>
                             {data.listGames.map((item: GameModel) =>
                                 <Button variant="outlined" color="primary">
                                     {item.name}
                                 </Button>
                             )}
                         </Grid>
-                        <Grid item xs={12}>
-                            <Typography>{data.duration}</Typography>
+                        <Grid item xs={12} className={'inline'}>
+                            <Typography className={'title'}>Durée de l'évènement: </Typography>
+                            <Typography className={'bold-text'}>{data.duration}</Typography>
                         </Grid>
-                        <Grid item xs={12}>
-                            <Typography>Nombre de participants: {data.nbPlayers}/{data.maxPlayers}</Typography>
+                        <Grid item xs={12} className={'inline'}>
+                            <Typography className={'title'}>Nombre de participants: </Typography>
+                            <Typography className={'bold-text'}>{data.nbPlayers}/{data.maxPlayers}</Typography>
                         </Grid>
-                        <Grid item xs={12}>
-                            <Grid container>
-                                <Grid item xs={4}>
-                                    <Typography>
-                                        Créé par:
-                                    </Typography>
-                                </Grid>
-                                <Grid item xs={8}>
-                                    {data.owner} <Avatar alt="user" src="https://placekitten.com/300/200"/>
-                                </Grid>
-                            </Grid>
+                        <Grid item xs={12} className={'inline'}>
+                            <Typography className={'title'}>
+                                Créé par:
+                            </Typography>
+                            <div className={'inline-nospace'}>
+                                <Typography className={'bold-text'}>{data.owner}</Typography>
+                                <Avatar alt="user"
+                                        src="https://placekitten.com/300/200"/>
+                            </div>
                         </Grid>
                     </Grid>
                 </div>
