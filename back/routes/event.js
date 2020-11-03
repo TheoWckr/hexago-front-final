@@ -120,7 +120,7 @@ router.post('/create', auth, async (req, res, next) => {
         // TODO changer le localhost:3100 par url en production
         var me_req = unirest('GET', 'https://localhost:3100/users/me')
         .headers({
-            'token': me_req.params.token
+            'token': req.params.token
         })
         .end(function (res) {
             if (res.error) throw new Error(res.error);

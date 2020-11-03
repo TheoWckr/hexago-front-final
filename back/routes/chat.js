@@ -4,6 +4,10 @@ let express = require('express');
 let router = express.Router();
 let Chat = require('../models/chat');
 
+
+
+
+
 router.post('/create', (req, res, next) => {
     Chat.create(req.body, (err, content) => {
         if (err) res.json({err: err});
@@ -18,6 +22,16 @@ router.post('/create', (req, res, next) => {
 });
 
 
+router.get('/', (req, res, next) => {
+    Chat.find({}, function (err, content) {
+        console.log(content);
+        if (err) res.json({
+            err: err
+        });
+        else res.json({content})
+    })
+
+});
 
 
 module.exports = router;
