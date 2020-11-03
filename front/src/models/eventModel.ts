@@ -3,22 +3,22 @@ import {GameModel} from "./gameModel";
 export class eventModel {
     _id?: string;
     date: string;
-    duration: string;
+    duration: number;
     owner: string;
     details: string;
     nbPlayers: number;
     maxPlayers: number;
-    localisation: string;
+    locationId: string;
     listGames: GameModel[];
     constructor({
                     _id = '',
                     date = '',
-                    duration = '',
+                    duration = 0,
                     owner = '',
                     details = '',
                     nbPlayers = 0,
                     maxPlayers = 0,
-                    localisation = '',
+                    locationId = '',
                     listGames = [],
                 } = {}) {
 
@@ -32,7 +32,7 @@ export class eventModel {
         this.details = details;
         this.nbPlayers = nbPlayers;
         this.maxPlayers = maxPlayers;
-        this.localisation = localisation;
+        this.locationId = locationId;
         this.listGames = listGames;
     }
 }

@@ -49,7 +49,7 @@ const EventDisplayPage = () => {
                         </Grid>
                         <Grid item xs={12} className={'inline'}>
                             <Typography className={'title'}>Durée de l'évènement: </Typography>
-                            <Typography className={'bold-text'}>{data.duration}</Typography>
+                            <Typography className={'bold-text'}>{data.duration} minutes</Typography>
                         </Grid>
                         <Grid item xs={12} className={'inline'}>
                             <Typography className={'title'}>Nombre de participants: </Typography>
@@ -64,6 +64,9 @@ const EventDisplayPage = () => {
                                 <Avatar alt="user"
                                         src="https://placekitten.com/300/200"/>
                             </div>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Typography>{data.details}</Typography>
                         </Grid>
                     </Grid>
                 </div>
