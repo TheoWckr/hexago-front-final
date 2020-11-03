@@ -56,10 +56,8 @@ router.get('/', (req, res, next) => {
  * @apiParam {Number} minPlayers minimum number of players to start an event
  * @apiParam {Number} maxPlayers Maximum number of players for an event
  * @apiParam {Array} listGames list of games (gameDetails Object ID)
- * @apiParam {Array} listPlayers list of current players (users ObjectId)
  * @apiParam {String} locationId location of the event informations
  * @apiParam {String} phone phone number
- * @apiParam {ObjectId} owner owner of the event
  * @apiParam {String} details details or description of the event
  *
  * @apiParamExample {json} Request-Example:
@@ -71,7 +69,6 @@ router.get('/', (req, res, next) => {
         "phone": "+330000000",
         "details": "bobibobou",
         "locationId": "Montpellier",
-        "listPlayers": ["5e78ab08122bd31750df8c90"],
         "listGames": ["5e95c3eae39f5227dc0533be"]
 }
  *

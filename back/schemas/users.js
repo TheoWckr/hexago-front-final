@@ -12,11 +12,11 @@ let usersSchema = new Schema({
     firstname: {
         type: String,
         required: true,
-        match: /^[a-zA-Z0-9-_]+$/ },
+        match: /^[a-zA-Z0-9-_"  *"]+$/ },
     lastname: {
         type: String,
         required: true,
-        match: /^[a-zA-Z0-9-_]+$/ },
+        match: /^[a-zA-Z0-9-_"  *"]+$/ },
     password: {
         type: String,
         required: true
@@ -40,9 +40,13 @@ let usersSchema = new Schema({
         default:Date.now
     },
     userProfile: {
-        Schema: mongoose.Schema.userProfile,
-        type: Object,
+        type: Schema.Types.ObjectID, ref:'userProfile',
         required: true
+    },
+    img: {
+        url: {type: String},
+        id: {type: String}
+
     },
     roleId: Number,
 }, {

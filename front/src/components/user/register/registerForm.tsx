@@ -1,14 +1,15 @@
 import React, {useState, useEffect} from 'react';
 import './register.css';
-import { Typography, Grid} from "@material-ui/core";
+import {Grid} from "@material-ui/core";
 import TextField from '@material-ui/core/TextField';
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import {KeyboardDatePicker} from "@material-ui/pickers";
 import {MaterialUiPickersDate} from "@material-ui/pickers/typings/date";
-import {AxiosPromise} from "axios";
-import {axios} from "../../../utils/utilsAxios";
+
 import {UserService} from "../../../services/userService";
+import {useSnack} from "../../../services/hooks/useSnackBar";
+import {useHistory} from "react-router";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -48,8 +49,8 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const RegisterForm = () => {
     const classes = useStyles();
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
+    const [firstname, setFirstName] = useState('');
+    const [lastname, setLastName] = useState('');
     const [username, setUsername] = useState('');
     const [email, setMail] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
@@ -58,15 +59,27 @@ export const RegisterForm = () => {
     const [passwordConfirm, setPasswordConfirm] = useState(''); 
     const [isButtonDisabled, setIsButtonDisabled] = useState(true);
     const [helperText, setHelperText] = useState('');
-    const [error, setError] = useState(false);
+	const {snack,openSnack} = useSnack()
+	const history = useHistory();
+
+
+	const [error, setError] = useState({
+    	firstname: false,
+    	lastname: false,
+    	username: false,
+    	email: false,
+    	phone: false,
+    	pwd: false,
+    	pwdconfirm: false
+    });
 
     useEffect(() => {
-        if (firstName.trim() && lastName.trim() && email.trim() && phoneNumber.trim() && birth.trim() && username.trim() && password.trim() && passwordConfirm.trim()) {
+        if (firstname.trim() && lastname.trim() && email.trim() && phoneNumber.trim() && birth.trim() && username.trim() && password.trim() && passwordConfirm.trim()) {
             setIsButtonDisabled(false);
         } else {
             setIsButtonDisabled(true);
         }
-    }, [firstName, lastName, email, phoneNumber, birth, username, password, passwordConfirm]);
+    }, [firstname, lastname, email, phoneNumber, birth, username, password, passwordConfirm, error]);
 
     const handleRegister = () => {
     	if (password != passwordConfirm) {
@@ -74,15 +87,23 @@ export const RegisterForm = () => {
     		console.log("passwords don't match");
     	}
     	const user = {
-    		username: username,
-    		firstname: firstName,
-    		lastname: lastName,
-    		password: password,
-    		email: email,
-    		phone: phoneNumber,
-    		dateOfBirth: birth
+    		"username": username,
+    		"firstname": firstname,
+    		"lastname": lastname,
+    		"password": password,
+    		"email": email,
+    		"phone": phoneNumber,
+    		"dateOfBirth": birth
     	}
-        UserService.createUser(user);
+    	console.log("user : ", user);
+        UserService.createUser(user).then(
+			() => {
+				openSnack("Register validated, an email will be send to you")
+				history.push("/");
+			}
+		).catch(()=>
+			openSnack("Error in entered datas")
+		);
     };
 
     const handleKeyPress = (e: any) => {
@@ -96,15 +117,31 @@ export const RegisterForm = () => {
     		setBirth(date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear());
     };
 
+    const checkPasswords = (pwdconfirm: string) => {
+    	console.log("pwdconfirm : ", error.pwdconfirm);
+    	let newError = error;
+    	if (pwdconfirm != password) {
+    		newError.pwdconfirm = true;
+    		newError.pwd = true
+    	}
+    	else {
+    		newError.pwdconfirm = false;
+    		newError.pwd = false;
+    		setPasswordConfirm(pwdconfirm);
+    	}
+    	setError({...newError});
+    };
+
     return (
         <div className={classes.registerContainer}>
+			{snack()}
             <span className="userLogo"></span>
             <div style={{width: '76%'}}>
                 <form noValidate autoComplete="off">
                 	<Grid container>
-                		<Grid container sm={12} md={6}>
+                		<Grid container item sm={12} md={6}>
 		                    <TextField
-		                        error={error}
+		                        error={error.firstname}
 		                        id="first-name"
 		                        className={classes.formInputs}
 		                        type="text"
@@ -116,9 +153,9 @@ export const RegisterForm = () => {
 		                        variant="outlined"
 		                    />
 			            </Grid>
-			            <Grid container sm={12} md={6}>
+			            <Grid container item sm={12} md={6}>
 		                    <TextField
-		                        error={error}
+		                        error={error.lastname}
 		                        id="last-name"
 		                        className={classes.formInputs}
 		                        type="text"
@@ -131,9 +168,9 @@ export const RegisterForm = () => {
 		                        variant="outlined"
 		                    />
 		                </Grid>
-		                <Grid container sm={12}>
+		                <Grid container item sm={12}>
 		                    <TextField
-		                        error={error}
+		                        error={error.username}
 		                        id="username"
 		                        className={classes.formInputs}
 		                        type="text"
@@ -146,9 +183,9 @@ export const RegisterForm = () => {
 		                        variant="outlined"
 		                    />
 		                </Grid>
-		                <Grid container sm={12}>
+		                <Grid container item sm={12}>
 		                    <TextField
-		                        error={error}
+		                        error={error.email}
 		                        id="email"
 		                        className={classes.formInputs}
 		                        type="email"
@@ -161,9 +198,9 @@ export const RegisterForm = () => {
 		                        variant="outlined"
 		                    />
 		                </Grid>
-		                <Grid container sm={12} md={6}>
+		                <Grid container item sm={12} md={6}>
 		                    <TextField
-		                        error={error}
+		                        error={error.phone}
 		                        id="phone"
 		                        className={classes.formInputs}
 		                        type="text"
@@ -176,7 +213,7 @@ export const RegisterForm = () => {
 		                        variant="outlined"
 		                    />
 		                </Grid>
-		                <Grid container sm={12} md={6}>
+		                <Grid container item sm={12} md={6}>
 		                    <KeyboardDatePicker
 					            className={classes.formInputs}
 					            margin="normal"
@@ -191,9 +228,9 @@ export const RegisterForm = () => {
 					            }}
 					        />
 		                </Grid>
-		                <Grid container sm={12} md={6}>
+		                <Grid container item sm={12} md={6}>
 		                    <TextField
-		                        error={error}
+		                        error={error.pwd}
 		                        id="pwd"
 		                        className={classes.formInputs}
 		                        type="password"
@@ -206,9 +243,9 @@ export const RegisterForm = () => {
 		                        variant="outlined"
 		                    />
 		                </Grid>
-		                <Grid container sm={12} md={6}>
+		                <Grid container item sm={12} md={6}>
 		                    <TextField
-		                        error={error}
+		                        error={error.pwdconfirm}
 		                        id="pwd-confirm"
 		                        className={classes.formInputs}
 		                        type="password"
@@ -216,7 +253,7 @@ export const RegisterForm = () => {
 		                        placeholder="Confirmation du mot de passe"
 		                        margin="normal"
 		                        helperText={helperText}
-		                        onChange={(e) => setPasswordConfirm(e.target.value)}
+		                        onChange={(e) => checkPasswords(e.target.value)}
 		                        onKeyPress={(e) => handleKeyPress(e)}
 		                        variant="outlined"
 		                    />

@@ -4,14 +4,16 @@ import {RoleEnum} from "./roleEnum";
 export class UserModel {
     _id?: string;
     username: string;
-    firstName: string;
-    lastName: string;
+    firstname: string;
+    lastname: string;
     email: string;
-    phoneNumber: string;
+    password: string;
+    phone: string;
     dateOfCreation: Date;
     dateLastConnection: Date;
     dateOfBirth: Date;
-    active: boolean = true;
+    userProfile: Object;
+    active: boolean = false;
     role: RoleEnum;
 
 
@@ -19,26 +21,30 @@ export class UserModel {
         {
             id = "",
             username= "",
-            firstName= "",
-            lastName= "",
+            firstname= "",
+            lastname= "",
             email= "",
-            phoneNumber = "",
+            password="",
+            phone = "",
             dateOfCreation = new Date,
             dateLastConnection = new Date,
             dateOfBirth= new Date,
-            active = true,
-            role= RoleEnum.STANDARD
+            active = false,
+            role= RoleEnum.STANDARD,
+            userProfile={}
         }) {
         this._id = id;
         this.username = username;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.firstname = firstname;
+        this.lastname = lastname;
         this.email = email;
-        this.phoneNumber = phoneNumber;
+        this.password = password;
+        this.phone = phone;
         this.dateOfCreation = dateOfCreation;
         this.dateLastConnection = dateLastConnection;
         this.dateOfBirth = dateOfBirth;
         this.active = active;
         this.role = role;
+        this.userProfile={}
     }
 }
