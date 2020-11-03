@@ -129,6 +129,7 @@ router.post('/create', auth, async (req, res, next) => {
                 } else {
                     resolve(me_res.body);
                     eventToCreate.owner = me_res.body._id
+                    eventToCreate.listPlayers.push(me_res.body._id)
                 }
             });
         })
