@@ -99,10 +99,10 @@ router.get('/', (req, res, next) => {
 router.post('/create', auth, async (req, res, next) => {
     const errorCheck = [];
     let eventToCreate = req.body;
+    eventToCreate.owner = "";
     let eventToCreateGameDetailsId = [];
     // TODO in the future, check agenda conflict
     // check if games within listGames exist
-    console.log(req.user.id)
     if (req.body.listGames.length !== 0) {
         const listGamesPromise = await req.body.listGames.map(async (game, res,next ) =>
             GameDetails.findOne( {_id: game}, async function (err, result){
@@ -118,16 +118,20 @@ router.post('/create', auth, async (req, res, next) => {
         // put game id list with event to create
         eventToCreate.listGames = eventToCreateGameDetailsId;
         // TODO changer le localhost:3100 par url en production
-        var me_req = unirest('GET', 'https://localhost:3100/users/me')
-        .headers({
-            'token': me_req.params.token
+        await new Promise((resolve, reject) => {
+            unirest('GET', 'http://localhost:3100/users/me')
+            .headers({
+                'token': req.header("token")
+            })
+            .end(function (me_res) {
+                if (me_res.error) { 
+                    reject(me_res.error)
+                } else {
+                    resolve(me_res.body);
+                    eventToCreate.owner = me_res.body._id
+                }
+            });
         })
-        .end(function (res) {
-            if (res.error) throw new Error(res.error);
-            console.log(res);
-            eventToCreate.owner = res.body._id //check le console log de res peut etre raw_body à la place de body
-        });
-        // eventToCreate.owner = "5e78ab08122bd31750df8c90" ;
         // create event in bdd
         Event.create(eventToCreate, (err, content) => {
             if (err) res.json({err: err});
