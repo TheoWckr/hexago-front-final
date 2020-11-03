@@ -4,7 +4,15 @@ let express = require('express');
 let router = express.Router();
 let GameDetails = require('../models/gameDetails');
 let Genre = require ('../models/genre');
+const parseImageUpload = require('../middleware/cloudinary');
+const uploadImage = require('../cloudinary');
+const cloudinary = require('cloudinary');
 
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SERCRET,
+});
 
 // let axios = require('axios')
 // axios.defaults.baseURL = `${process.env.AUTH0_AUDIENCE}`
@@ -119,6 +127,7 @@ router.get('/', (req, res, next) => {
     // search by release date
     if (req.query.releaseDate) {
         let releaseDate = new Date( req.query.releaseDate);
+        console.log(releaseDate);
         data['releaseDate'] = {
             $gte: new Date(new Date(0).setFullYear(releaseDate.getFullYear(), 0, 1)),
             $lt: new Date(new Date(0).setFullYear(releaseDate.getFullYear(), 11, 31))
@@ -250,10 +259,12 @@ router.get('/', (req, res, next) => {
  */
 let genreDoNotExist = [];
 
-router.post('/create', async(req, res, next) => {
+router.post('/create', parseImageUpload(), async(req, res, next) => {
     // check if game already exists
+    console.log(req.body)
     const errorCheck = [];
     let gameToCreate = req.body;
+    gameToCreate.img = {url: "", id: ""}
     let gameToCreateGenresId =[];
         const GameAlreadyExists = await GameDetails.findOne({'name': req.body.name}, function (error, gameExists) {
             genreDoNotExist = [];
@@ -283,6 +294,16 @@ router.post('/create', async(req, res, next) => {
             if (errorCheck.length === 0) {
                 // put genre id table with game to create.
                 gameToCreate.genres=gameToCreateGenresId;
+                if (req.file) {
+                    await uploadImage(req.file)
+                      .then((result) => {
+                        gameToCreate.img.url = result.url
+                        gameToCreate.img.id = result.public_id
+                      })
+                      .catch((error) => { /* If there is an error uploading the image */
+                          console.log(error.message)
+                    });
+                }
                 // create game in bdd
                 GameDetails.create(gameToCreate, (err, content) => {
                     if (err) res.json({err: err});
@@ -507,7 +528,7 @@ router.get('/:id', function (req, res, next) {
     "msg": "Game deleted successfully."
 }
  */
-router.delete('/:id', (req, res, next) => {
+router.delete('/:id', async (req, res, next) => {
     if (!req.params.id) res.json({
         err: 'Please provide an id param.'
     });
@@ -515,7 +536,12 @@ router.delete('/:id', (req, res, next) => {
         res.json({
             err: 'Please provide a valid id param, 24 digits.'
         });
-    else
+    else {
+        const game = await GameDetails.findById(req.params.id);
+        if (game.img.id != "") {
+            await cloudinary.v2.uploader.destroy(game.img.id, { invalidate: true, resource_type: "raw" }, function(result, error) { if (error) { console.log(error)} else {console.log(result)} });
+        }
+        //TODO - verify if game id is present within event
         GameDetails.findByIdAndDelete(req.params.id, (err, content) => {
             if (err) res.json({
                 err: err
@@ -532,6 +558,7 @@ router.delete('/:id', (req, res, next) => {
                 })
             }
         })
+    }
 });
 
 // modify a game
@@ -584,9 +611,10 @@ router.delete('/:id', (req, res, next) => {
     "msg": "Game updated successfully."
 }
  */
-router.put('/:id', async (req, res, next) =>{
+router.put('/:id', parseImageUpload(), async (req, res, next) =>{
     const errorCheck = [];
     let gameToModify = req.body;
+    gameToModify.img = {url: "", id: ""}
     let gameToModifyGenresId =[];
     if (!req.params.id) res.json({
         err: 'Please provide an id param.'
@@ -624,8 +652,20 @@ router.put('/:id', async (req, res, next) =>{
         const resultGenre = await Promise.all(genrePromise);
 
         if (errorCheck.length === 0) {
+            const game = await GameDetails.findById(req.params.id)
             // put genre id table with game to create.
             gameToModify.genres=gameToModifyGenresId;
+            if (req.file) {
+                await cloudinary.v2.uploader.destroy(game.img.id, { invalidate: true, resource_type: "raw" }, function(result, error) { if (error) { console.log(error)} else {console.log(result)} });
+                await uploadImage(req.file)
+                    .then((result) => {
+                        gameToModify.img.url = result.url
+                        gameToModify.img.id = result.public_id
+                    })
+                    .catch((error) => { /* If there is an error uploading the image */
+                        console.log(error.message)
+                    });
+            }
             // create game in bdd
             GameDetails.updateOne({_id:req.params.id}, gameToModify, (err, content) => {
                 if (err) res.json({err: err});

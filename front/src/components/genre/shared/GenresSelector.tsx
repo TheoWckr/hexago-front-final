@@ -28,7 +28,7 @@ const   GenresSelector = (props : {
         props.changeGenreState(newGenres);
     };
 
-        return (<div>
+        return (<div className="iflx mx-2-childs">
             <Typography variant={props.inline ? 'body1' : 'h5' }  style={props.inline ? {} :  {padding: '1.3em'}}>
                 Genre Selected
             </Typography>
