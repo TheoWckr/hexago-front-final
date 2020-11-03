@@ -19,6 +19,7 @@ let GameDetailsRouter = require('./routes/gameDetails');
 let EventRouter = require('./routes/event');
 let BadgeRouter = require('./routes/badge');
 let GenreRouter = require('./routes/genre');
+let ChatRouter = require('./routes/chat');
 
 
 
@@ -41,6 +42,7 @@ app.use('/gamedetails', GameDetailsRouter);
 app.use('/event', EventRouter);
 app.use('/badge', BadgeRouter);
 app.use('/genre', GenreRouter);
+app.use('/chat', ChatRouter);
 
 
 // catch 404 and forward to error handler
@@ -66,5 +68,6 @@ app.use('/api/v0/gamedetails', GameDetailsRouter);
 app.use('/api/v0/event', EventRouter);
 app.use('/api/v0/badge', BadgeRouter);
 app.use('/api/v0/genre', GenreRouter);
+app.use('/api/v0/chat', ChatRouter);
 
 module.exports = app;
