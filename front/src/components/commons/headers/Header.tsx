@@ -64,7 +64,8 @@ const Header = () => {
                             <MenuItem key={5} onClick={handleClose} component={Link} to={'/event/create'}>Event create</MenuItem>,
                             <MenuItem key={6} onClick={handleClose} component={Link} to={'/event/update/1'}>Event update</MenuItem>,
                             <MenuItem key={7} onClick={handleClose} component={Link} to={'/event/1'}>Event display</MenuItem>,
-                            <MenuItem key={8} onClick={logout}>Logout</MenuItem>
+                            <MenuItem key={8} onClick={handleClose} component={Link} to={'/event/search'}>Event search</MenuItem>,
+                            <MenuItem key={9} onClick={logout}>Logout</MenuItem>
                         ]
                     )}
                     {!isLogged && (

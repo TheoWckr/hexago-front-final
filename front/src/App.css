@@ -58,3 +58,8 @@ html, body {
 .w-100 {
   width: 100%;
 }
+
+.purple-input input::placeholder {
+  color: #994277 !important;
+  opacity: 1; /* Firefox */
+}
