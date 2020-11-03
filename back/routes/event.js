@@ -375,16 +375,20 @@ router.put('/unsubscribe/:id', auth, async (req, res) => {
         }
         else {
             const event = await Event.findById(req.params.id);
-            if (event.listPlayers.indexOf(req.user.id) != -1)  {
-                event.listPlayers.splice(event.listPlayers.indexOf(req.user.id), 1);
-                await event.save()
-            }
-            if (event.owner == req.user.id && req.body.playerId) {
-                event.listPlayers.splice(event.listPlayers.indexOf(req.params.playerId), 1);
-                await event.save()
-            }
+            if (event.listPlayers.indexOf(event.owner) !== -1) {
+                res.json({error: "You can't unsubscribe of your own event"});
+            } else {
+                if (event.listPlayers.indexOf(req.user.id) != -1)  {
+                    event.listPlayers.splice(event.listPlayers.indexOf(req.user.id), 1);
+                    await event.save()
+                }
+                if (event.owner == req.user.id && req.body.playerId) {
+                    event.listPlayers.splice(event.listPlayers.indexOf(req.params.playerId), 1);
+                    await event.save()
+                }
 
-            res.json({content: event});
+                res.json({content: event});
+            }
         }
     } catch (e) {
         res.send({ message: "Error in subscribe" });
