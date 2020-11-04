@@ -1,40 +1,27 @@
-import {CircularProgress, Typography} from "@material-ui/core";
-import ChildCareIcon from "@material-ui/icons/ChildCare";
-import React, {useEffect, useState} from "react";
+import React, {Dispatch, SetStateAction, useEffect, useState} from "react";
 import TextField from "@material-ui/core/TextField";
 import {Autocomplete} from "@material-ui/lab";
 import {GameModel} from "../../../models/gameModel";
 import GameService from "../../../services/gameService";
+import {type} from "os";
+import QuickSearchMultiple from "../../commons/quicksearch/quickSearchMultiple";
 
 const GameNameQS = () =>  {
-    const [search, setSearch] = useState("");
-    const [options, setOptions] = useState<GameModel[]>([]);
+    const [chosenGames, setChosenGames] = useState<string[]>([]);
+    const [options, setOptions] = useState<string[]>([]);
 
     useEffect(()=>{
-            console.log('test', search);
-
-            if(search.trim().length !== 0) {
-            console.log('test', search);
-            GameService.getGamesForQuickSearch(search).then((result => {
+            GameService.getGamesForQuickSearch("").then((result => {
                 console.log('result QS', result);
-                let stock: GameModel[] = [];
-                result.data.content.forEach((game: {}) => {
-                    stock.push(new GameModel(game));
+                let stock: string[] = [];
+                result.data.content.forEach((game: any) => {
+                   if(game._id && !chosenGames.includes(game._id))
+                    stock.push(game.name);
                 });
                 setOptions(stock);
             }))
-        }
-    }
 
-    , [search]);
+    }, []);
     return (
-            <Autocomplete
-                id="combo-box-demo"
-                options={options}
-                getOptionLabel={(option) => option.name}
-                style={{ width: 300 }}
-                renderInput={(params) => <TextField {...params} onChange={(event) => setSearch(event.target.value)} label="Combo box" variant="outlined" />}
-            />
-        );
-};
+<QuickSearchMultiple listOfChoices={options} setChoices={setChosenGames} /> )};
 export default GameNameQS;

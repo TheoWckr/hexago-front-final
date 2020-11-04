@@ -9,6 +9,8 @@ import {KeyboardDateTimePicker} from "@material-ui/pickers";
 import {MaterialUiPickersDate} from "@material-ui/pickers/typings/date";
 import {makeStyles} from "@material-ui/core/styles";
 import {createEventForm} from "../../../models/service/eventServiceType";
+import {GameSearchPanel} from "../../game/search/GameSearchPanel";
+import GameNameQS from "../../game/shared/GameNameQS";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -73,22 +75,14 @@ const EventCreateForm = (props: {
                 <Grid
                     container
                     item
-                    md={6}
+                    md={8}
                     sm={12}
                     direction={"column"}
                     alignContent={"space-around"}
                     spacing={4}
                 >
                     <Grid item>
-                        <TextField
-                            id="title"
-                            label="Donnez un nom à votre évènement"
-                            margin="normal"
-                            multiline={false}
-                            onChange={event => event}
-                            //onKeyPress={(e) => handleKeyPress(e)}
-                            variant="outlined"
-                        />
+                        <GameNameQS />
                     </Grid>
                     <Grid item>
                         <TextField
@@ -120,7 +114,7 @@ const EventCreateForm = (props: {
                 <Grid
                     container
                     item
-                    md={6}
+                    md={4}
                     sm={12}
                     direction={"column"}
                     alignContent={"space-around"}
