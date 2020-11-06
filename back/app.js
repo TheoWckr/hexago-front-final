@@ -85,26 +85,25 @@ const socket = io(http);
 
 //To listen to messages
 socket.on('connection', (socket)=>{
-  console.log('connection');
   socket.on("newMessage", async function(msg, userId, chatId) {
-    console.log("message: " + msg);
-
-    //broadcast message to everyone in port:5000 except yourself.
-    // socket.broadcast.emit("received", { message: msg });
 
     //save chat to the database
     let Chat = require('./models/chat');
     const chat = await Chat.findById(chatId);
     chat.messages.push({userId: userId, message: msg})
     chat.save();
-    // mongoose.connect('mongodb://localhost:27017/hexago', { useNewUrlParser: true })
-    //   .then(async (db) => {
-    //     console.log("connected correctly to the server");
-    //     const chat = await Chat.findById(chatId);
-    //     chat.messages.push({userId: userId, message: msg})
-    //     chat.save();
-    //   })
-    //   .catch(err => console.log(err));
+
+    socket.broadcast.emit("message", msg, chat.userIdList);
+  });
+  socket.on("writingMessage", async function(userId, chatId) {
+    let Chat = require('./models/chat');
+    const chat = await Chat.findById(chatId);
+    socket.broadcast.emit("writing", userId, chat.userIdList);
+  });
+  socket.on("stopWritingMessage", async function(userId, chatId) {
+    let Chat = require('./models/chat');
+    const chat = await Chat.findById(chatId);
+    socket.broadcast.emit("stopWriting", userId, chat.userIdList);
   });
 });
 
