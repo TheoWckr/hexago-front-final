@@ -17,8 +17,7 @@ let chatSchema = new Schema({
     },
     messages:[{
         userId: {type: Schema.Types.ObjectID, ref:'Users'},
-        message: String,
-        timestamps: true
+        message: String
     }]
 
 });

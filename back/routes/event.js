@@ -44,7 +44,7 @@ router.get('/', (req, res, next) => {
 
 //post create an event http://localhost:3100/event/create?token=xxxxxxx
 /**
- * @api {post} /event/ Create an event
+ * @api {post} /event/create Create an event
  * @apiName POST event
  * @apiGroup event
  * @apiDescription event
@@ -124,11 +124,12 @@ router.post('/create', auth, async (req, res, next) => {
                 'token': req.header("token")
             })
             .end(function (me_res) {
-                if (me_res.error) { 
+                if (me_res.error) {
                     reject(me_res.error)
                 } else {
                     resolve(me_res.body);
                     eventToCreate.owner = me_res.body._id
+                    eventToCreate.listPlayers = [];
                     eventToCreate.listPlayers.push(me_res.body._id)
                 }
             });
