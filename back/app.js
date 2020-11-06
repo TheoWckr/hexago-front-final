@@ -93,17 +93,17 @@ socket.on('connection', (socket)=>{
     chat.messages.push({userId: userId, message: msg})
     chat.save();
 
-    socket.broadcast.emit("message", msg, chat.userIdList);
+    socket.broadcast.emit("message", msg, chat._id);
   });
   socket.on("writingMessage", async function(userId, chatId) {
     let Chat = require('./models/chat');
     const chat = await Chat.findById(chatId);
-    socket.broadcast.emit("writing", userId, chat.userIdList);
+    socket.broadcast.emit("writing", userId, chat._id, chat.userIdList);
   });
   socket.on("stopWritingMessage", async function(userId, chatId) {
     let Chat = require('./models/chat');
     const chat = await Chat.findById(chatId);
-    socket.broadcast.emit("stopWriting", userId, chat.userIdList);
+    socket.broadcast.emit("stopWriting", userId, chat._id, chat.userIdList);
   });
 });
 
