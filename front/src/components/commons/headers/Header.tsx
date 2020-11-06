@@ -25,10 +25,12 @@ const Header = () => {
     const handleClose = () => {
         setAnchorEl(null);
     };
-
+    // Action associée au bouton de logout
     const logout = () => {
-        setAnchorEl(null);
+        //Logique application
         disconnect();
+        //Logique de rendu
+        setAnchorEl(null);
         history.push("/");
     };
 

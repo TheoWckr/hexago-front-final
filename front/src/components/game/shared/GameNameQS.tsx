@@ -1,40 +1,41 @@
-import {CircularProgress, Typography} from "@material-ui/core";
-import ChildCareIcon from "@material-ui/icons/ChildCare";
-import React, {useEffect, useState} from "react";
-import TextField from "@material-ui/core/TextField";
-import {Autocomplete} from "@material-ui/lab";
-import {GameModel} from "../../../models/gameModel";
+import React, {Dispatch, SetStateAction, useEffect, useState} from "react";
 import GameService from "../../../services/gameService";
+import QuickSearchMultiple from "../../commons/quicksearch/quickSearchMultiple";
+import {GameModel} from "../../../models/gameModel";
 
-const GameNameQS = () =>  {
-    const [search, setSearch] = useState("");
-    const [options, setOptions] = useState<GameModel[]>([]);
+const GameNameQS = (props : {
+   setChoices:  React.Dispatch<React.SetStateAction<string[]>>
+}) =>  {
+    const [chosenGames, setChosenGames] = useState<string[]>([]);
+    const [options, setOptions] = useState<string[]>([]);
+    const [gameStock, setGameStock] = useState<GameModel[] >([]);
 
     useEffect(()=>{
-            console.log('test', search);
-
-            if(search.trim().length !== 0) {
-            console.log('test', search);
-            GameService.getGamesForQuickSearch(search).then((result => {
+            GameService.getGamesForQuickSearch("").then((result => {
                 console.log('result QS', result);
-                let stock: GameModel[] = [];
-                result.data.content.forEach((game: {}) => {
-                    stock.push(new GameModel(game));
+                let stock: string[] = [];
+                let gameStock1: GameModel[] = [];
+
+                result.data.content.forEach((game: GameModel) => {
+                  // if(game._id && !chosenGames.includes(game._id))
+                    gameStock1.push(game)
+                    stock.push(game.name);
                 });
+                setGameStock(gameStock1)
                 setOptions(stock);
             }))
-        }
-    }
 
-    , [search]);
+    }, []);
+    //Conversion name to idGame pour transmettre au dessus
+    useEffect(() => {
+        const listIdGame: string[] = [];
+        gameStock.forEach((game : GameModel) => {
+            if(chosenGames.includes(game.name))
+                if(game._id)
+                listIdGame.push(game._id)
+        });
+        props.setChoices(listIdGame)
+    }, [chosenGames])
     return (
-            <Autocomplete
-                id="combo-box-demo"
-                options={options}
-                getOptionLabel={(option) => option.name}
-                style={{ width: 300 }}
-                renderInput={(params) => <TextField {...params} onChange={(event) => setSearch(event.target.value)} label="Combo box" variant="outlined" />}
-            />
-        );
-};
+<QuickSearchMultiple listOfChoices={options} setChoices={setChosenGames} /> )};
 export default GameNameQS;

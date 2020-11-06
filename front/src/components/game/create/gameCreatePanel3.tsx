@@ -3,7 +3,6 @@ import React from "react";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import {GameEditProps} from "../../../models/propsDeclaration";
 import DragNDropImage from "../../commons/dragNDrop/dragNDropImageComponent";
-import {RichTextEditor} from "../../commons/richText/richText";
 import {useStylesPanelCreatePage} from "./gameCreatePage";
 
 makeStyles({
@@ -25,7 +24,6 @@ const GameCreatePanel3 = (props : GameEditProps) => {
               className={classes.panel}
         >
             <DragNDropImage/>
-            <RichTextEditor />
         </Grid>
     )
 };

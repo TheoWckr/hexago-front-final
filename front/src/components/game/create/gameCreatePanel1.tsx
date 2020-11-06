@@ -1,5 +1,5 @@
 import {Checkbox, Divider, FormControlLabel, Grid, TextField, Typography} from "@material-ui/core";
-import React from "react";
+import React, {useState} from "react";
 import {GameEditProps} from "../../../models/propsDeclaration";
 import {useStylesPanelCreatePage} from "./gameCreatePage";
 import {KeyboardDatePicker} from "@material-ui/pickers";
@@ -11,7 +11,7 @@ import GameNameQS from "../shared/GameNameQS";
 export const GameCreatePanel1 = (props: GameEditProps) => {
     const {register} = useFormContext();
     const [isExtension, setIsExtension] = React.useState(false);
-
+    const [extention, setExtention] = useState<string[]>([])
     const handleChangeTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
         props.changeGameState('name', event.target.value);
     };
@@ -38,7 +38,7 @@ export const GameCreatePanel1 = (props: GameEditProps) => {
 
 
     const displayExtension = () => {
-        if (isExtension) return <GameNameQS/>;
+        if (isExtension) return <GameNameQS setChoices={setExtention} />;
     };
 
     const handleChangeExtension = (event: React.ChangeEvent<HTMLInputElement>) => {

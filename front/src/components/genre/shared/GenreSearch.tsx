@@ -22,7 +22,7 @@ const GenreSearch = (props : {
     const  [genresSearched, setGenresSearched] = useState([] as GenreModel[]);
     useEffect(() => {
         const updateGenreSearched = [] as GenreModel [];
-        GenreService.getGenres(genresInput,10).then((response:AxiosResponse) =>{
+        GenreService.getGenres(genresInput,5).then((response:AxiosResponse) =>{
             if(response.data.content && response.data.content.length !== 0) {
                 response.data.content.forEach((genre :any) => updateGenreSearched.push(new GenreModel(genre)));
                 setGenresSearched(updateGenreSearched);

@@ -51,7 +51,7 @@ const App = () => {
                     <Route exact path="/event">
                         <EventListPage/>
                     </Route>
-                    <Route path="/event/create">
+                    <Route path="/event/create" >
                         <EventCreatePage/>
                     </Route>
                     <Route path="/event/update/:id">

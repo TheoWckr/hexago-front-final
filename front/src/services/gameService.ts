@@ -10,7 +10,7 @@ export const GameService = {
         return axios.get(routeName);
     },
     getGamesForQuickSearch(search :string ) :AxiosPromise {
-        return axios.get(routeName+'/name?name='+ search);
+        return axios.get(routeName+'/');
     },
 
     /** formulaire pour créer un jeu */

@@ -7,7 +7,7 @@ import GenreList from "../../genre/shared/GenreListComponent";
 import CardContent from '@material-ui/core/CardContent';
 import {UtilsDate} from "../../../utils/utilsDate";
 import {Rating} from "@material-ui/lab";
-import {useParams} from "react-router";
+import {useHistory, useParams} from "react-router";
 import {GameService} from "../../../services/gameService";
 import {GameModel} from "../../../models/gameModel";
 import PlayerNumber from "../shared/PlayerNumber";
@@ -55,15 +55,21 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const GameDisplayPage = () => {
     let { id } = useParams();
+    const history = useHistory();
     const classes = useStyles();
     const[gameState, setGameState] = React.useState(new GameModel({}));
 
     useEffect(  () => {
         if(id) {
           GameService.getGame(id).then((value) => {
-                    setGameState(new GameModel(value.data.content));
+                    if(value.data.content) {
+                        setGameState(new GameModel(value.data.content));
+                    } else
+                        history.push("/");
                 }
-            )
+            ).catch(() =>
+              history.push("/")
+          )
         }
     },[id]);
 

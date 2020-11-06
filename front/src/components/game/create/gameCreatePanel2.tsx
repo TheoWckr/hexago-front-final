@@ -10,13 +10,10 @@ import {GenreModel} from "../../../models/genreModel";
 
 
 const GameCreatePanel2 = (props:GameEditProps ) => {
-    function valueLabelFormat(value: number) {
-        return marksGameDuration[marksGameDuration.findIndex(mark => mark.value === value)].hiddenLabel ;
-    }
+
 
     const [checkedAge, setCheckedAge] = React.useState(props.game.minAge !== undefined);
     const [checkedDuration, setCheckedDuration] = React.useState(props.game.gameLengthMin !== undefined);
-
 
     const handleChangeNumberOfPlayer = (event: any, newValue: number | number[]) => {
         if (newValue as number[]) {
@@ -45,6 +42,7 @@ const GameCreatePanel2 = (props:GameEditProps ) => {
         }
         setCheckedAge(prev => !prev);
     };
+
     const handleChangeCheckedDuration = () => {
         if(checkedDuration){
             props.changeGameState('gameLengthMin', undefined);
@@ -57,6 +55,9 @@ const GameCreatePanel2 = (props:GameEditProps ) => {
         props.changeGameState('genres', genres);
     };
 
+    function valueLabelFormat(value: number) {
+        return marksGameDuration[marksGameDuration.findIndex(mark => mark.value === value)].hiddenLabel ;
+    }
 
     const classes = useStylesPanelCreatePage();
     return (
@@ -111,8 +112,6 @@ const GameCreatePanel2 = (props:GameEditProps ) => {
             />
             <GenresSelector changeGenreState={setGenres} genres={props.game.genres}/>
         </Grid>
-
-
 )
 };
 export default GameCreatePanel2;
