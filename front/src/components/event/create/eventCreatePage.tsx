@@ -1,9 +1,12 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import EventCreateForm from "./eventCreateForm";
 import Button from "@material-ui/core/Button";
 import {Container, createStyles, Grid, Paper, Theme, Typography} from "@material-ui/core";
 import {useSnack} from "../../../services/hooks/useSnackBar";
 import {makeStyles} from "@material-ui/core/styles";
+import {createEventForm} from "../../../models/service/eventServiceType";
+import {EventService} from "../../../services/eventService";
+import {useHistory} from "react-router";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -16,17 +19,30 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const EventCreatePage = () => {
     const classes = useStyles();
+    const history = useHistory();
+
     const [isButtonDisabled,setButtonDisabled] = useState(false);
-    const eventChangeHandler = (newButtonDisabled: boolean) => {
-        console.log(newButtonDisabled , isButtonDisabled)
-        setButtonDisabled(newButtonDisabled)
-    };
+    const [createEventForm, setCreateEventForm] = useState<createEventForm>({} as createEventForm);
+
+    useEffect(() => {
+        if(createEventForm.date &&createEventForm.details.trim().length > 0
+            && createEventForm.phone.trim().length > 8 && createEventForm.locationId.trim().length > 0
+            && createEventForm.listGames!.length > 0 )
+            setButtonDisabled(false)
+        else             setButtonDisabled(true)
+    }, [createEventForm]);
 
     const {openSnack, snack} = useSnack("Sortie validée ")
 
     const sendForm = () => {
         console.log("Send")
-        openSnack()
+        EventService.createEvent(createEventForm)
+            .catch((err) => console.log("Erreur create event" , err) )
+            .then((result) => {
+                console.log("reussite", result)
+                openSnack()
+                history.push("/");
+            })
     }
 
 
@@ -38,7 +54,7 @@ const EventCreatePage = () => {
               container
               direction="column"
               >
-          <EventCreateForm setButtonDisabled={eventChangeHandler} />
+          <EventCreateForm setButtonDisabled={setButtonDisabled} setCreateEventForm={setCreateEventForm}/>
               {snack()}
           <Button
               onClick={()=> sendForm()}

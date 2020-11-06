@@ -5,7 +5,7 @@ import {UserModel} from "../../models/userModel";
 
 // Provider empty because we can't create hook outside of component
 export const AuthContext =  createContext(undefined as any );
-
+export let currentToken = ''
 export function useAuth() {
     const [token, setToken] = useState(null as String | undefined | null)
     const [currentUser, setCurrentUser] = useState(undefined as UserModel |undefined);
@@ -31,9 +31,13 @@ export function useAuth() {
     const updateToken = (newToken : string | null) => {
         setToken(prevState => {
             if(newToken) {
+                console.log('new token : ', newToken)
                 prevState = newToken;
                 localStorage.setItem('token', newToken);
                 setIsLogged(true);
+                UserService.me(newToken)
+                    .catch((err) => console.log("Error", err))
+                    .then((result) => console.log("result me : ", result))
             }
             else {
                 localStorage.removeItem('token');

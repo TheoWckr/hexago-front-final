@@ -11,7 +11,7 @@ const QuickSearchMultiple = (props:{listOfChoices : string[],
             options={props.listOfChoices}
             multiple
             disableCloseOnSelect
-            limitTags={3}
+            limitTags={1}
             onChange={(event: any, value: string[] | null) => {
                 if(value) props.setChoices(value)
                 else props.setChoices([])

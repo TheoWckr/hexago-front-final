@@ -1,5 +1,4 @@
 import {axios, MAIN_ADRESS} from "../utils/utilsAxios";
-import {GameModel} from "../models/gameModel";
 import {AxiosPromise} from "axios";
 import {createEventForm, searchEvent} from "../models/service/eventServiceType";
 
@@ -9,10 +8,15 @@ const routeName = MAIN_ADRESS+'event/';
 export const EventService = {
 
     createEvent(event : createEventForm) :AxiosPromise {
-        return axios.post(routeName, event);
+        const header = {
+            headers : {
+                token: localStorage.getItem('token')
+            }
+        };
+        return axios.post(routeName+'create', event, header );
     },
     getEvent(id : string) :AxiosPromise {
-        return axios.get(routeName+'/searchid/'+id);
+        return axios.get(routeName+'searchid/'+id);
     },
 
     searchEvent(params : searchEvent){
@@ -25,6 +29,6 @@ export const EventService = {
         if(params.offset) paramsString +=`offset=${params.offset}&`
         else paramsString +=`offset=0`
 
-        return axios.get(routeName+'/searchlist'+paramsString)
+        return axios.get(routeName+'searchlist'+paramsString)
     }
 }

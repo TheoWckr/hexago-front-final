@@ -24,7 +24,8 @@ const useStyles = makeStyles((theme: Theme) =>
 
 
 const EventCreateForm = (props: {
-    setButtonDisabled : (arg0: boolean) => void
+    setButtonDisabled : React.Dispatch<React.SetStateAction<boolean>>
+    setCreateEventForm : React.Dispatch<React.SetStateAction<createEventForm>>
 }) => {
     const [eventDetail, setEventDetail] = useState(`<h2>Details</h2>`)
     const [eventDate,setEventDate] = useState(new Date())
@@ -42,14 +43,12 @@ const EventCreateForm = (props: {
         details: eventDetail,
         duration:eventDuration,
         listGames: eventListGames,
-        phone:eventPhone
+        phone:eventPhone,
+        listPlayers: []
     }
+
     useEffect(() => {
-        console.log('Test ',eventFormValue )
-        if(eventDate && eventDetail.trim().length > 0
-            && eventPhone.trim().length > 8 && eventLocationid.trim().length > 0 )
-            props.setButtonDisabled(false)
-        else             props.setButtonDisabled(true)
+        props.setCreateEventForm(eventFormValue);
     }, [eventDetail, eventDate,eventDuration,eventListGames,eventLocationid,eventMaxPlayers,eventPhone]);
     const classes = useStyles();
 
@@ -82,7 +81,7 @@ const EventCreateForm = (props: {
                     spacing={4}
                 >
                     <Grid item>
-                        <GameNameQS />
+                        <GameNameQS setChoices={setEventListGames}/>
                     </Grid>
                     <Grid item>
                         <TextField

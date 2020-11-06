@@ -5,7 +5,6 @@ import {MAIN_ADRESS, axios} from "../utils/utilsAxios";
 import {UserModel} from "../models/userModel";
 import {LoginFormType} from "../models/form/loginFormType";
 import {RegisterFormType} from "../models/form/registerFormType";
-
 const empyUserProfil = {
     "userProfile":{
     "experience":0,
@@ -17,6 +16,7 @@ const empyUserProfil = {
         "favoriteGenres": []
 }
 };
+
 
 const routeName = MAIN_ADRESS+'users/';
 export const UserService = {
@@ -44,8 +44,8 @@ export const UserService = {
      */
     me(token : String): AxiosPromise{
         const header = {
-            header : {
-                token: 'token'
+            headers : {
+                token: token
             }
         };
         return axios.get('http://localhost:3100/users/me', header);

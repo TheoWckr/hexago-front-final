@@ -7,6 +7,7 @@ export interface createEventForm{
     locationId : string;
     phone: string;
     details: string;
+    listPlayers : string[]
 }
 
 
