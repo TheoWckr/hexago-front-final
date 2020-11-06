@@ -6,6 +6,7 @@ const logger = require('morgan');
 const jwt = require("express-jwt");
 const jwksRsa = require("jwks-rsa");
 const helmet = require('helmet');
+let mongoose = require('mongoose');
 
 let cors = require('cors');
 let app = express();
@@ -69,5 +70,47 @@ app.use('/api/v0/event', EventRouter);
 app.use('/api/v0/badge', BadgeRouter);
 app.use('/api/v0/genre', GenreRouter);
 app.use('/api/v0/chat', ChatRouter);
+
+const http = require('http').createServer(app);
+
+// require the socket.io module
+const io = require('socket.io');
+
+const port = 3100;
+
+const socket = io(http);
+//create an event listener
+
+
+
+//To listen to messages
+socket.on('connection', (socket)=>{
+  console.log('connection');
+  socket.on("newMessage", async function(msg, userId, chatId) {
+    console.log("message: " + msg);
+
+    //broadcast message to everyone in port:5000 except yourself.
+    // socket.broadcast.emit("received", { message: msg });
+
+    //save chat to the database
+    let Chat = require('./models/chat');
+    const chat = await Chat.findById(chatId);
+    chat.messages.push({userId: userId, message: msg})
+    chat.save();
+    // mongoose.connect('mongodb://localhost:27017/hexago', { useNewUrlParser: true })
+    //   .then(async (db) => {
+    //     console.log("connected correctly to the server");
+    //     const chat = await Chat.findById(chatId);
+    //     chat.messages.push({userId: userId, message: msg})
+    //     chat.save();
+    //   })
+    //   .catch(err => console.log(err));
+  });
+});
+
+//wire up the server to listen to our port 500
+http.listen(port, ()=>{
+  console.log('connected to port: '+ port)
+});
 
 module.exports = app;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import Header from "./components/commons/headers/Header";
 
@@ -19,9 +19,17 @@ import EventListPage from "./components/event/list/eventListPage";
 import EventDisplayPage from "./components/event/display/eventDisplayPage";
 import EventCreatePage from "./components/event/create/eventCreatePage";
 import EventUpdatePage from "./components/event/update/eventUpdatePage";
+import { ChatComponent } from './components/chat/ChatComponent';
+const socketIOClient = require('socket.io-client');
 
 const App = () => {
     const {isLogged, signIn, updateToken, token, currentUser, disconnect} = useAuth();
+
+    useEffect(() => {
+        console.log("test")
+        const socket = socketIOClient("http://localhost:3100");
+
+    }, [])
 
     return (
         <AuthContext.Provider value={{isLogged, signIn, updateToken, token, currentUser, disconnect}}>
@@ -57,6 +65,9 @@ const App = () => {
                     </Route>
                     <Route path="/register">
                         <RegisterPage/>
+                    </Route>
+                    <Route path="/chat">
+                        <ChatComponent/>
                     </Route>
                 </Switch>
             </Router>

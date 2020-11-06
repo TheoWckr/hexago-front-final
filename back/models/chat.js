@@ -5,6 +5,6 @@ mongoose.connect('mongodb://localhost:27017/hexago', { useNewUrlParser: true })
     .catch(err => console.log(err));
 
 let db = mongoose.connection;
-let ChatSchema = require('../schemas/badge');
+let ChatSchema = require('../schemas/chat');
 
 module.exports = db.model('Chat', ChatSchema);
