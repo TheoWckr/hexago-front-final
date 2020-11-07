@@ -50,6 +50,9 @@ const App = () => {
                     <Route path="/event/update/:id">
                         <EventUpdatePage/>
                     </Route>
+                    <Route path="/event/display/:id" >
+                        <EventDisplayPage/>
+                    </Route>
                     <Route path="/event/search">
                         <EventSearchPanel/>
                     </Route>
