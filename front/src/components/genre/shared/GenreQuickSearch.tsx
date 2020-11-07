@@ -7,7 +7,7 @@ import {AxiosResponse} from "axios";
 import {GenreModel} from "../../../models/genreModel";
 
 const GenreQuickSearch = (props : {
-    setChoices: (genres: GenreModel[]) => void
+    setChoices:  (genres: GenreModel[]) => void | React.Dispatch<React.SetStateAction<GenreModel[]>>
 }) =>  {
     const [chosenGenres, setChosenGenres] = useState<string[]>([]);
     const [options, setOptions] = useState<string[]>([]);
