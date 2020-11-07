@@ -1,6 +1,4 @@
 import React, {useEffect, useState} from "react";
-import {GameModel} from "../../../models/gameModel";
-import GameService from "../../../services/gameService";
 import QuickSearchMultiple from "../../commons/quicksearch/quickSearchMultiple";
 import {GenreService} from "../../../services/genreService";
 import {AxiosResponse} from "axios";
