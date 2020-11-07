@@ -6,11 +6,10 @@ import 'react-phone-input-2/lib/style.css'
 import {marksGameDuration, marksGameNumPlayer} from "../../../models/gameModel";
 import {RichTextEditor} from "../../commons/richText/RichTextEditor";
 import {KeyboardDateTimePicker} from "@material-ui/pickers";
-import {MaterialUiPickersDate} from "@material-ui/pickers/typings/date";
 import {makeStyles} from "@material-ui/core/styles";
 import {createEventForm} from "../../../models/service/eventServiceType";
-import {GameSearchPanel} from "../../game/search/GameSearchPanel";
 import GameNameQS from "../../game/shared/GameNameQS";
+import {UtilsDate} from "../../../utils/utilsDate";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -28,7 +27,7 @@ const EventCreateForm = (props: {
     setCreateEventForm : React.Dispatch<React.SetStateAction<createEventForm>>
 }) => {
     const [eventDetail, setEventDetail] = useState(`<h2>Details</h2>`)
-    const [eventDate,setEventDate] = useState(new Date())
+    const [eventDate,setEventDate] = useState<Date | undefined>(new Date())
     const [eventMinPlayers,setEventMinPlayers] = useState(4)
     const [eventMaxPlayers,setEventMaxPlayers] = useState(6)
     const [eventDuration,setEventDuration] = useState(90)
@@ -63,9 +62,7 @@ const EventCreateForm = (props: {
     };
     function valueLabelFormat(value: number) {
         return marksGameDuration[marksGameDuration.findIndex(mark => mark.value === value)].hiddenLabel;
-    }
-
-    return (
+    }    return (
         <div className={classes.root}>
             <Grid
                 container
@@ -126,7 +123,7 @@ const EventCreateForm = (props: {
                             label="Date de l'évènement"
                             format="dd/MM/yyyy - hh:mm:ss"
                             value={eventDate}
-                            onChange={value => setEventDate(new Date(value!.getDate()))}
+                            onChange={value => setEventDate(new Date(UtilsDate.toStringFromMUIDateFormat(value)))}
                         />
                     </Grid>
                     <Grid item>
@@ -156,7 +153,7 @@ const EventCreateForm = (props: {
             <Grid >
                 <Typography align={"center"} variant={"body1"}> Description de l'évènement</Typography>
                 <RichTextEditor
-                    handleEditorChange={((content, editor) =>  setEventDetail(content))}
+                    handleEditorChange={((content) =>  setEventDetail(content))}
                     initialValue={eventDetail}
                     height={"300"}
                 />

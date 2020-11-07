@@ -1,5 +1,5 @@
 export interface createEventForm{
-    date : Date;
+    date? : Date;
     duration :number;
     minPlayers: number;
     maxPlayers: number;
