@@ -1,4 +1,3 @@
-
 import {FormControlLabel, Grid, Slider, Switch, Typography} from "@material-ui/core";
 import React from "react";
 import {GameEditProps} from "../../../models/propsDeclaration";
@@ -7,10 +6,7 @@ import {useStylesPanelCreatePage} from "./gameCreatePage";
 import GenresSelector from "../../genre/shared/GenresSelector";
 import {GenreModel} from "../../../models/genreModel";
 
-
-
 const GameCreatePanel2 = (props:GameEditProps ) => {
-
 
     const [checkedAge, setCheckedAge] = React.useState(props.game.minAge !== undefined);
     const [checkedDuration, setCheckedDuration] = React.useState(props.game.gameLengthMin !== undefined);
@@ -66,7 +62,7 @@ const GameCreatePanel2 = (props:GameEditProps ) => {
               direction="column"
               className={classes.panel}
         >
-            <Typography>Number of player</Typography>
+            <Typography>Nombre de joueurs possible</Typography>
             <Slider
                 value={ props.game.playerMin ? [props.game.playerMin, props.game.playerMax] : [4,8]}
                 onChange={handleChangeNumberOfPlayer}
@@ -78,7 +74,7 @@ const GameCreatePanel2 = (props:GameEditProps ) => {
             />
              <FormControlLabel
                 control={<Switch checked={checkedAge} onChange={handleChangeCheckedAge} />}
-                label="Minimum Age"
+                label="Age minimum"
             />
             <Slider
                 name={'age'}
@@ -96,7 +92,7 @@ const GameCreatePanel2 = (props:GameEditProps ) => {
 
             <FormControlLabel
                 control={<Switch checked={checkedDuration} onChange={handleChangeCheckedDuration} />}
-                label="Duration"
+                label="Durée moyenne d'une partie"
             />
             <Slider
                 disabled={!checkedDuration}
