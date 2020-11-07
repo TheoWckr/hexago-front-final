@@ -5,6 +5,7 @@ import {marksGameAgeMin, marksGameDuration, marksGameNumPlayer} from "../../../m
 import {useStylesPanelCreatePage} from "./gameCreatePage";
 import GenresSelector from "../../genre/shared/GenresSelector";
 import {GenreModel} from "../../../models/genreModel";
+import GenreQuickSearch from "../../genre/shared/GenreQuickSearch";
 
 const GameCreatePanel2 = (props:GameEditProps ) => {
 
@@ -106,7 +107,7 @@ const GameCreatePanel2 = (props:GameEditProps ) => {
                 min={15}
                 max={180}
             />
-            <GenresSelector changeGenreState={setGenres} genres={props.game.genres}/>
+            <GenreQuickSearch  setChoices={setGenres}/>
         </Grid>
 )
 };

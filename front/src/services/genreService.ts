@@ -13,7 +13,7 @@ export const GenreService = {
             paramsString += 'genre=' + genre+ '&';
         if(limit && limit > 1)
             paramsString += 'limit=' + limit;
-        else paramsString += 'limit=2';
+        else paramsString += 'limit=9999';
         return axios.get(routeName + paramsString);
     },
 
