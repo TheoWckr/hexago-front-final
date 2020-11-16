@@ -24,7 +24,12 @@ export const EventService = {
         else paramsString +=`limit=5&`
         if(params.offset) paramsString +=`offset=${params.offset}&`
         else paramsString +=`offset=0`
-
-        return axios.get(routeName+'/searchlist'+paramsString)
+        const header = {
+            headers: {
+                token: localStorage.getItem("token")
+            }
+        };
+        console.log("header :", header);
+        return axios.get(routeName+'/searchlist'+paramsString, header);
     }
 }
