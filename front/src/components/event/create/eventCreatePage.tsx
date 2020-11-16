@@ -7,6 +7,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import {createEventForm} from "../../../models/service/eventServiceType";
 import {EventService} from "../../../services/eventService";
 import {useHistory} from "react-router";
+import Simple from "./simple";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -67,6 +68,7 @@ const EventCreatePage = () => {
           </Button>
           </Grid>
             </Paper>
+          <Simple></Simple>
       </Container>
     );
 };

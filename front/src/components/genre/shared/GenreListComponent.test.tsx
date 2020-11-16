@@ -3,7 +3,6 @@ import {mount, shallow} from 'enzyme';
 import GenreList from "./GenreListComponent";
 import {createMount, createRender, createShallow} from "@material-ui/core/test-utils";
 import {GenreModel} from "../../../models/genreModel";
-
 let genreMockList2 : GenreModel[] = [
     new GenreModel({genre : "Medieval",_id : 'Heroic'}), new GenreModel( {genre: "Heroic",_id : 'Heroic'} ),
     new GenreModel({genre: " Collaboration ",_id : 'Collaboration'}),new GenreModel({genre: "Magic",_id : 'Magic'}),

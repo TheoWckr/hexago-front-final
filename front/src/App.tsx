@@ -20,6 +20,7 @@ import EventDisplayPage from "./components/event/display/eventDisplayPage";
 import EventCreatePage from "./components/event/create/eventCreatePage";
 import EventUpdatePage from "./components/event/update/eventUpdatePage";
 import EventSearchPanel from "./components/event/search/eventSearchPanel";
+import Simple from "./components/event/create/simple";
 
 const App = () => {
     const {isLogged, signIn, updateToken, token, currentUser, disconnect} = useAuth();
@@ -29,6 +30,9 @@ const App = () => {
             <Router>
                 <Header/>
                 <Switch>
+                    <Route exact path={"/"} >
+                        <Simple />
+                    </Route>
                     <Route exact path="/GameCreate/:id?">
                         <GameCreatePage/>
                     </Route>

@@ -30,7 +30,7 @@ const   GenresSelector = (props : {
 
         return (<div className="iflx mx-2-childs">
             <Typography variant={props.inline ? 'body1' : 'h5' }  style={props.inline ? {} :  {padding: '1.3em'}}>
-                Genre Selected
+                Genre sélectionné
             </Typography>
             <GenreList genres={props.genres} ClickHandler={funRemove} />
             <GenreSearch genresHidden={props.genres} clickHandler={funAdd} inline={props.inline}/>
