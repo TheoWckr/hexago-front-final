@@ -1,12 +1,11 @@
-import React, {useEffect} from 'react';
-import {useParams} from "react-router-dom";
+import React from 'react';
+import {useParams} from "react-router";
 import {Button, Grid, Typography} from "@material-ui/core";
 import './EventDisplay.css';
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 import Avatar from "@material-ui/core/Avatar";
 import eventData from "../../../data-mock/eventData";
 import {GameModel} from "../../../models/gameModel";
-import {EventService} from "../../../services/eventService";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -29,18 +28,9 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const EventDisplayPage = () => {
-    const {id} = useParams<{ id: string }>();
+    let {id} = useParams();
     const classe = useStyles();
     let data = eventData;
-
-    useEffect(() => {
-        //IISE
-        (async function callEvent() {
-            await EventService.getEvent(id)
-                .then((result) => console.log("getEventResult" , result))
-                .catch(reason => console.log(reason))
-        })();
-    },[])
     return (
         <Grid container className="main">
             <Grid item xs={6} className="box">
