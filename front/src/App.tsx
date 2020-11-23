@@ -20,14 +20,12 @@ import EventCreatePage from "./components/event/create/eventCreatePage";
 import EventUpdatePage from "./components/event/update/eventUpdatePage";
 import {Home} from "./components/home/home";
 import EventSearchPanel from "./components/event/search/eventSearchPanel";
-import Simple from "./components/event/create/simple";
 
 const App = (props : {location : any}) => {
     const {isLogged, signIn, updateToken, token, currentUser, disconnect} = useAuth();
 
     return (
         <AuthContext.Provider value={{isLogged, signIn, updateToken, token, currentUser, disconnect}}>
-            <Router>
                 <Header/>
                 <TransitionGroup>
                     <CSSTransition key={props.location.key} classNames="fade" timeout={{

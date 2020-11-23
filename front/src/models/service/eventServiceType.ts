@@ -16,7 +16,7 @@ export interface getEvent{
 }
 
 export interface searchEvent {
-    date?: Date;
+    date?: Date | string;
     locationId?: String;
     listGames?: String[];
     showEventFull?: boolean;

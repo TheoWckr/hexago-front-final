@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const EventDisplayPage = () => {
-    let {id} = useParams();
+    const {id} = useParams<{ id: string }>();
     const classe = useStyles();
     let data = eventData;
     return (
