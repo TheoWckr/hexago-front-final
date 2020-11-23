@@ -8,14 +8,7 @@ export const ChatComponent = () => {
     const [messages, setMessages] = useState<string[]>([]);
     const [writing, setWriting] = useState<boolean>(false);
     const [message, setMessage] = useState<string>("");
-    const [chat, setChat] = useState<object[]>([
-        {
-            _id: "",
-            userIdList: [],
-            userIdNames: [],
-            messages: []
-        }
-    ]);
+    const [chat, setChat] = useState<object[]>([]);
     const [chatId, setChatId] = useState<string>()
 
     useEffect(() => {
@@ -31,17 +24,18 @@ export const ChatComponent = () => {
             await axios.get(MAIN_ADRESS + "chat/5fa424e6c4c5be08c7809355")
             .then((res: any) => {
                 chats = res.data.content
+                console.log(res.data.content)
             })
             .catch((err: any) => {
                 console.log(err)
             })
             console.log(chats)
-            chats.forEach((chat: any) => {
-                chat.userIdList.forEach((userId: any) => {
-                    axios.get(MAIN_ADRESS + "users/" + userId, {header: {token: ""}})
+            await chats.forEach(async (chat: any) => {
+                chat.userIdNames = []
+                await chat.userIdList.forEach((userId: any) => {
+                    axios.get(MAIN_ADRESS + "users/" + userId, {headers: {token: localStorage.getItem("token")}})
                     .then((res: any) => {
-                        console.log(res.data.content)
-                        chats.userIdNames.push(res.data.content.firstname + " " + res.data.content.lastname)
+                        chat.userIdNames.push(res.data.content.firstname + " " + res.data.content.lastname)
                     })
                     .catch((err: any) => {
                         console.log(err)
@@ -51,7 +45,6 @@ export const ChatComponent = () => {
             setChat(chats)
         }
         getChats()
-        
         socket.on('message', (message: string, id: string) => {
             // dcheck if the connected userId is in userIdList
             if (id === chatId) {
@@ -97,8 +90,12 @@ export const ChatComponent = () => {
             <div style={{display: "flex", flexDirection: "row"}}>
                 <div style={{display: "flex", flexDirection: "column", width: "50%"}}>
                     <div>Liste des chats</div>
-                    {chat.map((chat: any, i:number) =>
-                        <button key={i} onClick={() => onChatClick(chat._id, chat.messages)}>{chat._id}</button>
+                    {chat.map((chat: any, i:number) => {
+                        console.log(chat)
+                        return (
+                            <button key={i} onClick={() => onChatClick(chat._id, chat.messages)}>{chat.userIdList}</button>
+                        )
+                    }
                     )}
                 </div>
                 <div style={{display: "flex", flexDirection: "column"}}>
