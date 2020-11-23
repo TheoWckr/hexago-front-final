@@ -11,6 +11,9 @@ let chatSchema = new Schema({
     userIdList: [{
         type: Schema.Types.ObjectID, ref:'Users'
     }],
+    userIdNames: [{
+        type: String
+    }],
     eventId:{
         type: Schema.Types.ObjectID, ref:'Event'
     },

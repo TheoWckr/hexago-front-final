@@ -47,32 +47,6 @@ router.get('/', auth, (req, res, next) => {
   })
 });
 
-//get a user
-router.get('/:id', auth, (req, res, next) => {
-  if (!req.params.id) res.json({
-    err: 'Please provide an id param.'
-});
-else {
-  User.findById(
-    req.params.id, (err, content) => {
-        if (err) res.json({
-            err: err
-        });
-        else {
-            if (content) {
-                res.json({
-                    content
-                })
-            } else {
-                res.json({
-                    err: 'No badge found with this id.'
-                })
-            }
-        }
-    })
-  }
-});
-
 //post create a user
 /**
  * @api {post} /users/signup Sign Up User
@@ -107,7 +81,6 @@ router.post(
       check("password", "Please enter a valid password").isLength({ min: 6 })
   ],
   async (req, res) => {
-    console.log(req.body);
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         console.log(errors)
@@ -141,7 +114,6 @@ router.post(
             });
           }
           const newUserProfile = new UserProfile(userProfile);
-          console.log(newUserProfile);
           const userProfileId = newUserProfile._id;
           user = new User({
             username,
@@ -162,7 +134,6 @@ router.post(
           if (req.file) {
             await uploadImage(req.file)
               .then((result) => {
-                console.log(user.img)
                 user.img.url = result.url
                 user.img.id = result.public_id
               })
@@ -171,7 +142,6 @@ router.post(
               });
           }
           await user.save();
-          console.log(user)
           const payload = {
               user: {
                   id: user.id
@@ -453,6 +423,7 @@ router.delete('/:id', async (req, res, next) => {
  */
 router.get("/me", auth, async (req, res) => {
   try {
+    console.log(req.user.id)
     // request.user is getting fetched from Middleware after token authentication
     const user = await User.findById(req.user.id);
     const tmpuser = user.toObject();
