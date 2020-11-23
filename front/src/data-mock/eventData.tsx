@@ -1,7 +1,8 @@
 import {eventModel} from "../models/eventModel";
 import gameData from "./gameData";
+import {GameModel} from "../models/gameModel";
 
-let list = [];
+let list = new Array<GameModel>();
 
 list.push(gameData);
 

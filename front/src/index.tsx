@@ -4,14 +4,22 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
-
+import {
+    BrowserRouter as Router,
+    useLocation,
+    Switch,
+    Route, useParams, useHistory
+} from 'react-router-dom';
 import DateFnsUtils from "@date-io/date-fns";
+import {LocationWrapper} from "./LocationWrapper";
 
 ReactDOM.render(
 
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <meta charSet="utf-8"/>
-    <App />
+        <Router>
+        <LocationWrapper />
+        </Router>
     </MuiPickersUtilsProvider>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change

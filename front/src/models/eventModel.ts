@@ -43,7 +43,7 @@ export class eventModel {
                     nbPlayers = 0,
                     maxPlayers = 0,
                     locationId = '',
-                    listGames = [],
+                    listGames = new Array<GameModel>(),
                 } = {}) {
 
         this._id = _id.length === 0  ? undefined : _id;

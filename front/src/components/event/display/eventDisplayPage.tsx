@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {useParams} from "react-router";
+import {useParams} from "react-router-dom";
 import {Button, Grid, Typography} from "@material-ui/core";
 import './EventDisplay.css';
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const EventDisplayPage = () => {
-    let {id} = useParams();
+    const {id} = useParams<{ id: string }>();
     const classe = useStyles();
     let data = eventData;
 

@@ -75,7 +75,7 @@ const  GameCreatePage = () => {
     const [gameStatus, setGameStatus] = React.useState('');
 
 
-    let {id} = useParams();
+    const {id} = useParams<{ id: string }>();
     const methods = useForm<GameModel>();
 
     /**

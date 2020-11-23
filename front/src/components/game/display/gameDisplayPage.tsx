@@ -1,6 +1,5 @@
 import React, {useEffect} from "react";
 import {Grid, Typography, Box, Divider, createStyles, Theme, Card} from "@material-ui/core";
-import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import GenreList from "../../genre/shared/GenreListComponent";
@@ -54,7 +53,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const GameDisplayPage = () => {
-    let { id } = useParams();
+    const {id} = useParams<{ id: string }>();
     const history = useHistory();
     const classes = useStyles();
     const[gameState, setGameState] = React.useState(new GameModel({}));

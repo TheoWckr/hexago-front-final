@@ -1,13 +1,14 @@
 import React from 'react';
 import './App.css';
 import Header from "./components/commons/headers/Header";
-
+import { TransitionGroup, CSSTransition } from "react-transition-group";
 import GameList from "./components/game/list/gameList";
 
 import {
     BrowserRouter as Router,
+    useLocation,
     Switch,
-    Route
+    Route, useParams, useHistory
 } from 'react-router-dom';
 import GameDisplayPage from "./components/game/display/gameDisplayPage";
 import GameCreatePage from "./components/game/create/gameCreatePage";
@@ -22,13 +23,17 @@ import EventUpdatePage from "./components/event/update/eventUpdatePage";
 import EventSearchPanel from "./components/event/search/eventSearchPanel";
 import Simple from "./components/event/create/simple";
 
-const App = () => {
+const App = (props : {location : any}) => {
     const {isLogged, signIn, updateToken, token, currentUser, disconnect} = useAuth();
-
     return (
         <AuthContext.Provider value={{isLogged, signIn, updateToken, token, currentUser, disconnect}}>
-            <Router>
                 <Header/>
+                <TransitionGroup>
+                    <CSSTransition key={props.location.key} classNames="fade" timeout={{
+                        appear: 1500,
+                        enter: 500,
+                        exit : 300
+                    }}>
                 <Switch>
                     <Route exact path={"/"} >
                         <Simple />
@@ -67,7 +72,8 @@ const App = () => {
                         <RegisterPage/>
                     </Route>
                 </Switch>
-            </Router>
+                    </CSSTransition>
+                </TransitionGroup>
         </AuthContext.Provider>
     );
 };
