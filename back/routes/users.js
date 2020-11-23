@@ -38,13 +38,39 @@ function handleError(err) {
 
 
 //get all user
-router.get('/', (req, res, next) => {
+router.get('/', auth, (req, res, next) => {
   User.find({}, function (err, content) {
     if (err) res.json({
       err: err
     });
     else res.json({content})
   })
+});
+
+//get a user
+router.get('/:id', auth, (req, res, next) => {
+  if (!req.params.id) res.json({
+    err: 'Please provide an id param.'
+});
+else {
+  User.findById(
+    req.params.id, (err, content) => {
+        if (err) res.json({
+            err: err
+        });
+        else {
+            if (content) {
+                res.json({
+                    content
+                })
+            } else {
+                res.json({
+                    err: 'No badge found with this id.'
+                })
+            }
+        }
+    })
+  }
 });
 
 //post create a user

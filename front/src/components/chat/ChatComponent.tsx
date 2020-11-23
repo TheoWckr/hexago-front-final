@@ -11,6 +11,8 @@ export const ChatComponent = () => {
     const [chat, setChat] = useState<object[]>([
         {
             _id: "",
+            userIdList: [],
+            userIdNames: [],
             messages: []
         }
     ]);
@@ -23,14 +25,33 @@ export const ChatComponent = () => {
       }, [message]);
 
     useEffect(() => {
-        // replace 5fa424e6c4c5be08c780935 by connected userId
-        axios.get(MAIN_ADRESS + "chat/5fa424e6c4c5be08c7809355")
+        async function getChats() {
+            // replace 5fa424e6c4c5be08c780935 by connected userId
+            let chats: any = [];
+            await axios.get(MAIN_ADRESS + "chat/5fa424e6c4c5be08c7809355")
             .then((res: any) => {
-                setChat(res.data.content)
+                chats = res.data.content
             })
             .catch((err: any) => {
                 console.log(err)
             })
+            console.log(chats)
+            chats.forEach((chat: any) => {
+                chat.userIdList.forEach((userId: any) => {
+                    axios.get(MAIN_ADRESS + "users/" + userId, {header: {token: ""}})
+                    .then((res: any) => {
+                        console.log(res.data.content)
+                        chats.userIdNames.push(res.data.content.firstname + " " + res.data.content.lastname)
+                    })
+                    .catch((err: any) => {
+                        console.log(err)
+                    })
+                });
+            });
+            setChat(chats)
+        }
+        getChats()
+        
         socket.on('message', (message: string, id: string) => {
             // dcheck if the connected userId is in userIdList
             if (id === chatId) {
