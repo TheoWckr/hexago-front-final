@@ -27,42 +27,44 @@ const App = () => {
     return (
         <AuthContext.Provider value={{isLogged, signIn, updateToken, token, currentUser, disconnect}}>
             <Router>
-                <Header/>
-                <Switch>
-                    <Route exact path="/">
-                        <Home/>
-                    </Route>
-                    <Route exact path="/GameCreate/:id?">
-                        <GameCreatePage/>
-                    </Route>
-                    <Route path="/GameDisplay/:id">
-                        <GameDisplayPage/>
-                    </Route>
-                    <Route path="/GameSearch/">
-                        <GameList/>
-                    </Route>
-                    <Route path="/GenreManagement/">
-                        <GenreCRUDPage/>
-                    </Route>
-                    <Route exact path="/event">
-                        <EventListPage/>
-                    </Route>
-                    <Route path="/event/create">
-                        <EventCreatePage/>
-                    </Route>
-                    <Route path="/event/update/:id">
-                        <EventUpdatePage/>
-                    </Route>
-                    <Route path="/event/:id">
-                        <EventDisplayPage/>
-                    </Route>
-                    <Route path="/login">
-                        <LoginPage/>
-                    </Route>
-                    <Route path="/register">
-                        <RegisterPage/>
-                    </Route>
-                </Switch>
+                <div className={'fullHeight'}>
+                    <Header/>
+                    <Switch>
+                        <Route exact path="/">
+                            <Home/>
+                        </Route>
+                        <Route exact path="/GameCreate/:id?">
+                            <GameCreatePage/>
+                        </Route>
+                        <Route path="/GameDisplay/:id">
+                            <GameDisplayPage/>
+                        </Route>
+                        <Route path="/GameSearch/">
+                            <GameList/>
+                        </Route>
+                        <Route path="/GenreManagement/">
+                            <GenreCRUDPage/>
+                        </Route>
+                        <Route exact path="/event">
+                            <EventListPage/>
+                        </Route>
+                        <Route path="/event/create">
+                            <EventCreatePage/>
+                        </Route>
+                        <Route path="/event/update/:id">
+                            <EventUpdatePage/>
+                        </Route>
+                        <Route path="/event/:id">
+                            <EventDisplayPage/>
+                        </Route>
+                        <Route path="/login">
+                            <LoginPage/>
+                        </Route>
+                        <Route path="/register">
+                            <RegisterPage/>
+                        </Route>
+                    </Switch>
+                </div>
             </Router>
         </AuthContext.Provider>
     );

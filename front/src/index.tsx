@@ -3,15 +3,13 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import {MuiPickersUtilsProvider} from '@material-ui/pickers';
 
 import DateFnsUtils from "@date-io/date-fns";
 
 ReactDOM.render(
-
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
-        <meta charSet="utf-8"/>
-    <App />
+        <App/>
     </MuiPickersUtilsProvider>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
