@@ -1,5 +1,4 @@
-import React, {Dispatch, SetStateAction, useState} from "react";
-import {GameModel} from "../../../models/gameModel";
+import React, {Dispatch, SetStateAction} from "react";
 import {Autocomplete} from "@material-ui/lab";
 import TextField from "@material-ui/core/TextField";
 

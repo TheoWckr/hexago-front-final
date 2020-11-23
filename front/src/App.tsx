@@ -5,10 +5,8 @@ import { TransitionGroup, CSSTransition } from "react-transition-group";
 import GameList from "./components/game/list/gameList";
 
 import {
-    BrowserRouter as Router,
-    useLocation,
     Switch,
-    Route, useParams, useHistory
+    Route
 } from 'react-router-dom';
 import GameDisplayPage from "./components/game/display/gameDisplayPage";
 import GameCreatePage from "./components/game/create/gameCreatePage";

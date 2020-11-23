@@ -1,7 +1,4 @@
-import React, {useCallback} from 'react'
-import RootRef from '@material-ui/core/RootRef'
-import {Paper} from "@material-ui/core";
-
+import React from 'react'
 
 
 function DragNDropImage() {

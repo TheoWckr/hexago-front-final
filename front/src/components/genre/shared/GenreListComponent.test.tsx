@@ -1,7 +1,7 @@
 import React from 'react';
-import {mount, shallow} from 'enzyme';
+import {mount} from 'enzyme';
 import GenreList from "./GenreListComponent";
-import {createMount, createRender, createShallow} from "@material-ui/core/test-utils";
+import {createMount} from "@material-ui/core/test-utils";
 import {GenreModel} from "../../../models/genreModel";
 let genreMockList2 : GenreModel[] = [
     new GenreModel({genre : "Medieval",_id : 'Heroic'}), new GenreModel( {genre: "Heroic",_id : 'Heroic'} ),

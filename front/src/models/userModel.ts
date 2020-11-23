@@ -1,4 +1,3 @@
-import {GenreModel} from "./genreModel";
 import {RoleEnum} from "./roleEnum";
 
 export class UserModel {

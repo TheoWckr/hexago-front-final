@@ -1,6 +1,5 @@
 import Carousel from "react-multi-carousel";
 import React from "react";
-import {Typography, Card} from "@material-ui/core";
 import "react-multi-carousel/lib/styles.css";
 import SimpleCard from "./simpleCard";
 

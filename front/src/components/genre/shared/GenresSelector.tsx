@@ -1,5 +1,4 @@
 import * as React from "react";
-import {GenreProps} from "../../../models/propsDeclaration";
 import {Typography} from "@material-ui/core";
 import GenreList from "./GenreListComponent";
 import {GenreModel} from "../../../models/genreModel";

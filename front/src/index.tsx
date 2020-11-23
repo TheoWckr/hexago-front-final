@@ -1,14 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import {
-    BrowserRouter as Router,
-    useLocation,
-    Switch,
-    Route, useParams, useHistory
+    BrowserRouter as Router
 } from 'react-router-dom';
 import DateFnsUtils from "@date-io/date-fns";
 import {LocationWrapper} from "./LocationWrapper";

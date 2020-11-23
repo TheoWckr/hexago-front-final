@@ -3,7 +3,6 @@ import { Grid, Container, Box } from "@material-ui/core";
 import {makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import Chip from '@material-ui/core/Chip';
 import Avatar from '@material-ui/core/Avatar';
-import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 
 interface ChipData {

@@ -3,7 +3,6 @@ import React from "react";
 import {GameEditProps} from "../../../models/propsDeclaration";
 import {marksGameAgeMin, marksGameDuration, marksGameNumPlayer} from "../../../models/gameModel";
 import {useStylesPanelCreatePage} from "./gameCreatePage";
-import GenresSelector from "../../genre/shared/GenresSelector";
 import {GenreModel} from "../../../models/genreModel";
 import GenreQuickSearch from "../../genre/shared/GenreQuickSearch";
 

@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Divider, Input, Typography} from "@material-ui/core";
+import {Input, Typography} from "@material-ui/core";
 import GenreList from "./GenreListComponent";
 import {GenreModel} from "../../../models/genreModel";
 import {useEffect, useState} from "react";

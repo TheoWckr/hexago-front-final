@@ -1,4 +1,4 @@
-import {AxiosPromise, AxiosResponse} from "axios";
+import {AxiosPromise} from "axios";
 import {MAIN_ADRESS, axios} from "../utils/utilsAxios";
 import {GameModel} from "../models/gameModel";
 

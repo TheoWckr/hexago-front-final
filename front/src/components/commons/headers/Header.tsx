@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {Toolbar, useTheme,} from "@material-ui/core";
+import {Toolbar, } from "@material-ui/core";
 import './Header.css';
 import {makeStyles, createStyles, Theme} from '@material-ui/core/styles';
 import AppBar from "@material-ui/core/AppBar";
