@@ -68,7 +68,7 @@ html, body {
 }
 .fade-enter-active {
   opacity: 1;
-  transition: opacity 1000ms;
+  transition: opacity 1800ms;
 }
 .fade-exit {
   opacity: 1;

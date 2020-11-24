@@ -29,7 +29,7 @@ const App = (props : {location : any}) => {
                 <Header/>
                 <TransitionGroup>
                     <CSSTransition key={props.location.key} classNames="fade" timeout={{
-                        appear: 1500,
+                        appear: 1800,
                         enter: 500,
                         exit : 300
                     }}>
