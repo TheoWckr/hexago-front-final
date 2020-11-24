@@ -1,4 +1,4 @@
-import {Checkbox, Divider, FormControlLabel, Grid, TextField, Typography} from "@material-ui/core";
+import {Checkbox, Divider, FormControlLabel, Grid, Paper, TextField, Typography} from "@material-ui/core";
 import React, {useState} from "react";
 import {GameEditProps} from "../../../models/propsDeclaration";
 import {useStylesPanelCreatePage} from "./gameCreatePage";
@@ -46,7 +46,9 @@ export const GameCreatePanel1 = (props: GameEditProps) => {
     };
 
     const classes = useStylesPanelCreatePage();
-    return (<Grid
+    return (
+        <Paper elevation={3} className={classes.paper}>
+            <Grid
         container
         direction="column"
         className={classes.panel}
@@ -97,12 +99,12 @@ export const GameCreatePanel1 = (props: GameEditProps) => {
         <Typography variant={'h4'} style={{paddingTop: '0.8em'}}>
            Credits </Typography>
         <Divider style={{margin: '0.5em', width: '50%', marginBottom: '1.2em'}}/>
-
         <TextField id="standard" onChange={handleChangeAuthor} className={classes.textField} label="Author " multiline
                    value={props.game.author}/>
         <TextField id="standard" onChange={handleChangeEditor} className={classes.textField} label="Editor " multiline
                    value={props.game.editor}/>
         <TextField id="standard" onChange={handleChangeDistributor} className={classes.textField} label="Distributor "
                    multiline value={props.game.distributor}/>
-    </Grid>)
+    </Grid>
+        </Paper>)
 };

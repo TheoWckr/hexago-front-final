@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import SwipeableViews from 'react-swipeable-views';
 import {makeStyles, Theme, useTheme} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -63,6 +63,11 @@ export const useStylesPanelCreatePage = makeStyles((theme: Theme) => ({
     },
     errorTab: {
         backgroundColor: theme.palette.error.light,
+    },
+    paper:{
+        padding: '3px',
+        marginLeft:"10em",
+        marginRight:"10em"
     }
 }));
 
@@ -73,11 +78,22 @@ const  GameCreatePage = () => {
     const [errorMessages, setErrorMessage] = React.useState([] as string[]);
     const [gameState, setGameState] = React.useState(new GameModel({}));
     const [gameStatus, setGameStatus] = React.useState('');
-
-
+    const [file,setFile] = useState<File>(new File(new Array<BlobPart>(),""));
+    const [urlPicture, setUrlPicture] = useState("")
     const {id} = useParams<{ id: string }>();
     const methods = useForm<GameModel>();
 
+
+    /*
+     When the file is refresh , a new url is made to refresh the view
+     */
+    useEffect( () => {
+        if(file.size>0)
+        setUrlPicture( URL.createObjectURL(file))
+        else {
+            setUrlPicture("")
+        }
+    }, [file])
     /**
      * Return true if the validation is completed or send errorMessage if not
      */
@@ -250,7 +266,7 @@ const  GameCreatePage = () => {
                         <GameCreatePanel2 game={gameState} changeGameState={changeGameState} key={'gameCreatePanel2'}/>
                     </TabPanel>
                     <TabPanel value={valueTabs} index={2} dir={theme.direction}>
-                        <GameCreatePanel3 game={gameState} changeGameState={changeGameState} key={'gameCreatePanel3'}/>
+                        <GameCreatePanel3 game={gameState} changeGameState={changeGameState} urlReturn={urlPicture} setFile={setFile} key={'gameCreatePanel3'}/>
                     </TabPanel>
                 </SwipeableViews>
             </FormContext>
