@@ -3,6 +3,7 @@ import {Typography, Grid, Button} from "@material-ui/core";
 import {About} from "./about";
 import {makeStyles} from "@material-ui/core/styles";
 import {EventCity} from "./eventCity";
+import './home.css';
 
 const useStyles = makeStyles({
     root: {
@@ -43,7 +44,7 @@ export const Home = () => {
     const classes = useStyles();
 
     return (
-        <div>
+        <div className={'remainHeight'}>
             <About/>
             <div className={classes.root}>
                 <h2 className={classes.primary}>ARE YOU READY ?</h2>
