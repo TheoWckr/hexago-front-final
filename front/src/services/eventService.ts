@@ -16,11 +16,17 @@ export const EventService = {
         return axios.post(routeName+'create', event, header );
     },
     getEvent(id : string) :AxiosPromise {
-        return axios.get(routeName+'searchid/'+id);
+        const header = {
+            headers : {
+                token: localStorage.getItem('token')
+            }
+        };
+        return axios.get(routeName+'searchid/'+id, header);
     },
 
     searchEvent(params : searchEvent){
         let paramsString ='?'
+        console.log("params : " ,params)
         if(params.date)  paramsString +=`date=${params.date}&`
         if(params.listGames)  paramsString +=`listGames=${params.listGames.toString().replace('[','').replace(']','')}&`
         if(params.locationId) paramsString +=`locationId=${params.locationId}&`

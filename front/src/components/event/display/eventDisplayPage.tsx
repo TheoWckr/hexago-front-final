@@ -1,11 +1,9 @@
 import React from 'react';
-import {useParams} from "react-router";
 import {Button, Grid, Typography} from "@material-ui/core";
 import './EventDisplay.css';
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 import Avatar from "@material-ui/core/Avatar";
-import eventData from "../../../data-mock/eventData";
-import {GameModel} from "../../../models/gameModel";
+import EventDisplayType from "../../../models/event/eventDisplayType";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -27,64 +25,63 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-const EventDisplayPage = () => {
-    const {id} = useParams<{ id: string }>();
+const EventDisplayPage = (props : {event : EventDisplayType}) => {
+
     const classe = useStyles();
-    let data = eventData;
-    return (
-        <Grid container className="main">
-            <Grid item xs={6} className="box">
-                <div className="box-detail">
-                    <Grid container>
-                        <Grid item xs={12} className="title-detail">
-                            <Typography className={'bold'}>Le {data.date}</Typography>
+        return (
+            <Grid container className="main">
+                <Grid item xs={6} className="box">
+                    <div className="box-detail">
+                        <Grid container>
+                            <Grid item xs={12} className="title-detail">
+                                <Typography className={'bold'}>Le {props.event.date}</Typography>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Typography className={'title'}>A l'affiche:</Typography>
+                                {props.event.listGames.map((item: {_id : string, name : string}) =>
+                                    <Button variant="outlined" color="primary">
+                                        {item.name}
+                                    </Button>
+                                )}
+                            </Grid>
+                            <Grid item xs={12} className={'inline'}>
+                                <Typography className={'title'}>Durée de l'évènement: </Typography>
+                                <Typography className={'bold-text'}>{props.event.duration} minutes</Typography>
+                            </Grid>
+                            <Grid item xs={12} className={'inline'}>
+                                <Typography className={'title'}>Nombre de participants: </Typography>
+                                <Typography className={'bold-text'}>{props.event.currentPlayers}/{props.event.maxPlayers}</Typography>
+                            </Grid>
+                            <Grid item xs={12} className={'inline'}>
+                                <Typography className={'title'}>
+                                    Créé par:
+                                </Typography>
+                                <div className={'inline-nospace'}>
+                                    <Typography className={'bold-text'}>{props.event.owner.username}</Typography>
+                                    <Avatar alt="user"
+                                            src="https://placekitten.com/300/200"/>
+                                </div>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Typography>{props.event.details}</Typography>
+                            </Grid>
                         </Grid>
-                        <Grid item xs={12}>
-                            <Typography className={'title'}>A l'affiche:</Typography>
-                            {data.listGames.map((item: GameModel) =>
-                                <Button variant="outlined" color="primary">
-                                    {item.name}
-                                </Button>
-                            )}
-                        </Grid>
-                        <Grid item xs={12} className={'inline'}>
-                            <Typography className={'title'}>Durée de l'évènement: </Typography>
-                            <Typography className={'bold-text'}>{data.duration} minutes</Typography>
-                        </Grid>
-                        <Grid item xs={12} className={'inline'}>
-                            <Typography className={'title'}>Nombre de participants: </Typography>
-                            <Typography className={'bold-text'}>{data.nbPlayers}/{data.maxPlayers}</Typography>
-                        </Grid>
-                        <Grid item xs={12} className={'inline'}>
-                            <Typography className={'title'}>
-                                Créé par:
-                            </Typography>
-                            <div className={'inline-nospace'}>
-                                <Typography className={'bold-text'}>{data.owner}</Typography>
-                                <Avatar alt="user"
-                                        src="https://placekitten.com/300/200"/>
-                            </div>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Typography>{data.details}</Typography>
-                        </Grid>
-                    </Grid>
-                </div>
+                    </div>
+                </Grid>
+                <Grid item xs={6} className="box">
+                    <div className="box-map">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7449.505429822984!2d6.173500846207366!3d48.69022845072249!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4794986e17a692cd%3A0x4ed671b10d82498d!2sNancy!5e0!3m2!1sfr!2sfr!4v1600071064410!5m2!1sfr!2sfr"
+                            className="map"
+                            allowFullScreen={true}
+                            aria-hidden="false"/>
+                    </div>
+                </Grid>
+                <Grid item xs={12} className="box-button">
+                    <Button variant="outlined" className={classe.btn}>Participer à l'évènement</Button>
+                </Grid>
             </Grid>
-            <Grid item xs={6} className="box">
-                <div className="box-map">
-                    <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7449.505429822984!2d6.173500846207366!3d48.69022845072249!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4794986e17a692cd%3A0x4ed671b10d82498d!2sNancy!5e0!3m2!1sfr!2sfr!4v1600071064410!5m2!1sfr!2sfr"
-                        className="map"
-                        allowFullScreen={true}
-                        aria-hidden="false"/>
-                </div>
-            </Grid>
-            <Grid item xs={12} className="box-button">
-                <Button variant="outlined" className={classe.btn}>Participer à l'évènement</Button>
-            </Grid>
-        </Grid>
-    );
+        )
 }
 
 export default EventDisplayPage;

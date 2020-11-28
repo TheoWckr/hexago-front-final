@@ -20,6 +20,7 @@ import EventCreatePage from "./components/event/create/eventCreatePage";
 import EventUpdatePage from "./components/event/update/eventUpdatePage";
 import {Home} from "./components/home/home";
 import EventSearchPanel from "./components/event/search/eventSearchPanel";
+import EventDisplayPageLoader from "./components/event/display/EventDisplayPageLoader";
 
 const App = (props : {location : any}) => {
     const {isLogged, signIn, updateToken, token, currentUser, disconnect} = useAuth();
@@ -60,7 +61,7 @@ const App = (props : {location : any}) => {
                         <EventUpdatePage/>
                     </Route>
                     <Route path="/event/display/:id" >
-                        <EventDisplayPage/>
+                        <EventDisplayPageLoader/>
                     </Route>
                     <Route path="/event/search">
                         <EventSearchPanel/>
