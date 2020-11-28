@@ -16,14 +16,14 @@ import {useParams} from "react-router";
 import {FormContext, useForm} from "react-hook-form";
 import {Button, Grid, List, ListItem, ListItemText, Paper} from "@material-ui/core";
 
-interface TabPanelProps {
+export interface TabPanelProps {
     children?: React.ReactNode;
     dir?: string;
     index: any;
     value: any;
 }
 
-function TabPanel(props: TabPanelProps) {
+export function TabPanel(props: TabPanelProps) {
     const {children, value, index, ...other} = props;
 
     return (
@@ -40,7 +40,7 @@ function TabPanel(props: TabPanelProps) {
     );
 }
 
-function a11yProps(index: any) {
+export function a11yProps(index: any) {
     return {
         id: `full-width-tab-${index}`,
         'aria-controls': `full-width-tabpanel-${index}`,
@@ -116,7 +116,7 @@ const  GameCreatePage = () => {
 
     const onCreate = () => {
         if (validation()) {
-            GameService.createGame(gameState).then((response) => {
+            GameService.createGame(gameState, file).then((response) => {
                 if (response.status !== 200 || response.data.error) {
                     console.log('error', response);
                     setErrorMessage(['nameAlreadyExist']);
@@ -134,7 +134,6 @@ const  GameCreatePage = () => {
             GameService.updateGame(gameState).then((response: any) => {
                     console.log('On Update ', response);
                     setGameStatus('Game successfully updated');
-
                 }
             )
         }

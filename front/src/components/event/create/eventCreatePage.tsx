@@ -40,7 +40,7 @@ const EventCreatePage = () => {
         EventService.createEvent(createEventForm)
             .catch((err) => console.log("Erreur create event" , err) )
             .then((result) => {
-                console.log("reussite", result)
+                //console.log("reussite", result)
                 openSnack()
                 history.push("/");
             })
