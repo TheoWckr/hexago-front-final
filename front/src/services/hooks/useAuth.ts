@@ -8,8 +8,9 @@ export const AuthContext =  createContext(undefined as any );
 export let currentToken = ''
 export function useAuth() {
     const [token, setToken] = useState(null as String | undefined | null)
-    const [currentUser, setCurrentUser] = useState(undefined as UserModel |undefined);
+ //   const [currentUser, setCurrentUser] = useState(undefined as UserModel |undefined);
     const [isLogged, setIsLogged] = useState(false);
+    const[userId, setUserId] = useState("")
     /**
      * Fonction called on login
      * @param email
@@ -37,7 +38,13 @@ export function useAuth() {
                 setIsLogged(true);
                 UserService.me(newToken)
                     .catch((err) => console.log("Error", err))
-                    .then((result) => console.log("result me : ", result))
+                    .then((result) => {
+                        if(result) {
+                            console.log("result me : ", result)
+                            setUserId(result.data._id)
+                        }
+                    }
+                    )
             }
             else {
                 localStorage.removeItem('token');
@@ -63,16 +70,19 @@ export function useAuth() {
     };
 
    useEffect(() => {
-                autoLogin()
+       (async function anyNameFunction() {
+           await autoLogin()
+       })();
         },[]);
 
     return {
-        currentUser,
+     //   currentUser,
         isLogged,
         token,
         updateToken,
         signIn,
-        disconnect
+        disconnect,
+        userId
     };
 
 }

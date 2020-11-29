@@ -26,9 +26,9 @@ export const RichTextEditor = (props: {
                 height: props.height ? props.height : "250",
                 menubar: false,
                 toolbar:
-                    'undo redo | formatselect | bold italic backcolor | \
-                    alignleft aligncenter alignright alignjustify | \
-                    bullist numlist outdent indent | removeformat | help'
+                    "undo redo | formatselect | bold italic backcolor " +
+                    "| alignleft aligncenter alignright alignjustify " +
+                    "| bullist numlist outdent indent | removeformat | help"
             }}
             onEditorChange={props.handleEditorChange}
         />

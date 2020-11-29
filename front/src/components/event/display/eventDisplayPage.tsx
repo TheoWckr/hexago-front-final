@@ -1,9 +1,12 @@
-import React from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Button, Grid, Typography} from "@material-ui/core";
 import './EventDisplay.css';
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 import Avatar from "@material-ui/core/Avatar";
 import EventDisplayType from "../../../models/event/eventDisplayType";
+import {EventService} from "../../../services/eventService";
+import {AuthContext} from "../../../services/hooks/useAuth";
+import {AxiosResponse} from "axios";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -15,6 +18,14 @@ const useStyles = makeStyles((theme: Theme) =>
             borderRadius: 50,
             borderColor: '#312783',
         },
+        btnCancel: {
+            color: 'red',
+            fontSize: '1.1rem',
+            borderWidth: 2,
+            borderStyle: 'solid',
+            borderRadius: 50,
+            borderColor: 'red',
+        },
         btnDetail: {
             color: '#312783',
             fontSize: '0.7rem',
@@ -24,9 +35,51 @@ const useStyles = makeStyles((theme: Theme) =>
         }
     }),
 );
-
+//TODO changer l'affichage de la date
 const EventDisplayPage = (props : {event : EventDisplayType}) => {
+    const {userId} = useContext(AuthContext)
+    const[event, ] = useState(props.event)
+    const [displaySubscribeButton, setDisplaySubscribeButton] = useState(false);
+    const [displayUnsubscribeButton, setDisplayUnsubscribeButton] = useState(false);
 
+    //Use Effect de gestion de l'affichage des boutons subscribe et unsubscribe
+    useEffect(() => {
+        console.log("Intro")
+        let subButton = true
+        let unsubButton = true
+        if(event.listPlayers.includes(userId)){
+            subButton = false
+        } else {
+            unsubButton = false
+        }
+        if(event.currentPlayers === event.maxPlayers) {
+            subButton = false
+        }
+        if(event.owner._id === userId) {
+            subButton = false
+            unsubButton = false
+        }
+        setDisplaySubscribeButton(subButton)
+        setDisplayUnsubscribeButton(unsubButton)
+    },[event])
+
+    const subscribe = async () => {
+        await EventService.subscribeEvent(props.event._id)
+            .catch((reason: any) => {
+                if(reason) {
+                    console.log('errorSubscribe', reason)
+                }
+            })
+            .then(((value: AxiosResponse<any> ) => {
+                if(value){
+                    console.log(value.data.content)
+        }}))
+    }
+    const unsubscribe = async () => {
+        await EventService.unSubscribeEvent(props.event._id, userId)
+            .catch((reason: any) => console.log('errorUnSubscribe', reason))
+            .then(((value: any) => console.log("unsubscribe ; ", value)))
+    }
     const classe = useStyles();
         return (
             <Grid container className="main">
@@ -34,11 +87,11 @@ const EventDisplayPage = (props : {event : EventDisplayType}) => {
                     <div className="box-detail">
                         <Grid container>
                             <Grid item xs={12} className="title-detail">
-                                <Typography className={'bold'}>Le {props.event.date}</Typography>
+                                <Typography className={'bold'}>Le {new Date(event.date).toLocaleDateString()} à {new Date(event.date).toLocaleTimeString()} </Typography>
                             </Grid>
                             <Grid item xs={12}>
                                 <Typography className={'title'}>A l'affiche:</Typography>
-                                {props.event.listGames.map((item: {_id : string, name : string}) =>
+                                {event.listGames.map((item: {_id : string, name : string}) =>
                                     <Button variant="outlined" color="primary">
                                         {item.name}
                                     </Button>
@@ -46,24 +99,24 @@ const EventDisplayPage = (props : {event : EventDisplayType}) => {
                             </Grid>
                             <Grid item xs={12} className={'inline'}>
                                 <Typography className={'title'}>Durée de l'évènement: </Typography>
-                                <Typography className={'bold-text'}>{props.event.duration} minutes</Typography>
+                                <Typography className={'bold-text'}>{event.duration} minutes</Typography>
                             </Grid>
                             <Grid item xs={12} className={'inline'}>
                                 <Typography className={'title'}>Nombre de participants: </Typography>
-                                <Typography className={'bold-text'}>{props.event.currentPlayers}/{props.event.maxPlayers}</Typography>
+                                <Typography className={'bold-text'}>{event.currentPlayers}/{event.maxPlayers}</Typography>
                             </Grid>
                             <Grid item xs={12} className={'inline'}>
                                 <Typography className={'title'}>
                                     Créé par:
                                 </Typography>
                                 <div className={'inline-nospace'}>
-                                    <Typography className={'bold-text'}>{props.event.owner.username}</Typography>
+                                    <Typography className={'bold-text'}>{event.owner.username}</Typography>
                                     <Avatar alt="user"
                                             src="https://placekitten.com/300/200"/>
                                 </div>
                             </Grid>
                             <Grid item xs={12}>
-                                <Typography>{props.event.details}</Typography>
+                                <Typography>{event.details}</Typography>
                             </Grid>
                         </Grid>
                     </div>
@@ -78,7 +131,9 @@ const EventDisplayPage = (props : {event : EventDisplayType}) => {
                     </div>
                 </Grid>
                 <Grid item xs={12} className="box-button">
-                    <Button variant="outlined" className={classe.btn}>Participer à l'évènement</Button>
+                    {   displaySubscribeButton && <Button variant="outlined" className={classe.btn} onClick={subscribe} >Participer à l'évènement</Button>}
+                    {displayUnsubscribeButton &&<Button variant="outlined" className={classe.btnCancel} onClick={unsubscribe} >Annuler ma participation </Button>}
+
                 </Grid>
             </Grid>
         )

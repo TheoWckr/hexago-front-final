@@ -41,5 +41,22 @@ export const EventService = {
         };
         console.log("header :", header);
         return axios.get(routeName+'/searchlist'+paramsString, header);
+    },
+
+    subscribeEvent(eventId : string){
+        const header = {
+            headers : {
+                token: localStorage.getItem('token')
+            }
+        };
+        return axios.put(routeName+'subscribe/'+eventId,{}, header);
+    },
+    unSubscribeEvent(eventId : string, userId : string){
+        const header = {
+            headers : {
+                token: localStorage.getItem('token')
+            }
+        };
+        return axios.put(routeName+'unsubscribe/'+eventId, {playerId:userId}, header);
     }
 }

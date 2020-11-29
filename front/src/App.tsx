@@ -15,7 +15,6 @@ import {LoginPage} from "./components/user/login/loginPage";
 import {RegisterPage} from "./components/user/register/registerPage";
 import {AuthContext, useAuth} from './services/hooks/useAuth';
 import EventListPage from "./components/event/list/eventListPage";
-import EventDisplayPage from "./components/event/display/eventDisplayPage";
 import EventCreatePage from "./components/event/create/eventCreatePage";
 import EventUpdatePage from "./components/event/update/eventUpdatePage";
 import {Home} from "./components/home/home";
@@ -23,10 +22,10 @@ import EventSearchPanel from "./components/event/search/eventSearchPanel";
 import EventDisplayPageLoader from "./components/event/display/EventDisplayPageLoader";
 
 const App = (props : {location : any}) => {
-    const {isLogged, signIn, updateToken, token, currentUser, disconnect} = useAuth();
+    const {isLogged, signIn, updateToken, token, disconnect,userId} = useAuth();
 
     return (
-        <AuthContext.Provider value={{isLogged, signIn, updateToken, token, currentUser, disconnect}}>
+        <AuthContext.Provider value={{isLogged, signIn, updateToken, token, disconnect, userId}}>
             <div className={'fullHeight'}>
                 <Header/>
                 <TransitionGroup>

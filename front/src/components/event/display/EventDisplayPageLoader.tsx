@@ -27,7 +27,7 @@ const EventDisplayPageLoader = () => {
     if(event){
     return (<EventDisplayPage event={event} />)
     }
-    else return (<div>Erreur 404</div>)
+    else return (<div>Il n'y a pas de page ici </div>)
 };
 
 export default EventDisplayPageLoader;

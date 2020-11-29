@@ -1,5 +1,5 @@
-import React from 'react';
-import { Grid, Container, Box } from "@material-ui/core";
+import React, {useEffect} from 'react';
+import {Grid, Container, Box, Typography} from "@material-ui/core";
 import {makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import Chip from '@material-ui/core/Chip';
 import Avatar from '@material-ui/core/Avatar';
@@ -67,16 +67,19 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const EventSearchPanel = () => {
     const classes = useStyles()
-    const [date, setDate] = React.useState(undefined);
+    const [date, setDate] = React.useState("");
     const [chipData, setChipData] = React.useState<ChipData[]>([]);
-    const [events, setEvents] = React.useState([]);
-    const [locationId, setLocationId] = React.useState(undefined);
-    const [listGames, setListGames] = React.useState(undefined);
+    const [events, setEvents] = React.useState<any[]>([]);
+    const [locationId, setLocationId] = React.useState("");
+    const [listGames, setListGames] = React.useState<any[]>([]);
     const [showEventFull, setShowEventFull] = React.useState(undefined);
     const [limit, setLimit] = React.useState(0);
     const [offset, setOffset] = React.useState(0);
-    
+	const [render, setRender] = React.useState<JSX.Element[]>(new Array<JSX.Element>());
+
+
     useEffect(() => {
+		(async function anyNameFunction() {
     	let filters = {
     		date: date,
 		    locationId: locationId,
@@ -85,10 +88,43 @@ const EventSearchPanel = () => {
 		    limit: limit,
 		    offset: offset,
     	};
-    	EventService.searchEvent(filters).then((res: any) => {
-			setEvents(res);
-		}).catch(() => {});
-    }
+    	await EventService.searchEvent(filters).then((res: any) => {
+			setEvents(res.data.content);
+		}).catch(() => {})
+		})()}, []);
+
+    	useEffect( () => renderDisplay(),[events])
+		const renderDisplay = () => {
+		console.log("event", events)
+			//return (<p>Aucun evenement</p>);
+
+			const result = events.map((event : any,index) => {
+				const renderGames = event.listGames.map((game : any) =>
+					(
+						<Grid item xs={4}>
+							<Chip variant="outlined" className={classes.card_games} color="secondary"
+								  label={game.name}/>
+						</Grid>
+					));
+
+				return (
+					<Grid item className={classes.event_card}>
+						<Typography className={classes.card_affiche_title}><u>A l'affiche :</u></Typography>
+						<Grid container justify="center" spacing={2}>
+							{renderGames}
+						</Grid>
+						<Grid container justify="center">
+							<h2>Test</h2>
+						</Grid>
+						<Grid container justify="center">
+							<Box component="div" display="inline"><Avatar src="/broken-image.jpg" /></Box>
+							<Box component="div" display="inline" className={classes.card_autor}>Crée par {event.owner.username} le {event.date}</Box>
+						</Grid>
+					</Grid>
+				);
+			})
+			setRender(result);
+	}
 
 	const handleDelete = (key: number) => {
   	  	let idx = 0;
@@ -188,32 +224,9 @@ const EventSearchPanel = () => {
 		      			<h2>RESULTATS :</h2>
 		      		</Grid>
 		      		<Grid container>
-		      		{if (events.length != 0) {
-		      		events.map((event) => {
-		      			if (!event.eventId)
-		      				return (<p>Aucun evenement</p>);
-		      			return (
-			      			<Grid item key={event.eventId} className={classes.event_card}>
-			      				<p className={classes.card_affiche_title}><u>A l'affiche :</u></p>
-			      				<Grid container justify="center" spacing={2}>
-			      				{event.listGames((game) => {
-			      					return (
-				      					<Grid item key={game} xs={4}>
-				      						<Chip variant="outlined" className={classes.card_games} color="secondary" label={game}/>
-				      					</Grid>
-				      				);
-			      				})}
-			      				</Grid>
-			      				<Grid container justify="center">
-				      				<h2>{event.locationID}</h2>
-				      			</Grid>
-				      			<Grid container justify="center">
-				      				<Box component="div" display="inline"><Avatar src="/broken-image.jpg" /></Box>
-				      				<Box component="div" display="inline" className={classes.card_autor}>Crée par {event.owner} le {event.date}</Box>
-				      			</Grid>
-			      			</Grid>
-			      		);
-		      		})}}
+						<div>
+							{render.length > 0 && render}
+						</div>
 		      		</Grid>
 		      	</Grid>
 		    </Grid>

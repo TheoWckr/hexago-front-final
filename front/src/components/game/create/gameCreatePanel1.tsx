@@ -11,7 +11,7 @@ import GameNameQS from "../shared/GameNameQS";
 export const GameCreatePanel1 = (props: GameEditProps) => {
     const {register} = useFormContext();
     const [isExtension, setIsExtension] = React.useState(false);
-    const [extention, setExtention] = useState<string[]>([])
+    const [, setExtention] = useState<string[]>([])
     const handleChangeTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
         props.changeGameState('name', event.target.value);
     };

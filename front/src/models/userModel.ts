@@ -25,9 +25,9 @@ export class UserModel {
             email= "",
             password="",
             phone = "",
-            dateOfCreation = new Date,
-            dateLastConnection = new Date,
-            dateOfBirth= new Date,
+            dateOfCreation = new Date(),
+            dateLastConnection = new Date(),
+            dateOfBirth= new Date(),
             active = false,
             role= RoleEnum.STANDARD,
             userProfile={}

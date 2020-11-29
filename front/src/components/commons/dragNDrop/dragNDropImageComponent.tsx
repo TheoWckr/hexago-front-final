@@ -1,4 +1,4 @@
-import React, {ChangeEvent, Component, CSSProperties, Dispatch, SetStateAction, useState} from 'react'
+import React, {ChangeEvent,  CSSProperties, Dispatch, SetStateAction} from 'react'
 import {Box, Button, Grid, Paper} from "@material-ui/core";
 
 
@@ -91,7 +91,7 @@ const DragNDropImage = (props : UploadFileProps) => {
             <Grid item xs={12}>
                 <Paper elevation={3} style={imgPaperPreview}>
                     <Box style={imgBoxPreview}>
-                        {props.file.length > 0 && <img src={props.file} style={imgPreview}/>}
+                        {props.file.length > 0 && <img src={props.file} alt={""} style={imgPreview}/>}
                         {button}
                     </Box>
                 </Paper>
