@@ -25,7 +25,7 @@ const GameNameQS = (props : {
                 setOptions(stock);
             }))
 
-    }, [props,  gameStock]);
+    }, []);
     //Conversion name to idGame pour transmettre au dessus
     useEffect(() => {
         const listIdGame: string[] = [];
@@ -35,7 +35,7 @@ const GameNameQS = (props : {
                 listIdGame.push(game._id)
         });
         props.setChoices(listIdGame)
-    }, [chosenGames,props,  gameStock])
+    }, [ chosenGames])
     return (
 <QuickSearchMultiple listOfChoices={options} setChoices={setChosenGames} /> )};
 export default GameNameQS;

@@ -24,7 +24,7 @@ const GenreQuickSearch = (props : {
                 setOptions(tmpOptions);
             }
         });
-    }, [props]);
+    }, []);
     //Conversion from name to genre for return
     useEffect(() => {
         const listGenre: GenreModel[] = [];
