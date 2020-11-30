@@ -1,12 +1,11 @@
-html, body {
-  padding: 0;
-  margin: 0;
-}
-
-.fullHeight {
+#root {
   display: flex;
   flex-direction: column;
   height: 100vh;
+}
+
+#fullHeight {
+  flex: 1;
 }
 
 .App {
