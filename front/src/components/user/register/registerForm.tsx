@@ -84,8 +84,7 @@ export const RegisterForm = () => {
     const handleRegister = () => {
     	if (password != passwordConfirm) {
     		return;
-    		console.log("passwords don't match");
-    	}
+		}
     	const user = {
     		"username": username,
     		"firstname": firstname,

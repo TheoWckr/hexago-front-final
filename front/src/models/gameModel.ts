@@ -60,7 +60,33 @@ export class GameModel {
         this.genres = [] as GenreModel[];
         if(genres.length)
             genres.forEach((genres) => this.genres.push(new GenreModel(genres)));
-    }
+    };
+
+    toFormData = () :FormData =>  {
+        const formData = new FormData();
+        console.log("genre",this.genres)
+        formData.append('author',  this.author!)
+        formData.append('genres',  this.genres.toString())
+    formData.append('releaseDate', this.releaseDate)
+        if(this.baseGameId)
+        formData.append('baseGameId',this.baseGameId)
+        if(this.distributor)
+            formData.append('distributor',this.distributor)
+        formData.append('description',this.description)
+        if(this.editor)
+            formData.append('editor',this.editor)
+        if(this.gameLengthMax)
+            formData.append('gameLengthMax',this.gameLengthMax.toString())
+        if(this.gameLengthMin)
+            formData.append('gameLengthMin',this.gameLengthMin.toString())
+        if(this.minAge)
+            formData.append('minAge',this.minAge.toString())
+        formData.append('name',this.name)
+        formData.append('playerMax',this.playerMax.toString())
+        formData.append('playerMin',this.playerMin.toString())
+        formData.append('popularity',this.popularity.toString())
+        return formData;
+}
 }
 
 export const marksGameAgeMin = [

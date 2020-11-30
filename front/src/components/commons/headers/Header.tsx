@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {Toolbar, useTheme,} from "@material-ui/core";
+import {Toolbar, } from "@material-ui/core";
 import './Header.css';
 import {makeStyles, createStyles, Theme} from '@material-ui/core/styles';
 import AppBar from "@material-ui/core/AppBar";
@@ -25,10 +25,12 @@ const Header = () => {
     const handleClose = () => {
         setAnchorEl(null);
     };
-
+    // Action associée au bouton de logout
     const logout = () => {
-        setAnchorEl(null);
+        //Logique application
         disconnect();
+        //Logique de rendu
+        setAnchorEl(null);
         history.push("/");
     };
 
@@ -56,25 +58,18 @@ const Header = () => {
                 >
                     {isLogged && (
                         [
-                            <MenuItem key={0} onClick={handleClose} component={Link} to={'/GenreManagement/'}>Genre management</MenuItem>,
-                            <MenuItem key={1} onClick={handleClose} component={Link} to={'/GameCreate/'}>Create Game</MenuItem>,
-                            <MenuItem key={2} onClick={handleClose} component={Link} to={'/GameSearch/'}>Game List</MenuItem>,
-                            <MenuItem key={3} onClick={handleClose} component={Link} to={'/GameDisplay/'}>Display game</MenuItem>,
-                            <MenuItem key={4} onClick={handleClose} component={Link} to={'/event'}>Event list</MenuItem>,
-                            <MenuItem key={5} onClick={handleClose} component={Link} to={'/event/create'}>Event create</MenuItem>,
-                            <MenuItem key={6} onClick={handleClose} component={Link} to={'/event/update/1'}>Event update</MenuItem>,
-                            <MenuItem key={7} onClick={handleClose} component={Link} to={'/event/1'}>Event display</MenuItem>,
-                            <MenuItem key={8} onClick={logout}>Logout</MenuItem>
+                            <MenuItem key={0} onClick={handleClose} component={Link} to={'/GenreManagement/'}>Gestion des genres</MenuItem>,
+                            <MenuItem key={1} onClick={handleClose} component={Link} to={'/GameCreate/'}>Création de jeu</MenuItem>,
+                            <MenuItem key={2} onClick={handleClose} component={Link} to={'/GameSearch/'}>Liste des jeux</MenuItem>,
+                            <MenuItem key={5} onClick={handleClose} component={Link} to={'/event/create'}>Création d'évenement</MenuItem>,
+                            <MenuItem key={8} onClick={handleClose} component={Link} to={'/event/search'}>Recherche d'événements</MenuItem>,
+                            <MenuItem key={9} onClick={logout}>Déconnection</MenuItem>
                         ]
                     )}
                     {!isLogged && (
                         [
-                            <MenuItem key={0} onClick={handleClose} component={Link} to={'/login'}>Log In</MenuItem>,
-                            <MenuItem key={1} onClick={handleClose} component={Link} to={'/register'}>Register</MenuItem>,
-                            <MenuItem key={2} onClick={handleClose} component={Link} to={'/event'}>Event list</MenuItem>,
-                            <MenuItem key={3} onClick={handleClose} component={Link} to={'/event/create'}>Event create</MenuItem>,
-                            <MenuItem key={4} onClick={handleClose} component={Link} to={'/event/update/1'}>Event update</MenuItem>,
-                            <MenuItem key={5} onClick={handleClose} component={Link} to={'/event/1'}>Event display</MenuItem>,
+                            <MenuItem key={0} onClick={handleClose} component={Link} to={'/login'}>Connection</MenuItem>,
+                            <MenuItem key={1} onClick={handleClose} component={Link} to={'/register'}>Inscription</MenuItem>,
                         ]
                     )}
                 </Menu>

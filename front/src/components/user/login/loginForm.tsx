@@ -4,13 +4,12 @@ import TextField from '@material-ui/core/TextField';
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import {LoginProvider} from "./loginProvider";
-import {UserService} from "../../../services/userService";
 import Grid from '@material-ui/core/Grid';
 import {Box} from "@material-ui/core";
 import {useHistory} from "react-router";
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from "@material-ui/core/CircularProgress";
-import {AuthContext, useAuth} from "../../../services/hooks/useAuth";
+import {AuthContext} from "../../../services/hooks/useAuth";
 import {useSnack} from "../../../services/hooks/useSnackBar";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -82,12 +81,11 @@ export const LoginForm = () => {
                 setError(false);
                 setLoad(false);
                 history.push("/");
-                openSnack("Login validated")
+                openSnack("Connection réussie")
             }).catch(() => {
             setError(true);
             setLoad(false);
-            setHelperText('Incorrect username or password');
-            openSnack("Unable to login")
+            setHelperText('Email/ mot de passe erroné');
         })
     };
 

@@ -5,7 +5,6 @@ import {MAIN_ADRESS, axios} from "../utils/utilsAxios";
 import {UserModel} from "../models/userModel";
 import {LoginFormType} from "../models/form/loginFormType";
 import {RegisterFormType} from "../models/form/registerFormType";
-
 const empyUserProfil = {
     "userProfile":{
     "experience":0,
@@ -18,6 +17,7 @@ const empyUserProfil = {
 }
 };
 
+
 const routeName = MAIN_ADRESS+'users/';
 export const UserService = {
 
@@ -29,17 +29,26 @@ export const UserService = {
     signup(registerData : RegisterFormType): AxiosPromise{
         return axios.post('http://localhost:3100/users/signup', registerData)
     },
+    /**
+     * For login
+     * @param loginData
+     * @return data.token the JWT Token of the session
+     */
     login(loginData: LoginFormType): AxiosPromise{
         return axios.post('http://localhost:3100/users/login', loginData)
     },
+    /**
+     * Fonction that take the user's token and return all data about it
+     * not usable on other users
+     * @param token
+     */
     me(token : String): AxiosPromise{
         const header = {
-            header : {
-                token: 'token'
+            headers : {
+                token: token
             }
         };
         return axios.get('http://localhost:3100/users/me', header);
-
     },
 
     /** Crée un joueur */

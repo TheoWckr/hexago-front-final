@@ -4,6 +4,7 @@ import ListCard from "./listCard";
 import {GameModel} from "../../../models/gameModel";
 import GameService from "../../../services/gameService";
 import {AxiosResponse} from "axios";
+import GameSearchProps from "../../../models/game/gameSearch";
 
 type PageState = {
     page: number,
@@ -11,7 +12,7 @@ type PageState = {
     detail: GameModel[]
 }
 
-export default class ListPagination extends React.Component<{}, PageState> {
+export default class ListPagination extends React.Component<{ search : GameSearchProps}, PageState> {
     getGamesByPage(page: number) {
         GameService.getGamesPage(page).then((result: AxiosResponse) => {
             let stock: GameModel[] = [];

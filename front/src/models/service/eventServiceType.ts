@@ -1,5 +1,5 @@
 export interface createEventForm{
-    date : Date;
+    date? : Date;
     duration :number;
     minPlayers: number;
     maxPlayers: number;
@@ -7,6 +7,7 @@ export interface createEventForm{
     locationId : string;
     phone: string;
     details: string;
+    listPlayers : string[]
 }
 
 
@@ -15,8 +16,8 @@ export interface getEvent{
 }
 
 export interface searchEvent {
-    date?: Date;
-    locationId?: String;
+    date: any;
+     locationId?: String;
     listGames?: String[];
     showEventFull?: boolean;
     limit: number;
