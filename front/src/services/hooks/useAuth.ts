@@ -41,6 +41,7 @@ export function useAuth() {
                     .then((result) => {
                         if(result) {
                             console.log("result me : ", result)
+                            localStorage.setItem('userId', result.data._id);
                             setUserId(result.data._id)
                         }
                     }

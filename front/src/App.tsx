@@ -34,7 +34,7 @@ const App = (props : {location : any}) => {
 
     return (
         <AuthContext.Provider value={{isLogged, signIn, updateToken, token, disconnect, userId}}>
-            <div className={'fullHeight'}>
+            <div>
                 <Header/>
                 <TransitionGroup>
                     <CSSTransition key={props.location.key} classNames="fade" timeout={{

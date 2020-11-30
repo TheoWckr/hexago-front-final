@@ -2,7 +2,10 @@ import { createStyles, TextareaAutosize, Drawer, List, ListItem, ListItemIcon, L
 import React, { useEffect, useState } from 'react'
 import { axios, MAIN_ADRESS } from '../../utils/utilsAxios';
 import Send from '@material-ui/icons/SendOutlined';
+import EditIcon from '@material-ui/icons/Edit';
 import "./Chat.css";
+import {UtilsString} from "../../utils/utilsString";
+import { useHistory } from 'react-router-dom';
 
 const socketIOClient = require('socket.io-client');
 
@@ -39,30 +42,40 @@ export const ChatComponent = () => {
     const [writing, setWriting] = useState<boolean>(false);
     const [message, setMessage] = useState<string>("");
     const [chat, setChat] = useState<object[]>([]);
-    const [chatId, setChatId] = useState<string>()
+    const [users, setUsers] = useState<object[]>([]);
+    const [selectedUsers, setSelectedUsers] = useState<object[]>([]);
+    const [chatId, setChatId] = useState<string>();
+    const [isCreate, setIsCreate] = useState<boolean>(false);
+    const userId = localStorage.getItem("userId")
     const classes = useStyles();
+    const history = useHistory();
 
     useEffect(() => {
         // socket stopWritingMessage params :  userId, chatId
-        const timeoutId = setTimeout(() => socket.emit("stopWritingMessage", "5fa424e6c4c5be08c7809355", chatId), 1000);
+        const timeoutId = setTimeout(() => socket.emit("stopWritingMessage", userId, chatId), 1000);
         return () => clearTimeout(timeoutId);
       }, [message]);
 
+    async function getChats() {
+        await axios.get(MAIN_ADRESS + "chat/" + userId)
+        .then((res: any) => {
+            console.log(res.data.content)
+            setChat(res.data.content)
+            if (chatId) {
+                setMessages(res.data.content.find((chat: any) => chat._id === chatId).messages)
+            }
+        })
+        .catch((err: any) => {
+            console.log(err)
+        })
+    }
+
     useEffect(() => {
-        async function getChats() {
-            // replace 5fa424e6c4c5be08c780935 by connected userId
-            await axios.get(MAIN_ADRESS + "chat/5fa424e6c4c5be08c7809355")
-            .then((res: any) => {
-                setChat(res.data.content)
-                if (chatId) {
-                    setMessages(res.data.content.find((chat: any) => chat._id === chatId).messages)
-                }
-            })
-            .catch((err: any) => {
-                console.log(err)
-            })
+        if (!userId){
+            history.push("/login")
         }
         getChats()
+        getUsers()
         socket.on('message', (message: string, id: string) => {
             // dcheck if the connected userId is in userIdList
             if (id === chatId) {
@@ -85,17 +98,55 @@ export const ChatComponent = () => {
     }, [chatId])
 
 
+    const createChat = async () => {
+        const usersId = selectedUsers.map((x: any) => x._id)
+        if (usersId.length === 0) {
+            alert("Veuillez séléctionner au moins un contact")
+            return;
+        }
+        usersId.push(userId)
+        console.log(usersId)
+        const header = {
+            headers : {
+                token: localStorage.getItem("token")
+            }
+        };
+        await axios.post(MAIN_ADRESS + "chat/create", {userIdList: usersId, messages: []}, header)
+        .then((res: any) => {
+            getChats()
+            setIsCreate(false)
+        })
+        .catch((err: any) => {
+            console.log(err)
+        })
+    }
+
+    const getUsers = async () => {
+        const header = {
+            headers : {
+                token: localStorage.getItem("token")
+            }
+        };
+        await axios.get(MAIN_ADRESS + "users", header)
+        .then((res: any) => {
+            setUsers(res.data.content)
+        })
+        .catch((err: any) => {
+            console.log(err)
+        })
+    }
+
     const sendMessage = ()  => {
         const message = document.getElementById("chatInput") as HTMLInputElement;
         // socket newMessage params : message, userId, chatId
-        socket.emit("newMessage", message.value, "5fa424e6c4c5be08c7809355", chatId);
+        socket.emit("newMessage", message.value, userId, chatId);
         (document.getElementById("chatInput") as HTMLInputElement).value = ""
     }
 
     const writingMessage = (event: any) => {
         setMessage(event.target.value)
         // socket writingMessage params : userId, chatId
-        socket.emit("writingMessage", "5fa424e6c4c5be08c7809355", chatId)
+        socket.emit("writingMessage", userId, chatId)
     }
 
     const onChatClick = (chatId: string, messages: any) => {
@@ -116,19 +167,53 @@ export const ChatComponent = () => {
             >
                 <Toolbar />
                 <div className={classes.drawerContainer}>
-                    <List>
-                        {chat.map((conv: any, index: any) => (
-                            <ListItem button key={index} onClick={() => onChatClick(conv._id, conv.messages)}>
-                                <ListItemText primary={conv.userIdNames} />
-                            </ListItem>
-                        ))}
-                    </List>
+                    {isCreate === false ? (
+                        <div>
+                            <Button variant="outlined" color="primary" onClick={() => {setIsCreate(true); getUsers();}}><EditIcon/></Button>
+                            {chat.length === 0 ? (
+                                <div style={{textAlign: "center", marginTop: "30vh"}}>Pas de conversations trouvées</div>
+                            ) : (
+                                <List>
+                                    {chat.map((conv: any, index: any) => (
+                                        <ListItem button key={index} onClick={() => onChatClick(conv._id, conv.messages)}>
+                                            <ListItemText primary={UtilsString.arrayToForm(conv.userIdNames)} />
+                                        </ListItem>
+                                    ))}
+                                </List>
+                            )}
+                        </div>
+                    ) : (
+                        <div>
+                            <Button color="primary" onClick={createChat}>Ok</Button>
+                            {selectedUsers.map((user: any, index: any) => (
+                                <ListItem key={index} >
+                                    <ListItemText primary={user.firstname + " " + user.lastname} />
+                                    <Button color="primary" onClick={() => {setUsers([user, ...users]);setSelectedUsers(selectedUsers.filter((x: any) => x._id !== user._id))}}>X</Button>
+                                </ListItem>
+                            ))}
+                            <List>
+                                {users.map((user: any, index: any) => (
+                                    <ListItem button key={index} onClick={() => {setSelectedUsers([...selectedUsers, user]); setUsers(users.filter((x: any) => x._id !== user._id))}}>
+                                        <ListItemText primary={user.firstname + " " + user.lastname} />
+                                    </ListItem>
+                                ))}
+                            </List>
+                        </div>
+                    )}
                 </div>
             </Drawer>
             <main className={classes.content}>           
                 <div style={{display: "flex", flexDirection: "column", overflowY: "scroll", height: "78vh"}}>
                     {messages.map((message: any, i: any) => {
-                            if (message.userId.indexOf("5fa424e6c4c5be08c7809355") !== -1) {
+                            let user = users.map((x: any) => {
+                                if (x._id === message.userId) {
+                                    return x.firstname
+                                }
+                            })
+
+                            user = user.filter(x => x !== undefined)
+                            console.log(user)
+                            if (message.userId.indexOf(userId) !== -1) {
                                 return (
                                     <div style={{display: "flex", flexDirection: "row-reverse", alignItems: "end"}}>
                                         <div key={i} className="speech-bubble" style={{wordBreak: "break-word"}}>{message.message}</div>
@@ -137,7 +222,10 @@ export const ChatComponent = () => {
                             } else {
                                 return (
                                     <div style={{display: "flex", flexDirection: "row", alignItems: "start"}}>
-                                        <div key={i} className="speech-bubble" style={{wordBreak: "break-word"}}>{message.message}</div>
+                                        <div className="col">
+                                            <div>{user[0]}</div>
+                                            <div key={i} className="speech-bubble" style={{wordBreak: "break-word"}}>{message.message}</div>
+                                        </div>
                                     </div>
                                 )
                             }

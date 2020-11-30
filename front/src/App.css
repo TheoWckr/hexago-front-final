@@ -3,12 +3,6 @@ html, body {
   margin: 0;
 }
 
-.fullHeight {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-}
-
 .App {
   text-align: center;
 }
