@@ -39,7 +39,7 @@ const GameCard = (props: { game: GameModel }) => {
                 <CardContent onClick={() => history.push('/gamedisplay/' + props.game._id)} >
                     <CardMedia
                         className={classes.media}
-                        image="https://via.placeholder.com/400"
+                        image={props.game.img.url.length > 0 ? props.game.img.url : "https://via.placeholder.com/300"}
                         title={props.game.name}
                     />
                     <Typography className={classes.title}>

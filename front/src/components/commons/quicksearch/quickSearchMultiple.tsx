@@ -3,7 +3,7 @@ import {Autocomplete} from "@material-ui/lab";
 import TextField from "@material-ui/core/TextField";
 
 const QuickSearchMultiple = (props:{listOfChoices : string[],
-                           setChoices : Dispatch<SetStateAction<string[]>>} ) =>
+                           setChoices : Dispatch<SetStateAction<string[]>>, label?: string} ) =>
 {
     return (
         <Autocomplete
@@ -18,7 +18,7 @@ const QuickSearchMultiple = (props:{listOfChoices : string[],
             }}
             getOptionLabel={(option) => option}
             style={{ width: 400}}
-            renderInput={(params) => <TextField {...params}  label="Selection" variant="outlined" />}
+            renderInput={(params) => <TextField {...params}  label={props.label? props.label : "Sélection"} variant="outlined" />}
         />
     );
 }

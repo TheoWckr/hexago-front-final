@@ -2,6 +2,7 @@ import {AxiosPromise} from "axios";
 import {MAIN_ADRESS, axios, UtilsAxios} from "../utils/utilsAxios";
 import {GameModel} from "../models/gameModel";
 import {GameCreateForm} from "../models/form/gameCreateForm";
+import GameSearchProps from "../models/game/gameSearch";
 
 const routeName = MAIN_ADRESS+'gamedetails/';
 export const GameService = {
@@ -64,19 +65,25 @@ export const GameService = {
         return axios.get(routeName+'/'+id);
     },
 
-    getGamesPage(page: number, sortBy?: string, sortOrder?: string, popularity?: number,baseGameId? : string ) :AxiosPromise {
+    getGamesPage(page: number, gameSearch?: GameSearchProps, sortBy?: string, ) :AxiosPromise {
         let sortValue = '-1';
         let whatToSortBy = 'popularity';
-        if (sortOrder && sortOrder){
-            sortValue = sortOrder;
-        }
         if(sortBy){
             sortValue = sortBy;
         }
         //Every non essential elements
         let additionalElements = '';
-        if(baseGameId){
-            additionalElements += '&baseGameId='+baseGameId;
+        if(gameSearch){
+            if(gameSearch.name && gameSearch.name.length > 0)
+                additionalElements += `&name=${gameSearch.name}`
+            if(gameSearch.genres.length > 0) {
+                additionalElements += `&genres=`
+                gameSearch.genres.forEach((value,index) =>
+                     additionalElements +=  index === gameSearch.genres.length ? `${value},` :`${value}` )
+            }
+            if(gameSearch.year){
+                additionalElements += `&releaseDate=${gameSearch.year}`
+            }
         }
 
         return axios.get(routeName+'?limit=12&offset='+ page +'&whatToSortBy='+ whatToSortBy +'&sortValue='+sortValue+additionalElements);

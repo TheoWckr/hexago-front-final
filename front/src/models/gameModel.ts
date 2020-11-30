@@ -21,6 +21,7 @@ export class GameModel {
     editor?: string;
     baseGameId? :string;
     genres: GenreModel[];
+    img:{id: string , url: string};
 
     constructor({
                     author = '',
@@ -37,7 +38,8 @@ export class GameModel {
                     gameLengthMax=0,
                     editor = '',
                     baseGameId  = '',
-    genres = [] as any[]
+                    img={id:"",url:""},
+                    genres = [] as any[]
                 } = {}) {
 
         this._id = _id.length === 0  ? undefined : _id;
@@ -60,6 +62,7 @@ export class GameModel {
         this.genres = [] as GenreModel[];
         if(genres.length)
             genres.forEach((genres) => this.genres.push(new GenreModel(genres)));
+        this.img = img;
     };
 
     toFormData = () :FormData =>  {

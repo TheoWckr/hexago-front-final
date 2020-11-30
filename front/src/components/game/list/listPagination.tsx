@@ -5,6 +5,7 @@ import {GameModel} from "../../../models/gameModel";
 import GameService from "../../../services/gameService";
 import {AxiosResponse} from "axios";
 import GameSearchProps from "../../../models/game/gameSearch";
+import {useEffect, useState} from "react";
 
 type PageState = {
     page: number,
@@ -12,58 +13,52 @@ type PageState = {
     detail: GameModel[]
 }
 
-export default class ListPagination extends React.Component<{ search : GameSearchProps}, PageState> {
-    getGamesByPage(page: number) {
-        GameService.getGamesPage(page).then((result: AxiosResponse) => {
-            let stock: GameModel[] = [];
+const ListPagination = (props : { search : GameSearchProps}) =>  {
 
+    const [page, setPage] = useState(0)
+    const [numberGame, setNumberGame] = useState(0)
+    const [detail,setDetail] = useState<GameModel[]> ([])
+
+    useEffect(()=> {
+        console.log("listPagination", props.search)
+        setPage(0)
+        getGamesByPage(0)
+    }, [props.search])
+    const getGamesByPage = (page: number) =>  {
+        GameService.getGamesPage(page, props.search).then((result: AxiosResponse) => {
+            let stock: GameModel[] = [];
+            console.log("Datas", result.data)
             result.data.content.forEach((game: {}) => {
-                console.log('gameReceived', game);
                 stock.push(new GameModel(game));
             });
-            this.setState({
-                detail: stock
-            });
+        setDetail(stock)
         }).catch((message: any) => console.log( 'error' , message));
     }
 
-    countPage() {
+    const countPage = () => {
         GameService.getAllGames().then((result: AxiosResponse) => {
             let calc = result.data.content.length / 12 < 1 ? 1 : Math.ceil(result.data.content.length / 12);
-
-            this.setState({
-                numberGame: calc
-            });
+           setNumberGame(calc)
         });
     }
 
-    handleChange = (event: any, value: number) => {
+    const handleChange = (event: any, value: number) => {
         let page = value - 1;
-
-        this.getGamesByPage(page);
-        this.setState({
-            page: page
-        });
+        getGamesByPage(page);
+        setPage(page)
     };
 
-    componentWillMount() {
-        this.setState({
-            page: 0,
-            detail: []
-        });
-    };
+    useEffect(() =>  {
+        getGamesByPage(page);
+        countPage();
+    }, []);
 
-    componentDidMount() {
-        this.getGamesByPage(this.state.page);
-        this.countPage();
-    }
-
-    render() {
-        return (
+            return (
             <div>
-                <ListCard games={this.state.detail}/>
-                <Pagination count={this.state.numberGame} onChange={this.handleChange}/>
+                <ListCard games={detail}/>
+                <Pagination count={numberGame} onChange={handleChange}/>
             </div>
         )
-    }
+
 }
+export default ListPagination;

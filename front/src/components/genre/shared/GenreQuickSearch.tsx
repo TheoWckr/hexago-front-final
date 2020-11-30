@@ -36,7 +36,7 @@ const GenreQuickSearch = (props : {
         props.setChoices(listGenre)
     }, [chosenGenres])
     return (
-        <QuickSearchMultiple listOfChoices={options} setChoices={setChosenGenres} />
+        <QuickSearchMultiple listOfChoices={options} setChoices={setChosenGenres} label={"Genre"}/>
         )
 };
 export default GenreQuickSearch;

@@ -13,6 +13,7 @@ import PlayerNumber from "../shared/PlayerNumber";
 import GameDuration from "../shared/GameDuration";
 import GameAgeMin from "../shared/GameAgeMin";
 import GameExtentionDisplay from "../shared/GameExtentionDisplay";
+import CardMedia from "@material-ui/core/CardMedia";
 
 
 
@@ -46,8 +47,8 @@ const useStyles = makeStyles((theme: Theme) =>
             lineHeight :'2em',
         },
         carrousselImage: {
-            maxHeight:"450px",
-            maxWidth:"300px"
+            maxHeight:"100%",
+            maxWidth:"50%"
         }
     }),
 );
@@ -75,7 +76,14 @@ const GameDisplayPage = () => {
     return (
         <Box component="div" className={classes.padding }  >
             <Grid container spacing={3}  >
-                <Grid item md={6} alignItems={"baseline"}  spacing={3}  className={classes.padding}  >
+                <Grid item md={6} >
+                    <img
+                        className={classes.carrousselImage}
+                        src={gameState.img.url.length > 0 ? gameState.img.url : "https://via.placeholder.com/300"}
+                        title={gameState.name}
+                    />
+                </Grid>
+                <Grid item md={6}  spacing={3}  className={classes.padding}  >
                     <Typography variant="h4" component="h2" >{gameState.name}  </Typography>
                     <Rating
                         name="customized-empty"
@@ -106,9 +114,7 @@ const GameDisplayPage = () => {
                     <GameDuration gameLengthMin={gameState.gameLengthMin} gameLengthMax={gameState.gameLengthMax}/>
                     <GameAgeMin minAge={gameState.minAge} />
                 </Grid>
-                <Grid item md={6} >
-                </Grid>
-                <Grid item xs={6}> <GameExtentionDisplay id={gameState._id} /></Grid>
+                <Grid item xs={12}> <GameExtentionDisplay id={gameState._id} /></Grid>
             </Grid>
         </Box>
     );

@@ -28,7 +28,7 @@ const App = (props : {location : any}) => {
 
     useEffect(() => {
         console.log("test")
-        const socket = socketIOClient("http://localhost:3100");
+        //const socket = socketIOClient("http://localhost:3100");
 
     }, [])
 
