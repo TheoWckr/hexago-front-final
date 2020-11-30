@@ -65,12 +65,13 @@ export const GameService = {
         return axios.get(routeName+'/'+id);
     },
 
-    getGamesPage(page: number, gameSearch?: GameSearchProps, sortBy?: string, ) :AxiosPromise {
+    getGamesPage(page: number, gameSearch?: GameSearchProps, sortBy?: string, baseGameId?: string) :AxiosPromise {
         let sortValue = '-1';
         let whatToSortBy = 'popularity';
         if(sortBy){
             sortValue = sortBy;
         }
+
         //Every non essential elements
         let additionalElements = '';
         if(gameSearch){
@@ -85,7 +86,9 @@ export const GameService = {
                 additionalElements += `&releaseDate=${gameSearch.year}`
             }
         }
-
+        if(baseGameId) {
+            additionalElements += '&baseGameId=' + baseGameId;
+        }
         return axios.get(routeName+'?limit=12&offset='+ page +'&whatToSortBy='+ whatToSortBy +'&sortValue='+sortValue+additionalElements);
     },
 

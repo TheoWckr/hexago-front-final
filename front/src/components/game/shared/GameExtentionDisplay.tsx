@@ -8,7 +8,7 @@ const GameExtentionDisplay = (props : {id?: string}) => {
     const [games, setGames] = useState([] as GameModel[])
     useEffect(() => {
         if(props.id)
-        GameService.getGamesPage( 0,undefined,undefined).then((result: AxiosResponse) => {
+        GameService.getGamesPage( 0,undefined,undefined,props.id).then((result: AxiosResponse) => {
             let stock: GameModel[] = [];
             result.data.content.forEach((game: {}) => {
                 stock.push(new GameModel(game));
