@@ -43,6 +43,19 @@ export const EventService = {
         return axios.get(routeName+'/searchlist'+paramsString, header);
     },
 
+    searchEventByLocation(location : string = "", limit : number = 0 , offset : number = 0 ){
+        let paramsString ='?'
+        if(location.length > 0)
+            paramsString += `locationId=${location}&`
+        paramsString += `limit=${limit}&offset=${offset}`
+        const header = {
+            headers: {
+                token: localStorage.getItem("token")
+            }
+        };
+        return axios.get(routeName+'/searchlist'+paramsString, header);
+    },
+
     subscribeEvent(eventId : string){
         const header = {
             headers : {
