@@ -1,5 +1,5 @@
-import {Checkbox, Divider, FormControlLabel, Grid, TextField, Typography} from "@material-ui/core";
-import React from "react";
+import {Checkbox, Divider, FormControlLabel, Grid, Paper, TextField, Typography} from "@material-ui/core";
+import React, {useState} from "react";
 import {GameEditProps} from "../../../models/propsDeclaration";
 import {useStylesPanelCreatePage} from "./gameCreatePage";
 import {KeyboardDatePicker} from "@material-ui/pickers";
@@ -11,7 +11,7 @@ import GameNameQS from "../shared/GameNameQS";
 export const GameCreatePanel1 = (props: GameEditProps) => {
     const {register} = useFormContext();
     const [isExtension, setIsExtension] = React.useState(false);
-
+    const [, setExtention] = useState<string[]>([])
     const handleChangeTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
         props.changeGameState('name', event.target.value);
     };
@@ -38,7 +38,7 @@ export const GameCreatePanel1 = (props: GameEditProps) => {
 
 
     const displayExtension = () => {
-        if (isExtension) return <GameNameQS/>;
+        if (isExtension) return <GameNameQS setChoices={setExtention} />;
     };
 
     const handleChangeExtension = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,17 +46,19 @@ export const GameCreatePanel1 = (props: GameEditProps) => {
     };
 
     const classes = useStylesPanelCreatePage();
-    return (<Grid
+    return (
+        <Paper elevation={3} className={classes.paper}>
+            <Grid
         container
         direction="column"
         className={classes.panel}
     >
         <Typography variant={'h4'}>
-            Mandatory fields </Typography>
+           Définition du jeu </Typography>
         <Divider style={{margin: '0.5em', width: '50%', marginBottom: '1.2em'}}/>
 
 
-        <TextField required id="standard-required" label="Title " multiline
+        <TextField required id="standard-required" label="Titre" multiline
                    name='name'
                    onChange={handleChangeTitle}
                    className={classes.textField}
@@ -68,7 +70,7 @@ export const GameCreatePanel1 = (props: GameEditProps) => {
             className={classes.textField}
 
             control={<Checkbox color="primary" onChange={handleChangeExtension}/>}
-            label="Is an extension "
+            label="Extension de jeu "
             labelPlacement="end"
         />
         {displayExtension()}
@@ -77,8 +79,8 @@ export const GameCreatePanel1 = (props: GameEditProps) => {
             className={classes.textField}
             margin="normal"
             id="date-picker-dialog"
-            label="Date picker dialog"
-            format="MM/dd/yyyy"
+            label="Date de parution"
+            format="dd/MM/yyyy"
             value={props.game.releaseDate}
             onChange={handleChangeReleasedDate}
             KeyboardButtonProps={{
@@ -97,12 +99,12 @@ export const GameCreatePanel1 = (props: GameEditProps) => {
         <Typography variant={'h4'} style={{paddingTop: '0.8em'}}>
            Credits </Typography>
         <Divider style={{margin: '0.5em', width: '50%', marginBottom: '1.2em'}}/>
-
         <TextField id="standard" onChange={handleChangeAuthor} className={classes.textField} label="Author " multiline
                    value={props.game.author}/>
         <TextField id="standard" onChange={handleChangeEditor} className={classes.textField} label="Editor " multiline
                    value={props.game.editor}/>
         <TextField id="standard" onChange={handleChangeDistributor} className={classes.textField} label="Distributor "
                    multiline value={props.game.distributor}/>
-    </Grid>)
+    </Grid>
+        </Paper>)
 };

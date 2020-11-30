@@ -24,7 +24,7 @@ const GenreList = (props: {
             props.ClickHandler(event);
 
         console.log('genreList', props.genres);
-    };
+    }
     let genreList = props.genres.map((genre, index) => {
             if (index < 12)
                 return <Chip

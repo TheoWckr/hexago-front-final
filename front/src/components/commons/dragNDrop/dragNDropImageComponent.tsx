@@ -1,36 +1,103 @@
-import React, {useCallback} from 'react'
-import {useDropzone} from 'react-dropzone'
-import RootRef from '@material-ui/core/RootRef'
-import {Paper} from "@material-ui/core";
+import React, {ChangeEvent,  CSSProperties, Dispatch, SetStateAction} from 'react'
+import {Box, Button, Grid, Paper} from "@material-ui/core";
 
 
+const inputUploadFile: CSSProperties = {
+    display: 'none',
+};
 
-function DragNDropImage() {
+const imgPreview: CSSProperties = {
+    objectFit:"contain",
+    maxWidth: "22em",
+    maxHeight: "22em",
+};
 
-    useCallback((acceptedFiles) => {
-        acceptedFiles.forEach((file: Blob) => {
+const imgPaperPreview: CSSProperties = {
+    width: "25em",
+    height: "25em",
+   // padding:"8px",
+    display:"flex",
+    margin:"auto",
+
+};
+const imgBoxPreview: CSSProperties = {
+    margin:"auto",
+    display: 'flex',
+    flexDirection:"column",
+    alignItems: 'center',
+    justifyContent: 'center',
+    verticalAlign:"middle"
+}
+const buttonUploadFile: CSSProperties = {
+    display:"flex"
+
+};
+
+// component own props
+interface UploadFileOwnProps { }
+
+// component props
+interface UploadFileProps  extends UploadFileOwnProps {
+    file : string
+    setFile : Dispatch<SetStateAction<File>>
+}
+//class DragNDropImage extends Component<UploadFileProps, UploadFileStateProps>  {
+const DragNDropImage = (props : UploadFileProps) => {
+    // function to read file as binary and return
+    function getFileFromInput(file: File): Promise<any> {
+        return new Promise(function (resolve, reject) {
             const reader = new FileReader();
+            reader.onerror = reject;
+            reader.onload = function () { resolve(reader.result); };
+            reader.readAsBinaryString(file); // here the file can be read in different way Text, DataUrl, ArrayBuffer
+        });
+    }
 
-            reader.onabort = () => console.log('file reading was aborted');
-            reader.onerror = () => console.log('file reading has failed');
-            reader.onload = () => {
-                // Do whatever you want with the file contents
-                const binaryStr = reader.result;
-                console.log('loaded', binaryStr)
-            };
-            reader.readAsArrayBuffer(file)
-        })
+    console.log("file file ", props.file)
 
-    }, []);
-    const {getRootProps, getInputProps} = useDropzone();
-    const {ref, ...rootProps} = getRootProps();
+    function manageUploadedFile(binary: String, file: File) {
+        // do what you need with your file (fetch POST, ect ....)
+        console.log(`The file size is ${binary.length}`);
+        console.log(`The file name is ${file.name}`);
+        props.setFile(file)
+    }
+
+    function handleFileChange(event: ChangeEvent<HTMLInputElement>) {
+        event.persist();
+        console.log(event.target.files)
+        Array.from(event.target.files!).forEach(file => {
+            getFileFromInput(file)
+                .then((binary: any) => {
+                    manageUploadedFile(binary, file);
+                }).catch(function (reason: any) {
+                console.log(`Error during upload ${reason}`);
+                event.target.value = ''; // to allow upload of same file if error occurs
+            });
+        });
+    }
+    const button = (<>
+            <input accept="image/*" style={inputUploadFile} id="file" multiple={false} type="file"
+                   onChange={handleFileChange}/>
+            <label htmlFor="file">
+                <Button component="span" style={buttonUploadFile}
+                        onClick={(e: { stopPropagation: () => void; }) => e.stopPropagation()}>
+                    Ajoutez une image
+                </Button>
+            </label>
+        </>)
+
     return (
-        <RootRef rootRef={ref}>
-            <Paper {...rootProps}>
-                <input {...getInputProps()} />
-                <p>Drag 'n' drop some files here, or click to select files</p>
-            </Paper>
-        </RootRef>
-    )
+        <Grid container style={ {margin : "auto"}}>
+            <Grid item xs={12}>
+                <Paper elevation={3} style={imgPaperPreview}>
+                    <Box style={imgBoxPreview}>
+                        {props.file.length > 0 && <img src={props.file} alt={""} style={imgPreview}/>}
+                        {button}
+                    </Box>
+                </Paper>
+            </Grid>
+        </Grid>
+    );
+
 }
 export default DragNDropImage;

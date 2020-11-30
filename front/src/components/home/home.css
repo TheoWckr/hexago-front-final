@@ -1,0 +1,45 @@
+.remainHeight {
+    flex: 1;
+    background: url('../../assets/dice.jpg') no-repeat;
+    background-size: cover;
+}
+
+.callToActionBtn {
+    font-size: 1.5rem;
+    color: #951B81;
+    border-width: 2px;
+    border-style: solid;
+    border-color: #951B81;
+    min-width: 300px;
+    min-height: 70px;
+    border-radius: 50px;
+    background-color: #fff;
+}
+
+.callToActionBtn span {
+    transition: 0.5s;
+}
+
+.callToActionBtn:hover {
+    cursor: pointer;
+}
+
+.callToActionBtn:hover > span {
+    transition: 0.5s;
+    margin-left: 10px;
+}
+
+.goDownBtn {
+    font-size: 1.5rem;
+    color: #951B81;
+    border: none;
+    margin-top: 3rem;
+    min-width: 50px;
+    min-height: 50px;
+    border-radius: 50%;
+    background-color: #fff;
+}
+
+.goDownBtn:hover {
+    cursor: pointer;
+}

@@ -9,11 +9,11 @@ export const GenreService = {
      * If genre is empty , return all possible */
     getGenres(genre: string, limit: number) :AxiosPromise {
         let paramsString = '?';
-        if(genre && genre.length != 0)
+        if(genre && genre.length !== 0)
             paramsString += 'genre=' + genre+ '&';
         if(limit && limit > 1)
             paramsString += 'limit=' + limit;
-        else paramsString += 'limit=2';
+        else paramsString += 'limit=9999';
         return axios.get(routeName + paramsString);
     },
 

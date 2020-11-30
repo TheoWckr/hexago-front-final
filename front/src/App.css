@@ -3,6 +3,12 @@ html, body {
   margin: 0;
 }
 
+.fullHeight {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
 .App {
   text-align: center;
 }
@@ -57,4 +63,24 @@ html, body {
 
 .w-100 {
   width: 100%;
+}
+
+.purple-input input::placeholder {
+  color: #994277 !important;
+  opacity: 1; /* Firefox */
+}
+.fade-enter {
+  opacity: 0;
+}
+.fade-enter-active {
+  opacity: 1;
+  transition: opacity 1800ms;
+}
+.fade-exit {
+  opacity: 1;
+}
+.fade-exit-active {
+  opacity: 0;
+  transition: opacity 100ms;
+  visibility: hidden;
 }

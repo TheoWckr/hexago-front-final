@@ -1,11 +1,10 @@
 import React, {useEffect} from 'react';
 import './App.css';
 import Header from "./components/commons/headers/Header";
-
+import { TransitionGroup, CSSTransition } from "react-transition-group";
 import GameList from "./components/game/list/gameList";
 
 import {
-    BrowserRouter as Router,
     Switch,
     Route
 } from 'react-router-dom';
@@ -16,14 +15,16 @@ import {LoginPage} from "./components/user/login/loginPage";
 import {RegisterPage} from "./components/user/register/registerPage";
 import {AuthContext, useAuth} from './services/hooks/useAuth';
 import EventListPage from "./components/event/list/eventListPage";
-import EventDisplayPage from "./components/event/display/eventDisplayPage";
 import EventCreatePage from "./components/event/create/eventCreatePage";
 import EventUpdatePage from "./components/event/update/eventUpdatePage";
 import { ChatComponent } from './components/chat/ChatComponent';
+import {Home} from "./components/home/home";
+import EventSearchPanel from "./components/event/search/eventSearchPanel";
+import EventDisplayPageLoader from "./components/event/display/EventDisplayPageLoader";
 const socketIOClient = require('socket.io-client');
 
-const App = () => {
-    const {isLogged, signIn, updateToken, token, currentUser, disconnect} = useAuth();
+const App = (props : {location : any}) => {
+    const {isLogged, signIn, updateToken, token, disconnect,userId} = useAuth();
 
     useEffect(() => {
         console.log("test")
@@ -32,10 +33,19 @@ const App = () => {
     }, [])
 
     return (
-        <AuthContext.Provider value={{isLogged, signIn, updateToken, token, currentUser, disconnect}}>
-            <Router>
+        <AuthContext.Provider value={{isLogged, signIn, updateToken, token, disconnect, userId}}>
+            <div className={'fullHeight'}>
                 <Header/>
+                <TransitionGroup>
+                    <CSSTransition key={props.location.key} classNames="fade" timeout={{
+                        appear: 1800,
+                        enter: 500,
+                        exit : 300
+                    }}>
                 <Switch>
+                    <Route exact path="/">
+                        <Home/>
+                    </Route>
                     <Route exact path="/GameCreate/:id?">
                         <GameCreatePage/>
                     </Route>
@@ -51,14 +61,17 @@ const App = () => {
                     <Route exact path="/event">
                         <EventListPage/>
                     </Route>
-                    <Route path="/event/create">
+                    <Route path="/event/create" >
                         <EventCreatePage/>
                     </Route>
                     <Route path="/event/update/:id">
                         <EventUpdatePage/>
                     </Route>
-                    <Route path="/event/:id">
-                        <EventDisplayPage/>
+                    <Route path="/event/display/:id" >
+                        <EventDisplayPageLoader/>
+                    </Route>
+                    <Route path="/event/search">
+                        <EventSearchPanel/>
                     </Route>
                     <Route path="/login">
                         <LoginPage/>
@@ -70,7 +83,9 @@ const App = () => {
                         <ChatComponent/>
                     </Route>
                 </Switch>
-            </Router>
+                    </CSSTransition>
+                </TransitionGroup>
+            </div>
         </AuthContext.Provider>
     );
 };

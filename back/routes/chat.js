@@ -69,6 +69,16 @@ router.get('/:id', async (req, res) => {
 });
 
 
+router.get('/', (req, res, next) => {
+    Chat.find({}, function (err, content) {
+        console.log(content);
+        if (err) res.json({
+            err: err
+        });
+        else res.json({content})
+    })
+
+});
 
 
 module.exports = router;

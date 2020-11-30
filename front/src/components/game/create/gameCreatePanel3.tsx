@@ -1,32 +1,41 @@
-import {Grid} from "@material-ui/core";
-import React from "react";
+import {Grid, Paper} from "@material-ui/core";
+import React, {Dispatch, SetStateAction} from "react";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import {GameEditProps} from "../../../models/propsDeclaration";
 import DragNDropImage from "../../commons/dragNDrop/dragNDropImageComponent";
-import {RichTextEditor} from "../../commons/richText/richText";
 import {useStylesPanelCreatePage} from "./gameCreatePage";
+import {RichTextEditor} from "../../commons/richText/RichTextEditor";
 
 makeStyles({
     root: {
         background: 'linear-gradient(60deg, white 30%,primary 90%)',
         border: 0,
         borderRadius: 3,
-        margin:'3%',
+        margin: '3%',
         padding: '3%',
     },
+    paper: {
+        padding: '3%'
+    }
 });
 
-const GameCreatePanel3 = (props : GameEditProps) => {
+interface GameCreatePanel3Props extends GameEditProps {
+    urlReturn: string
+    setFile: Dispatch<SetStateAction<File>>
+}
+
+const GameCreatePanel3 = (props: GameCreatePanel3Props) => {
     const classes = useStylesPanelCreatePage();
     return (
-        <Grid
-              container
-              direction="column"
-              className={classes.panel}
-        >
-            <DragNDropImage/>
-            <RichTextEditor />
-        </Grid>
+        <Paper elevation={3} className={classes.paper}>
+            <Grid
+                container
+                direction="row"
+                className={classes.panel}
+            >
+                    <DragNDropImage setFile={props.setFile} file={props.urlReturn}/>
+            </Grid>
+        </Paper>
     )
 };
 

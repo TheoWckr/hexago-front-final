@@ -172,8 +172,8 @@ router.post(
  * @apiName Login User
  * @apiGroup User
  *
- * 
- * 
+ *
+ *
  * @apiParam {String} email User email
  * @apiParam {String} password User's password
  *
@@ -212,7 +212,7 @@ router.post(
         })
       }
 
-      
+
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch)
         return res.status(400).json({
@@ -227,7 +227,7 @@ router.post(
           id: user.id
         }
       };
-     
+
       jwt.sign(
         payload,
         "randomString",
@@ -236,7 +236,7 @@ router.post(
         },
         (err, token) => {
           if (err) throw err;
-          
+
           res.status(200).json({
             token
           });
@@ -261,7 +261,7 @@ router.post(
  *     {
  *       "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWVkZTE1MTAxZDEzOWEwMzZiNzlmNWE5In0sImlhdCI6MTU5MTYxMjY4OCwiZXhwIjoxNTkxNjIyNjg4fQ.dI-Emc4EM24Pw1KFAWJi8sOKPFusgXn_BvODpxBAV70"
  *     }
- * 
+ *
  * @apiParam {boolean} isActive User account is active or not
  * @apiParam {String} _id User unique ID
  * @apiParam {String} username User nickname for the service
@@ -280,7 +280,7 @@ router.post(
       "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWVkZTE1MTAxZDEzOWEwMzZiNzlmNWE5In0sImlhdCI6MTU5MTYxMjY4OCwiZXhwIjoxNTkxNjIyNjg4fQ.dI-Emc4EM24Pw1KFAWJi8sOKPFusgXn_BvODpxBAV70"
     }
  */
-router.patch("/update", parseImageUpload(), 
+router.patch("/update", parseImageUpload(),
   [
     check("username", "Please Enter a Valid Firstname").not().isEmpty(),
     check("firstname", "Please Enter a Valid Firstname").not().isEmpty(),
@@ -355,7 +355,7 @@ router.patch("/update", parseImageUpload(),
  *     {
  *       "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWVkZTE1MTAxZDEzOWEwMzZiNzlmNWE5In0sImlhdCI6MTU5MTYxMjY4OCwiZXhwIjoxNTkxNjIyNjg4fQ.dI-Emc4EM24Pw1KFAWJi8sOKPFusgXn_BvODpxBAV70"
  *     }
- * 
+ *
  * @apiSuccessExample {json} Success-Response:
  *  {
       "_id": "5ede13241d139a036b79f5a8",
@@ -373,6 +373,7 @@ router.delete('/:id', async (req, res, next) => {
       });
     else {
       const user = await User.findById(req.params.id);
+      console.log("eeeeeeeeeeeeeeeeeeeee" + user.image.id)
       if (user.img.id != "") {
         await cloudinary.v2.uploader.destroy(user.img.id, { invalidate: true, resource_type: "raw" }, function(result, error) { if (error) { console.log(error)} else {console.log(result)} });
       }
@@ -404,7 +405,7 @@ router.delete('/:id', async (req, res, next) => {
  *     {
  *       "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWVkZTE1MTAxZDEzOWEwMzZiNzlmNWE5In0sImlhdCI6MTU5MTYxMjY4OCwiZXhwIjoxNTkxNjIyNjg4fQ.dI-Emc4EM24Pw1KFAWJi8sOKPFusgXn_BvODpxBAV70"
  *     }
- * 
+ *
  * @apiSuccessExample {json} Success-Response:
  *  {
       "isActive": true,

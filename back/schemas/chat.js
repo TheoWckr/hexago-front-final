@@ -15,12 +15,12 @@ let chatSchema = new Schema({
         type: String
     }],
     eventId:{
-        type: Schema.Types.ObjectID, ref:'Event'
+        type: Schema.Types.ObjectID, ref:'Event',
+        default: null
     },
     messages:[{
         userId: {type: Schema.Types.ObjectID, ref:'Users'},
-        message: String,
-        date: Date
+        message: String
     }]
 
 });

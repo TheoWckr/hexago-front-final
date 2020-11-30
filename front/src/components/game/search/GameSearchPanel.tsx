@@ -1,10 +1,11 @@
-import React, {useEffect, useState} from "react";
+import React, {Dispatch, SetStateAction, useEffect, useState} from "react";
 import { TextField} from "@material-ui/core";
 import {KeyboardDatePicker} from "@material-ui/pickers";
 import {GenreModel} from "../../../models/genreModel";
 import GenresSelector from "../../genre/shared/GenresSelector";
+import GameSearchProps from "../../../models/game/gameSearch";
 
-export const GameSearchPanel = () => {
+export const GameSearchPanel = (props : {setSearch : Dispatch<SetStateAction<GameSearchProps>>}) => {
     const [date, setDate] = useState(new Date);
     const[genreList, setGenreList] = useState(new Array<GenreModel>());
     const [name, setName] = useState('');
