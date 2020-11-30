@@ -1,7 +1,5 @@
 .remainHeight {
-    flex: 1;
-    background: url('../../assets/dice.jpg') no-repeat;
-    background-size: cover;
+    height: 100%;
 }
 
 .callToActionBtn {
@@ -13,11 +11,12 @@
     min-width: 300px;
     min-height: 70px;
     border-radius: 50px;
-    background-color: #fff;
+    background-color: rgba(255,255,255,0.7);
 }
 
 .callToActionBtn span {
     transition: 0.5s;
+    font-size: 2rem;
 }
 
 .callToActionBtn:hover {
@@ -30,16 +29,50 @@
 }
 
 .goDownBtn {
-    font-size: 1.5rem;
+    font-size: 2rem;
     color: #951B81;
     border: none;
     margin-top: 3rem;
     min-width: 50px;
     min-height: 50px;
     border-radius: 50%;
-    background-color: #fff;
+    background-color: rgba(255,255,255,0.7);
 }
 
 .goDownBtn:hover {
     cursor: pointer;
+}
+
+.wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.search {
+    width: 100%;
+    position: relative;
+    padding: 1.5rem 0;
+    display: flex;
+}
+
+.searchTerm {
+    width: 100%;
+    border: none;
+    padding: 5px;
+    height: 30px;
+    border-radius: 50px 0 0 50px;
+    outline: none;
+}
+
+.searchButton {
+    width: 60px;
+    height: 40px;
+    border: none;
+    background: #312783;
+    text-align: center;
+    color: #fff;
+    border-radius: 0 50px 50px 0;
+    cursor: pointer;
+    font-size: 20px;
 }
