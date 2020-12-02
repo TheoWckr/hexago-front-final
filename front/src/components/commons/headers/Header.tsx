@@ -45,7 +45,7 @@ const Header = () => {
     return (
         <AppBar className={classes.background} position="static" elevation={0}>
             <Toolbar onMouseEnter={triggerGif} >
-                <img src={isAnimate ? "dice.gif" : "dice-static.png"} style={{height:"50px"}} />
+                <img src={isAnimate ? "/dice.gif" : "/dice-static.png"} style={{height:"50px"}} />
                 <Typography variant="h6" className={[classes.title, "App-title"].join(' ')}>
                     <span className="App-title" onClick={()=>  history.push("/")}>HexaGo</span>
                 </Typography>

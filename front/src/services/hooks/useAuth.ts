@@ -23,7 +23,7 @@ export function useAuth() {
     const [isLogged, setIsLogged] = useState(false);
     const[userId, setUserId] = useState("")
     /**
-     * Fonction called on login
+     * Fonction called on login and autoLogin
      * @param email
      * @param password
      */
@@ -31,42 +31,10 @@ export function useAuth() {
        return UserService.login({
             email : email,
             password: password}).then(result => {
+                if(result){
                setToken(result.data.token)
-        })
-    };
-
-    /**
-     * function used to change token
-     * leading to set the others values
-     * @param newToken, if null , remove all datas
-     */
-    const updateToken = (newToken : string | null) => {
-        setToken(newToken);
-        setToken(prevState => {
-            if(newToken) {
-                console.log('new token : ', newToken)
-                prevState = newToken;
-                localStorage.setItem('token', newToken);
-                setIsLogged(true);
-                UserService.me(newToken)
-                    .catch((err) => console.log("Error", err))
-                    .then((result) => {
-                        if(result) {
-                            console.log("result me : ", result)
-                            localStorage.setItem('userId', result.data._id);
-                            setUserId(result.data._id)
-                        }
-                    }
-                    )
-            }
-            else {
-                localStorage.removeItem('token');
-                prevState = null;
-                setIsLogged(false);
-            }
-                return prevState;
-            }
-        )
+                }
+        }).catch(() => setToken(null))
     };
 
     /**
@@ -76,7 +44,7 @@ export function useAuth() {
        setToken(null);
         localStorage.removeItem('autoLogin')
         localStorage.removeItem('email')
-        localStorage.removeItem('email')
+        localStorage.removeItem('password')
     };
     /**
      * lauch at the start to allow
@@ -84,7 +52,7 @@ export function useAuth() {
     const autoLogin = async () => {
         const autoLogin = localStorage.getItem("autoLogin")
         const email = localStorage.getItem("email")
-        const password = localStorage.getItem("email")
+        const password = localStorage.getItem("password")
 
         if(autoLogin && email && password ){
             await signIn(email, password)
