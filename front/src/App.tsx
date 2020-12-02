@@ -24,7 +24,7 @@ import EventSearchPage from "./components/event/search/eventSearchPage";
 const socketIOClient = require('socket.io-client');
 
 const App = (props: { location: any }) => {
-    const {isLogged, signIn, updateToken, token, disconnect, userId} = useAuth();
+    const {isLogged, signIn, token, disconnect, userId} = useAuth();
 
     useEffect(() => {
         console.log("test")
@@ -33,7 +33,7 @@ const App = (props: { location: any }) => {
     }, [])
 
     return (
-        <AuthContext.Provider value={{isLogged, signIn, updateToken, token, disconnect, userId}}>
+        <AuthContext.Provider value={{isLogged, signIn, token, disconnect, userId}}>
             <Header/>
             <TransitionGroup id={'fullHeight'}>
                 <CSSTransition key={props.location.key} classNames="fade" timeout={{

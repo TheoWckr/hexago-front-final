@@ -5,10 +5,21 @@ import {UserModel} from "../../models/userModel";
 
 // Provider empty because we can't create hook outside of component
 export const AuthContext =  createContext(undefined as any );
-export let currentToken = ''
+
+export interface UserData {
+    _id: string,
+        createdAt: Date,
+        email : string,
+        firstName: string,
+        lastName:string,
+        userName: string,
+        img: {url:string, id:string},
+        userProfile : string
+}
+
 export function useAuth() {
-    const [token, setToken] = useState(null as String | undefined | null)
- //   const [currentUser, setCurrentUser] = useState(undefined as UserModel |undefined);
+    const [token, setToken] = useState<string | null>(localStorage.getItem('token'))
+    const [currentUser, setCurrentUser] = useState<UserData |undefined>();
     const [isLogged, setIsLogged] = useState(false);
     const[userId, setUserId] = useState("")
     /**
@@ -20,7 +31,7 @@ export function useAuth() {
        return UserService.login({
             email : email,
             password: password}).then(result => {
-                updateToken(result.data.token)
+               setToken(result.data.token)
         })
     };
 
@@ -30,6 +41,7 @@ export function useAuth() {
      * @param newToken, if null , remove all datas
      */
     const updateToken = (newToken : string | null) => {
+        setToken(newToken);
         setToken(prevState => {
             if(newToken) {
                 console.log('new token : ', newToken)
@@ -49,7 +61,7 @@ export function useAuth() {
             }
             else {
                 localStorage.removeItem('token');
-                prevState = undefined;
+                prevState = null;
                 setIsLogged(false);
             }
                 return prevState;
@@ -61,13 +73,13 @@ export function useAuth() {
      * hook to log out at any moment
      */
     const disconnect = () => {
-       updateToken(null);
+       setToken(null);
     };
     /**
      * lauch at the start to allow
      */
-    const autoLogin = () => {
-        updateToken(localStorage.getItem('token'));
+    const autoLogin = async () => {
+        await setToken(localStorage.getItem('token'));
     };
 
    useEffect(() => {
@@ -76,11 +88,35 @@ export function useAuth() {
        })();
         },[]);
 
+   useEffect(() => {
+       (async function anyNameFunction() {
+       if(token){
+           setIsLogged( true)
+           localStorage.setItem('token', token);
+           UserService.me(token)
+               .catch(() => setToken(null))
+               .then((result) => {
+                       if(result) {
+                           console.log("Connected")
+                           setCurrentUser(result.data)
+                           setUserId(result.data._id)
+                       }
+                   }
+               )
+       } else {
+           setCurrentUser(undefined)
+           setIsLogged(false)
+           localStorage.removeItem('token');
+           console.log('Storage ', localStorage.getItem('token'))
+       }
+       })();
+    },[token]);
+
+
     return {
      //   currentUser,
         isLogged,
         token,
-        updateToken,
         signIn,
         disconnect,
         userId

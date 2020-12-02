@@ -1,5 +1,5 @@
 import React from "react";
-import {Typography, Grid, Button, Container, Paper} from "@material-ui/core";
+import {Typography, Paper} from "@material-ui/core";
 import {About} from "./about";
 import {makeStyles} from "@material-ui/core/styles";
 import {EventCity} from "./eventCity";
