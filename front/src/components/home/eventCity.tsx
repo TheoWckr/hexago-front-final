@@ -3,9 +3,7 @@ import { Grid, Toolbar} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
-import eventData from "../../data-mock/eventData";
 import {EventSearchProps, eventSearchPropsDefault} from "../event/search/eventSearchPage";
-import EventCarousel from "../commons/carroussel/eventCarousel";
 import EventCarrouselListLoader from "../event/list/EventCarrouselListLoader";
 
 const useStyles = makeStyles({

@@ -93,13 +93,14 @@ export function useAuth() {
        if(token){
            setIsLogged( true)
            localStorage.setItem('token', token);
-           UserService.me(token)
+           await UserService.me(token)
                .catch(() => setToken(null))
                .then((result) => {
                        if(result) {
                            console.log("Connected")
                            setCurrentUser(result.data)
                            setUserId(result.data._id)
+                           localStorage.setItem("userId",result.data._id )
                        }
                    }
                )
@@ -114,7 +115,7 @@ export function useAuth() {
 
 
     return {
-     //   currentUser,
+        currentUser,
         isLogged,
         token,
         signIn,

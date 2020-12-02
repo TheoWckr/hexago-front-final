@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import {Toolbar, } from "@material-ui/core";
 import './Header.css';
 import {makeStyles, createStyles, Theme} from '@material-ui/core/styles';
@@ -17,6 +17,7 @@ const Header = () => {
     const open = Boolean(anchorEl);
     const {isLogged, disconnect } = useContext(AuthContext);
     const history = useHistory();
+    const [isAnimate,setAnimate] = useState(false);
 
     const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
@@ -33,10 +34,15 @@ const Header = () => {
         setAnchorEl(null);
         history.push("/");
     };
-
+    const triggerGif= () => {
+        if(!isAnimate)
+            setAnimate(true)
+        setTimeout(() => {  setAnimate(false)}, 2000);
+    }
     return (
         <AppBar className={classes.background} position="static" elevation={0}>
-            <Toolbar>
+            <Toolbar onMouseEnter={triggerGif} >
+                <img src={isAnimate ? "dice.gif" : "dice-static.png"} style={{height:"50px"}} />
                 <Typography variant="h6" className={[classes.title, "App-title"].join(' ')}>
                     <span className="App-title" onClick={()=>  history.push("/")}>HexaGo</span>
                 </Typography>
@@ -63,6 +69,7 @@ const Header = () => {
                             <MenuItem key={2} onClick={handleClose} component={Link} to={'/GameSearch/'}>Liste des jeux</MenuItem>,
                             <MenuItem key={5} onClick={handleClose} component={Link} to={'/event/create'}>Création d'évenement</MenuItem>,
                             <MenuItem key={8} onClick={handleClose} component={Link} to={'/event/search'}>Recherche d'événements</MenuItem>,
+                            <MenuItem key={10} onClick={handleClose} component={Link} to={'/chat'}>Chat</MenuItem>,
                             <MenuItem key={9} onClick={logout}>Déconnection</MenuItem>
                         ]
                     )}
