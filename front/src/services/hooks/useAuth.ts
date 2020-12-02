@@ -18,7 +18,7 @@ export interface UserData {
 }
 
 export function useAuth() {
-    const [token, setToken] = useState<string | null>(localStorage.getItem('token'))
+    const [token, setToken] = useState<string | null>(localStorage.getItem('autoLogin') ? localStorage.getItem('token') : null)
     const [currentUser, setCurrentUser] = useState<UserData |undefined>();
     const [isLogged, setIsLogged] = useState(false);
     const[userId, setUserId] = useState("")
@@ -74,12 +74,23 @@ export function useAuth() {
      */
     const disconnect = () => {
        setToken(null);
+        localStorage.removeItem('autoLogin')
+        localStorage.removeItem('email')
+        localStorage.removeItem('email')
     };
     /**
      * lauch at the start to allow
      */
     const autoLogin = async () => {
-        await setToken(localStorage.getItem('token'));
+        const autoLogin = localStorage.getItem("autoLogin")
+        const email = localStorage.getItem("email")
+        const password = localStorage.getItem("email")
+
+        if(autoLogin && email && password ){
+            await signIn(email, password)
+        } else {
+            disconnect()
+        }
     };
 
    useEffect(() => {
@@ -108,6 +119,8 @@ export function useAuth() {
            setCurrentUser(undefined)
            setIsLogged(false)
            localStorage.removeItem('token');
+           localStorage.removeItem("email")
+           localStorage.removeItem("password")
            console.log('Storage ', localStorage.getItem('token'))
        }
        })();

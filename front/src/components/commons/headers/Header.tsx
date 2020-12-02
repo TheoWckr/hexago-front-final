@@ -35,9 +35,12 @@ const Header = () => {
         history.push("/");
     };
     const triggerGif= () => {
-        if(!isAnimate)
+        if(!isAnimate) {
             setAnimate(true)
-        setTimeout(() => {  setAnimate(false)}, 2000);
+            setTimeout(() => {
+                setAnimate(false)
+            }, 2000);
+        }
     }
     return (
         <AppBar className={classes.background} position="static" elevation={0}>
