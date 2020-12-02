@@ -5,22 +5,8 @@ import GameCard from "./gameCard";
 import {GameModel} from "../../../models/gameModel";
 
 const useStyles = makeStyles({
-    root: {
-        minWidth: 275,
-        marginBottom: 12
-    },
-    title: {
-        fontSize: 25,
-        fontWeight: 600
-    },
     grid: {
-        marginTop: 12
-    },
-    pos: {
-        marginBottom: 12,
-    },
-    media: {
-        height: 300
+        marginTop: 12,
     }
 });
 

@@ -1,5 +1,5 @@
 import React from "react";
-import {Typography, Grid, Button, Container} from "@material-ui/core";
+import {Typography, Grid, Button, Container, Paper} from "@material-ui/core";
 import {About} from "./about";
 import {makeStyles} from "@material-ui/core/styles";
 import {EventCity} from "./eventCity";
@@ -8,8 +8,8 @@ import './home.css';
 const useStyles = makeStyles({
     text: {
         textAlign: 'center',
-        fontSize: '1.5rem',
-        padding: '3rem 0'
+        fontSize: '1.3rem',
+        padding: '1rem 0'
     },
 });
 
@@ -20,17 +20,20 @@ export const Home = () => {
         <div className={'remainHeight'}>
             <About/>
             <EventCity/>
-            <Container>
+            <Paper elevation={3}>
                 <Typography className={classes.text}>
-                    Hexago est un site de mise en relation de joueurs amateurs et passionnés. Choississez un jeu, une
-                    ville
-                    et une date, et laissez vous guider par l'applications. Les évènements peuvent se reproduire dans
-                    des
-                    lieux publics (dans un bar) ou privés (chez un particulier). Le service est exclusivement accessible
-                    aux
-                    personnes majeures.
+                    Hexago est un site de mise en relation de joueurs amateurs et passionnés.
                 </Typography>
-            </Container>
+                <Typography className={classes.text}>Choisissez un jeu, une
+                    ville et une date, et laissez vous guider par l'application.
+                </Typography>
+                <Typography className={classes.text}>Les évènements peuvent se produire dans
+                    des lieux publics (dans un bar) ou privés (chez un particulier).
+                </Typography>
+                <Typography className={classes.text}> Le service est exclusivement accessible
+                    aux personnes majeures.
+                </Typography>
+            </Paper>
         </div>
     )
 };

@@ -14,13 +14,12 @@ import {GenreCRUDPage} from "./components/genre/page/genreCRUDPage";
 import {LoginPage} from "./components/user/login/loginPage";
 import {RegisterPage} from "./components/user/register/registerPage";
 import {AuthContext, useAuth} from './services/hooks/useAuth';
-import EventListPage from "./components/event/list/eventListPage";
 import EventCreatePage from "./components/event/create/eventCreatePage";
 import EventUpdatePage from "./components/event/update/eventUpdatePage";
 import {ChatComponent} from './components/chat/ChatComponent';
 import {Home} from "./components/home/home";
-import EventSearchPanel from "./components/event/search/eventSearchPanel";
 import EventDisplayPageLoader from "./components/event/display/EventDisplayPageLoader";
+import EventSearchPage from "./components/event/search/eventSearchPage";
 
 const socketIOClient = require('socket.io-client');
 
@@ -59,7 +58,7 @@ const App = (props: { location: any }) => {
                             <GenreCRUDPage/>
                         </Route>
                         <Route exact path="/event">
-                            <EventListPage/>
+                            <EventSearchPage/>
                         </Route>
                         <Route path="/event/create">
                             <EventCreatePage/>
@@ -71,7 +70,7 @@ const App = (props: { location: any }) => {
                             <EventDisplayPageLoader/>
                         </Route>
                         <Route path="/event/search">
-                            <EventSearchPanel/>
+                            <EventSearchPage/>
                         </Route>
                         <Route path="/login">
                             <LoginPage/>

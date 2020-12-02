@@ -7,12 +7,6 @@ import {AxiosResponse} from "axios";
 import GameSearchProps from "../../../models/game/gameSearch";
 import {useEffect, useState} from "react";
 
-type PageState = {
-    page: number,
-    numberGame: number,
-    detail: GameModel[]
-}
-
 const ListPagination = (props : { search : GameSearchProps}) =>  {
 
     const [page, setPage] = useState(0)

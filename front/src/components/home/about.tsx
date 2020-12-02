@@ -5,7 +5,7 @@ import {Container} from "@material-ui/core";
 
 const useStyles = makeStyles({
     root: {
-        height: '100%',
+        height: '39em',
         background: `url(${img}) no-repeat`,
         backgroundSize: "cover",
     },

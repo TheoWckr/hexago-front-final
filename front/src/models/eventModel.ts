@@ -8,7 +8,7 @@ export class EventModel {
     playerMin = 2;
     playerMax = 4;
     phoneNumber ="";
-    games = new Array<String>();
+    listGames = new Array<GameModel>();
     listPlayers= new Array<String>();
     owner = "";
 }
@@ -22,6 +22,15 @@ export interface EventCreateForm{
     phoneNumber:string,
     games: string [],
     detail: string,
+}
+
+export interface EventCardModel {
+    date: Date,
+    listGames: { _id: string, name: string }[],
+    listPlayers: number,
+    locationId: string,
+    maxPlayers: number,
+    owner: { _id: string, username: string }
 }
 
 export class eventModel {

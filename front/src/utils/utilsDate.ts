@@ -1,8 +1,19 @@
 import {MaterialUiPickersDate} from "@material-ui/pickers/typings/date";
 
 export const UtilsDate = {
-    toDisplay(date : string) : string {
-        return Intl.DateTimeFormat('fr-FR').format( new Date(date));
+
+    toDisplay(date : string | Date) : string {
+        if (typeof date === 'string')
+        return Intl.DateTimeFormat('fr-FR').format( new Date (date));
+        else
+            return Intl.DateTimeFormat('fr-FR').format( date);
+    },
+    toDisplayWithTime(date : string |Date ) : string {
+        if (typeof date === 'string'){
+            const tempDate = new Date(date)
+            return this.toDisplay(tempDate)+` à ${tempDate.getHours()}:${tempDate.getMinutes()} `
+        } else
+            return this.toDisplay(date)+` à ${date.getHours()}:${date.getMinutes()} `
     },
     toStringFromMUIDateFormat(date : MaterialUiPickersDate) : string{
         if(date) {

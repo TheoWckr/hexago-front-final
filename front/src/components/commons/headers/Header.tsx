@@ -38,7 +38,7 @@ const Header = () => {
         <AppBar className={classes.background} position="static" elevation={0}>
             <Toolbar>
                 <Typography variant="h6" className={[classes.title, "App-title"].join(' ')}>
-                    <span className="App-title">HexaGo</span>
+                    <span className="App-title" onClick={()=>  history.push("/")}>HexaGo</span>
                 </Typography>
                 <IconButton
                     aria-label="menu"

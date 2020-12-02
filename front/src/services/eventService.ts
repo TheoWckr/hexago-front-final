@@ -1,6 +1,7 @@
 import {axios, MAIN_ADRESS} from "../utils/utilsAxios";
 import {AxiosPromise} from "axios";
 import {createEventForm, searchEvent} from "../models/service/eventServiceType";
+import {EventSearchProps} from "../components/event/search/eventSearchPage";
 
 
 const routeName = MAIN_ADRESS+'event/';
@@ -24,22 +25,20 @@ export const EventService = {
         return axios.get(routeName+'searchid/'+id, header);
     },
 
-    searchEvent(params : searchEvent){
+    searchEvent(params : EventSearchProps){
         let paramsString ='?'
         console.log("params : " ,params)
         if(params.date)  paramsString +=`date=${params.date}&`
         if(params.listGames)  paramsString +=`listGames=${params.listGames.toString().replace('[','').replace(']','')}&`
-        if(params.locationId) paramsString +=`locationId=${params.locationId}&`
-        if(params.limit) paramsString +=`limit=${params.limit}&`
-        else paramsString +=`limit=5&`
-        if(params.offset) paramsString +=`offset=${params.offset}&`
-        else paramsString +=`offset=0`
+        if(params.localisation) paramsString +=`locationId=${params.localisation}&`
+        paramsString +=`limit=10&`
+
+        paramsString +=`offset=0&`
         const header = {
             headers: {
                 token: localStorage.getItem("token")
             }
         };
-        console.log("header :", header);
         return axios.get(routeName+'/searchlist'+paramsString, header);
     },
 
