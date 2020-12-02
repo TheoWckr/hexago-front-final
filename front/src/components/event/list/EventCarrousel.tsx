@@ -24,7 +24,6 @@ const responsive = {
 
 const EventCarrousel = (props: { events: EventCardModel[] }) => {
 
-    if(props.events.length >0) {
         return (<Carousel
             ssr
             partialVisbile
@@ -34,11 +33,10 @@ const EventCarrousel = (props: { events: EventCardModel[] }) => {
         >
             {props.events.map(event => {
                 return (
-                    <EventCard event={event}/>
+                    <EventCard event={event} key={event._id}/>
                 );
             })}
         </Carousel>)
-    }
-    else return(<div></div>)
+
 }
 export default EventCarrousel

@@ -258,7 +258,8 @@ router.get('/searchlist', auth, async (req, res, next) => {
                     maxPlayers: content[current].maxPlayers,
                     locationId: content[current].locationId,
                     owner: content[current].owner,
-                    date: content[current].date
+                    date: content[current].date,
+                    _id: content[current]._id
                 });
                 console.log(data);
             }

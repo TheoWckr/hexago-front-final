@@ -31,6 +31,7 @@ export interface EventCardModel {
     locationId: string,
     maxPlayers: number,
     owner: { _id: string, username: string }
+    _id: string
 }
 
 export class eventModel {

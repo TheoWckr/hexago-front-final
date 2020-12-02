@@ -19,16 +19,11 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 const EventCardList = (props: { events: EventCardModel[] }) => {
     const classes = useStyles();
-
-    if (props.events.length == 0) {
-        return (<div className={classes.root}>
-            <Paper elevation={3}>
-                <p className={classes.text}> Pas de liste à afficher </p>
-            </Paper>
-        </div>)
-    } else
         return (<Grid container spacing={4} className={classes.root}>
-            {props.events.map(event => <Grid item xs={4}><EventCard event={event}/></Grid>)}
+            {props.events.map(event => <Grid item xs={4} key={event._id}><EventCard event={event}/></Grid>)}
+            {props.events.length == 0 && (<Paper elevation={3}>
+                <p className={classes.text}> Pas de liste à afficher </p>
+            </Paper>)}
         </Grid>)
 }
 export default EventCardList;

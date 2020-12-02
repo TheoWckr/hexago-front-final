@@ -38,13 +38,13 @@ const useStyles = makeStyles(() =>
 );
 const EventCard = (props:{event : EventCardModel}) => {
     const classes = useStyles();
-    const renderGames = props.event.listGames.map((game : any) =>
+    const renderGames = props.event.listGames.map((game : { _id: string, name: string }) =>
         (
-                <Chip variant="outlined"      className={classes.card_games} color="secondary"
+                <Chip variant="outlined"   key={game._id}   className={classes.card_games} color="secondary"
                       label={game.name}/>
         ));
     return (
-        <Paper  elevation={3}  className={classes.event_card}>
+        <Paper  elevation={3}  className={classes.event_card} >
             <Typography variant={"h5"} align={"center"}> {UtilsDate.toDisplayWithTime(props.event.date)}</Typography>
             <Typography align={"center"}> {props.event.locationId }</Typography>
             <Grid container justify="center">
