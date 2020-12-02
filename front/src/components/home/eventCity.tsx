@@ -24,6 +24,11 @@ export const EventCity = () => {
             listGames:[]
         } )
     }
+    const handleKeyPress = (e: any) => {
+        if (e.keyCode === 13 || e.which === 13) {
+           changeLocation()
+        }
+    };
     return (
         <div>
             <AppBar position={'static'} className={classes.root}>
@@ -36,7 +41,7 @@ export const EventCity = () => {
                         </Grid>
                         <Grid item xs={12} sm={12} md={6} className="wrap">
                             <div className="search">
-                                <input type="text" className="searchTerm" onChange={event => setValue(event.target.value)}/>
+                                <input type="text" className="searchTerm" onKeyPress={(e) => handleKeyPress(e)}  onChange={event => setValue(event.target.value)}/>
                                 <button className="searchButton"  onClick={changeLocation}>
                                     <SearchOutlinedIcon />
                                 </button>
