@@ -19,7 +19,7 @@ export const Home = () => {
     return (
         <div className={'remainHeight'}>
             <About/>
-            <EventCity/>
+            <EventCity />
             <Paper elevation={3}>
                 <Typography className={classes.text}>
                     Hexago est un site de mise en relation de joueurs amateurs et passionnés.

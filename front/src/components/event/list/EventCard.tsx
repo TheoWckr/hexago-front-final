@@ -1,10 +1,13 @@
 import {EventCardModel} from "../../../models/eventModel";
-import {Box, Grid, Paper, Typography} from "@material-ui/core";
+import {Box, CardContent, Grid, Paper, Typography} from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
 import React from "react";
 import Chip from "@material-ui/core/Chip";
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 import {UtilsDate} from "../../../utils/utilsDate";
+import {useHistory} from "react-router";
+import Card from "@material-ui/core/Card";
+import CardActionArea from "@material-ui/core/CardActionArea";
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -12,12 +15,14 @@ const useStyles = makeStyles(() =>
             //border: '1px solid grey',
             backgroundColor: "#FFFFFF",
             borderRadius: '10px',
-            padding: '1em 1.5em',
-            margin:'1em 1.5em'
+            margin:'5em 2em'
+        },
+        event_card_action: {
+            padding: '1em 2em',
         },
         card_author: {
             alignSelf: "center",
-            marginLeft: '0.5em',
+            margin:'1em'
         },
         card_affiche_title: {
             marginTop: '0px',
@@ -38,23 +43,28 @@ const useStyles = makeStyles(() =>
 );
 const EventCard = (props:{event : EventCardModel}) => {
     const classes = useStyles();
+    const history = useHistory();
     const renderGames = props.event.listGames.map((game : { _id: string, name: string }) =>
         (
-                <Chip variant="outlined"   key={game._id}   className={classes.card_games} color="secondary"
-                      label={game.name}/>
+                <Chip variant="outlined"  clickable={true}  key={game._id}   className={classes.card_games} color="secondary"
+                      label={game.name}  onClick={() => history.push('/gamedisplay/' +game._id)} />
+
         ));
     return (
-        <Paper  elevation={3}  className={classes.event_card} >
+        <Card elevation={3}  className={classes.event_card} >
+            <CardActionArea className={classes.event_card_action} onClickCapture={() => history.push('/event/display/' + props.event._id)}>
             <Typography variant={"h5"} align={"center"}> {UtilsDate.toDisplayWithTime(props.event.date)}</Typography>
             <Typography align={"center"}> {props.event.locationId }</Typography>
+            </CardActionArea>
+
+
             <Grid container justify="center">
             {renderGames}
             </Grid>
-            <Grid container justify="center">
+            <Grid container justify="center" className={classes.card_author}>
                 <Box component="div" display="inline">Hébergé par {props.event.owner.username} <Avatar src="/broken-image.jpg" /></Box>
             </Grid>
-
-        </Paper>
+        </Card>
     );
 }
 

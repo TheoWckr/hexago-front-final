@@ -11,7 +11,7 @@ export const UtilsDate = {
     toDisplayWithTime(date : string |Date ) : string {
         if (typeof date === 'string'){
             const tempDate = new Date(date)
-            return this.toDisplay(tempDate)+` à ${tempDate.getHours()}:${tempDate.getMinutes()} `
+            return this.toDisplay(tempDate)+` à ${tempDate.getHours()}h${tempDate.getMinutes() > 10 ? tempDate.getMinutes() : "0"+tempDate.getMinutes() } `
         } else
             return this.toDisplay(date)+` à ${date.getHours()}:${date.getMinutes()} `
     },

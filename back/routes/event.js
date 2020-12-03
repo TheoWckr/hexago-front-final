@@ -202,7 +202,7 @@ router.post('/create', auth, async (req, res, next) => {
 }
  */
 
-router.get('/searchlist', auth, async (req, res, next) => {
+router.get('/searchlist', async (req, res, next) => {
     let data= {};
     let query= {};
     let offset= 0;

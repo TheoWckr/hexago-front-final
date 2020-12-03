@@ -1,5 +1,5 @@
 import {EventSearchProps} from "./eventSearchPage";
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useLayoutEffect, useState} from "react";
 
 import {EventCardModel} from "../../../models/eventModel";
 import EventCardList from "../list/EventCardList";
@@ -7,7 +7,8 @@ import {EventService} from "../../../services/eventService";
 
 const EventSearchListLoader = (props : {search : EventSearchProps}) => {
     const [events, setEvents] = useState<EventCardModel[]>([])
-    useEffect(() =>{
+
+    useLayoutEffect (() =>{
         (async function anyNameFunction() {
             await EventService.searchEvent(props.search)
                 .catch((reason: any) => console.log("Error", reason))
@@ -17,6 +18,7 @@ const EventSearchListLoader = (props : {search : EventSearchProps}) => {
                     }
                 })
         })();
+        console.log("passage")
     }, [props.search])
 
     return(<EventCardList events={events} />)

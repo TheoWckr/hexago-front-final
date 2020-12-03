@@ -31,6 +31,7 @@ export function useAuth() {
        return UserService.login({
             email : email,
             password: password}).then(result => {
+                console.log("signInOk")
                 if(result){
                setToken(result.data.token)
                 }

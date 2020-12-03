@@ -28,8 +28,8 @@ export const EventCity = () => {
         }
     };
     return (
-        <div>
-            <AppBar position={'static'} className={classes.root}>
+        <div >
+            <AppBar position={'static'} className={classes.root} >
                 <Toolbar>
                     <Grid container>
                         <Grid item xs={12} sm={12} md={6} className="wrap">

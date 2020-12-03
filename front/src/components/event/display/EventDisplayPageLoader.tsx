@@ -13,19 +13,23 @@ const EventDisplayPageLoader = () => {
      */
     useEffect(() => {
             (async function anyNameFunction() {
-                await EventService.getEvent(id)
-                    .catch(reason => console.log("Error", reason))
-                    .then(value => {
-                        if (value)
-                            setEvent(value.data.content)
-                        console.log("getEvent", event)
-                    })
+             await refresh();
             })();
         }
         , [])
 
+    const refresh = async () => {
+        await EventService.getEvent(id)
+            .catch(reason => console.log("Error", reason))
+            .then(value => {
+                if (value)
+                    setEvent(value.data.content)
+                console.log("getEvent", event)
+            })
+    }
+
     if(event){
-    return (<EventDisplayPage event={event} />)
+    return (<EventDisplayPage event={event} refresh={refresh} />)
     }
     else return (<div>Il n'y a pas de page ici </div>)
 };

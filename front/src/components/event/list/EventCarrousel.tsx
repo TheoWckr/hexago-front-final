@@ -24,9 +24,10 @@ const responsive = {
 
 const EventCarrousel = (props: { events: EventCardModel[] }) => {
 
-        return (<Carousel
+        return (
+            <Carousel
+
             ssr
-            partialVisbile
             itemClass="image-item"
             responsive={responsive}
             transitionDuration={1000}
@@ -36,7 +37,7 @@ const EventCarrousel = (props: { events: EventCardModel[] }) => {
                     <EventCard event={event} key={event._id}/>
                 );
             })}
-        </Carousel>)
+            </Carousel>)
 
 }
 export default EventCarrousel

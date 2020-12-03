@@ -19,7 +19,7 @@ export interface EventSearchProps {
 
 export const eventSearchPropsDefault: EventSearchProps = {
     date: undefined,
-    localisation: "",
+    localisation: undefined,
     listGames: []
 }
 

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useLayoutEffect, useState} from 'react';
 import './App.css';
 import Header from "./components/commons/headers/Header";
 import {TransitionGroup, CSSTransition} from "react-transition-group";
@@ -25,18 +25,26 @@ const socketIOClient = require('socket.io-client');
 
 const App = (props: { location: any }) => {
     const {isLogged, signIn, token, disconnect, userId} = useAuth();
-
+    const[previousValueLocation, setPreviousValueLocation]  =useState("")
     useEffect(() => {
         console.log("test")
         const socket = socketIOClient("http://localhost:3100");
 
     }, [])
+    useEffect(() => {
+       setPreviousValueLocation(props.location.pathname)
+    }, [props.location])
+    const shouldRefresh = () :boolean => {
+        console.log("rerender", props.location.pathname)
+        return props.location.pathname != previousValueLocation
+    }
+
 
     return (
         <AuthContext.Provider value={{isLogged, signIn, token, disconnect, userId}}>
             <Header/>
-            <TransitionGroup id={'fullHeight'}>
-                <CSSTransition key={props.location.key} classNames="fade" timeout={{
+            <TransitionGroup appear={ shouldRefresh()} enter={shouldRefresh()} exit={shouldRefresh()}>
+                <CSSTransition  key={props.location.key} classNames="fade" timeout={{
                     appear: 1800,
                     enter: 500,
                     exit: 300

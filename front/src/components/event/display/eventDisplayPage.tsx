@@ -7,6 +7,9 @@ import EventDisplayType from "../../../models/event/eventDisplayType";
 import {EventService} from "../../../services/eventService";
 import {AuthContext} from "../../../services/hooks/useAuth";
 import {AxiosResponse} from "axios";
+import {UtilsDate} from "../../../utils/utilsDate";
+import {useHistory} from "react-router";
+import Chip from "@material-ui/core/Chip";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -35,33 +38,31 @@ const useStyles = makeStyles((theme: Theme) =>
         }
     }),
 );
-//TODO changer l'affichage de la date
-const EventDisplayPage = (props : {event : EventDisplayType}) => {
+const EventDisplayPage = (props : {event : EventDisplayType, refresh: () => void}) => {
     const {userId} = useContext(AuthContext)
-    const[event, ] = useState(props.event)
     const [displaySubscribeButton, setDisplaySubscribeButton] = useState(false);
     const [displayUnsubscribeButton, setDisplayUnsubscribeButton] = useState(false);
-
+    const history = useHistory()
     //Use Effect de gestion de l'affichage des boutons subscribe et unsubscribe
     useEffect(() => {
         console.log("Intro")
         let subButton = true
         let unsubButton = true
-        if(event.listPlayers.includes(userId)){
+        if(props.event.listPlayers.includes(userId)){
             subButton = false
         } else {
             unsubButton = false
         }
-        if(event.currentPlayers === event.maxPlayers) {
+        if(props.event.currentPlayers === props.event.maxPlayers) {
             subButton = false
         }
-        if(event.owner._id === userId) {
+        if(props.event.owner._id === userId) {
             subButton = false
             unsubButton = false
         }
         setDisplaySubscribeButton(subButton)
         setDisplayUnsubscribeButton(unsubButton)
-    },[event])
+    },[props.event])
 
     const subscribe = async () => {
         await EventService.subscribeEvent(props.event._id)
@@ -72,13 +73,13 @@ const EventDisplayPage = (props : {event : EventDisplayType}) => {
             })
             .then(((value: AxiosResponse<any> ) => {
                 if(value){
-                    console.log(value.data.content)
+                    props.refresh()
         }}))
     }
     const unsubscribe = async () => {
         await EventService.unSubscribeEvent(props.event._id, userId)
             .catch((reason: any) => console.log('errorUnSubscribe', reason))
-            .then(((value: any) => console.log("unsubscribe ; ", value)))
+            .then(((value: any) => props.refresh()))
     }
     const classe = useStyles();
         return (
@@ -87,36 +88,36 @@ const EventDisplayPage = (props : {event : EventDisplayType}) => {
                     <div className="box-detail">
                         <Grid container>
                             <Grid item xs={12} className="title-detail">
-                                <Typography className={'bold'}>Le {new Date(event.date).toLocaleDateString()} à {new Date(event.date).toLocaleTimeString()} </Typography>
+                                <Typography className={'bold'}>{UtilsDate.toDisplayWithTime(props.event.date)} </Typography>
                             </Grid>
                             <Grid item xs={12}>
                                 <Typography className={'title'}>A l'affiche:</Typography>
-                                {event.listGames.map((item: {_id : string, name : string}) =>
-                                    <Button variant="outlined" color="primary">
+                                {props.event.listGames.map((item: {_id : string, name : string}) =>
+                                    <Button variant="outlined" color="primary"  onClick={() => history.push('/gamedisplay/' +item._id)}>
                                         {item.name}
                                     </Button>
                                 )}
                             </Grid>
                             <Grid item xs={12} className={'inline'}>
                                 <Typography className={'title'}>Durée de l'évènement: </Typography>
-                                <Typography className={'bold-text'}>{event.duration} minutes</Typography>
+                                <Typography className={'bold-text'}>{props.event.duration} minutes</Typography>
                             </Grid>
                             <Grid item xs={12} className={'inline'}>
                                 <Typography className={'title'}>Nombre de participants: </Typography>
-                                <Typography className={'bold-text'}>{event.currentPlayers}/{event.maxPlayers}</Typography>
+                                <Typography className={'bold-text'}>{props.event.currentPlayers}/{props.event.maxPlayers}</Typography>
                             </Grid>
                             <Grid item xs={12} className={'inline'}>
                                 <Typography className={'title'}>
                                     Créé par:
                                 </Typography>
                                 <div className={'inline-nospace'}>
-                                    <Typography className={'bold-text'}>{event.owner.username}</Typography>
+                                    <Typography className={'bold-text'}>{props.event.owner.username}</Typography>
                                     <Avatar alt="user"
                                             src="https://placekitten.com/300/200"/>
                                 </div>
                             </Grid>
                             <Grid item xs={12}>
-                                <Typography>{event.details}</Typography>
+                                <Typography>{props.event.details}</Typography>
                             </Grid>
                         </Grid>
                     </div>

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useLayoutEffect, useState} from "react";
 import {EventSearchProps} from "./eventSearchPage";
 import {Grid} from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
