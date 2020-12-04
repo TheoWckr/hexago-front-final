@@ -10,6 +10,8 @@ import {AxiosResponse} from "axios";
 import {UtilsDate} from "../../../utils/utilsDate";
 import {useHistory} from "react-router";
 import Chip from "@material-ui/core/Chip";
+import {Call} from "@material-ui/icons";
+import CallToAction from "../../home/callToAction";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -56,7 +58,7 @@ const EventDisplayPage = (props : {event : EventDisplayType, refresh: () => void
         if(props.event.currentPlayers === props.event.maxPlayers) {
             subButton = false
         }
-        if(props.event.owner._id === userId) {
+        if(!userId || userId.length ==0 || props.event.owner._id === userId ) {
             subButton = false
             unsubButton = false
         }
@@ -92,9 +94,9 @@ const EventDisplayPage = (props : {event : EventDisplayType, refresh: () => void
                             </Grid>
                             <Grid item xs={12}>
                                 <Typography className={'title'}>A l'affiche:</Typography>
-                                {props.event.listGames.map((item: {_id : string, name : string}) =>
-                                    <Button variant="outlined" color="primary"  onClick={() => history.push('/gamedisplay/' +item._id)}>
-                                        {item.name}
+                                {props.event.listGames.map((item: {_id : string, name : string, img?:{url:string}}) =>
+                                    <Button variant="outlined" color="primary"  style={{margin:"0.5em 1em"}} onClick={() => history.push('/gamedisplay/' +item._id)}>
+                                     <Avatar src={item.img?.url} style={{height:"1.2em",width:"1.2em"}} /> {item.name}
                                     </Button>
                                 )}
                             </Grid>
@@ -132,6 +134,7 @@ const EventDisplayPage = (props : {event : EventDisplayType, refresh: () => void
                     </div>
                 </Grid>
                 <Grid item xs={12} className="box-button">
+                    {(!userId || userId.length ==0) && <CallToAction />}
                     {   displaySubscribeButton && <Button variant="outlined" className={classe.btn} onClick={subscribe} >Participer à l'évènement</Button>}
                     {displayUnsubscribeButton &&<Button variant="outlined" className={classe.btnCancel} onClick={unsubscribe} >Annuler ma participation </Button>}
 

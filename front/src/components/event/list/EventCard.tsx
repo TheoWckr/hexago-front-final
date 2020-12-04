@@ -9,7 +9,7 @@ import {useHistory} from "react-router";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 
-const useStyles = makeStyles(() =>
+const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         event_card: {
             //border: '1px solid grey',
@@ -39,14 +39,18 @@ const useStyles = makeStyles(() =>
             flex:"auto",
             justifyContent:"space-around",
         },
+        small: {
+            width: theme.spacing(3),
+            height: theme.spacing(3),
+        },
     })
 );
 const EventCard = (props:{event : EventCardModel}) => {
     const classes = useStyles();
     const history = useHistory();
-    const renderGames = props.event.listGames.map((game : { _id: string, name: string }) =>
+    const renderGames = props.event.listGames.map((game : { _id: string, name: string, img? : {url:string }}) =>
         (
-                <Chip variant="outlined"  clickable={true}  key={game._id}   className={classes.card_games} color="secondary"
+                <Chip variant="outlined" avatar={<Avatar src={game.img?.url} />}  clickable={true}  key={game._id}  className={classes.card_games} color="secondary"
                       label={game.name}  onClick={() => history.push('/gamedisplay/' +game._id)} />
 
         ));

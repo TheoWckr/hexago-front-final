@@ -2,8 +2,7 @@ import React, {useContext} from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import img from '../../assets/home.jpg';
 import {Container} from "@material-ui/core";
-import {AuthContext, useAuth} from "../../services/hooks/useAuth";
-import {useHistory} from "react-router";
+import CallToAction from "./callToAction";
 
 const useStyles = makeStyles({
     root: {
@@ -31,12 +30,7 @@ const useStyles = makeStyles({
 
 export const About = () => {
     const classes = useStyles();
-    const {isLogged} = useContext(AuthContext)
-    const history = useHistory()
-    const call_to_action = () => {
-        if(isLogged){history.push('/event/search')}
-        else{history.push('/register')}
-    }
+
     return (
         <div className={classes.root}>
             <div className={classes.overlay}>
@@ -46,9 +40,7 @@ export const About = () => {
                         découverte.
                         Jouer
                         où vous le souhaitez, en compagnie de joueurs intéressés.</h2>
-                    <button className={'callToActionBtn'} onClick={call_to_action}>
-                        Je participe <span>&rarr;</span>
-                    </button>
+                        <CallToAction />
                         <button className={'goDownBtn'} >
                         <span>&darr;</span>
                     </button>

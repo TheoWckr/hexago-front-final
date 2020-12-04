@@ -26,7 +26,7 @@ export interface EventCreateForm{
 
 export interface EventCardModel {
     date: Date,
-    listGames: { _id: string, name: string }[],
+    listGames: { _id: string, name: string , img?:{url :string}}[],
     listPlayers: number,
     locationId: string,
     maxPlayers: number,

@@ -234,7 +234,7 @@ router.get('/searchlist', async (req, res, next) => {
             data['maxPlayers']= { '$ne': this.listPlayers.length};
         }
     }
-    query= Event.find(data).populate('owner', 'username').populate('listGames', 'name').select('listGames date owner maxPlayers locationId listPlayers');
+    query= Event.find(data).populate('owner', 'username').populate('listGames', 'name img').select('listGames  date owner maxPlayers locationId listPlayers');
 
 
     //pagination handling
@@ -309,7 +309,7 @@ router.get('/searchlist', async (req, res, next) => {
     }
 }
  */
-router.get('/searchid/:id', auth, function (req, res, next) {
+router.get('/searchid/:id', function (req, res, next) {
     // find a game by it id
     if (req.params.id.length !== 24) {
         res.json({
@@ -317,7 +317,7 @@ router.get('/searchid/:id', auth, function (req, res, next) {
         })
     } else {
         Event.findById(
-            req.params.id).populate('owner', 'username').populate('listGames', 'name').exec((err, content) => {
+            req.params.id).populate('owner', 'username').populate('listGames', 'name img').exec((err, content) => {
             if (err) res.json({
                 err: err
             });

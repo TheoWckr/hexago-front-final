@@ -1,8 +1,14 @@
 import React, {Dispatch, SetStateAction} from "react";
 import {Autocomplete} from "@material-ui/lab";
 import TextField from "@material-ui/core/TextField";
+import {Avatar, Typography} from "@material-ui/core";
 
-const QuickSearchMultiple = (props:{listOfChoices : string[],
+export interface QSLabelChoicesWithImg {
+    _id: string;
+    label: string;
+    url?: string;
+}
+const QuickSearchMultiple = (props:{listOfChoices : QSLabelChoicesWithImg[],
                            setChoices : Dispatch<SetStateAction<string[]>>, label?: string} ) =>
 {
     return (
@@ -12,13 +18,21 @@ const QuickSearchMultiple = (props:{listOfChoices : string[],
             multiple
             disableCloseOnSelect
             limitTags={1}
-            onChange={(event: any, value: string[] | null) => {
-                if(value) props.setChoices(value)
+            onChange={(event: any, value: QSLabelChoicesWithImg[] | null) => {
+                if(value) props.setChoices(value.map((val)=> val._id))
                 else props.setChoices([])
             }}
-            getOptionLabel={(option) => option}
+            getOptionLabel={(option) => option.label}
+            renderOption={(option =>
+                    <React.Fragment>
+                        {(option.url && <Avatar src={option.url}/> )}
+                        <Typography > {option.label? option.label : "Sélection"}</Typography>
+                    </React.Fragment>
+            )}
             style={{ width: 400}}
-            renderInput={(params) => <TextField {...params}  label={props.label? props.label : "Sélection"} variant="outlined" />}
+            renderInput={(params) =>
+                    <TextField {...params}  label={props.label? props.label : "Sélection"} variant="outlined" />
+                }
         />
     );
 }
