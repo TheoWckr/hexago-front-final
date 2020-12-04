@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme: Theme) =>
             //border: '1px solid grey',
             backgroundColor: "#FFFFFF",
             borderRadius: '10px',
-            margin:'5em 2em'
+            margin:'3em 1.5em'
         },
         event_card_action: {
             padding: '1em 2em',

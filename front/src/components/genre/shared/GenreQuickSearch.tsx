@@ -32,7 +32,7 @@ const GenreQuickSearch = (props : {
     useEffect(() => {
         const listGenre: GenreModel[] = [];
         genreStock.forEach((genre : GenreModel) => {
-            if(chosenGenres.includes(genre.genre))
+            if(chosenGenres.includes(genre._id))
                 if(genre._id)
                     listGenre.push(genre)
         });

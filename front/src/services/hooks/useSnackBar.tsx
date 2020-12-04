@@ -1,12 +1,18 @@
-import {useState} from "react";
+import {createContext, useState} from "react";
 import React from "react";
 import {IconButton, Snackbar} from "@material-ui/core";
 import CloseIcon from '@material-ui/icons/Close';
 
+export interface SnackContextType {
+    openSnack:(input : string) => void
+}
+export const SnackContext =  createContext<SnackContextType>({
+    openSnack : input => {}
+});
 
 export function useSnack(messageProvided? : string) {
     const [open,setOpen] = useState(false);
-    const [message,setMessage] = useState(messageProvided);
+    const [message,setMessage] = useState(messageProvided? messageProvided :"");
 
     const openSnack = (messageProvided? : string) => {
         if(messageProvided)
@@ -28,7 +34,7 @@ export function useSnack(messageProvided? : string) {
                 <Snackbar
                     anchorOrigin={{
                         vertical: 'bottom',
-                        horizontal: 'left',
+                        horizontal: 'center',
                     }}
                     open={open}
                     autoHideDuration={4000}

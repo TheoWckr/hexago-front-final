@@ -20,11 +20,14 @@ import {ChatComponent} from './components/chat/ChatComponent';
 import {Home} from "./components/home/home";
 import EventDisplayPageLoader from "./components/event/display/EventDisplayPageLoader";
 import EventSearchPage from "./components/event/search/eventSearchPage";
+import {SnackContext, useSnack} from "./services/hooks/useSnackBar";
 
 const socketIOClient = require('socket.io-client');
 
 const App = (props: { location: any }) => {
     const {isLogged, signIn, token, disconnect, userId} = useAuth();
+    const {   openSnack,snack} = useSnack("");
+
     const[previousValueLocation, setPreviousValueLocation]  =useState("")
     useEffect(() => {
         console.log("test")
@@ -42,6 +45,7 @@ const App = (props: { location: any }) => {
 
     return (
         <AuthContext.Provider value={{isLogged, signIn, token, disconnect, userId}}>
+            <SnackContext.Provider value={{openSnack}} >
             <Header/>
             <TransitionGroup appear={ shouldRefresh()} enter={shouldRefresh()} exit={shouldRefresh()}>
                 <CSSTransition  key={props.location.key} classNames="fade" timeout={{
@@ -92,6 +96,8 @@ const App = (props: { location: any }) => {
                     </Switch>
                 </CSSTransition>
             </TransitionGroup>
+                {snack()}
+            </SnackContext.Provider>
         </AuthContext.Provider>
     );
 };

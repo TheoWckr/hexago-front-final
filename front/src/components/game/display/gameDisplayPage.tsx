@@ -14,6 +14,7 @@ import GameDuration from "../shared/GameDuration";
 import GameAgeMin from "../shared/GameAgeMin";
 import GameExtentionDisplay from "../shared/GameExtentionDisplay";
 import CardMedia from "@material-ui/core/CardMedia";
+import EventSearchListLoader from "../../event/search/EventSearchListLoader";
 
 
 
@@ -115,6 +116,8 @@ const GameDisplayPage = () => {
                     <GameAgeMin minAge={gameState.minAge} />
                 </Grid>
                 <Grid item xs={12}> <GameExtentionDisplay id={gameState._id} /></Grid>
+                <Grid item xs={12}><Typography align={"center"} variant={"h4"}> Evenements autour de ce jeu</Typography> </Grid>
+                <Grid item xs={12}><EventSearchListLoader search={{listGames : [gameState._id!],localisation : ""}} /> </Grid>
             </Grid>
         </Box>
     );

@@ -10,7 +10,7 @@ import {useHistory} from "react-router";
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from "@material-ui/core/CircularProgress";
 import {AuthContext} from "../../../services/hooks/useAuth";
-import {useSnack} from "../../../services/hooks/useSnackBar";
+import {SnackContext, useSnack} from "../../../services/hooks/useSnackBar";
 import {CheckBox} from "@material-ui/icons";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -61,7 +61,7 @@ export const LoginForm = () => {
     const [autoLogin, setAutoLogin] = useState(!!localStorage.getItem("autoLogin"))
     const {signIn} = useContext(AuthContext);
     const history = useHistory();
-    const {snack,openSnack} = useSnack()
+    const {openSnack} = useContext(SnackContext)
 
     useEffect(() => {
         if (email.trim() && password.trim()) {
@@ -102,7 +102,6 @@ export const LoginForm = () => {
 
     return (
         <div className="loginContainer">
-            {snack()}
             <span className="userLogo"></span>
             <div className={classes.formContainer}>
                 <form noValidate autoComplete="off" className={classes.formBox}>
