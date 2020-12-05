@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import SwipeableViews from 'react-swipeable-views';
 import {makeStyles, Theme, useTheme} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -15,6 +15,7 @@ import {UtilsAxios} from "../../../utils/utilsAxios";
 import {useParams} from "react-router";
 import {FormContext, useForm} from "react-hook-form";
 import {Button, Grid, List, ListItem, ListItemText, Paper} from "@material-ui/core";
+import {SnackContext} from "../../../services/hooks/useSnackBar";
 
 export interface TabPanelProps {
     children?: React.ReactNode;
@@ -81,6 +82,7 @@ const  GameCreatePage = () => {
     const [errorMessages, setErrorMessage] = React.useState([] as string[]);
     const [gameState, setGameState] = React.useState(new GameModel({}));
     const [gameStatus, setGameStatus] = React.useState('');
+    const {openSnack} = useContext(SnackContext)
     const [file,setFile] = useState<File>(new File(new Array<BlobPart>(),""));
     const [urlPicture, setUrlPicture] = useState("")
     const {id} = useParams<{ id: string }>();
@@ -126,7 +128,8 @@ const  GameCreatePage = () => {
                 }
                 else {
                     console.log('Create', response);
-                    setGameStatus('Game successfully created');
+                    setGameStatus('Jeu crée');
+                    openSnack(gameState.name + " a été crée " )
                 }
             });
         }
@@ -136,7 +139,7 @@ const  GameCreatePage = () => {
         if (validation()) {
             GameService.updateGame(gameState).then((response: any) => {
                     console.log('On Update ', response);
-                    setGameStatus('Game successfully updated');
+                    openSnack(gameState.name + " a été supprimé " )
                 }
             )
         }
@@ -147,7 +150,7 @@ const  GameCreatePage = () => {
             GameService.deleteGame(gameState._id).then((response) => {
                 console.log(response);
                 setGameState(new GameModel());
-                setGameStatus('Game successfully deleted');
+                openSnack(gameState.name + " a été crée " )
             })
         }
     };

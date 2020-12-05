@@ -10,12 +10,14 @@ import DehazeRoundedIcon from '@material-ui/icons/DehazeRounded';
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import {AuthContext} from "../../../services/hooks/useAuth";
+import {SnackContext} from "../../../services/hooks/useSnackBar";
 
 const Header = () => {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const {isLogged, disconnect } = useContext(AuthContext);
+    const {openSnack} = useContext(SnackContext)
     const history = useHistory();
     const [isAnimate,setAnimate] = useState(false);
 
@@ -32,6 +34,7 @@ const Header = () => {
         disconnect();
         //Logique de rendu
         setAnchorEl(null);
+        openSnack("Vous êtes désormais déconnecté")
         history.push("/");
     };
     const triggerGif= () => {

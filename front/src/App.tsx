@@ -25,7 +25,7 @@ import {SnackContext, useSnack} from "./services/hooks/useSnackBar";
 const socketIOClient = require('socket.io-client');
 
 const App = (props: { location: any }) => {
-    const {isLogged, signIn, token, disconnect, userId} = useAuth();
+    const {isLogged, signIn, token, disconnect, userId, currentUser} = useAuth();
     const {   openSnack,snack} = useSnack("");
 
     const[previousValueLocation, setPreviousValueLocation]  =useState("")
@@ -38,13 +38,13 @@ const App = (props: { location: any }) => {
        setPreviousValueLocation(props.location.pathname)
     }, [props.location])
     const shouldRefresh = () :boolean => {
-        console.log("rerender", props.location.pathname)
         return props.location.pathname != previousValueLocation
     }
 
 
     return (
-        <AuthContext.Provider value={{isLogged, signIn, token, disconnect, userId}}>
+        // @ts-ignore
+        <AuthContext.Provider value={{isLogged, signIn, token, disconnect, userId,currentUser}}>
             <SnackContext.Provider value={{openSnack}} >
             <Header/>
             <TransitionGroup appear={ shouldRefresh()} enter={shouldRefresh()} exit={shouldRefresh()}>

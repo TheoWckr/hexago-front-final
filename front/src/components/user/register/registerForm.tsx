@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import './register.css';
 import {Grid} from "@material-ui/core";
 import TextField from '@material-ui/core/TextField';
@@ -8,7 +8,7 @@ import {KeyboardDatePicker} from "@material-ui/pickers";
 import {MaterialUiPickersDate} from "@material-ui/pickers/typings/date";
 
 import {UserService} from "../../../services/userService";
-import {useSnack} from "../../../services/hooks/useSnackBar";
+import {SnackContext, useSnack} from "../../../services/hooks/useSnackBar";
 import {useHistory} from "react-router";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -59,7 +59,7 @@ export const RegisterForm = () => {
     const [passwordConfirm, setPasswordConfirm] = useState(''); 
     const [isButtonDisabled, setIsButtonDisabled] = useState(true);
     const [helperText, setHelperText] = useState('');
-	const {snack,openSnack} = useSnack()
+	const {openSnack} = useContext(SnackContext)
 	const history = useHistory();
 
 
@@ -97,11 +97,11 @@ export const RegisterForm = () => {
     	console.log("user : ", user);
         UserService.createUser(user).then(
 			() => {
-				openSnack("Register validated, an email will be send to you")
+				openSnack("Inscription validée, vous pouvez désormais vous connecter")
 				history.push("/");
 			}
 		).catch(()=>
-			openSnack("Error in entered datas")
+			openSnack("Erreur(s) dans les données saisies")
 		);
     };
 
@@ -134,7 +134,6 @@ export const RegisterForm = () => {
 
     return (
         <div className={classes.registerContainer}>
-			{snack()}
             <span className="userLogo"></span>
             <div style={{width: '76%'}}>
                 <form noValidate autoComplete="off">

@@ -11,7 +11,7 @@ import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from "@material-ui/core/CircularProgress";
 import {AuthContext} from "../../../services/hooks/useAuth";
 import {SnackContext, useSnack} from "../../../services/hooks/useSnackBar";
-import {CheckBox} from "@material-ui/icons";
+
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -58,8 +58,8 @@ export const LoginForm = () => {
     const [helperText, setHelperText] = useState('');
     const [error, setError] = useState(false);
     const [load, setLoad] = useState(false);
-    const [autoLogin, setAutoLogin] = useState(!!localStorage.getItem("autoLogin"))
-    const {signIn} = useContext(AuthContext);
+    const [autoLogin, setAutoLogin] = useState( true )
+    const {signIn} = useContext(AuthContext)! ;
     const history = useHistory();
     const {openSnack} = useContext(SnackContext)
 
@@ -75,23 +75,20 @@ export const LoginForm = () => {
         return new Promise(resolve => setTimeout(resolve, milliseconds))
     }
 
-    const handleLogin = async (withAutoLog?: boolean ) => {
+    const handleLogin = async () => {
         setLoad(true);
-        await sleep(1000);
-        signIn(email, password)
-            .then(() => {
-                localStorage.setItem("email",email)
-                localStorage.setItem("password",password )
-                localStorage.setItem("autoLogin", "true")
-                setError(false);
-                setLoad(false);
-                history.push("/");
-                openSnack("Connection réussie")
-            }).catch(() => {
+         const result = await signIn(email, password, autoLogin)
+        if(result)  {
+            setError(false);
+            setLoad(false);
+            history.push("/");
+            openSnack("Connection réussie")
+            } else {
             setError(true);
             setLoad(false);
-            setHelperText('Email/ mot de passe erroné');
-        })
+            setHelperText('Email/ mot de passe erroné')
+            openSnack('Echec de la tentative de connexion')
+        }
     };
 
     const handleKeyPress = (e: any) => {

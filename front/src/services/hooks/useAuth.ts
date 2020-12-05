@@ -2,12 +2,28 @@
 import {useState, createContext, useEffect} from "react";
 import {UserService} from "../userService";
 import {UserModel} from "../../models/userModel";
+interface AuthType{
+    currentUser : UserData |undefined,
+        isLogged : boolean,
+        token : string | null,
+        signIn : (email : string,password : string, withAutoLogin?: boolean) => boolean,
+        disconnect: () => void,
+        userId : string,
+}
+const  AuthTypeDefault : AuthType = {
+    currentUser: undefined,
+    isLogged : true,
+    token : null,
+    signIn : () => false,
+    disconnect: () => {},
+    userId : "",
+}
 
 // Provider empty because we can't create hook outside of component
-export const AuthContext =  createContext(undefined as any );
+export const AuthContext =  createContext<AuthType>(AuthTypeDefault);
 
 export interface UserData {
-    _id: string,
+        _id: string,
         createdAt: Date,
         email : string,
         firstName: string,
@@ -26,16 +42,31 @@ export function useAuth() {
      * Fonction called on login and autoLogin
      * @param email
      * @param password
+     * @param withAutoLogin
      */
-    const signIn = (email :string , password : string) => {
-       return UserService.login({
-            email : email,
-            password: password}).then(result => {
-                console.log("signInOk")
-                if(result){
-               setToken(result.data.token)
-                }
-        }).catch(() => setToken(null))
+    const  signIn = async (email: string, password: string, withAutoLogin?: boolean): Promise<boolean> => {
+        if (withAutoLogin) {
+            localStorage.setItem("autoLogin", "true")
+            console.log("AutoLogin")
+        }
+        let isLogged = false;
+        await UserService.login({
+            email: email,
+            password: password
+        }).then(result => {
+            console.log("no error", result)
+            if (result) {
+                isLogged = true;
+                setToken(result.data.token)
+                localStorage.setItem("email", email)
+                localStorage.setItem("password", password)
+            }
+        }).catch(() => {
+            console.log("je passe par la")
+            setToken(null)
+        } )
+
+        return isLogged;
     };
 
     /**
@@ -72,15 +103,15 @@ export function useAuth() {
        (async function anyNameFunction() {
        if(token){
            setIsLogged( true)
-           localStorage.setItem('token', token);
            await UserService.me(token)
                .catch(() => setToken(null))
                .then((result) => {
                        if(result) {
-                           console.log("Connected")
+                           console.log("Connectedgfddfhdg")
                            setCurrentUser(result.data)
                            setUserId(result.data._id)
                            localStorage.setItem("userId",result.data._id )
+                           localStorage.setItem("token",token )
                        }
                    }
                )
@@ -90,6 +121,7 @@ export function useAuth() {
            localStorage.removeItem('token');
            localStorage.removeItem("email")
            localStorage.removeItem("password")
+           localStorage.removeItem("userId")
            console.log('Storage ', localStorage.getItem('token'))
        }
        })();

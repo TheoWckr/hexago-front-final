@@ -12,6 +12,7 @@ import {useHistory} from "react-router";
 import Chip from "@material-ui/core/Chip";
 import {Call} from "@material-ui/icons";
 import CallToAction from "../../home/callToAction";
+import {SnackContext} from "../../../services/hooks/useSnackBar";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -44,6 +45,7 @@ const EventDisplayPage = (props : {event : EventDisplayType, refresh: () => void
     const {userId} = useContext(AuthContext)
     const [displaySubscribeButton, setDisplaySubscribeButton] = useState(false);
     const [displayUnsubscribeButton, setDisplayUnsubscribeButton] = useState(false);
+    const {openSnack} = useContext(SnackContext)
     const history = useHistory()
     //Use Effect de gestion de l'affichage des boutons subscribe et unsubscribe
     useEffect(() => {
@@ -75,13 +77,18 @@ const EventDisplayPage = (props : {event : EventDisplayType, refresh: () => void
             })
             .then(((value: AxiosResponse<any> ) => {
                 if(value){
+                    openSnack("Vous êtes désormais inscrit a cet événement")
                     props.refresh()
         }}))
     }
     const unsubscribe = async () => {
         await EventService.unSubscribeEvent(props.event._id, userId)
             .catch((reason: any) => console.log('errorUnSubscribe', reason))
-            .then(((value: any) => props.refresh()))
+            .then(((value: any) => {
+                props.refresh()
+                openSnack("Vous êtes désormais plus inscrit a cet événement")
+
+            }))
     }
     const classe = useStyles();
         return (
