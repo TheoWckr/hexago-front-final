@@ -87,18 +87,19 @@ const EventSearchPanel = (props:{setSearch :  React.Dispatch<EventSearchProps>})
                     <TextField
                         className={[classes.input, "purple-input"].join(' ')}
                         id="location-input"
-                        label="Localisation"
+                        label="Ville"
                         variant="outlined"
                         onChange={(e) => setLocation(e.target.value)}/>
                 </Grid>
                 <Grid key={1} className={classes.filter} xs={12} lg={3} item>
                     <KeyboardDatePicker
-                        className={classes.input}
-                        margin="normal"
+
+                        margin="dense"
                         id="date-input"
-                        placeholder="Date de l'éventement (dd/mm/yyyy)"
-                        format="MM/dd/yyyy"
+                        placeholder="Date de l'évènement (dd/mm/yyyy)"
+                        format="dd/mm/yyyy"
                         value={date}
+                        label={"Date de l'évènement"}
                         onChange={setDateFromInput}
                         KeyboardButtonProps={{
                             'aria-label': 'change birth date',

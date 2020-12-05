@@ -85,7 +85,7 @@ const EventCreateForm = (props: {
                             id="localisation"
                             // className={`${classes.formInput}`}
                             //type={Localization}
-                            label="Localisation"
+                            label="Ville"
                             margin="normal"
                             onChange={event => setEventLocationId(event.target.value)}
                             //onKeyPress={(e) => handleKeyPress(e)}
@@ -151,7 +151,6 @@ const EventCreateForm = (props: {
                 </Grid>
             </Grid>
             <Grid >
-                <Typography align={"center"} variant={"body1"}> Description de l'évènement</Typography>
                 <RichTextEditor
                     handleEditorChange={((content) =>  setEventDetail(content))}
                     initialValue={eventDetail}

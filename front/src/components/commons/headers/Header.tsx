@@ -73,7 +73,7 @@ const Header = () => {
                             <MenuItem key={5} onClick={handleClose} component={Link} to={'/event/create'}>Création d'évenement</MenuItem>,
                             <MenuItem key={8} onClick={handleClose} component={Link} to={'/event/search'}>Recherche d'événements</MenuItem>,
                             <MenuItem key={10} onClick={handleClose} component={Link} to={'/chat'}>Chat</MenuItem>,
-                            <MenuItem key={9} onClick={logout}>Déconnection</MenuItem>
+                            <MenuItem key={9} onClick={logout}>Déconnexion</MenuItem>
                         ]
                     )}
                     {!isLogged && (

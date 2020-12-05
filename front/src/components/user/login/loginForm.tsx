@@ -114,7 +114,6 @@ export const LoginForm = () => {
                                     className={`${classes.formInput}`}
                                     type="email"
                                     label="Email"
-                                    placeholder="Email"
                                     margin="normal"
                                     onChange={(e) => setEmail(e.target.value)}
                                     onKeyPress={(e) => handleKeyPress(e)}
@@ -129,8 +128,7 @@ export const LoginForm = () => {
                                     id="password"
                                     className={`${classes.formInput}`}
                                     type="password"
-                                    label="Password"
-                                    placeholder="Password"
+                                    label="Mot de passe"
                                     margin="normal"
                                     helperText={helperText}
                                     onChange={(e) => setPassword(e.target.value)}
@@ -151,7 +149,7 @@ export const LoginForm = () => {
                     className={classes.loginBtn}
                     onClick={() => handleLogin()}
                     disabled={isButtonDisabled}>
-                    Login
+                    Connexion
                 </Button>
             </div>
             <LoginProvider/>

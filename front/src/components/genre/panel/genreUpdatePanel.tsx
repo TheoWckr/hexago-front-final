@@ -48,10 +48,10 @@ useEffect(() => {
             <form onSubmit={onSubmit}>
                 <Grid container direction={"column"}>
                     <Typography variant={'h5'}  style={{padding: '1.3em'}}>
-                        Genre Edition
+                        Edition
                     </Typography>
                     <Grid container direction={"row"}>
-                        <TextField label={'Edited Genre'} variant={"outlined"} name={'genre'}
+                        <TextField label={'Nouvelle valeur'} variant={"outlined"} name={'genre'}
                                    value={newGenreValue}
                                    style={{margin: 'auto', width: '40%', marginBottom:'1em'}}
                                    inputRef={register({required: true})}
@@ -65,10 +65,10 @@ useEffect(() => {
                     <Grid container direction={"row"} style={{padding: '1.3em'}}>
                         <Button variant="outlined" color="primary" style={{width: '40%', margin: 'auto'}}
                                 type="submit"
-                        >Update</Button>
+                        >Modifier</Button>
                         <Button variant="outlined" color="secondary" style={{width: '40%', margin: 'auto'}}
                                 onClick={deleteState}
-                        >Delete </Button>
+                        >Supprimer </Button>
                     </Grid>
                     <div style={{margin: "auto"}}>
                         {errors.genre && <Typography> The name of the genre is mandatory</Typography>}

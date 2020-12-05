@@ -30,9 +30,9 @@ export const GenreCreatePanel = () => {
             <form onSubmit={onSubmit}>
                 <Grid container direction={"column"} >
                     <Typography variant={'h5'}  style={{padding: '1.3em'}}>
-                        Genre Creation
+                        Creer un nouveau genre
                     </Typography>
-                        <TextField name={'genre'} style={{width: '50%', margin: "auto", marginBottom:'1em'}} label="New genre"
+                        <TextField name={'genre'} style={{width: '50%', margin: "auto", marginBottom:'1em'}} label="Nouveau genre"
                                    variant="outlined"
                                    inputRef={register({required: true})}
                                    onChange={() => {
@@ -40,7 +40,7 @@ export const GenreCreatePanel = () => {
                                    }}/>
                     <Button variant="outlined" color="primary" style={{width: '30%', margin: "auto", marginTop:'1em'}}
                             type="submit"
-                    > Create</Button>
+                    > Créer</Button>
                     <div style={{margin :"auto", padding:'1em'}}>
                     {errors.genre && <Typography> The name of the genre is mandatory</Typography>}
                     {created && <Typography > Genre successfully created</Typography>}

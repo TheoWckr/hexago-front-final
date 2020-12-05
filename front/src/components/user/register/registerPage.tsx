@@ -13,7 +13,9 @@ const useStyles = makeStyles((theme: Theme) =>
             justifyContent: 'center',
             color: 'white',
             fontSize: '2rem',
-            backgroundColor: '#312783'
+            backgroundColor: '#312783',
+            backgroundImage: "url('subscribe_image.jpg')",
+            backgroundSize: 'cover'
         },
         fullHeight: {
             height: 'calc(100vh - 64px)'
@@ -28,7 +30,7 @@ export const RegisterPage = () => {
         <Grid container className={classes.fullHeight}>
             <Hidden only={['xs', 'sm']}>
                 <Grid item md={4} lg={4} className={classes.leftContain}>
-                    SIGN UP
+                    INSCRIPTION
                 </Grid>
             </Hidden>
             <Grid item xs={12} sm={12} md={8} lg={8}>

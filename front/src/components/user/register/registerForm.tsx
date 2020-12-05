@@ -112,6 +112,7 @@ export const RegisterForm = () => {
     };
 
     const handleChangeReleasedDate = (date: MaterialUiPickersDate) => {
+    	console.log("Date", date)
     	if (date)
     		setBirth(date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear());
     };
@@ -217,9 +218,9 @@ export const RegisterForm = () => {
 					            className={classes.formInputs}
 					            margin="normal"
 					            id="date-picker-dialog"
-					            placeholder="Date de naissance (dd/mm/yyyy)"
-					            format="MM/dd/yyyy"
-					            value={birth}
+								label={"Date de naissance"}
+					            format="dd/MM/yyyy"
+					            value={new Date(birth) 	}
 					            onChange={handleChangeReleasedDate}
 		                        onKeyPress={(e) => handleKeyPress(e)}
 					            KeyboardButtonProps={{
