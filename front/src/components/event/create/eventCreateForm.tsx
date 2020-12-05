@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
-import TextField from "@material-ui/core/TextField";
-import { createStyles, Grid, Slider, Theme, Typography} from "@material-ui/core";
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import {createStyles, Grid, Slider, TextField, Theme, Typography} from "@material-ui/core";
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 import {marksGameDuration, marksGameNumPlayer} from "../../../models/gameModel";
@@ -10,6 +10,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import {createEventForm} from "../../../models/service/eventServiceType";
 import GameNameQS from "../../game/shared/GameNameQS";
 import {UtilsDate} from "../../../utils/utilsDate";
+import {Ville, villes} from "../../../utils/UtilsVilles";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -81,15 +82,20 @@ const EventCreateForm = (props: {
                         <GameNameQS setChoices={setEventListGames}/>
                     </Grid>
                     <Grid item>
-                        <TextField
+                        <Autocomplete
                             id="localisation"
+                            options={villes as Ville[] }
+                            getOptionLabel={(ville : {name : string}) => ville.name}
+                            multiple={false}
                             // className={`${classes.formInput}`}
                             //type={Localization}
-                            label="Ville"
-                            margin="normal"
-                            onChange={event => setEventLocationId(event.target.value)}
+                            renderInput={(params) => <TextField {...params} label="Ville" variant="outlined" />}
+                            onChange={(event, value :Ville |null, reason) => {
+                                if(value && value.name)
+                                setEventLocationId(value.name  )
+                                else setEventLocationId("")
+                            }}
                             //onKeyPress={(e) => handleKeyPress(e)}
-                            variant="outlined"
                         />
                     </Grid>
                     <Grid item>

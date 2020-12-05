@@ -5,6 +5,9 @@ import AppBar from "@material-ui/core/AppBar";
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import {EventSearchProps, eventSearchPropsDefault} from "../event/search/eventSearchPage";
 import EventCarrouselListLoader from "../event/list/EventCarrouselListLoader";
+import {Autocomplete} from "@material-ui/lab";
+import {Ville, villes} from "../../utils/UtilsVilles";
+import TextField from "@material-ui/core/TextField";
 
 const useStyles = makeStyles({
     root: {
@@ -39,7 +42,24 @@ export const EventCity = () => {
                         </Grid>
                         <Grid item xs={12} sm={12} md={6} className="wrap">
                             <div className="search">
-                                <input type="text" className="searchTerm" onKeyPress={(e) => handleKeyPress(e)}  onChange={event => setValue(event.target.value)}/>
+                                <Autocomplete
+                                    id="localisation"
+                                    options={villes as Ville[] }
+                                    getOptionLabel={(ville : {name : string}) => ville.name}
+                                    multiple={false}
+
+                                    onKeyPress={(e) => handleKeyPress(e)}
+                                    renderInput={(params) => <div  className="searchTerm"  >
+                                        <TextField {...params}  variant="standard"  style={{width:"97%",paddingLeft:"3%"}}  />
+                                    </div>}
+                                    onChange={(event, value :Ville |null, reason) => {
+                                        if(value && value.name)
+                                            setValue(value.name  )
+                                        else setValue("")
+                                    }}
+                                    //onKeyPress={(e) => handleKeyPress(e)}
+                                />
+
                                 <button className="searchButton"  onClick={changeLocation}>
                                     <SearchOutlinedIcon />
                                 </button>

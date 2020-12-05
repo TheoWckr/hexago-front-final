@@ -6,6 +6,8 @@ import {KeyboardDatePicker} from "@material-ui/pickers";
 import Chip from "@material-ui/core/Chip";
 import {makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import GameNameQS from "../../game/shared/GameNameQS";
+import {Autocomplete} from "@material-ui/lab";
+import {Ville, villes} from "../../../utils/UtilsVilles";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -84,12 +86,21 @@ const EventSearchPanel = (props:{setSearch :  React.Dispatch<EventSearchProps>})
         <Grid item xs={12}>
             <Grid container justify="center">
                 <Grid key={0} className={classes.filter} xs={12} lg={3} item>
-                    <TextField
-                        className={[classes.input, "purple-input"].join(' ')}
-                        id="location-input"
-                        label="Ville"
-                        variant="outlined"
-                        onChange={(e) => setLocation(e.target.value)}/>
+                    <Autocomplete
+                        id="localisation"
+                        options={villes as Ville[] }
+                        getOptionLabel={(ville : {name : string}) => ville.name}
+                        multiple={false}
+                        // className={`${classes.formInput}`}
+                        //type={Localization}
+                        renderInput={(params) => <TextField {...params} label="Ville" variant="outlined" />}
+                        onChange={(event, value :Ville |null, reason) => {
+                            if(value && value.name)
+                                setLocation(value.name  )
+                            else setLocation(undefined)
+                        }}
+                        //onKeyPress={(e) => handleKeyPress(e)}
+                    />
                 </Grid>
                 <Grid key={1} className={classes.filter} xs={12} lg={3} item>
                     <KeyboardDatePicker

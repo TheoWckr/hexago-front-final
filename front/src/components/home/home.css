@@ -57,12 +57,17 @@
 }
 
 .searchTerm {
-    width: 100%;
+    width: 500px;
     border: none;
     padding: 5px;
     height: 30px;
     border-radius: 50px 0 0 50px;
     outline: none;
+    background: white;
+}
+
+.searchTermTextField{
+    width:400px;
 }
 
 .searchButton {
