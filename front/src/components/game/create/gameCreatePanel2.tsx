@@ -63,6 +63,11 @@ const GameCreatePanel2 = (props: GameEditProps) => {
                 direction="column"
                 className={classes.panel}
             >
+                <div className={classes.divSpace}>
+                <Typography>Genre du jeu</Typography>
+                <GenreQuickSearch setChoices={setGenres}/>
+                </div>
+                <div className={classes.divSpace}>
                 <Typography>Nombre de joueurs possible</Typography>
                 <Slider
                     value={props.game.playerMin ? [props.game.playerMin, props.game.playerMax] : [4, 8]}
@@ -73,6 +78,8 @@ const GameCreatePanel2 = (props: GameEditProps) => {
                     max={16}
                     marks={marksGameNumPlayer}
                 />
+                </div>
+                <div className={classes.divSpace}>
                 <FormControlLabel
                     control={<Switch checked={checkedAge} onChange={handleChangeCheckedAge}/>}
                     label="Age minimum"
@@ -89,8 +96,9 @@ const GameCreatePanel2 = (props: GameEditProps) => {
                     valueLabelDisplay={"on"}
                     marks={marksGameAgeMin}
                 />
+                </div>
 
-
+                <div className={classes.divSpace}>
                 <FormControlLabel
                     control={<Switch checked={checkedDuration} onChange={handleChangeCheckedDuration}/>}
                     label="Durée moyenne d'une partie"
@@ -107,7 +115,7 @@ const GameCreatePanel2 = (props: GameEditProps) => {
                     min={15}
                     max={180}
                 />
-                <GenreQuickSearch setChoices={setGenres}/>
+            </div>
             </Grid>
         </Paper>
     )

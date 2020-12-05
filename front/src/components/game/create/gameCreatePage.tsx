@@ -68,6 +68,9 @@ export const useStylesPanelCreatePage = makeStyles((theme: Theme) => ({
         padding: '3px',
         marginLeft:"10em",
         marginRight:"10em"
+    },
+    divSpace : {
+        padding: '1em 0em',
     }
 }));
 
@@ -152,26 +155,26 @@ const  GameCreatePage = () => {
 
     const errorDisplay = (
         <Paper style={{padding : '0.5em'}} >
-            <Typography variant={'h5'} style={{padding : '0.5em'}}> Errors</Typography>
+            <Typography variant={'h5'} style={{padding : '0.5em'}}> Erreurs</Typography>
             <List style={{color : theme.palette.text.secondary}}>
                 {errorMessages.includes('name') &&
                 <ListItem>
-                    <ListItemText>Name is mandatory</ListItemText>
+                    <ListItemText>Le nom est obligatoire </ListItemText>
                 </ListItem>
                 }
                 {errorMessages.includes('nameAlreadyExist') &&
                 <ListItem>
-                    <ListItemText>This name is already used</ListItemText>
+                    <ListItemText>Ce nom est déja utilisé</ListItemText>
                 </ListItem>
                 }
                 {errorMessages.includes('description') &&
                 <ListItem>
-                    <ListItemText>Description is mandatory</ListItemText>
+                    <ListItemText>La description est obligatoire et doit contenir plus de 10 caractères</ListItemText>
                 </ListItem>
                 }
                 {errorMessages.includes('genres') &&
                 <ListItem>
-                    <ListItemText>The game need at least one genre</ListItemText>
+                    <ListItemText>Le jeu à besoin d'au moins un genre</ListItemText>
                 </ListItem>
                 }
             </List>
@@ -218,16 +221,16 @@ const  GameCreatePage = () => {
                 {!gameState._id &&
                 <Button variant="outlined" name='create' onClick={onCreate} color="primary"
                         style={{width: '300px', margin: 'auto'}}
-                >Create</Button>}
+                >Créer</Button>}
                 {gameState._id &&
                 <Button variant="outlined" onClick={onUpdate} name='update' color="primary"
                         style={{width: '300px', margin: 'auto'}}
-                >Update
+                >Modifier
                 </Button>}
                 {gameState._id &&
                 <Button variant="outlined" onClick={onDelete} name='delete' color="default"
                         style={{width: '300px', margin: 'auto'}}
-                >Delete
+                >Supprimer
                 </Button>}
             </Grid>
             {errorMessages.length !== 0 && errorDisplay}
@@ -245,9 +248,9 @@ const  GameCreatePage = () => {
                 >
                     <Tab
                         className={errorMessages.includes('description')  || errorMessages.includes('description')  || errorMessages.includes('name') ? classes.errorTab : ''}
-                        label="Game definition"  {...a11yProps(0)} />
+                        label="Carte d'identité "  {...a11yProps(0)} />
                     <Tab className={errorMessages.includes('genres') ? classes.errorTab : ''}
-                         label="Game properties " {...a11yProps(1)} />
+                         label="Descriptif " {...a11yProps(1)} />
                     <Tab label="Images " {...a11yProps(2)} />
                 </Tabs>
             </AppBar>
