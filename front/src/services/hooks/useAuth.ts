@@ -74,6 +74,8 @@ export function useAuth() {
      */
     const disconnect = () => {
        setToken(null);
+       setIsLogged(false);
+       setUserId("");
         localStorage.removeItem('autoLogin')
         localStorage.removeItem('email')
         localStorage.removeItem('password')

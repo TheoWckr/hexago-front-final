@@ -54,7 +54,7 @@ export const RegisterForm = () => {
     const [username, setUsername] = useState('');
     const [email, setMail] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
-    const [birth, setBirth] = useState(new Date().toString());
+    const [birth, setBirth] = useState(new Date());
     const [password, setPassword] = useState('');
     const [passwordConfirm, setPasswordConfirm] = useState(''); 
     const [isButtonDisabled, setIsButtonDisabled] = useState(true);
@@ -74,7 +74,7 @@ export const RegisterForm = () => {
     });
 
     useEffect(() => {
-        if (firstname.trim() && lastname.trim() && email.trim() && phoneNumber.trim() && birth.trim() && username.trim() && password.trim() && passwordConfirm.trim()) {
+        if (firstname.trim() && lastname.trim() && email.trim() && phoneNumber.trim() && birth && username.trim() && password.trim() && passwordConfirm.trim()) {
             setIsButtonDisabled(false);
         } else {
             setIsButtonDisabled(true);
@@ -83,7 +83,15 @@ export const RegisterForm = () => {
 
     const handleRegister = () => {
     	if (password != passwordConfirm) {
-    		return;
+			openSnack("Le mot de passe et la confirmation ne correspondent pas ")
+			return;
+		}
+    	if(error.email || error.firstname || error.lastname || error.phone || error.pwd || error.pwdconfirm || error.username ){
+			openSnack("Certains champs sont en erreur")
+		}
+		if(birth.getFullYear() > 2002){
+			openSnack("Vous devez être majeur pour accéder a ce service")
+			return
 		}
     	const user = {
     		"username": username,
@@ -92,7 +100,7 @@ export const RegisterForm = () => {
     		"password": password,
     		"email": email,
     		"phone": phoneNumber,
-    		"dateOfBirth": birth
+    		"dateOfBirth": birth.toString()
     	}
     	console.log("user : ", user);
         UserService.createUser(user).then(
@@ -114,7 +122,7 @@ export const RegisterForm = () => {
     const handleChangeReleasedDate = (date: MaterialUiPickersDate) => {
     	console.log("Date", date)
     	if (date)
-    		setBirth(date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear());
+    		setBirth(date);
     };
 
     const checkPasswords = (pwdconfirm: string) => {
@@ -219,7 +227,7 @@ export const RegisterForm = () => {
 					            id="date-picker-dialog"
 								label={"Date de naissance"}
 					            format="dd/MM/yyyy"
-					            value={new Date(birth) 	}
+					            value={birth}
 					            onChange={handleChangeReleasedDate}
 		                        onKeyPress={(e) => handleKeyPress(e)}
 					            KeyboardButtonProps={{

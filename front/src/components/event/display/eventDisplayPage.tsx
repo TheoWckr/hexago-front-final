@@ -85,9 +85,9 @@ const EventDisplayPage = (props : {event : EventDisplayType, refresh: () => void
         await EventService.unSubscribeEvent(props.event._id, userId)
             .catch((reason: any) => console.log('errorUnSubscribe', reason))
             .then(((value: any) => {
+                console.log("Réussite", value.data)
                 props.refresh()
                 openSnack("Vous êtes désormais plus inscrit a cet événement")
-
             }))
     }
     const classe = useStyles();

@@ -149,7 +149,6 @@ export const LoginForm = () => {
                     Connexion
                 </Button>
             </div>
-            <LoginProvider/>
             <Backdrop open={load}>
                 <CircularProgress color="inherit"/>
             </Backdrop>
