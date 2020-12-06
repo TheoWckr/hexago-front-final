@@ -61,7 +61,7 @@ const EventCreatePage = () => {
               size={"small"}
               color={"primary"}
           >
-              Create Event
+              Créer votre évènement
           </Button>
             </Grid>
             </Paper>
