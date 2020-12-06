@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import { Grid, Toolbar} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -30,6 +30,8 @@ export const EventCity = () => {
            changeLocation()
         }
     };
+
+    useEffect(()=> changeLocation(),[value])
     return (
         <div >
             <AppBar position={'static'} className={classes.root} >
@@ -56,6 +58,7 @@ export const EventCity = () => {
                                         if(value && value.name)
                                             setValue(value.name  )
                                         else setValue("")
+                                        changeLocation()
                                     }}
                                     //onKeyPress={(e) => handleKeyPress(e)}
                                 />
