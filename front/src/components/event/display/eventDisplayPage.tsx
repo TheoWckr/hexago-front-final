@@ -102,7 +102,7 @@ const EventDisplayPage = (props : {event : EventDisplayType, refresh: () => void
                             <Grid item xs={12}>
                                 <Typography className={'title'}>A l'affiche:</Typography>
                                 {props.event.listGames.map((item: {_id : string, name : string, img?:{url:string}}) =>
-                                    <Button variant="outlined" color="primary"  style={{margin:"0.5em 1em"}} onClick={() => history.push('/gamedisplay/' +item._id)}>
+                                    <Button key={item._id}variant="outlined" color="primary"  style={{margin:"0.5em 1em"}} onClick={() => history.push('/gamedisplay/' +item._id)}>
                                      <Avatar src={item.img?.url} style={{height:"1.2em",width:"1.2em"}} /> {item.name}
                                     </Button>
                                 )}
@@ -126,7 +126,7 @@ const EventDisplayPage = (props : {event : EventDisplayType, refresh: () => void
                                 </div>
                             </Grid>
                             <Grid item xs={12}>
-                                <Typography>{props.event.details}</Typography>
+                                <Typography dangerouslySetInnerHTML={{__html: props.event.details}}/>
                             </Grid>
                         </Grid>
                     </div>

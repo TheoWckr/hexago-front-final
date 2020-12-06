@@ -66,7 +66,7 @@ const EventCard = (props:{event : EventCardModel}) => {
             {renderGames}
             </Grid>
             <Grid container justify="center" className={classes.card_author}>
-                <Box component="div" display="inline">Hébergé par {props.event.owner.username} <Avatar src="/broken-image.jpg" /></Box>
+                <Box component="div" display="inline">Hébergé par {props.event.owner.username}</Box>
             </Grid>
         </Card>
     );

@@ -1,5 +1,5 @@
 import React, {useContext, useState} from 'react';
-import {Toolbar, } from "@material-ui/core";
+import {Toolbar,} from "@material-ui/core";
 import './Header.css';
 import {makeStyles, createStyles, Theme} from '@material-ui/core/styles';
 import AppBar from "@material-ui/core/AppBar";
@@ -16,10 +16,10 @@ const Header = () => {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
-    const {isLogged, disconnect } = useContext(AuthContext);
+    const {isLogged, disconnect} = useContext(AuthContext);
     const {openSnack} = useContext(SnackContext)
     const history = useHistory();
-    const [isAnimate,setAnimate] = useState(false);
+    const [isAnimate, setAnimate] = useState(false);
 
     const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
@@ -37,8 +37,8 @@ const Header = () => {
         openSnack("Vous êtes désormais déconnecté")
         history.push("/");
     };
-    const triggerGif= () => {
-        if(!isAnimate) {
+    const triggerGif = () => {
+        if (!isAnimate) {
             setAnimate(true)
             setTimeout(() => {
                 setAnimate(false)
@@ -47,45 +47,60 @@ const Header = () => {
     }
     return (
         <AppBar className={classes.background} position="static" elevation={0}>
-            <Toolbar onMouseEnter={triggerGif} >
-                <img src={isAnimate ? "/dice-anim.gif" : "/dice-static.png"} style={{height:"50px"}} />
+            <Toolbar onMouseEnter={triggerGif}>
+
+                <img src={isAnimate ? "/dice-anim.gif" : "/dice-static.png"} style={{height: "50px", cursor: "pointer"}}
+                     onClick={() => history.push("/")}/>
                 <Typography variant="h6" className={[classes.title, "App-title"].join(' ')}>
-                    <span className="App-title" onClick={()=>  history.push("/")}>HexaGo</span>
+                    <span className="App-title" style={{cursor: "pointer"}}
+                          onClick={() => history.push("/")}>HexaGo</span>
                 </Typography>
-                <IconButton
-                    aria-label="menu"
-                    aria-controls="menu-appbar"
-                    aria-haspopup="true"
-                    onClick={handleMenu}
-                    color="inherit"
-                >
-                    <DehazeRoundedIcon/>
-                </IconButton>
-                <Menu
-                    id="menu-appbar"
-                    anchorEl={anchorEl}
-                    keepMounted
-                    open={open}
-                    onClose={handleClose}
-                >
-                    {isLogged && (
-                        [
-                            <MenuItem key={0} onClick={handleClose} component={Link} to={'/GenreManagement/'}>Gestion des genres</MenuItem>,
-                            <MenuItem key={1} onClick={handleClose} component={Link} to={'/GameCreate/'}>Création de jeu</MenuItem>,
-                            <MenuItem key={2} onClick={handleClose} component={Link} to={'/GameSearch/'}>Liste des jeux</MenuItem>,
-                            <MenuItem key={5} onClick={handleClose} component={Link} to={'/event/create'}>Création d'évenement</MenuItem>,
-                            <MenuItem key={8} onClick={handleClose} component={Link} to={'/event/search'}>Recherche d'événements</MenuItem>,
-                            <MenuItem key={10} onClick={handleClose} component={Link} to={'/chat'}>Chat</MenuItem>,
-                            <MenuItem key={9} onClick={logout}>Déconnexion</MenuItem>
-                        ]
-                    )}
-                    {!isLogged && (
-                        [
-                            <MenuItem key={0} onClick={handleClose} component={Link} to={'/login'}>Connection</MenuItem>,
-                            <MenuItem key={1} onClick={handleClose} component={Link} to={'/register'}>Inscription</MenuItem>,
-                        ]
-                    )}
-                </Menu>
+                {!isLogged && (
+                    [
+                        <MenuItem key={0} onClick={handleClose} component={Link} to={'/login'}>Connection</MenuItem>,
+                        <MenuItem key={1} onClick={handleClose} component={Link}
+                                  to={'/register'}>Inscription</MenuItem>,
+                    ]
+                )}
+                {isLogged && (
+                    <React.Fragment>
+                        <MenuItem onClick={handleClose} style={{border: 'indigo'}} component={Link}
+                                  to={'/event/create'}>Création de partie</MenuItem>
+                        <MenuItem onClick={handleClose} component={Link} to={'/event/search'}>Recherche
+                            d'évenements </MenuItem>
+                        <MenuItem onClick={handleClose} component={Link} to={'/GameSearch/'}>Liste des jeux</MenuItem>
+
+                        <IconButton
+                            aria-label="menu"
+                            aria-controls="menu-appbar"
+                            aria-haspopup="true"
+                            onClick={handleMenu}
+                            color="inherit"
+                        >
+                            <DehazeRoundedIcon/>
+
+                        </IconButton>
+                        <Menu
+                            id="menu-appbar"
+                            anchorEl={anchorEl}
+                            keepMounted
+                            open={open}
+                            onClose={handleClose}
+                        >
+                            {isLogged && (
+                                [
+                                    <MenuItem key={0} onClick={handleClose} component={Link} to={'/GenreManagement/'}>Gestion
+                                        des genres</MenuItem>,
+                                    <MenuItem key={1} onClick={handleClose} component={Link} to={'/GameCreate/'}>Création
+                                        de jeu</MenuItem>,
+
+                                    <MenuItem key={9} onClick={logout}>Déconnexion</MenuItem>
+                                ]
+                            )}
+                        </Menu>
+                    </React.Fragment>
+                )}
+
             </Toolbar>
         </AppBar>
     );

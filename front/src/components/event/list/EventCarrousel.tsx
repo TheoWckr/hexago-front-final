@@ -25,19 +25,21 @@ const responsive = {
 const EventCarrousel = (props: { events: EventCardModel[] }) => {
 
         return (
-            <Carousel
+            <div>
+
+                <Carousel
 
             ssr
             itemClass="image-item"
             responsive={responsive}
             transitionDuration={1000}
         >
-            {props.events.map(event => {
+            {props.events.length >0  && props.events.map(event => {
                 return (
                     <EventCard event={event} key={event._id}/>
                 );
             })}
-            </Carousel>)
+            </Carousel> </div>)
 
 }
 export default EventCarrousel

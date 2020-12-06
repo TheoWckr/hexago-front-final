@@ -104,10 +104,9 @@ export function useAuth() {
        if(token){
            setIsLogged( true)
            await UserService.me(token)
-               .catch(() => setToken(null))
+               .catch(() => autoLogin())
                .then((result) => {
                        if(result) {
-                           console.log("Connectedgfddfhdg")
                            setCurrentUser(result.data)
                            setUserId(result.data._id)
                            localStorage.setItem("userId",result.data._id )

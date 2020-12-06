@@ -22,6 +22,6 @@ const EventCarrouselListLoader = (props : {search : EventSearchProps}) => {
         })();
     }, [props.search])
 
-    return(<EventCarrousel events={events} />)
+    return(<div>{events.length >0 && <EventCarrousel events={events} />}</div>)
 }
 export default EventCarrouselListLoader;

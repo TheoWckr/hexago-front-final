@@ -30,7 +30,10 @@ const useStyles = makeStyles({
 
 export const About = () => {
     const classes = useStyles();
-
+    const goDownButton = (
+        <button className={'goDownBtn'} >
+        <span>&darr;</span>
+    </button>)
     return (
         <div className={classes.root}>
             <div className={classes.overlay}>
@@ -41,9 +44,7 @@ export const About = () => {
                         Jouer
                         où vous le souhaitez, en compagnie de joueurs intéressés.</h2>
                         <CallToAction />
-                        <button className={'goDownBtn'} >
-                        <span>&darr;</span>
-                    </button>
+
                 </Container>
             </div>
         </div>
