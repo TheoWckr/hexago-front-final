@@ -49,7 +49,6 @@ const EventDisplayPage = (props : {event : EventDisplayType, refresh: () => void
     const history = useHistory()
     //Use Effect de gestion de l'affichage des boutons subscribe et unsubscribe
     useEffect(() => {
-        console.log("Intro")
         let subButton = true
         let unsubButton = true
         if(props.event.listPlayers.includes(userId)){
@@ -71,9 +70,7 @@ const EventDisplayPage = (props : {event : EventDisplayType, refresh: () => void
     const subscribe = async () => {
         await EventService.subscribeEvent(props.event._id)
             .catch((reason: any) => {
-                if(reason) {
-                    console.log('errorSubscribe', reason)
-                }
+
             })
             .then(((value: AxiosResponse<any> ) => {
                 if(value){
@@ -83,11 +80,10 @@ const EventDisplayPage = (props : {event : EventDisplayType, refresh: () => void
     }
     const unsubscribe = async () => {
         await EventService.unSubscribeEvent(props.event._id, userId)
-            .catch((reason: any) => console.log('errorUnSubscribe', reason))
+            .catch((reason: any) => {})
             .then(((value: any) => {
-                console.log("Réussite", value.data)
                 props.refresh()
-                openSnack("Vous êtes désormais plus inscrit a cet événement")
+                openSnack("Vous n'êtes désormais plus inscrit à cet événement")
             }))
     }
     const classe = useStyles();

@@ -12,15 +12,13 @@ const EventSearchListLoader = (props : {search : EventSearchProps}) => {
     useLayoutEffect (() =>{
         (async function anyNameFunction() {
             await EventService.searchEvent(props.search)
-                .catch((reason: any) => console.log("Error", reason))
+                .catch((reason: any) => {})
                 .then((value: { data: { content: any; }; }) => {
-                    console.log("Events", data)
                     if (value) {
                         setEvents(value.data.content)
                     }
                 })
         })();
-        console.log("passage")
     }, [props.search])
 
     return(<EventCardList events={events} />)

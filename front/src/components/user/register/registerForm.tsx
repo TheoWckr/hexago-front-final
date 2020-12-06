@@ -102,7 +102,6 @@ export const RegisterForm = () => {
     		"phone": phoneNumber,
     		"dateOfBirth": birth.toString()
     	}
-    	console.log("user : ", user);
         UserService.createUser(user).then(
 			() => {
 				openSnack("Inscription validée, vous pouvez désormais vous connecter")
@@ -120,13 +119,11 @@ export const RegisterForm = () => {
     };
 
     const handleChangeReleasedDate = (date: MaterialUiPickersDate) => {
-    	console.log("Date", date)
     	if (date)
     		setBirth(date);
     };
 
     const checkPasswords = (pwdconfirm: string) => {
-    	console.log("pwdconfirm : ", error.pwdconfirm);
     	let newError = error;
     	if (pwdconfirm != password) {
     		newError.pwdconfirm = true;

@@ -59,14 +59,12 @@ export const ChatComponent = () => {
     async function getChats() {
         await axios.get(MAIN_ADRESS + "chat/" + userId)
         .then((res: any) => {
-            console.log(res.data.content)
             setChat(res.data.content)
             if (chatId) {
                 setMessages(res.data.content.find((chat: any) => chat._id === chatId).messages)
             }
         })
         .catch((err: any) => {
-            console.log(err)
         })
     }
 
@@ -105,7 +103,6 @@ export const ChatComponent = () => {
             return;
         }
         usersId.push(userId)
-        console.log(usersId)
         const header = {
             headers : {
                 token: localStorage.getItem("token")

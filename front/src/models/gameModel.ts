@@ -67,7 +67,6 @@ export class GameModel {
 
     toFormData = () :FormData =>  {
         const formData = new FormData();
-        console.log("genre",this.genres)
         formData.append('author',  this.author!)
         formData.append('genres',  this.genres.toString())
     formData.append('releaseDate', this.releaseDate)

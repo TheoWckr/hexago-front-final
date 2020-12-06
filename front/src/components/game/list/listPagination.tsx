@@ -14,19 +14,17 @@ const ListPagination = (props : { search : GameSearchProps}) =>  {
     const [detail,setDetail] = useState<GameModel[]> ([])
 
     useEffect(()=> {
-        console.log("listPagination", props.search)
         setPage(0)
         getGamesByPage(0)
     }, [props.search])
     const getGamesByPage = (page: number) =>  {
         GameService.getGamesPage(page, props.search).then((result: AxiosResponse) => {
             let stock: GameModel[] = [];
-            console.log("Datas", result.data)
             result.data.content.forEach((game: {}) => {
                 stock.push(new GameModel(game));
             });
         setDetail(stock)
-        }).catch((message: any) => console.log( 'error' , message));
+        }).catch((message: any) => {});
     }
 
     const countPage = () => {

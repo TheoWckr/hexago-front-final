@@ -53,24 +53,19 @@ const DragNDropImage = (props : UploadFileProps) => {
         });
     }
 
-    console.log("file file ", props.file)
 
     function manageUploadedFile(binary: String, file: File) {
         // do what you need with your file (fetch POST, ect ....)
-        console.log(`The file size is ${binary.length}`);
-        console.log(`The file name is ${file.name}`);
         props.setFile(file)
     }
 
     function handleFileChange(event: ChangeEvent<HTMLInputElement>) {
         event.persist();
-        console.log(event.target.files)
         Array.from(event.target.files!).forEach(file => {
             getFileFromInput(file)
                 .then((binary: any) => {
                     manageUploadedFile(binary, file);
                 }).catch(function (reason: any) {
-                console.log(`Error during upload ${reason}`);
                 event.target.value = ''; // to allow upload of same file if error occurs
             });
         });

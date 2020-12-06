@@ -12,7 +12,6 @@ const GameNameQS = (props : {
 
     useEffect(()=>{
             GameService.getGamesForQuickSearch("").then((result => {
-                console.log('result QS', result);
                 let stock: QSLabelChoicesWithImg[] = [];
                 let gameStock1: GameModel[] = [];
 

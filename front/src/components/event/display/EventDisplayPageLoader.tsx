@@ -20,11 +20,11 @@ const EventDisplayPageLoader = () => {
 
     const refresh = async () => {
         await EventService.getEvent(id)
-            .catch(reason => console.log("Error", reason))
+            .catch(reason => {})
             .then(value => {
                 if (value)
                     setEvent(value.data.content)
-                console.log("getEvent", event)
+
             })
     }
 

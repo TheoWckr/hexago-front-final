@@ -31,7 +31,6 @@ const useStyles = makeStyles({
 
 const GameCard = (props: { game: GameModel }) => {
     const classes = useStyles();
-    console.log('props game card' ,props.game);
     const history = useHistory();
     return (
         <Card>

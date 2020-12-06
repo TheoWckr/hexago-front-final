@@ -30,7 +30,6 @@ const App = (props: { location: any }) => {
 
     const[previousValueLocation, setPreviousValueLocation]  =useState("")
     useEffect(() => {
-        console.log("test")
         const socket = socketIOClient("http://localhost:3100");
 
     }, [])

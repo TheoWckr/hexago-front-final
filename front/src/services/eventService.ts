@@ -27,7 +27,6 @@ export const EventService = {
 
     searchEvent(params : EventSearchProps){
         let paramsString ='?'
-        console.log("params : " ,params)
         if(params.date)  paramsString +=`date=${params.date}&`
         if(params.listGames)  paramsString +=`listGames=${params.listGames.toString().replace('[','').replace(']','')}&`
         if(params.localisation) paramsString +=`locationId=${params.localisation}&`

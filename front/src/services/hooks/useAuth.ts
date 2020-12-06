@@ -47,14 +47,12 @@ export function useAuth() {
     const  signIn = async (email: string, password: string, withAutoLogin?: boolean): Promise<boolean> => {
         if (withAutoLogin) {
             localStorage.setItem("autoLogin", "true")
-            console.log("AutoLogin")
         }
         let isLogged = false;
         await UserService.login({
             email: email,
             password: password
         }).then(result => {
-            console.log("no error", result)
             if (result) {
                 isLogged = true;
                 setToken(result.data.token)
@@ -62,7 +60,6 @@ export function useAuth() {
                 localStorage.setItem("password", password)
             }
         }).catch(() => {
-            console.log("je passe par la")
             setToken(null)
         } )
 
@@ -123,7 +120,6 @@ export function useAuth() {
            localStorage.removeItem("email")
            localStorage.removeItem("password")
            localStorage.removeItem("userId")
-           console.log('Storage ', localStorage.getItem('token'))
        }
        })();
     },[token]);

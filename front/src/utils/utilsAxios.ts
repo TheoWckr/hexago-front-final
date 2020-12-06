@@ -11,12 +11,12 @@ export const UtilsAxios = {
          * @param response
          */
         displayReponse (response: AxiosResponse) {
-                console.log('axios', axios);
+              /*  console.log('axios', axios);
                 console.log('Data ' ,response.data);
                 console.log('Statuts', response.status);
                 console.log('Statuts Text', response.statusText);
                 console.log('Headeres', response.headers);
-                console.log('Config', response.config);
+                console.log('Config', response.config); */
     },
     convertModelToFormData(model: any, form: FormData = new FormData(), namespace = ''): FormData {
         let formData = form || new FormData();

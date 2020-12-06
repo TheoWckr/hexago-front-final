@@ -22,7 +22,6 @@ describe('<GenreList />', () => {
 
     it('should work', () => {
         const wrapper = mount(<GenreList genres={genreMockList2} />) ;
-            console.log(wrapper.find('#genre-list-grid-container'));
     });
 
 });

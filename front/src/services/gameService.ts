@@ -45,10 +45,6 @@ export const GameService = {
         gameFormData.genres = [];
         game.genres.forEach(value => gameFormData.genres.push(value._id))
 
-        console.log("Game file " , gameFormData.image)
-
-
-
         return axios.post(routeName + '/create',  UtilsAxios.convertModelToFormData(gameFormData), {
             headers: {
                 'credentials': 'include',

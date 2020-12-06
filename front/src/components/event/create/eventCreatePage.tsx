@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import EventCreateForm from "./eventCreateForm";
 import Button from "@material-ui/core/Button";
 import {Container, createStyles, Grid, Paper, Theme, Typography} from "@material-ui/core";
-import {useSnack} from "../../../services/hooks/useSnackBar";
+import {SnackContext, useSnack} from "../../../services/hooks/useSnackBar";
 import {makeStyles} from "@material-ui/core/styles";
 import {createEventForm} from "../../../models/service/eventServiceType";
 import {EventService} from "../../../services/eventService";
@@ -32,15 +32,14 @@ const EventCreatePage = () => {
         else             setButtonDisabled(true)
     }, [createEventForm]);
 
-    const {openSnack, snack} = useSnack("Sortie validée ")
+    const {openSnack} = useContext(SnackContext)
 
     const sendForm = () => {
-        console.log("Send")
         EventService.createEvent(createEventForm)
-            .catch((err) => console.log("Erreur create event" , err) )
+            .catch((err) =>  openSnack("Erreur dans le formulaire") )
             .then((result) => {
                 //console.log("reussite", result)
-                openSnack()
+                openSnack("Évènement crée")
                 history.push("/");
             })
     }
@@ -55,7 +54,6 @@ const EventCreatePage = () => {
               direction="column"
               >
           <EventCreateForm setButtonDisabled={setButtonDisabled} setCreateEventForm={setCreateEventForm}/>
-              {snack()}
           <Button
               onClick={()=> sendForm()}
               disabled={isButtonDisabled}

@@ -9,11 +9,9 @@ import EventCarrousel from "./EventCarrousel";
 const EventCarrouselListLoader = (props : {search : EventSearchProps}) => {
     const [events, setEvents] = useState<EventCardModel[]>([])
     useEffect(() =>{
-        console.log('Update', props.search);
-
         (async function anyNameFunction() {
             await EventService.searchEvent(props.search)
-                .catch((reason: any) => console.log("Error", reason))
+                .catch((reason: any) => {})
                 .then((value: { data: { content: any; }; }) => {
                     if (value) {
                         setEvents(value.data.content)

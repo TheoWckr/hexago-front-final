@@ -113,7 +113,6 @@ const  GameCreatePage = () => {
         if (gameState.description.trim().length <= 15) {
             errorList.push('description')
         }
-        console.log('Error List', errorList);
 
         setErrorMessage(errorList);
         return errorList.length === 0;
@@ -123,11 +122,9 @@ const  GameCreatePage = () => {
         if (validation()) {
             GameService.createGame(gameState, file).then((response) => {
                 if (response.status !== 200 || response.data.error) {
-                    console.log('error', response);
                     setErrorMessage(['nameAlreadyExist']);
                 }
                 else {
-                    console.log('Create', response);
                     setGameStatus('Jeu crée');
                     openSnack(gameState.name + " a été crée " )
                 }
@@ -138,7 +135,6 @@ const  GameCreatePage = () => {
     const onUpdate = () => {
         if (validation()) {
             GameService.updateGame(gameState).then((response: any) => {
-                    console.log('On Update ', response);
                     openSnack(gameState.name + " a été supprimé " )
                 }
             )
@@ -148,7 +144,6 @@ const  GameCreatePage = () => {
     const onDelete = () => {
         if (gameState._id) {
             GameService.deleteGame(gameState._id).then((response) => {
-                console.log(response);
                 setGameState(new GameModel());
                 openSnack(gameState.name + " a été crée " )
             })
@@ -196,12 +191,10 @@ const  GameCreatePage = () => {
                 [properties]: value
             }
         }));
-        console.log(gameState);
     };
     useEffect(() => {
         if (id) {
             GameService.getGame(id).then((value) => {
-                    console.log(UtilsAxios.displayReponse(value));
                     setGameState(new GameModel(value.data.content));
                 }
             )

@@ -19,7 +19,6 @@ const GameCreatePanel2 = (props: GameEditProps) => {
     };
 
     const handleChangeMinimumAge = (event: any, newValue: number | number[]) => {
-        console.log(newValue);
         if (newValue as number) {
             props.changeGameState('minAge', newValue);
         }

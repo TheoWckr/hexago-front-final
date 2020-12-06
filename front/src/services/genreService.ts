@@ -18,13 +18,10 @@ export const GenreService = {
     },
 
     createGenre(body : GenreModel) :AxiosPromise {
-        console.log("Create game  Body : " , JSON.stringify((body)) );
-        console.log("Create game  JSON : " , JSON.stringify((body)) );
         return axios.post(routeName + 'create',{genre : body.genre});
     },
 
     updateGenre(genre: GenreModel)  :AxiosPromise {
-        console.log( {genre : genre.genre} );
 
         return axios.put(routeName + genre._id, {genre : genre.genre});
     },

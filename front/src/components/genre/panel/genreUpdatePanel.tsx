@@ -21,7 +21,6 @@ useEffect(() => {
     const deleteState = () => {
         GenreService.deleteGenre(props.genreState._id).then(
             (response) => {
-                console.log(response);
                 if (response.status === 200)
                     setDeleted(true);
             });
