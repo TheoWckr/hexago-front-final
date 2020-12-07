@@ -166,22 +166,37 @@ export const ChatComponent = () => {
                 <div className={classes.drawerContainer}>
                     {isCreate === false ? (
                         <div>
-                            <Button variant="outlined" color="primary" onClick={() => {setIsCreate(true); getUsers();}}><EditIcon/></Button>
+                            <div style={{display: "flex", flexDirection: "row-reverse", margin: "10px"}}>
+                                <Button variant="outlined" color="primary" onClick={() => {setIsCreate(true); getUsers();}}><EditIcon/></Button>
+                            </div>
                             {chat.length === 0 ? (
                                 <div style={{textAlign: "center", marginTop: "30vh"}}>Pas de conversations trouvées</div>
                             ) : (
                                 <List>
-                                    {chat.map((conv: any, index: any) => (
-                                        <ListItem button key={index} onClick={() => onChatClick(conv._id, conv.messages)}>
-                                            <ListItemText primary={UtilsString.arrayToForm(conv.userIdNames)} />
-                                        </ListItem>
-                                    ))}
+                                    {chat.map((conv: any, index: any) => {
+                                        if (conv._id === chatId) {
+                                            return (
+                                                <ListItem button key={index} onClick={() => onChatClick(conv._id, conv.messages)} className="conv-active">
+                                                    <ListItemText primary={UtilsString.arrayToForm(conv.userIdNames)} style={{color: "white"}} />
+                                                </ListItem>
+                                            )
+                                        } else {
+                                            return (
+                                                <ListItem button key={index} onClick={() => onChatClick(conv._id, conv.messages)}>
+                                                    <ListItemText primary={UtilsString.arrayToForm(conv.userIdNames)} />
+                                                </ListItem>
+                                            )
+                                        }
+                                    })}
                                 </List>
                             )}
                         </div>
                     ) : (
                         <div>
-                            <Button color="primary" onClick={createChat}>Ok</Button>
+                            <div style={{display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
+                                <Button color="primary" onClick={() => setIsCreate(false)}>Retour</Button>
+                                <Button color="primary" onClick={createChat}>Ok</Button>
+                            </div>
                             {selectedUsers.map((user: any, index: any) => (
                                 <ListItem key={index} >
                                     <ListItemText primary={user.firstname + " " + user.lastname} />
@@ -189,11 +204,15 @@ export const ChatComponent = () => {
                                 </ListItem>
                             ))}
                             <List>
-                                {users.map((user: any, index: any) => (
-                                    <ListItem button key={index} onClick={() => {setSelectedUsers([...selectedUsers, user]); setUsers(users.filter((x: any) => x._id !== user._id))}}>
-                                        <ListItemText primary={user.firstname + " " + user.lastname} />
-                                    </ListItem>
-                                ))}
+                                {users.map((user: any, index: any) => {
+                                    if (user._id !== userId) {
+                                        return (
+                                            <ListItem button key={index} onClick={() => {setSelectedUsers([...selectedUsers, user]); setUsers(users.filter((x: any) => x._id !== user._id))}}>
+                                                <ListItemText primary={user.firstname + " " + user.lastname} />
+                                            </ListItem>
+                                        )
+                                    }
+                                })}
                             </List>
                         </div>
                     )}
@@ -209,16 +228,15 @@ export const ChatComponent = () => {
                             })
 
                             user = user.filter(x => x !== undefined)
-                            console.log(user)
                             if (message.userId.indexOf(userId) !== -1) {
                                 return (
                                     <div style={{display: "flex", flexDirection: "row-reverse", alignItems: "end"}}>
-                                        <div key={i} className="speech-bubble" style={{wordBreak: "break-word"}}>{message.message}</div>
+                                        <div key={i} className="speech-bubble" style={{wordBreak: "break-word", maxWidth: "50%"}}>{message.message}</div>
                                     </div>
                                 )
                             } else {
                                 return (
-                                    <div style={{display: "flex", flexDirection: "row", alignItems: "start"}}>
+                                    <div style={{display: "flex", flexDirection: "row", alignItems: "start", maxWidth: "50%"}}>
                                         <div className="col">
                                             <div>{user[0]}</div>
                                             <div key={i} className="speech-bubble" style={{wordBreak: "break-word"}}>{message.message}</div>
@@ -230,7 +248,7 @@ export const ChatComponent = () => {
                     )}
 
                 </div>
-                <div style={{position: "absolute", bottom: "2%", width: "75%"  }}>
+                <div>
                         { writing && (
                             <div>Typing...</div>
                         )}

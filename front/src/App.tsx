@@ -36,6 +36,13 @@ const App = (props: { location: any }) => {
     useEffect(() => {
        setPreviousValueLocation(props.location.pathname)
     }, [props.location])
+    // useEffect(() => {
+    //     window.onbeforeunload = beforeUnload;
+    //     function beforeUnload()
+    //     {
+    //         return //Une fonction qui sera appelé a la déconnexion 
+    //     }
+    // }, [])
     const shouldRefresh = () :boolean => {
         return props.location.pathname != previousValueLocation
     }
