@@ -93,6 +93,7 @@ const Header = () => {
                                         des genres</MenuItem>,
                                     <MenuItem key={1} onClick={handleClose} component={Link} to={'/GameCreate/'}>Création
                                         de jeu</MenuItem>,
+                                    <MenuItem key={2} onClick={handleClose} component={Link} to={'/chat'}>Chat</MenuItem>,
 
                                     <MenuItem key={9} onClick={logout}>Déconnexion</MenuItem>
                                 ]
