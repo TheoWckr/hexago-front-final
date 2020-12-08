@@ -105,3 +105,4 @@ dist
 front/package-lock.json
 back/apidoc
 /front/storybook-static/
+/back/package-lock.json
