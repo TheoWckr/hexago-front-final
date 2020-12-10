@@ -145,7 +145,6 @@ router.post(
               });
           }
           await user.save();
-          console.log(user)
           const payload = {
               user: {
                   id: user.id

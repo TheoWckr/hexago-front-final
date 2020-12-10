@@ -492,8 +492,7 @@ router.get('/:id', function (req, res, next) {
             err: 'Please provide a valid id param.'
         })
     } else {
-        GameDetails.findById(
-            req.params.id).populate('genres').exec((err, content) => {
+        GameDetails.findById(req.params.id).populate('genres').exec((err, content) => {
             if (err) res.json({
                 err: err
             });

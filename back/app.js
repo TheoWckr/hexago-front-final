@@ -7,10 +7,19 @@ const jwt = require("express-jwt");
 const jwksRsa = require("jwks-rsa");
 const helmet = require('helmet');
 let mongoose = require('mongoose');
+const dotEnv = require('dotenv');
+
+dotEnv.config();
 
 let cors = require('cors');
 let app = express();
 app.use(cors());
+
+// connect to Mongo daemon
+mongoose.connect("'"+ process.env.MONGODB_URI +"'", { useNewUrlParser: true })
+    .then(() => console.log('MongoDB Connected'))
+    .catch(err => console.log(err));
+
 
 let indexRouter = require('./routes/index');
 let usersRouter = require('./routes/users');

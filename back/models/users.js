@@ -1,10 +1,4 @@
 let mongoose = require('mongoose');
-// connect to Mongo daemon
-mongoose.connect('mongodb://localhost:27017/hexago', { useNewUrlParser: true })
-    .then(() => console.log('MongoDB Connected'))
-    .catch(err => console.log(err));
-
-let db = mongoose.connection;
 let usersSchema = require('../schemas/users');
 
-module.exports = db.model('Users', usersSchema);
+module.exports = mongoose.model('Users', usersSchema);
