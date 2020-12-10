@@ -82,7 +82,7 @@ const http = require('http').createServer(app);
 // require the socket.io module
 const io = require('socket.io');
 
-const port = 3100;
+const port = process.env.PORT;
 
 const socket = io(http);
 //create an event listener
