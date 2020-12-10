@@ -5,6 +5,7 @@ import {TransitionGroup, CSSTransition} from "react-transition-group";
 import GameList from "./components/game/list/gameList";
 
 import {
+    BrowserRouter as Router,
     Switch,
     Route
 } from 'react-router-dom';
@@ -40,7 +41,7 @@ const App = (props: { location: any }) => {
     //     window.onbeforeunload = beforeUnload;
     //     function beforeUnload()
     //     {
-    //         return //Une fonction qui sera appelé a la déconnexion 
+    //         return //Une fonction qui sera appelé a la déconnexion
     //     }
     // }, [])
     const shouldRefresh = () :boolean => {
