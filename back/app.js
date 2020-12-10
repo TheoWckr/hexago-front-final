@@ -3,9 +3,6 @@ let express = require('express');
 let path = require('path');
 let cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const jwt = require("express-jwt");
-const jwksRsa = require("jwks-rsa");
-const helmet = require('helmet');
 let mongoose = require('mongoose');
 const dotEnv = require('dotenv');
 
