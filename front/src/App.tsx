@@ -1,11 +1,10 @@
-import React, {useEffect, useLayoutEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './App.css';
 import Header from "./components/commons/headers/Header";
 import {TransitionGroup, CSSTransition} from "react-transition-group";
 import GameList from "./components/game/list/gameList";
-
+import {MAIN_ADRESS} from "./utils/utilsAxios";
 import {
-    BrowserRouter as Router,
     Switch,
     Route
 } from 'react-router-dom';
@@ -31,8 +30,7 @@ const App = (props: { location: any }) => {
 
     const[previousValueLocation, setPreviousValueLocation]  =useState("")
     useEffect(() => {
-        const socket = socketIOClient("http://localhost:3100");
-
+        const socket = socketIOClient(MAIN_ADRESS);
     }, [])
     useEffect(() => {
        setPreviousValueLocation(props.location.pathname)
