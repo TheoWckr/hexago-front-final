@@ -1,9 +1,9 @@
-import React, {useEffect, useLayoutEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './App.css';
 import Header from "./components/commons/headers/Header";
 import {TransitionGroup, CSSTransition} from "react-transition-group";
 import GameList from "./components/game/list/gameList";
-
+import {MAIN_ADRESS} from "./utils/utilsAxios";
 import {
     Switch,
     Route
@@ -30,8 +30,7 @@ const App = (props: { location: any }) => {
 
     const[previousValueLocation, setPreviousValueLocation]  =useState("")
     useEffect(() => {
-        const socket = socketIOClient("http://localhost:3100");
-
+        const socket = socketIOClient(MAIN_ADRESS);
     }, [])
     useEffect(() => {
        setPreviousValueLocation(props.location.pathname)
@@ -40,7 +39,7 @@ const App = (props: { location: any }) => {
     //     window.onbeforeunload = beforeUnload;
     //     function beforeUnload()
     //     {
-    //         return //Une fonction qui sera appelé a la déconnexion 
+    //         return //Une fonction qui sera appelé a la déconnexion
     //     }
     // }, [])
     const shouldRefresh = () :boolean => {

@@ -1,11 +1,11 @@
 import { createStyles, TextareaAutosize, Drawer, List, ListItem, ListItemIcon, ListItemText, makeStyles, Theme, Toolbar, Button } from '@material-ui/core';
 import React, { useEffect, useState } from 'react'
-import { axios, MAIN_ADRESS } from '../../utils/utilsAxios';
 import Send from '@material-ui/icons/SendOutlined';
 import EditIcon from '@material-ui/icons/Edit';
 import "./Chat.css";
 import {UtilsString} from "../../utils/utilsString";
 import { useHistory } from 'react-router-dom';
+import {axios, MAIN_ADRESS, UtilsAxios} from '../../utils/utilsAxios';
 
 const socketIOClient = require('socket.io-client');
 
@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export const ChatComponent = () => {
-    const socket = socketIOClient("http://localhost:3100");
+    const socket = socketIOClient(MAIN_ADRESS);
     const [messages, setMessages] = useState<any>([]);
     const [writing, setWriting] = useState<boolean>(false);
     const [message, setMessage] = useState<string>("");
@@ -50,6 +50,7 @@ export const ChatComponent = () => {
     let username = "";
     const classes = useStyles();
     const history = useHistory();
+
 
     useEffect(() => {
         // socket stopWritingMessage params :  userId, chatId

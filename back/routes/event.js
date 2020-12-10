@@ -8,6 +8,9 @@ let Users = require ('../models/users');
 let moment = require('moment');
 moment().format();
 const auth = require("../middleware/auth");
+const dotEnv = require('dotenv');
+
+dotEnv.config();
 
 // let axios = require('axios')
 // axios.defaults.baseURL = `${process.env.AUTH0_AUDIENCE}`
@@ -119,7 +122,7 @@ router.post('/create', auth, async (req, res, next) => {
         eventToCreate.listGames = eventToCreateGameDetailsId;
         // TODO changer le localhost:3100 par url en production
         await new Promise((resolve, reject) => {
-            unirest('GET', 'http://localhost:3100/users/me')
+            unirest('GET', 'http://localhost:'+ process.env.PORT +'/users/me')
             .headers({
                 'token': req.header("token")
             })

@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node app.js",
-    "test": "jest"
+    "test": "jest",
+    "publishToHeroku": "cd ../ && git subtree push --prefix back heroku master || true"
   },
   "dependencies": {
     "async": "^3.2.0",
