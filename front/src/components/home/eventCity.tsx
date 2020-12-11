@@ -49,7 +49,7 @@ export const EventCity = () => {
                                     options={villes as Ville[] }
                                     getOptionLabel={(ville : {name : string}) => ville.name}
                                     multiple={false}
-
+                                    className={"autocompleteField"}
                                     onKeyPress={(e) => handleKeyPress(e)}
                                     renderInput={(params) => <div  className="searchTerm"  >
                                         <TextField {...params}  variant="standard"  style={{width:"97%",paddingLeft:"3%"}}  />
