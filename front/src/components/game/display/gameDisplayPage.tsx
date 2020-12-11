@@ -93,19 +93,19 @@ const GameDisplayPage = () => {
                     />
                     <Card >
                         <CardContent  className={classes.lineHeight} >
-                            <Typography variant="body2"  className={classes.lineHeight} > Released : {UtilsDate.toDisplay(gameState.releaseDate)} </Typography>
+                            <Typography variant="body2"  className={classes.lineHeight} > Date de sortie: {UtilsDate.toDisplay(gameState.releaseDate)} </Typography>
                             <Divider variant={"inset"}/>
-                            <Typography variant="body2"  className={classes.lineHeight}>Author: {gameState.author}</Typography>
+                            <Typography variant="body2"  className={classes.lineHeight}>Auteur: {gameState.author}</Typography>
                             {gameState.distributor &&
                                 <>
                                     <Divider variant={"inset"}  className={classes.lineHeight}/>
-                                <Typography variant="body2"  className={classes.lineHeight} > Distributor : {gameState.distributor}</Typography>
+                                <Typography variant="body2"  className={classes.lineHeight} > Distributeur : {gameState.distributor}</Typography>
                                 </>
                             }
                             {gameState.editor &&
                             <>
                                 <Divider variant={"inset"}  className={classes.lineHeight}/>
-                                <Typography variant="body2"  className={classes.lineHeight} > Editor : {gameState.editor}</Typography>
+                                <Typography variant="body2"  className={classes.lineHeight} > Éditeur : {gameState.editor}</Typography>
                             </>
                             }
                         </CardContent>

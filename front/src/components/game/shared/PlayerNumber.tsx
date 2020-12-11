@@ -6,8 +6,8 @@ import React from "react";
     return (<Typography variant="body2">
         <FaceIcon  color="primary"/>
         {props.playerMin === 1 && 'Solo' }
-        {props.playerMin === props.playerMax && props.playerMin+ ' players'}
-        {props.playerMin !== props.playerMax && props.playerMin + ' - ' + props.playerMax+ ' players' }
+        {props.playerMin === props.playerMax && props.playerMin+ ' joueurs'}
+        {props.playerMin !== props.playerMax && props.playerMin + ' - ' + props.playerMax+ ' joueurs' }
     </Typography>)
 };
  export default PlayerNumber;

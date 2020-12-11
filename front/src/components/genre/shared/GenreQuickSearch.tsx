@@ -5,18 +5,29 @@ import {AxiosResponse} from "axios";
 import {GenreModel} from "../../../models/genreModel";
 
 const GenreQuickSearch = (props : {
-    setChoices:  (genres: GenreModel[]) => void | React.Dispatch<React.SetStateAction<GenreModel[]>>
+    setChoices:  (genres: GenreModel[]) => void | React.Dispatch<React.SetStateAction<GenreModel[]>>,
+    choices? : string[]
+
 }) =>  {
-    const [chosenGenres, setChosenGenres] = useState<string[]>([]);
-    const [options, setOptions] = useState<QSLabelChoicesWithImg[]>([]);
+    const [chosenGenres, setChosenGenres] = useState<string[]>(props.choices ? props.choices : []);
     const [genreStock, setGenreStock] = useState<GenreModel[] >([]);
+    const [defaultOptions, setDefaultOptions ] = useState<QSLabelChoicesWithImg[]>([]);
+    const [options, setOptions] = useState<QSLabelChoicesWithImg[]>([]);
 
     useEffect(()=>{
         GenreService.getGenres("",9999).then((response:AxiosResponse) =>{
             let tmpOptions: QSLabelChoicesWithImg[] = [];
+            let tmpDefaultOptions: QSLabelChoicesWithImg[] = [];
+
             let tmpGenreStocks: GenreModel[] = [];
             if(response.data.content && response.data.content.length !== 0) {
                 response.data.content.forEach((genre :GenreModel) => {
+                    if(chosenGenres.includes(genre._id)) {
+                        tmpDefaultOptions.push({
+                            label: genre.genre,
+                            _id: genre._id
+                        })
+                    }
                     tmpGenreStocks.push(genre)
                     tmpOptions.push({
                         label : genre.genre,
@@ -39,7 +50,7 @@ const GenreQuickSearch = (props : {
         props.setChoices(listGenre)
     }, [chosenGenres])
     return (
-        <QuickSearchMultiple listOfChoices={options} setChoices={setChosenGenres} label={"Genre"}/>
+        <QuickSearchMultiple listOfChoices={options} setChoices={setChosenGenres} defaultOptions={defaultOptions} label={"Genre"}/>
         )
 };
 export default GenreQuickSearch;
