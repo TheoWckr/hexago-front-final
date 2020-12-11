@@ -45,7 +45,7 @@
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public",
-    "publishToHeroku": "cd ../ && git subtree push --force --prefix front heroku-hexago-frontend master || true"
+    "publishToHeroku": "cd ../ && git subtree  push --prefix front heroku-hexago-frontend master"
   },
   "eslintConfig": {
     "extends": "react-app"
