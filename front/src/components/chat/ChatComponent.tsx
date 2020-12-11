@@ -47,6 +47,7 @@ export const ChatComponent = () => {
     const [chatId, setChatId] = useState<string>();
     const [isCreate, setIsCreate] = useState<boolean>(false);
     const userId = localStorage.getItem("userId")
+    let username = "";
     const classes = useStyles();
     const history = useHistory();
 
@@ -82,9 +83,9 @@ export const ChatComponent = () => {
                 getChats()
             }
         });
-        socket.on('writing', (userId: string, id: string, userIdList: string[]) => {
+        socket.on('writing', (senderId: string, id: string, userIdList: string[]) => {
             // check if userId is not in userIdList
-            if (id === chatId) {
+            if (id === chatId && userId !== senderId) {
                 setWriting(true)
             }
         });
@@ -220,10 +221,15 @@ export const ChatComponent = () => {
                 </div>
             </Drawer>
             <main className={classes.content}>           
-                <div style={{display: "flex", flexDirection: "column", overflowY: "scroll", height: "78vh"}}>
+                <div style={{display: "flex", flexDirection: "column", overflowY: "scroll", height: "79vh", justifyContent: "flex-end"}}>
                     {messages.map((message: any, i: any) => {
+                            let isUsername = true
                             let user = users.map((x: any) => {
                                 if (x._id === message.userId) {
+                                    if (username === x._id) {
+                                        isUsername = false
+                                    }
+                                    username = x._id
                                     return x.firstname
                                 }
                             })
@@ -231,7 +237,7 @@ export const ChatComponent = () => {
                             user = user.filter(x => x !== undefined)
                             if (message.userId.indexOf(userId) !== -1) {
                                 return (
-                                    <div style={{display: "flex", flexDirection: "row-reverse", alignItems: "end"}}>
+                                    <div style={{display: "flex", flexDirection: "row-reverse", alignItems: "end", marginRight: "1%"}}>
                                         <div key={i} className="speech-bubble" style={{wordBreak: "break-word", maxWidth: "50%"}}>{message.message}</div>
                                     </div>
                                 )
@@ -239,7 +245,9 @@ export const ChatComponent = () => {
                                 return (
                                     <div style={{display: "flex", flexDirection: "row", alignItems: "start", maxWidth: "50%"}}>
                                         <div className="col">
-                                            <div>{user[0]}</div>
+                                            {isUsername && (
+                                                <div>{user[0]}</div>
+                                            )}
                                             <div key={i} className="speech-bubble" style={{wordBreak: "break-word"}}>{message.message}</div>
                                         </div>
                                     </div>
@@ -247,17 +255,20 @@ export const ChatComponent = () => {
                             }
                         }
                     )}
-
+                    { writing && (
+                        <div id="wave">
+                            <span className="dot"></span>
+                            <span className="dot"></span>
+                            <span className="dot"></span>
+                        </div>
+                    )}
                 </div>
                 <div>
-                        { writing && (
-                            <div>Typing...</div>
-                        )}
                         <div style={{display: "flex", flexDirection: "row", justifyContent: "space-around"}}>
                             <TextareaAutosize style={{width: "90%"}} id="chatInput" onChange={writingMessage} placeholder="Ecrivez votre message ici" rowsMin={3} rowsMax={10}/>
                             <Button variant="outlined" color="primary" onClick={sendMessage}><Send/></Button>
                         </div>
-                    </div>
+                </div>
             </main>
         </div>
     )
