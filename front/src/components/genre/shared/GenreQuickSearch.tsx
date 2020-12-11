@@ -35,6 +35,7 @@ const GenreQuickSearch = (props : {
                     });
                 });
                 setGenreStock(tmpGenreStocks)
+                setDefaultOptions(tmpDefaultOptions);
                 setOptions(tmpOptions);
             }
         });
