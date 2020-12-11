@@ -51,6 +51,7 @@
 
 .search {
     width: 100%;
+    max-width: 500px;
     position: relative;
     padding: 1.5rem 0;
     display: flex;
