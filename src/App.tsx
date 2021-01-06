@@ -91,9 +91,9 @@ const App = (props: { location: any }) => {
                             <Route path="/login" render={() => (
                                 !isLogged ? <LoginPage/> : <Redirect to='/'/>
                             )}/>
-                            <Route path="/register">
-                                <RegisterPage/>
-                            </Route>
+                            <Route path="/register" render={() => (
+                                !isLogged ? <RegisterPage/> : <Redirect to='/'/>
+                            )}/>
                             <Route path="/chat">
                                 <ChatComponent/>
                             </Route>
