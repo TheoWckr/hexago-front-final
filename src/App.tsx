@@ -88,12 +88,12 @@ const App = (props: { location: any }) => {
                             <Route path="/event/search">
                                 <EventSearchPage/>
                             </Route>
-                            <Route path="/login" render={() => (
-                                !isLogged ? <LoginPage/> : <Redirect to='/'/>
-                            )}/>
-                            <Route path="/register" render={() => (
-                                !isLogged ? <RegisterPage/> : <Redirect to='/'/>
-                            )}/>
+                            <Route path="/login" >
+                                !isLogged ? <LoginPage/> : <Redirect to={'/'}/>
+                            </Route>
+                            <Route path="/register">
+                                !isLogged ? <RegisterPage/> : <Redirect to={'/'}/>
+                            </Route>
                             <Route path="/chat">
                                 <ChatComponent/>
                             </Route>
