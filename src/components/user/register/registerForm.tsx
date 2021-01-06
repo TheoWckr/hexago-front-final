@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme: Theme) =>
         formInputs: {
         	width: '100%',
         	marginLeft: '0.5rem',
-        	marginRight: '0.5rem' 
+        	marginRight: '0.5rem'
         }
     }),
 );
@@ -56,7 +56,7 @@ export const RegisterForm = () => {
     const [phoneNumber, setPhoneNumber] = useState('');
     const [birth, setBirth] = useState(new Date());
     const [password, setPassword] = useState('');
-    const [passwordConfirm, setPasswordConfirm] = useState(''); 
+    const [passwordConfirm, setPasswordConfirm] = useState('');
     const [isButtonDisabled, setIsButtonDisabled] = useState(true);
     const [helperText, setHelperText] = useState('');
 	const {openSnack} = useContext(SnackContext)
@@ -139,7 +139,7 @@ export const RegisterForm = () => {
 
     return (
         <div className={classes.registerContainer}>
-            <span className="userLogo"></span>
+            <span className="userLogo"/>
             <div style={{width: '76%'}}>
                 <form noValidate autoComplete="off">
                 	<Grid container>
