@@ -1,0 +1,11 @@
+.speech-bubble {
+	position: relative;
+	background: #00aabb;
+    border-radius: .4em;
+    padding: 5px;
+    margin-bottom: 5px;
+}
+
+.conv-active {
+    background-color: #312783!important;
+}
