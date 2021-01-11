@@ -32,16 +32,28 @@ export const EmailVerificationComponent = () => {
     }, [])
 
     return (
-        <div>
-            {isValidated ? (
-                <div>
-                    Félicitation votre email est validé ! Vous pouvez quitter cette page
-                </div>
-            ) : (
-                <div>
-                    Le token de vérification n'est pas bon. Cliquez <button onClick={sendVerifyEmail}>ici</button> pour recevoir un nouvel email
-                </div>
-            )}
+        <div className="email-vrf-bg">
+            <div className="center-box">
+                {isValidated ? (
+                    <div className="center">
+                        <div className="img-center">
+                            <img className="fit-picture"
+                            src="/icon-valid.png"
+                            alt="Grapefruit slice atop a pile of other slices"/>
+                        </div>
+                        Félicitation votre email est validé !<br/>Vous pouvez quitter cette page.
+                    </div>
+                ) : (
+                    <div className="center">
+                        <div className="img-center">
+                            <img className="fit-picture"
+                            src="/icon-error.png"
+                            alt="Grapefruit slice atop a pile of other slices"/>
+                        </div>
+                        Le token de vérification n'est pas bon. Cliquez <button onClick={sendVerifyEmail}>ici</button> pour recevoir un nouvel email
+                    </div>
+                )}
+            </div>
         </div>
     )
 }
