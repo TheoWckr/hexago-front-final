@@ -21,6 +21,7 @@ import {Home} from "./components/home/home";
 import EventDisplayPageLoader from "./components/event/display/EventDisplayPageLoader";
 import EventSearchPage from "./components/event/search/eventSearchPage";
 import {SnackContext, useSnack} from "./services/hooks/useSnackBar";
+import UserEditLoaderPage from "./components/user/edit/userEditLoaderPage";
 
 const socketIOClient = require('socket.io-client');
 
@@ -95,6 +96,9 @@ const App = (props: { location: any }) => {
                         </Route>
                         <Route path="/register">
                             <RegisterPage/>
+                        </Route>
+                        <Route path="/user/edit">
+                            <UserEditLoaderPage/>
                         </Route>
                         <Route path="/chat">
                             <ChatComponent/>

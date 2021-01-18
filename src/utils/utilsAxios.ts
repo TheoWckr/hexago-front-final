@@ -3,7 +3,7 @@ import {AxiosResponse} from "axios";
 export const axios = require('axios') ;
 
 
-export const MAIN_ADRESS = "http://localhost:3100/";
+export const MAIN_ADRESS = "http://localhost:3100";
 let contentType = 'Content-Type';
 export const UtilsAxios = {
         /**
