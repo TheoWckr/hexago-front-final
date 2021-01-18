@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {Component, useEffect, useState} from 'react';
 import './App.css';
 import Header from "./components/commons/headers/Header";
 import {TransitionGroup, CSSTransition} from "react-transition-group";
@@ -21,6 +21,7 @@ import {Home} from "./components/home/home";
 import EventDisplayPageLoader from "./components/event/display/EventDisplayPageLoader";
 import EventSearchPage from "./components/event/search/eventSearchPage";
 import {SnackContext, useSnack} from "./services/hooks/useSnackBar";
+import GuardedRoute from "./components/commons/guard/guardedRoute";
 
 const socketIOClient = require('socket.io-client');
 
@@ -88,12 +89,8 @@ const App = (props: { location: any }) => {
                             <Route path="/event/search">
                                 <EventSearchPage/>
                             </Route>
-                            <Route path="/login" >
-                                !isLogged ? <LoginPage/> : <Redirect to={'/'}/>
-                            </Route>
-                            <Route path="/register">
-                                !isLogged ? <RegisterPage/> : <Redirect to={'/'}/>
-                            </Route>
+                            <GuardedRoute path="/login" component={LoginPage} exact auth={false}/>
+                            <GuardedRoute path="/register" component={RegisterPage} exact auth={false}/>
                             <Route path="/chat">
                                 <ChatComponent/>
                             </Route>
