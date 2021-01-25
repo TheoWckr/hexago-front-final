@@ -1,12 +1,6 @@
 import React, {useContext, useEffect, useState} from "react";
-import {SnackContext} from "../../../services/hooks/useSnackBar";
-import {useHistory} from "react-router";
-import {UserService} from "../../../services/userService";
-import {MaterialUiPickersDate} from "@material-ui/pickers/typings/date";
 import {createStyles, Grid, Paper, Theme, Typography} from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
-import {KeyboardDatePicker} from "@material-ui/pickers";
-import Button from "@material-ui/core/Button";
 import {UserData} from "../../../services/hooks/useAuth";
 import {makeStyles} from "@material-ui/core/styles";
 import {UtilsDate} from "../../../utils/utilsDate";
