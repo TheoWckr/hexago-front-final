@@ -62,38 +62,28 @@ const App = (props: { location: any }) => {
                             <Route exact path="/">
                                 <Home/>
                             </Route>
-                            <Route exact path="/GameCreate/:id?">
-                                <GameCreatePage/>
-                            </Route>
+                            <GuardedRoute component={GameCreatePage} path={"/GameCreate/:id?"} exact={true} auth={true}/>
                             <Route path="/GameDisplay/:id">
                                 <GameDisplayPage/>
                             </Route>
                             <Route path="/GameSearch/">
                                 <GameList/>
                             </Route>
-                            <Route path="/GenreManagement/">
-                                <GenreCRUDPage/>
-                            </Route>
+                            <GuardedRoute component={GenreCRUDPage} path={"/GenreManagement/"} exact={true} auth={true}/>
                             <Route exact path="/event">
                                 <EventSearchPage/>
                             </Route>
-                            <Route path="/event/create">
-                                <EventCreatePage/>
-                            </Route>
-                            <Route path="/event/update/:id">
-                                <EventUpdatePage/>
-                            </Route>
+                            <GuardedRoute component={EventCreatePage} path={"/event/create"} exact={true} auth={true}/>
+                            <GuardedRoute component={EventUpdatePage} path={"/event/update/:id"} exact={true} auth={true}/>
                             <Route path="/event/display/:id">
                                 <EventDisplayPageLoader/>
                             </Route>
                             <Route path="/event/search">
                                 <EventSearchPage/>
                             </Route>
-                            <GuardedRoute path="/login" component={LoginPage} exact auth={false}/>
-                            <GuardedRoute path="/register" component={RegisterPage} exact auth={false}/>
-                            <Route path="/chat">
-                                <ChatComponent/>
-                            </Route>
+                            <GuardedRoute component={LoginPage} path={"/login"} exact={true} auth={false}/>
+                            <GuardedRoute component={RegisterPage} path={"/register"} exact={true} auth={false}/>
+                            <GuardedRoute component={ChatComponent} path={"/chat"} exact={true} auth={true}/>
                         </Switch>
                     </CSSTransition>
                 </TransitionGroup>

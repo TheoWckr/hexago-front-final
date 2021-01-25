@@ -107,8 +107,8 @@ export const RegisterForm = () => {
 				openSnack("Inscription validée, vous pouvez désormais vous connecter")
 				history.push("/");
 			}
-		).catch(()=>
-			openSnack("Erreur(s) dans les données saisies")
+		).catch((error)=>
+			console.log(error.message)
 		);
     };
 
