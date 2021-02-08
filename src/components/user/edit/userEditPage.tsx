@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from "react";
-import {createStyles, Grid, Paper, Theme, Typography} from "@material-ui/core";
+import {Button, createStyles, Grid, Paper, Theme, Typography} from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import {UserData} from "../../../services/hooks/useAuth";
 import {makeStyles} from "@material-ui/core/styles";
@@ -27,7 +27,9 @@ export const UserEditPage = (props: {user : UserData}) => {
     const [password, setPassword] = useState("")
     const [passwordCheck, setPasswordCheck] = useState("")
     const [passwordMatch, setPasswordMatch] = useState(true)
-    return     (<div className={classes.root}>
+    const[email, setEmail] = useState(props.user.email)
+    return     (
+        <div className={classes.root}>
             <Typography > Informations personnelles</Typography>
         <Grid container spacing={3}>
             <Grid item xs={6}>
@@ -35,9 +37,15 @@ export const UserEditPage = (props: {user : UserData}) => {
                 <TextField disabled> {UtilsDate.toDisplay(props.user.createdAt)}</TextField>
             </Grid>
             <Grid item xs={6}>
-                <Paper className={classes.paper}>xs=6</Paper>
+                <TextField label={"Pseudo"} onChange={event => setUserName(event.target.value)} > {userName}</TextField>
+                <TextField label={"Prénom"} onChange={event => setFirstName(event.target.value)}> {firstName}</TextField>
+                <TextField label={"Nom de famille"} onChange={event => setLastName(event.target.value)}> {lastName}</TextField>
+                <TextField label={"Mot de passe "} onChange={event => setPassword(event.target.value)} />
+                <TextField label={"Confirmation mot de passe"} onChange={event => setPasswordCheck(event.target.value)}/>
             </Grid>
+
         </Grid>
+            <Button> Sauvegarder</Button>
     </div>
 );
 };
