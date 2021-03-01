@@ -26,7 +26,7 @@ import GuardedRoute from "./components/commons/guard/guardedRoute";
 const socketIOClient = require('socket.io-client');
 
 const App = (props: { location: any }) => {
-    const {isLogged, signIn, token, disconnect, userId, currentUser} = useAuth();
+    const {isLogged, signIn, token, disconnect, userId, currentUser,loginResolved} = useAuth();
     const {openSnack, snack} = useSnack("");
 
     const [previousValueLocation, setPreviousValueLocation] = useState("")
@@ -52,6 +52,7 @@ const App = (props: { location: any }) => {
         <AuthContext.Provider value={{isLogged, signIn, token, disconnect, userId, currentUser}}>
             <SnackContext.Provider value={{openSnack}}>
                 <Header/>
+                {loginResolved &&(
                 <TransitionGroup appear={shouldRefresh()} enter={shouldRefresh()} exit={shouldRefresh()}>
                     <CSSTransition key={props.location.key} classNames="fade" timeout={{
                         appear: 1800,
@@ -87,6 +88,7 @@ const App = (props: { location: any }) => {
                         </Switch>
                     </CSSTransition>
                 </TransitionGroup>
+                )}
                 {snack()}
             </SnackContext.Provider>
         </AuthContext.Provider>
