@@ -17,6 +17,7 @@ import {AuthContext, useAuth} from './services/hooks/useAuth';
 import EventCreatePage from "./components/event/create/eventCreatePage";
 import EventUpdatePage from "./components/event/update/eventUpdatePage";
 import {ChatComponent} from './components/chat/ChatComponent';
+import {EmailVerificationComponent} from './components/email/EmailVerificationComponent';
 import {Home} from "./components/home/home";
 import EventDisplayPageLoader from "./components/event/display/EventDisplayPageLoader";
 import EventSearchPage from "./components/event/search/eventSearchPage";
@@ -97,6 +98,9 @@ const App = (props: { location: any }) => {
                         </Route>
                         <Route path="/chat">
                             <ChatComponent/>
+                        </Route>
+                        <Route path="/email/:id/verify/:token">
+                            <EmailVerificationComponent/>
                         </Route>
                     </Switch>
                 </CSSTransition>
