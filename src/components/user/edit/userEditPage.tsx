@@ -20,14 +20,16 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const UserEditPage = (props: {user : UserData}) => {
     const classes = useStyles();
-
-    const  [firstName, setFirstName] = useState(props.user.firstName)
-    const [lastName, setLastName] = useState(props.user.lastName)
-    const [userName, setUserName] = useState(props.user.userName)
+    const  [firstName, setFirstName] = useState(props.user.firstname)
+    const [lastName, setLastName] = useState(props.user.lastname)
+    const [userName, setUserName] = useState(props.user.username)
     const [password, setPassword] = useState("")
     const [passwordCheck, setPasswordCheck] = useState("")
     const [passwordMatch, setPasswordMatch] = useState(true)
-    const[email, setEmail] = useState(props.user.email)
+    const [email, setEmail] = useState(props.user.email)
+
+    useEffect(() => setPasswordMatch(password === passwordCheck)
+    ,[password, passwordCheck])
     return     (
         <div className={classes.root}>
             <Typography > Informations personnelles</Typography>
@@ -37,15 +39,15 @@ export const UserEditPage = (props: {user : UserData}) => {
                 <TextField disabled> {UtilsDate.toDisplay(props.user.createdAt)}</TextField>
             </Grid>
             <Grid item xs={6}>
-                <TextField label={"Pseudo"} onChange={event => setUserName(event.target.value)} > {userName}</TextField>
-                <TextField label={"Prénom"} onChange={event => setFirstName(event.target.value)}> {firstName}</TextField>
-                <TextField label={"Nom de famille"} onChange={event => setLastName(event.target.value)}> {lastName}</TextField>
-                <TextField label={"Mot de passe "} onChange={event => setPassword(event.target.value)} />
-                <TextField label={"Confirmation mot de passe"} onChange={event => setPasswordCheck(event.target.value)}/>
+                <TextField label={"Pseudo"} onChange={event => setUserName(event.target.value)} value={userName} />
+                <TextField label={"Prénom"} onChange={event => setFirstName(event.target.value)} value={firstName}/>
+                <TextField label={"Nom de famille"} onChange={event => setLastName(event.target.value)}value={lastName}/>
+                <TextField label={"Mot de passe "} onChange={event => setPassword(event.target.value)} value={password} />
+                <TextField label={"Confirmation mot de passe"} onChange={event => setPasswordCheck(event.target.value)}value={passwordCheck}/>
             </Grid>
 
         </Grid>
-            <Button> Sauvegarder</Button>
+            <Button disabled={!passwordMatch}> Sauvegarder</Button>
     </div>
 );
 };

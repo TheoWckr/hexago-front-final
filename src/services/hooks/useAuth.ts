@@ -26,9 +26,9 @@ export interface UserData {
         _id: string,
         createdAt: Date,
         email : string,
-        firstName: string,
-        lastName:string,
-        userName: string,
+        firstname: string,
+        lastname:string,
+        username: string,
         img: {url:string, id:string},
         userProfile : string
 }
