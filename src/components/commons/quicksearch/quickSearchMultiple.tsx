@@ -9,7 +9,7 @@ export interface QSLabelChoicesWithImg {
     url?: string;
 }
 const QuickSearchMultiple = (props:{listOfChoices : QSLabelChoicesWithImg[],
-                           setChoices : Dispatch<SetStateAction<string[]>>, label?: string} ) =>
+                           setChoices : Dispatch<SetStateAction<string[]>>, label?: string, defaultOptions?: QSLabelChoicesWithImg[]} ) =>
 {
     return (
         <Autocomplete
@@ -18,11 +18,13 @@ const QuickSearchMultiple = (props:{listOfChoices : QSLabelChoicesWithImg[],
             multiple
             disableCloseOnSelect
             limitTags={1}
+            defaultValue={props.defaultOptions ?props.defaultOptions : undefined }
             onChange={(event: any, value: QSLabelChoicesWithImg[] | null) => {
                 if(value) props.setChoices(value.map((val)=> val._id))
                 else props.setChoices([])
             }}
             getOptionLabel={(option) => option.label}
+
             renderOption={(option =>
                     <React.Fragment>
                         {(option.url && <Avatar src={option.url}/> )}

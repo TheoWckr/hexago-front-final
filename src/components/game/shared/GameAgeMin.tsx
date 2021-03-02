@@ -7,7 +7,7 @@ const GameAgeMin = (props : {minAge?: number}) => {
         return (
             <Typography variant="body1" id="age">
                 <ChildCareIcon  color="primary"/>
-                {props.minAge +' and + '}
+                {props.minAge +' et + '}
             </Typography>
         );
     else return (<></>)

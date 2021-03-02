@@ -51,19 +51,21 @@
 
 .search {
     width: 100%;
+    max-width: 500px;
     position: relative;
     padding: 1.5rem 0;
     display: flex;
 }
 
 .searchTerm {
-    width: 500px;
+    width: 100%;
     border: none;
     padding: 5px;
     height: 30px;
     border-radius: 50px 0 0 50px;
     outline: none;
     background: white;
+    margin-left: -10px;
 }
 
 .searchTermTextField{
@@ -80,4 +82,8 @@
     border-radius: 0 50px 50px 0;
     cursor: pointer;
     font-size: 20px;
+}
+
+.autocompleteField {
+    width: 100%;
 }
