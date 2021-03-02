@@ -110,5 +110,4 @@ const App = (props: { location: any }) => {
         </AuthContext.Provider>
     );
 };
-
 export default App;
