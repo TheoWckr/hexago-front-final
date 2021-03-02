@@ -33,7 +33,7 @@ const GameNameQS = (props : {
     //Conversion name to idGame pour transmettre au dessus
     useEffect(() => {
         props.setChoices(chosenGames)
-    }, [ chosenGames])
+    }, [chosenGames])
     return (
 <QuickSearchMultiple listOfChoices={options} setChoices={setChosenGames} label={"Recherche de jeux"}/> )};
 export default GameNameQS;

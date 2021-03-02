@@ -18,15 +18,15 @@ const empyUserProfil = {
 };
 
 
-const routeName = MAIN_ADRESS+'users/';
+const routeName = MAIN_ADRESS+'/users/';
 export const UserService = {
 
     /** Renvois tous les users */
     getAllUser() :AxiosPromise {
-        return axios.get(MAIN_ADRESS+'users/');    },
+        return axios.get(MAIN_ADRESS+'/users/');    },
 
     signup(registerData : RegisterFormType): AxiosPromise{
-        return axios.post(  MAIN_ADRESS+'users/signup', registerData)    },
+        return axios.post(  MAIN_ADRESS+'/users/signup', registerData)    },
     /**
      * For login
      * @param loginData

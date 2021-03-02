@@ -38,6 +38,7 @@ export function useAuth() {
     const [currentUser, setCurrentUser] = useState<UserData |undefined>();
     const [isLogged, setIsLogged] = useState(false);
     const[userId, setUserId] = useState("")
+    const [loginResolved, setLoginResolved] = useState(false)
     /**
      * Fonction called on login and autoLogin
      * @param email
@@ -87,8 +88,10 @@ export function useAuth() {
 
         if(autoLogin && email && password ){
             await signIn(email, password)
+            setLoginResolved(true);
         } else {
             disconnect()
+            setLoginResolved(true);
         }
     };
 
@@ -131,7 +134,8 @@ export function useAuth() {
         token,
         signIn,
         disconnect,
-        userId
+        userId,
+        loginResolved
     };
 
 }
