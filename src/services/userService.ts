@@ -27,14 +27,14 @@ export const UserService = {
         },
 
     signup(registerData : RegisterFormType): AxiosPromise{
-        return axios.post(  MAIN_ADRESS+'users/signup', registerData)    },
+        return axios.post(  routeName+'signup', registerData)    },
     /**
      * For login
      * @param loginData
      * @return data.token the JWT Token of the session
      */
     login(loginData: LoginFormType): AxiosPromise{
-        return axios.post(MAIN_ADRESS + 'users/login', loginData)    },
+        return axios.post(routeName + 'login', loginData)    },
     /**
      * Fonction that take the user's token and return all data about it
      * not usable on other users
@@ -46,7 +46,7 @@ export const UserService = {
                 token: token
             }
         };
-        return axios.get(MAIN_ADRESS + 'users/me', header);
+        return axios.get(routeName + 'me', header);
         },
 
     /** Crée un joueur */
