@@ -46,6 +46,7 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 const EventCard = (props:{event : EventCardModel}) => {
+    console.log("event", props.event)
     const classes = useStyles();
     const history = useHistory();
     const renderGames = props.event.listGames.map((game : { _id: string, name: string, img? : {url:string }}) =>
@@ -65,9 +66,11 @@ const EventCard = (props:{event : EventCardModel}) => {
             <Grid container justify="center">
             {renderGames}
             </Grid>
-            <Grid container justify="center" className={classes.card_author}>
+            {props.event.owner &&
+            (<Grid container justify="center" className={classes.card_author}>
                 <Box component="div" display="inline">Hébergé par {props.event.owner.username}</Box>
-            </Grid>
+            </Grid>)
+            }
         </Card>
     );
 }

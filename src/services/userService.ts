@@ -18,22 +18,23 @@ const empyUserProfil = {
 };
 
 
-const routeName = MAIN_ADRESS+'/users/';
+const routeName = MAIN_ADRESS+'users/';
 export const UserService = {
 
     /** Renvois tous les users */
     getAllUser() :AxiosPromise {
-        return axios.get(MAIN_ADRESS+'/users/');    },
+        return axios.get(routeName);
+        },
 
     signup(registerData : RegisterFormType): AxiosPromise{
-        return axios.post(  MAIN_ADRESS+'/users/signup', registerData)    },
+        return axios.post(  MAIN_ADRESS+'users/signup', registerData)    },
     /**
      * For login
      * @param loginData
      * @return data.token the JWT Token of the session
      */
     login(loginData: LoginFormType): AxiosPromise{
-        return axios.post(MAIN_ADRESS + '/users/login', loginData)    },
+        return axios.post(MAIN_ADRESS + 'users/login', loginData)    },
     /**
      * Fonction that take the user's token and return all data about it
      * not usable on other users
@@ -45,7 +46,7 @@ export const UserService = {
                 token: token
             }
         };
-        return axios.get(MAIN_ADRESS + '/users/me', header);
+        return axios.get(MAIN_ADRESS + 'users/me', header);
         },
 
     /** Crée un joueur */

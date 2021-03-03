@@ -30,7 +30,8 @@ export interface UserData {
         lastname:string,
         username: string,
         img: {url:string, id:string},
-        userProfile : string
+        userProfile : string,
+        dateOfBirth: Date
 }
 
 export function useAuth() {
