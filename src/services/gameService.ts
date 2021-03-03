@@ -12,7 +12,7 @@ export const GameService = {
         return axios.get(routeName);
     },
     getGamesForQuickSearch(search :string ) :AxiosPromise {
-        return axios.get(routeName+'/');
+        return axios.get(routeName);
     },
 
     /** formulaire pour créer un jeu */
@@ -45,7 +45,7 @@ export const GameService = {
         gameFormData.genres = [];
         game.genres.forEach(value => gameFormData.genres.push(value._id))
 
-        return axios.post(routeName + '/create',  UtilsAxios.convertModelToFormData(gameFormData), {
+        return axios.post(routeName + 'create',  UtilsAxios.convertModelToFormData(gameFormData), {
             headers: {
                 'credentials': 'include',
                 'Access-Control-Allow-Origin': '*',
@@ -58,7 +58,7 @@ export const GameService = {
     },
 
     getGame(id : string) :AxiosPromise {
-        return axios.get(routeName+'/'+id);
+        return axios.get(routeName+id);
     },
 
     getGamesPage(page: number, gameSearch?: GameSearchProps, sortBy?: string, baseGameId?: string) :AxiosPromise {
