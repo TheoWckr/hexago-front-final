@@ -4,6 +4,8 @@ import TextField from "@material-ui/core/TextField";
 import {UserData} from "../../../services/hooks/useAuth";
 import {makeStyles} from "@material-ui/core/styles";
 import {UtilsDate} from "../../../utils/utilsDate";
+import DragNDropImage from "../../commons/dragNDrop/dragNDropImageComponent";
+import DragNDropAvatar from "../../commons/dragNDrop/dragNDropAvatarComponent";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -31,7 +33,7 @@ const useStyles = makeStyles((theme: Theme) =>
             borderColor: '#312783',
         },
         grid:{
-            padding:'1rem'
+            padding:'0.5rem'
         },
         innerGrid:{
             padding:'0.3rem'
@@ -52,8 +54,19 @@ export const UserEditPage = (props: { user: UserData }) => {
     const [passwordMatch, setPasswordMatch] = useState(true)
     const [email, setEmail] = useState(props.user.email)
 
+    const [file,setFile] = useState<File>(new File(new Array<BlobPart>(),""));
+    const [urlPicture, setUrlPicture] = useState("")
+
     useEffect(() => setPasswordMatch(password === passwordCheck)
         , [password, passwordCheck])
+
+    useEffect( () => {
+        if(file.size>0)
+            setUrlPicture( URL.createObjectURL(file))
+        else {
+            setUrlPicture("")
+        }
+    }, [file])
     return (
         <div className={classes.root}>
             <CssBaseline />
@@ -62,12 +75,14 @@ export const UserEditPage = (props: { user: UserData }) => {
             </Grid>
 
             <Grid container  direction="row" justify="center"
-                  alignItems="center" className={classes.grid}>
+                  alignItems="center" className={classes.grid} >
                 <Grid container item xs={4}
                       direction="column"
                       justify="center"
                       alignItems="center"
                       className={classes.centralBar}>
+                    <DragNDropAvatar setFile={setFile} file={urlPicture} />
+
                     <TextField  className={classes.textBox} label={"Prénom"} onChange={event => setFirstName(event.target.value)} value={firstName}/>
                     <TextField className={classes.textBox} label={"Nom de famille"} onChange={event => setLastName(event.target.value)}
                                value={lastName}/>
@@ -75,10 +90,9 @@ export const UserEditPage = (props: { user: UserData }) => {
 
                 </Grid>
                 <Grid container item xs={8}  className={classes.grid}
-                      justify="center"
-                      alignItems="center">
-                    <Grid item xs={4} alignItems="center">
-                        <TextField className={classes.textBox} label={"Pseudo"} onChange={event => setUserName(event.target.value)}
+                      alignItems="center" >
+                    <Grid item xs={4} >
+                        <TextField className={classes.textBox} label={"Pseudo"} fullWidth onChange={event => setUserName(event.target.value)}
                                    value={userName}/>
                     </Grid>
                     <Grid item xs={4}>
@@ -88,18 +102,18 @@ export const UserEditPage = (props: { user: UserData }) => {
                         <TextField className={classes.textBox} label={"Mot de passe actuel"} onChange={event => setPassword(event.target.value)}
                                    value={password}/>
                     </Grid>
-                    <Grid item container xs={6}>
-                        <TextField className={classes.textBox} label={"Nouveau mot de passe "}
+                    <Grid item container xs={4} alignItems="center" >
+                        <TextField className={classes.textBox} label={"Nouveau mot de passe "} fullWidth hidden
                                    onChange={event => setNewPassword(event.target.value)}
                                    value={newPassword}/>
                     </Grid>
-                    <Grid item container xs={6}>
-                        <TextField className={classes.textBox} label={"Confirmation mot de passe"}
+                    <Grid item container xs={4} >
+                        <TextField className={classes.textBox} label={"Confirmation mot de passe"} fullWidth
                                    onChange={event => setPasswordCheck(event.target.value)} value={passwordCheck}/>
                     </Grid>
                 </Grid>
             </Grid>
-            <Grid container xs={12} justify="center" >
+            <Grid container justify="center" >
                 <Button disabled={!passwordMatch} className={classes.btn}> Sauvegarder</Button>
             </Grid>
         </div>

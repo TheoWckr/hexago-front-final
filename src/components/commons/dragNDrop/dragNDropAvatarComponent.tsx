@@ -1,5 +1,7 @@
 import React, {ChangeEvent,  CSSProperties, Dispatch, SetStateAction} from 'react'
-import {Box, Button, Grid, Paper} from "@material-ui/core";
+import {Avatar, Box, Button, createStyles, Grid, Paper, Theme} from "@material-ui/core";
+import {makeStyles} from "@material-ui/core/styles";
+import {DefaultAvatar} from "../avatar/defaultAvatarComponent";
 
 
 const inputUploadFile: CSSProperties = {
@@ -20,12 +22,11 @@ const imgPreviewRounded: CSSProperties = {
 };
 
 const imgPaperPreview: CSSProperties = {
-    width: "25em",
-    height: "25em",
-   // padding:"8px",
+    width: "10em",
+    height: "10em",
+    // padding:"8px",
     display:"flex",
     margin:"auto",
-
 };
 const imgBoxPreview: CSSProperties = {
     margin:"auto",
@@ -37,8 +38,32 @@ const imgBoxPreview: CSSProperties = {
 }
 const buttonUploadFile: CSSProperties = {
     display:"flex"
-
 };
+
+const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+        root: {
+            display: 'flex',
+            '& > *': {
+                margin: theme.spacing(1),
+            },
+        },
+        small: {
+            width: theme.spacing(3),
+            height: theme.spacing(3),
+        },
+        medium: {
+            width: theme.spacing(7),
+            height: theme.spacing(7),
+        },
+        large: {
+            width: theme.spacing(12),
+            height: theme.spacing(12),
+            cursor: 'pointer',
+            boxShadow: '3px 3px 3px 3px grey'
+        },
+    }),
+);
 
 // component own props
 interface UploadFileOwnProps { }
@@ -47,10 +72,12 @@ interface UploadFileOwnProps { }
 interface UploadFileProps  extends UploadFileOwnProps {
     file : string
     setFile : Dispatch<SetStateAction<File>>
-    avatar? : boolean
+    name ? : string
 }
 //class DragNDropImage extends Component<UploadFileProps, UploadFileStateProps>  {
-const DragNDropImage = (props : UploadFileProps) => {
+const DragNDropAvatar = (props : UploadFileProps) => {
+    const classes = useStyles();
+
     // function to read file as binary and return
     function getFileFromInput(file: File): Promise<any> {
         return new Promise(function (resolve, reject) {
@@ -79,28 +106,30 @@ const DragNDropImage = (props : UploadFileProps) => {
         });
     }
     const button = (<>
-            <input accept="image/*" style={inputUploadFile} id="file" multiple={false} type="file"
-                   onChange={handleFileChange}/>
-            <label htmlFor="file">
-                <Button component="span" style={buttonUploadFile}
-                        onClick={(e: { stopPropagation: () => void; }) => e.stopPropagation()}>
-                    Ajoutez une image
-                </Button>
-            </label>
-        </>)
+
+            <Button component="span" style={buttonUploadFile}
+                    onClick={(e: { stopPropagation: () => void; }) => e.stopPropagation()}>
+                Ajoutez une image
+            </Button>
+    </>)
 
     return (
-        <Grid container style={ {margin : "auto"}}>
-            <Grid item xs={12}>
-                <Paper elevation={3} style={imgPaperPreview}>
+        <Grid container>
+            <Grid item xs={12} alignContent={"center"} alignItems={"center"}>
+                    <input accept="image/*" style={inputUploadFile} id="file" multiple={false} type="file"
+                           onChange={handleFileChange}/>
+                    <label htmlFor="file">
                     <Box style={imgBoxPreview}>
-                        {props.file.length > 0 && <img src={props.file} alt={""} style={props.avatar ? imgPreviewRounded : imgPreview}/>}
-                        {button}
+                        {props.file.length > 0 ?
+                            <Avatar alt={props.name ? props.name : ''} src={props.file} className={classes.large}/> :
+                            <DefaultAvatar size={"big"}/>
+                        }
                     </Box>
-                </Paper>
+                    </label>
+
             </Grid>
         </Grid>
     );
 
 }
-export default DragNDropImage;
+export default DragNDropAvatar;
