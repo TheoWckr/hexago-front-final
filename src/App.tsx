@@ -6,7 +6,7 @@ import GameList from "./components/game/list/gameList";
 import {MAIN_ADRESS} from "./utils/utilsAxios";
 import {
     Switch,
-    Route, Redirect, RouteProps
+    Route
 } from 'react-router';
 import GameDisplayPage from "./components/game/display/gameDisplayPage";
 import GameCreatePage from "./components/game/create/gameCreatePage";
@@ -38,13 +38,6 @@ const App = (props: { location: any }) => {
     useEffect(() => {
         setPreviousValueLocation(props.location.pathname)
     }, [props.location])
-    // useEffect(() => {
-    //     window.onbeforeunload = beforeUnload;
-    //     function beforeUnload()
-    //     {
-    //         return //Une fonction qui sera appelé a la déconnexion
-    //     }
-    // }, [])
     const shouldRefresh = (): boolean => {
         return props.location.pathname != previousValueLocation
     }

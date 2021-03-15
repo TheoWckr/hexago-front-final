@@ -5,6 +5,7 @@ import {MAIN_ADRESS, axios} from "../utils/utilsAxios";
 import {UserModel} from "../models/userModel";
 import {LoginFormType} from "../models/form/loginFormType";
 import {RegisterFormType} from "../models/form/registerFormType";
+import {UserData} from "./hooks/useAuth";
 const empyUserProfil = {
     "userProfile":{
     "experience":0,
@@ -55,4 +56,7 @@ export const UserService = {
         userRequest._id = undefined;
         return axios.post(routeName + 'signup', userRequest);
     },
+    updateUser(user:UserData) : AxiosPromise{
+        return axios.patch(routeName + 'update');
+    }
 };
