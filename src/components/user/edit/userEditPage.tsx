@@ -6,6 +6,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import {UtilsDate} from "../../../utils/utilsDate";
 import DragNDropImage from "../../commons/dragNDrop/dragNDropImageComponent";
 import DragNDropAvatar from "../../commons/dragNDrop/dragNDropAvatarComponent";
+import {GridSize} from "@material-ui/core/Grid"
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -40,25 +41,43 @@ const useStyles = makeStyles((theme: Theme) =>
         }
     }),
 );
+interface sizeInterface {
+    xs: GridSize,
+    sm:GridSize,
+    md:GridSize
+}
 
+const vp_size_map : sizeInterface[] = [
+    {
+        xs: 12,
+        sm: 12,
+        md: 6
+    },
+    {
+        xs: 12,
+        sm: 6,
+        md: 4
+    }
+]
 export const UserEditPage = (props: { user: UserData }) => {
     console.log(props.user)
     const classes = useStyles();
     const [firstName, setFirstName] = useState(props.user.firstname)
     const [lastName, setLastName] = useState(props.user.lastname)
     const [userName, setUserName] = useState(props.user.username)
+    const [email, setEmail] = useState(props.user.email)
+    const [myVar,setMyVar] = useState<GridSize>(2)
+    //Password handling
     const [password, setPassword] = useState("")
     const [newPassword, setNewPassword] = useState("")
-
     const [passwordCheck, setPasswordCheck] = useState("")
     const [passwordMatch, setPasswordMatch] = useState(true)
-    const [email, setEmail] = useState(props.user.email)
-
+    //File handling
     const [file,setFile] = useState<File>(new File(new Array<BlobPart>(),""));
     const [urlPicture, setUrlPicture] = useState("")
 
-    useEffect(() => setPasswordMatch(password === passwordCheck)
-        , [password, passwordCheck])
+    useEffect(() => setPasswordMatch(newPassword === passwordCheck)
+        , [newPassword, passwordCheck])
 
     useEffect( () => {
         if(file.size>0)
@@ -69,7 +88,6 @@ export const UserEditPage = (props: { user: UserData }) => {
     }, [file])
     return (
         <div className={classes.root}>
-            <CssBaseline />
             <Grid container justify="center">
                 <Typography variant={"h3"}> Informations personnelles</Typography>
             </Grid>
@@ -98,17 +116,18 @@ export const UserEditPage = (props: { user: UserData }) => {
                     <Grid item xs={4}>
                         <TextField fullWidth className={classes.textBox} label={"Email"} onChange={event => setEmail(event.target.value)} value={email}/>
                     </Grid>
-                    <Grid item xs={12}>
-                        <TextField className={classes.textBox} label={"Mot de passe actuel"} onChange={event => setPassword(event.target.value)}
-                                   value={password}/>
+                    <Grid item container xs={myVar}>
+                        <TextField  security={'Bonjour'} className={classes.textBox} label={"Mot de passe actuel"}
+                                   onChange={event => setPassword(event.target.value)}
+                                    value={password}/>
                     </Grid>
                     <Grid item container xs={4} alignItems="center" >
-                        <TextField className={classes.textBox} label={"Nouveau mot de passe "} fullWidth hidden
+                        <TextField type="password" className={classes.textBox} label={"Nouveau mot de passe "} fullWidth hidden
                                    onChange={event => setNewPassword(event.target.value)}
                                    value={newPassword}/>
                     </Grid>
                     <Grid item container xs={4} >
-                        <TextField className={classes.textBox} label={"Confirmation mot de passe"} fullWidth
+                        <TextField type="password" className={classes.textBox} label={"Confirmation mot de passe"} fullWidth
                                    onChange={event => setPasswordCheck(event.target.value)} value={passwordCheck}/>
                     </Grid>
                 </Grid>
