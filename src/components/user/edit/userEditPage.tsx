@@ -7,6 +7,7 @@ import {UtilsDate} from "../../../utils/utilsDate";
 import DragNDropImage from "../../commons/dragNDrop/dragNDropImageComponent";
 import DragNDropAvatar from "../../commons/dragNDrop/dragNDropAvatarComponent";
 import {GridSize} from "@material-ui/core/Grid"
+import {usePassword} from "../../hooks/usePassword";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -41,35 +42,16 @@ const useStyles = makeStyles((theme: Theme) =>
         }
     }),
 );
-interface sizeInterface {
-    xs: GridSize,
-    sm:GridSize,
-    md:GridSize
-}
 
-const vp_size_map : sizeInterface[] = [
-    {
-        xs: 12,
-        sm: 12,
-        md: 6
-    },
-    {
-        xs: 12,
-        sm: 6,
-        md: 4
-    }
-]
 export const UserEditPage = (props: { user: UserData }) => {
-    console.log(props.user)
     const classes = useStyles();
     const [firstName, setFirstName] = useState(props.user.firstname)
     const [lastName, setLastName] = useState(props.user.lastname)
     const [userName, setUserName] = useState(props.user.username)
     const [email, setEmail] = useState(props.user.email)
-    const [myVar,setMyVar] = useState<GridSize>(2)
     //Password handling
-    const [password, setPassword] = useState("")
-    const [newPassword, setNewPassword] = useState("")
+    const [password , componentPassword] = usePassword("");
+    const [newPassword, componentNewPassword] = useState("")
     const [passwordCheck, setPasswordCheck] = useState("")
     const [passwordMatch, setPasswordMatch] = useState(true)
     //File handling
@@ -116,15 +98,13 @@ export const UserEditPage = (props: { user: UserData }) => {
                     <Grid item xs={4}>
                         <TextField fullWidth className={classes.textBox} label={"Email"} onChange={event => setEmail(event.target.value)} value={email}/>
                     </Grid>
-                    <Grid item container xs={myVar}>
-                        <TextField  security={'Bonjour'} className={classes.textBox} label={"Mot de passe actuel"}
-                                   onChange={event => setPassword(event.target.value)}
-                                    value={password}/>
+
+                    <Grid item container xs={12} alignItems="center" >
+                        {componentPassword}
                     </Grid>
                     <Grid item container xs={4} alignItems="center" >
-                        <TextField type="password" className={classes.textBox} label={"Nouveau mot de passe "} fullWidth hidden
-                                   onChange={event => setNewPassword(event.target.value)}
-                                   value={newPassword}/>
+                        {componentPassword}
+
                     </Grid>
                     <Grid item container xs={4} >
                         <TextField type="password" className={classes.textBox} label={"Confirmation mot de passe"} fullWidth

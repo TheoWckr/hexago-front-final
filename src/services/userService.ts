@@ -57,6 +57,11 @@ export const UserService = {
         return axios.post(routeName + 'signup', userRequest);
     },
     updateUser(user:UserData) : AxiosPromise{
-        return axios.patch(routeName + 'update');
+        const header = {
+            headers : {
+                token: localStorage.getItem('token')
+            }
+        };
+        return axios.patch(routeName + 'update',user,header);
     }
 };
