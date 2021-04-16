@@ -57,7 +57,7 @@ const Header = () => {
                 </Typography>
                 {!isLogged && (
                     [
-                        <MenuItem key={0} onClick={handleClose} component={Link} to={'/login'}>Connection</MenuItem>,
+                        <MenuItem key={0} onClick={handleClose} component={Link} to={'/login'}>Connexion</MenuItem>,
                         <MenuItem key={1} onClick={handleClose} component={Link}
                                   to={'/register'}>Inscription</MenuItem>,
                     ]

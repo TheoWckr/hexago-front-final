@@ -15,7 +15,6 @@ const useStyles = makeStyles((theme: Theme) =>
             //border: '1px solid grey',
             backgroundColor: "#FFFFFF",
             borderRadius: '10px',
-            margin:'3em 1.5em'
         },
         event_card_action: {
             padding: '1em 2em',
@@ -31,7 +30,8 @@ const useStyles = makeStyles((theme: Theme) =>
         card_games: {
             borderRadius: '0.3em',
             margin:'0.5em',
-            fontSize : "big"
+            fontSize : "big",
+            maxWidth:"40%"
         },
         card_games_grid: {
             display:'flex',

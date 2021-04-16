@@ -1,5 +1,4 @@
 import React from "react";
-import {Editor} from "@tinymce/tinymce-react";
 import "./textfield.css"
 
 /**
@@ -19,18 +18,6 @@ export const RichTextEditor = (props: {
                                     width?: string
                                }) => {
     return (
-        <Editor
-            initialValue={props.initialValue ? props.initialValue : "Description"}
-            init={{
-                width: props.width ? props.width : "auto",
-                height: props.height ? props.height : "250",
-                menubar: false,
-                toolbar:
-                    "undo redo | formatselect | bold italic backcolor " +
-                    "| alignleft aligncenter alignright alignjustify " +
-                    "| bullist numlist outdent indent | removeformat | help"
-            }}
-            onEditorChange={props.handleEditorChange}
-        />
+        <div></div>
     )
 };

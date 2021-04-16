@@ -21,6 +21,6 @@ const EventSearchListLoader = (props : {search : EventSearchProps}) => {
         })();
     }, [props.search])
 
-    return(<EventCardList events={events} />)
+    return(<EventCardList events={events} vp_size="large" />)
 }
 export default EventSearchListLoader;

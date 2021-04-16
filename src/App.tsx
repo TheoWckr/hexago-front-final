@@ -1,4 +1,4 @@
-import React, {Component, useEffect, useState} from 'react';
+import React, { useEffect, useState} from 'react';
 import './App.css';
 import Header from "./components/commons/headers/Header";
 import {TransitionGroup, CSSTransition} from "react-transition-group";
@@ -24,6 +24,8 @@ import EventSearchPage from "./components/event/search/eventSearchPage";
 import {SnackContext, useSnack} from "./services/hooks/useSnackBar";
 import GuardedRoute from "./components/commons/guard/guardedRoute";
 import UserEditLoaderPage from "./components/user/edit/userEditLoaderPage";
+import {Dashboard} from "./components/dashboard/Dashboard";
+
 
 const socketIOClient = require('socket.io-client');
 
@@ -84,7 +86,11 @@ const App = (props: { location: any }) => {
                                 <Route path="/email/:id/verify/:token">
                                     <EmailVerificationComponent/>
                                 </Route>
+                                <Route path="/dashboard">
+                                    <Dashboard/>
+                                </Route>
                             </Switch>
+
                         </CSSTransition>
                     </TransitionGroup>
                 )}

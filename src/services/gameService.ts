@@ -47,7 +47,7 @@ export const GameService = {
 
         return axios.post(routeName + 'create',  UtilsAxios.convertModelToFormData(gameFormData), {
             headers: {
-                'credentials': 'include',
+                'tials': 'include',
                 'Access-Control-Allow-Origin': '*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, OPTIONS, DELETE',
                 'Access-Control-Allow-Headers': 'Access-Control-Allow-Methods, Access-Control-Allow-Origin, Origin, Accept, Content-Type',

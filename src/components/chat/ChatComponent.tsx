@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export const ChatComponent = () => {
-    const socket = socketIOClient(MAIN_ADRESS);
+    const socket = socketIOClient("http://localhost:3100");
     const [messages, setMessages] = useState<any>([]);
     const [writing, setWriting] = useState<boolean>(false);
     const [message, setMessage] = useState<string>("");
@@ -220,7 +220,7 @@ export const ChatComponent = () => {
                     )}
                 </div>
             </Drawer>
-            <main className={classes.content}>           
+            <main className={classes.content}>
                 <div style={{display: "flex", flexDirection: "column", overflowY: "scroll", height: "79vh", justifyContent: "flex-end"}}>
                     {messages.map((message: any, i: any) => {
                             let isUsername = true
