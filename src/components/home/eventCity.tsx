@@ -58,9 +58,7 @@ export const EventCity = () => {
                                         if(value && value.name)
                                             setValue(value.name  )
                                         else setValue("")
-                                        changeLocation()
                                     }}
-                                    //onKeyPress={(e) => handleKeyPress(e)}
                                 />
 
                                 <button className="searchButton"  onClick={changeLocation}>

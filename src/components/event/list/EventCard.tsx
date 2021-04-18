@@ -46,7 +46,6 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 const EventCard = (props:{event : EventCardModel}) => {
-    console.log("event", props.event)
     const classes = useStyles();
     const history = useHistory();
     const renderGames = props.event.listGames.map((game : { _id: string, name: string, img? : {url:string }}) =>

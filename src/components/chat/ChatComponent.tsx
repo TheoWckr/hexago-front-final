@@ -1,11 +1,12 @@
 import { createStyles, TextareaAutosize, Drawer, List, ListItem, ListItemIcon, ListItemText, makeStyles, Theme, Toolbar, Button } from '@material-ui/core';
-import React, { useEffect, useState } from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import Send from '@material-ui/icons/SendOutlined';
 import EditIcon from '@material-ui/icons/Edit';
 import "./Chat.css";
 import {UtilsString} from "../../utils/utilsString";
 import { useHistory } from 'react-router-dom';
 import {axios, MAIN_ADRESS, UtilsAxios} from '../../utils/utilsAxios';
+import {AuthContext} from "../../services/hooks/useAuth";
 
 const socketIOClient = require('socket.io-client');
 
@@ -38,6 +39,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const ChatComponent = () => {
     const socket = socketIOClient("http://localhost:3100");
+    const {userId} = useContext(AuthContext)
     const [messages, setMessages] = useState<any>([]);
     const [writing, setWriting] = useState<boolean>(false);
     const [message, setMessage] = useState<string>("");
@@ -46,17 +48,16 @@ export const ChatComponent = () => {
     const [selectedUsers, setSelectedUsers] = useState<object[]>([]);
     const [chatId, setChatId] = useState<string>();
     const [isCreate, setIsCreate] = useState<boolean>(false);
-    const userId = localStorage.getItem("userId")
     let username = "";
     const classes = useStyles();
     const history = useHistory();
 
 
-    useEffect(() => {
+   /* useEffect(() => {
         // socket stopWritingMessage params :  userId, chatId
-        const timeoutId = setTimeout(() => socket.emit("stopWritingMessage", userId, chatId), 1000);
+       // const timeoutId = setTimeout(() => socket.emit("stopWritingMessage", userId, chatId), 1000);
         return () => clearTimeout(timeoutId);
-      }, [message]);
+      }, [message]); */
 
     async function getChats() {
         await axios.get(MAIN_ADRESS + "chat/" + userId)

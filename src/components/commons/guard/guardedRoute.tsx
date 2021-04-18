@@ -11,7 +11,8 @@ const GuardedRoute: React.FC<{
     const {isLogged} = useContext(AuthContext)
 
     return isLogged === props.auth ?
-        (<Route path={props.path} exact={props.exact} component={props.component}/>) : (<Redirect to="/"/>);
+        (<Route path={props.path} exact={props.exact} component={props.component}/>)
+            : (<Redirect to="/"/>);
 }
 
 export default GuardedRoute;

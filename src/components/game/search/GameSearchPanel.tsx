@@ -2,10 +2,8 @@ import React, {Dispatch, SetStateAction, useEffect, useState} from "react";
 import {createStyles, Grid, TextField, Theme} from "@material-ui/core";
 import {KeyboardDatePicker} from "@material-ui/pickers";
 import {GenreModel} from "../../../models/genreModel";
-import GenresSelector from "../../genre/shared/GenresSelector";
 import GameSearchProps from "../../../models/game/gameSearch";
 import GenreQuickSearch from "../../genre/shared/GenreQuickSearch";
-import getFieldValue from "react-hook-form/dist/logic/getFieldValue";
 import {makeStyles} from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme: Theme) =>

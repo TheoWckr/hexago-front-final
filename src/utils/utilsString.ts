@@ -6,7 +6,7 @@ export const UtilsString = {
     formToArray(formValue : string): string[]{
        let splittedArrayAnd = formValue.split('and');
        let splittedArrayComa = splittedArrayAnd[0].split(',');
-       if(splittedArrayAnd.length != 1)
+       if(splittedArrayAnd.length !== 1)
            splittedArrayComa.push(splittedArrayAnd[1]);
 
         return splittedArrayComa;
@@ -17,14 +17,14 @@ export const UtilsString = {
      */
     arrayToForm(arrayValue : string[]): string{
         let returnString ='';
-        if (arrayValue.length == 1 ) return arrayValue[0];
+        if (arrayValue.length === 1 ) return arrayValue[0];
         else if(arrayValue.length >=1 )
          arrayValue.forEach((value,index) => {
              returnString += value;
              if(index < arrayValue.length - 2)
                   returnString += ' ,';
-             else if (index == arrayValue.length - 2 )
-                 returnString += ' and ';
+             else if (index === arrayValue.length - 2 )
+                 returnString += ' et ';
          } );
         return returnString;
 

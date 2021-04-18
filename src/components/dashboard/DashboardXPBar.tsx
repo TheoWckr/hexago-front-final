@@ -100,6 +100,7 @@ const DashboardXPBar = (props: { XP: number}) => {
         let percentValue = 1;
         let lastPoints = 0;
         for (let lvl of levels) {
+            console.log(levels)
             if (score >= lvl.points) {
                 dots.push("#951B81");
                 filled = lvl.percent;
@@ -115,7 +116,7 @@ const DashboardXPBar = (props: { XP: number}) => {
         }
         setFilledWidth(filled + "%");
         setFilledDots(dots);
-    })
+    },[])
 
     return (
         <div className={classes.xpbarcontainer}>

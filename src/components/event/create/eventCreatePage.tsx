@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import EventCreateForm from "./eventCreateForm";
 import Button from "@material-ui/core/Button";
 import {Container, createStyles, Grid, Paper, Theme, Typography} from "@material-ui/core";
-import {SnackContext, useSnack} from "../../../services/hooks/useSnackBar";
+import {SnackContext} from "../../../services/hooks/useSnackBar";
 import {makeStyles} from "@material-ui/core/styles";
 import {createEventForm} from "../../../models/service/eventServiceType";
 import {EventService} from "../../../services/eventService";

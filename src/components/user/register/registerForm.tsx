@@ -8,7 +8,7 @@ import {KeyboardDatePicker} from "@material-ui/pickers";
 import {MaterialUiPickersDate} from "@material-ui/pickers/typings/date";
 
 import {UserService} from "../../../services/userService";
-import {SnackContext, useSnack} from "../../../services/hooks/useSnackBar";
+import {SnackContext} from "../../../services/hooks/useSnackBar";
 import {useHistory} from "react-router";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -58,11 +58,10 @@ export const RegisterForm = () => {
     const [password, setPassword] = useState('');
     const [passwordConfirm, setPasswordConfirm] = useState('');
     const [isButtonDisabled, setIsButtonDisabled] = useState(true);
-    const [helperText, setHelperText] = useState('');
 	const {openSnack} = useContext(SnackContext)
 	const history = useHistory();
 
-
+	const helperText = ''
 	const [error, setError] = useState({
     	firstname: false,
     	lastname: false,
@@ -82,7 +81,7 @@ export const RegisterForm = () => {
     }, [firstname, lastname, email, phoneNumber, birth, username, password, passwordConfirm, error]);
 
     const handleRegister = () => {
-    	if (password != passwordConfirm) {
+    	if (password !== passwordConfirm) {
 			openSnack("Le mot de passe et la confirmation ne correspondent pas ")
 			return;
 		}
@@ -125,7 +124,7 @@ export const RegisterForm = () => {
 
     const checkPasswords = (pwdconfirm: string) => {
     	let newError = error;
-    	if (pwdconfirm != password) {
+    	if (pwdconfirm !== password) {
     		newError.pwdconfirm = true;
     		newError.pwd = true
     	}

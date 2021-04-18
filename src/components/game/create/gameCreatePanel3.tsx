@@ -4,7 +4,6 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import {GameEditProps} from "../../../models/propsDeclaration";
 import DragNDropImage from "../../commons/dragNDrop/dragNDropImageComponent";
 import {useStylesPanelCreatePage} from "./gameCreatePage";
-import {RichTextEditor} from "../../commons/richText/RichTextEditor";
 
 makeStyles({
     root: {

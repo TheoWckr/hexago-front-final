@@ -1,14 +1,14 @@
 // Hook (use-auth.js)
 import {useState, createContext, useEffect} from "react";
 import {UserService} from "../userService";
-import {UserModel} from "../../models/userModel";
 interface AuthType{
     currentUser : UserData |undefined,
         isLogged : boolean,
         token : string | null,
         signIn : (email : string,password : string, withAutoLogin?: boolean) => boolean,
         disconnect: () => void,
-        userId : string,
+    refresh: () => void,
+    userId : string,
 }
 const  AuthTypeDefault : AuthType = {
     currentUser: undefined,
@@ -16,6 +16,7 @@ const  AuthTypeDefault : AuthType = {
     token : null,
     signIn : () => false,
     disconnect: () => {},
+    refresh : () =>{},
     userId : "",
 }
 
@@ -67,6 +68,9 @@ export function useAuth() {
 
         return isLogged;
     };
+    const refresh = () => {
+        setToken(token)
+    }
 
     /**
      * hook to log out at any moment
@@ -97,12 +101,11 @@ export function useAuth() {
     };
 
    useEffect(() => {
-       (async function anyNameFunction() {
-           await autoLogin()
-       })();
-        },[]);
+           autoLogin()
+        });
 
    useEffect(() => {
+       console.log("Modif use effec token ");
        (async function anyNameFunction() {
        if(token){
            setIsLogged( true)
@@ -110,6 +113,7 @@ export function useAuth() {
                .catch(() => autoLogin())
                .then((result) => {
                        if(result) {
+                           console.log(result)
                            setCurrentUser(result.data)
                            setUserId(result.data._id)
                            localStorage.setItem("userId",result.data._id )
@@ -136,7 +140,8 @@ export function useAuth() {
         signIn,
         disconnect,
         userId,
-        loginResolved
+        loginResolved,
+        refresh
     };
 
 }

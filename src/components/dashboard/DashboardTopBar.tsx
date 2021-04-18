@@ -3,6 +3,7 @@ import {Theme, makeStyles, createStyles} from "@material-ui/core/styles";
 import {Container, Box} from "@material-ui/core";
 import Grid, { GridSpacing } from '@material-ui/core/Grid';
 import DashboardXPBar from './DashboardXPBar';
+import {useHistory} from "react-router-dom";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -31,6 +32,7 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         links: {
             textDecoration: 'none',
+            cursor: 'pointer',
             color: "#951B81",
             marginTop: "2px",
             marginBottom: "2px",
@@ -51,7 +53,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const DashboardTopBar = () => {
     const classes = useStyles();
-
+    const history = useHistory()
     return (
         <Grid container className={classes.xp}>
             <Grid item xs={12} md={4} className={classes.leftSection}>
@@ -63,8 +65,8 @@ export const DashboardTopBar = () => {
                     <Grid item xs={12} md={6}>
                         <div className={classes.xpwelcome}>
                             <h2 className={classes.xptitle}>Bonjour !</h2>
-                            <a className={classes.links} href="#">Modifier votre profil </a>
-                            <a className={classes.links} href="#">Verifiez votre mail </a>
+                            <a className={classes.links} onClick={() => history.push('user/edit')}>Modifier votre profil </a>
+                            <a className={classes.links}  >Verifiez votre mail </a>
                         </div>
                     </Grid>
                 </Grid>

@@ -9,8 +9,6 @@ import {AuthContext} from "../../../services/hooks/useAuth";
 import {AxiosResponse} from "axios";
 import {UtilsDate} from "../../../utils/utilsDate";
 import {useHistory} from "react-router";
-import Chip from "@material-ui/core/Chip";
-import {Call} from "@material-ui/icons";
 import CallToAction from "../../home/callToAction";
 import {SnackContext} from "../../../services/hooks/useSnackBar";
 
@@ -59,13 +57,13 @@ const EventDisplayPage = (props : {event : EventDisplayType, refresh: () => void
         if(props.event.currentPlayers === props.event.maxPlayers) {
             subButton = false
         }
-        if(!userId || userId.length ==0 || props.event.owner._id === userId ) {
+        if(!userId || userId.length ===0 || props.event.owner._id === userId ) {
             subButton = false
             unsubButton = false
         }
         setDisplaySubscribeButton(subButton)
         setDisplayUnsubscribeButton(unsubButton)
-    },[props.event])
+    },[props.event, userId])
 
     const subscribe = async () => {
         await EventService.subscribeEvent(props.event._id)
@@ -130,6 +128,7 @@ const EventDisplayPage = (props : {event : EventDisplayType, refresh: () => void
                 <Grid item xs={6} className="box">
                     <div className="box-map">
                         <iframe
+                            title ={'Carte de la ville'}
                             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7449.505429822984!2d6.173500846207366!3d48.69022845072249!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4794986e17a692cd%3A0x4ed671b10d82498d!2sNancy!5e0!3m2!1sfr!2sfr!4v1600071064410!5m2!1sfr!2sfr"
                             className="map"
                             allowFullScreen={true}
@@ -137,7 +136,7 @@ const EventDisplayPage = (props : {event : EventDisplayType, refresh: () => void
                     </div>
                 </Grid>
                 <Grid item xs={12} className="box-button">
-                    {(!userId || userId.length ==0) && <CallToAction />}
+                    {(!userId || userId.length ===0) && <CallToAction />}
                     {   displaySubscribeButton && <Button variant="outlined" className={classe.btn} onClick={subscribe} >Participer à l'évènement</Button>}
                     {displayUnsubscribeButton &&<Button variant="outlined" className={classe.btnCancel} onClick={unsubscribe} >Annuler ma participation </Button>}
 

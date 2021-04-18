@@ -50,10 +50,10 @@ const Header = () => {
             <Toolbar onMouseEnter={triggerGif}>
 
                 <img src={isAnimate ? "/dice-anim.gif" : "/dice-static.png"} style={{height: "50px", cursor: "pointer"}}
-                     onClick={() => history.push("/")}/>
+                     onClick={() => isLogged ? history.push("/dashboard") :  history.push("/") }/>
                 <Typography variant="h6" className={[classes.title, "App-title"].join(' ')}>
                     <span className="App-title" style={{cursor: "pointer"}}
-                          onClick={() => history.push("/")}>HexaGo</span>
+                          onClick={() => isLogged ? history.push("/dashboard") :  history.push("/")}>HexaGo</span>
                 </Typography>
                 {!isLogged && (
                     [

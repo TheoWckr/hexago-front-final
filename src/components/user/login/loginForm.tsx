@@ -3,14 +3,13 @@ import './login.css';
 import TextField from '@material-ui/core/TextField';
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import {LoginProvider} from "./loginProvider";
 import Grid from '@material-ui/core/Grid';
 import {Box, Checkbox, FormControlLabel} from "@material-ui/core";
 import {useHistory} from "react-router";
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from "@material-ui/core/CircularProgress";
 import {AuthContext} from "../../../services/hooks/useAuth";
-import {SnackContext, useSnack} from "../../../services/hooks/useSnackBar";
+import {SnackContext} from "../../../services/hooks/useSnackBar";
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -71,9 +70,7 @@ export const LoginForm = () => {
         }
     }, [email, password]);
 
-    const sleep = (milliseconds: number) => {
-        return new Promise(resolve => setTimeout(resolve, milliseconds))
-    }
+
 
     const handleLogin = async () => {
         setLoad(true);

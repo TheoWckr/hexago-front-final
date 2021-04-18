@@ -96,6 +96,7 @@ const EventUpdatePage = () => {
                     <Grid item xs={12} md={6}>
                         <div>
                             <iframe
+                                title={"Carte de la ville"}
                                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7449.505429822984!2d6.173500846207366!3d48.69022845072249!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4794986e17a692cd%3A0x4ed671b10d82498d!2sNancy!5e0!3m2!1sfr!2sfr!4v1600071064410!5m2!1sfr!2sfr"
                                 allowFullScreen={true}
                                 className={classes.map}

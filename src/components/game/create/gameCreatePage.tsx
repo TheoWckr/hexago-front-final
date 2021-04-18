@@ -11,7 +11,6 @@ import GameCreatePanel3 from "./gameCreatePanel3";
 import GameCreatePanel2 from "./gameCreatePanel2";
 import {GameModel} from "../../../models/gameModel";
 import {GameService} from "../../../services/gameService";
-import {UtilsAxios} from "../../../utils/utilsAxios";
 import {useParams} from "react-router";
 import {FormContext, useForm} from "react-hook-form";
 import {Button, Grid, List, ListItem, ListItemText, Paper} from "@material-ui/core";

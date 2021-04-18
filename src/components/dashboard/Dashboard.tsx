@@ -6,12 +6,19 @@ import DashboardTopBar from './DashboardTopBar';
 import DashboardListEvent from './DashboardListEvent';
 import DashboardExpandableEventList from './DashboardExpandableEventList';
 import DashboardFavoriteAndPastEvents from './DashboardFavoriteAndPastEvents';
+import background from '../../assets/tabletop_dashboard.jpg'
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
+        background: {
+            backgroundImage:`url(${background})`,
+            width:"100%",
+            height:"100%",
+            },
         container: {
-            color: "#312783",
             fontFamiliy: "Roboto",
+            backgroundColor: "rgba(255,255,255,0.9)"
+
         },
         dashboardtitle: {
             paddingLeft: "10px",
@@ -57,6 +64,7 @@ export const Dashboard = () => {
     const classes = useStyles();
 
     return (
+        <div className={classes.background}>
         <Container className={classes.container}>
             <h1 className={classes.dashboardtitle}>Mon tableau de bord:</h1>
             <DashboardTopBar/>
@@ -70,5 +78,6 @@ export const Dashboard = () => {
                 </Grid>
             </Grid>
         </Container>
+        </div>
     )
 };

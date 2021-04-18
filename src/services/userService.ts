@@ -1,22 +1,12 @@
 // @ts-ignore
 
 import {AxiosPromise} from "axios";
-import {MAIN_ADRESS, axios} from "../utils/utilsAxios";
+import {MAIN_ADRESS, axios, UtilsAxios} from "../utils/utilsAxios";
 import {UserModel} from "../models/userModel";
 import {LoginFormType} from "../models/form/loginFormType";
 import {RegisterFormType} from "../models/form/registerFormType";
-import {UserData} from "./hooks/useAuth";
-const empyUserProfil = {
-    "userProfile":{
-    "experience":0,
-        "grade":0,
-        "rank":0,
-        "friendList": [],
-        "blackList": [],
-        "favoriteGames": [],
-        "favoriteGenres": []
-}
-};
+import {UserUpdateData} from "../models/service/userServiceType";
+
 
 
 const routeName = MAIN_ADRESS+'users/';
@@ -56,12 +46,15 @@ export const UserService = {
         userRequest._id = undefined;
         return axios.post(routeName + 'signup', userRequest);
     },
-    updateUser(user:UserData) : AxiosPromise{
+    updateUser(user:UserUpdateData) : AxiosPromise{
         const header = {
             headers : {
-                token: localStorage.getItem('token')
+                token: localStorage.getItem('token'),
+
+            'Content-Type':'application/x-www-form-urlencoded'
+
             }
         };
-        return axios.patch(routeName + 'update',user,header);
+        return axios.patch(routeName + 'update/',user,header);
     }
 };

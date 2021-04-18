@@ -13,7 +13,6 @@ import PlayerNumber from "../shared/PlayerNumber";
 import GameDuration from "../shared/GameDuration";
 import GameAgeMin from "../shared/GameAgeMin";
 import GameExtentionDisplay from "../shared/GameExtentionDisplay";
-import CardMedia from "@material-ui/core/CardMedia";
 import EventSearchListLoader from "../../event/search/EventSearchListLoader";
 
 
@@ -84,7 +83,7 @@ const GameDisplayPage = () => {
                         title={gameState.name}
                     />
                 </Grid>
-                <Grid item md={6}  spacing={3}  className={classes.padding}  >
+                <Grid item md={6}    className={classes.padding}  >
                     <Typography variant="h4" component="h2" >{gameState.name}  </Typography>
                     <Rating
                         name="customized-empty"

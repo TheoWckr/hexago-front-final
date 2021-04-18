@@ -16,7 +16,6 @@ const GameNameQS = (props : {
                 let gameStock1: GameModel[] = [];
 
                 result.data.content.forEach((game: GameModel) => {
-                  // if(game._id && !chosenGames.includes(game._id))
                     gameStock1.push(game)
                     if(game._id)
                     stock.push({
@@ -27,7 +26,7 @@ const GameNameQS = (props : {
                 });
                 setGameStock(gameStock1)
                 setOptions(stock);
-            }))
+            })).catch(() => setOptions([]))
 
     }, []);
     //Conversion name to idGame pour transmettre au dessus

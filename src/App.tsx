@@ -30,7 +30,7 @@ import {Dashboard} from "./components/dashboard/Dashboard";
 const socketIOClient = require('socket.io-client');
 
 const App = (props: { location: any }) => {
-    const {isLogged, signIn, token, disconnect, userId, currentUser,loginResolved} = useAuth();
+    const {isLogged, signIn, token, disconnect, userId, currentUser,loginResolved, refresh} = useAuth();
     const {openSnack, snack} = useSnack("");
 
     const [previousValueLocation, setPreviousValueLocation] = useState("")
@@ -46,7 +46,7 @@ const App = (props: { location: any }) => {
 
     return (
         // @ts-ignore
-        <AuthContext.Provider value={{isLogged, signIn, token, disconnect, userId, currentUser}}>
+        <AuthContext.Provider value={{isLogged, signIn, token, disconnect, userId, currentUser, refresh}}>
             <SnackContext.Provider value={{openSnack}}>
                 <Header/>
                 {loginResolved &&(

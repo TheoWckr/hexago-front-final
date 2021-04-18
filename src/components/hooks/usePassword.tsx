@@ -16,14 +16,11 @@ export function usePassword(defaultValue : string= "", label :string = 'mot de p
     const classes = useStyles();
 
     const [password,setPassword] = useState(defaultValue);
-
-
+    const passFun = () => "password";
     const component = (
-            <>
-                <TextField type="password" className={classes.textBox} label={label} fullWidth
-                           onChange={(event: { target: { value: any; }; }) => setPassword(event.target.value)} value={password}/>
-
-            </>);
+                <TextField type={passFun()}  className={classes.textBox} label={label} fullWidth
+                           onChange={(event: { target: { value: any; }; }) => setPassword(event.target.value)} defaultValue={''} />
+            );
 
 
     return [

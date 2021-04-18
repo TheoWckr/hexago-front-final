@@ -3,6 +3,7 @@ import {Theme, makeStyles, createStyles} from "@material-ui/core/styles";
 import {Container, Box} from "@material-ui/core";
 import Grid, { GridSpacing } from '@material-ui/core/Grid';
 import DashboardExpandableEventList from './DashboardExpandableEventList';
+import {EventService} from "../../services/eventService";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -23,13 +24,11 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const DashboardFavoriteAndPastEvents = () => {
     const classes = useStyles();
-    const [expanded, setExpanded] = React.useState<boolean|false>();
-
     return (
         <div className={classes.container}>
             <div className={classes.fav}>
                 <h3 className={classes.eventTypeTitle}>Mes évènements favoris: </h3>
-                <DashboardExpandableEventList/>
+                <DashboardExpandableEventList />
             </div>
             <h3 className={classes.eventTypeTitle}>Mes évènements passés: </h3>
             <DashboardExpandableEventList/>
