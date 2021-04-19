@@ -1,20 +1,27 @@
-import React, {useContext} from "react";
+import React from "react";
 import {Theme, makeStyles, createStyles} from "@material-ui/core/styles";
-import {Container, Box} from "@material-ui/core";
-import Grid, { GridSpacing } from '@material-ui/core/Grid';
-import DashboardTopBar from './DashboardTopBar';
-import DashboardListEvent from './DashboardListEvent';
-import DashboardExpandableEventList from './DashboardExpandableEventList';
-import DashboardFavoriteAndPastEvents from './DashboardFavoriteAndPastEvents';
-import background from '../../assets/tabletop_dashboard.jpg'
+import background from '../../../assets/tabletop_dashboard.jpg'
+import {Grid, Link, Paper, Typography} from "@material-ui/core";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         background: {
-            backgroundImage:`url(${background})`,
             width:"100%",
-            height:"100%",
-            },
+            height:"200px",
+            marginTop:"3em"
+
+        },
+        root: {
+            flexGrow: 1,
+            borderTop:'0.5rem solid  #cabbdc',
+            background: ' #cabbdc',
+
+        },
+        paper: {
+            padding: theme.spacing(2),
+            textAlign: 'center',
+            color: theme.palette.text.secondary,
+        },
         container: {
             fontFamiliy: "Roboto",
             backgroundColor: "rgba(255,255,255,0.9)"
@@ -60,25 +67,26 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 )
 
-export const Dashboard = () => {
+export const Footer = () => {
     const classes = useStyles();
 
     return (
-        <div className={classes.background}>
-        <Container className={classes.container}>
-            <h1 className={classes.dashboardtitle}>Mon tableau de bord:</h1>
-            <DashboardTopBar/>
+        <div className={classes.root}>
+            <Grid container  >
+                <Grid item xs={6}>
+                    <Paper style={{height:"100%", padding:"2.5em",background: '#cabbdc',}}>
+                    <Typography variant={"h6"} align={"center"}> Lien Utiles  </Typography>
+                        <Link target={"/bonjour"}> FAQ </Link>
+                    </Paper>
+                </Grid>
+            <Grid item xs={6} >
+                <Paper style={{height:"100%", padding:"2.5em",  background: '#cabbdc',}}>
+                <Typography variant={"h6"} align={"center"}> A propos  </Typography>
+                <Typography align={"center"}> Hexago est un projet mené par 6 étudiants d'EPITECH dans le cadre de leurs études en MSC </Typography>
+                </Paper>
 
-            <Grid container spacing={2} className={classes.eventContainer}>
-                <Grid item xs={12} md={3} className={classes.favAndPastEventsContainer}>
-                    <DashboardFavoriteAndPastEvents/>
-                </Grid>
-                <Grid item xs={12} md={9}>
-                    <h1 className={classes.dashboardtitle}>Mes prochains évènements:</h1>
-                    <DashboardListEvent/>
-                </Grid>
             </Grid>
-        </Container>
+            </Grid>
         </div>
     )
 };

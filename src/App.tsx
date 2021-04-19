@@ -25,6 +25,7 @@ import {SnackContext, useSnack} from "./services/hooks/useSnackBar";
 import GuardedRoute from "./components/commons/guard/guardedRoute";
 import UserEditLoaderPage from "./components/user/edit/userEditLoaderPage";
 import {Dashboard} from "./components/dashboard/Dashboard";
+import {Footer} from "./components/commons/footer/footer";
 
 
 const socketIOClient = require('socket.io-client');
@@ -95,6 +96,7 @@ const App = (props: { location: any }) => {
                     </TransitionGroup>
                 )}
                 {snack()}
+                <Footer />
             </SnackContext.Provider>
         </AuthContext.Provider>
     );
