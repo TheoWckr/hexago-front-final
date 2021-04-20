@@ -42,11 +42,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "storybook": "start-storybook -p 9009 -s public",
-    "build-storybook": "build-storybook -s public",
-    "publishToHeroku": "cd  && git subtree  push --prefix front heroku-hexago-frontend master"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -64,9 +60,6 @@
     ]
   },
   "devDependencies": {
-    "@storybook/addon-actions": "^5.3.21",
-    "@storybook/addon-links": "^5.3.21",
-    "@storybook/react": "^5.3.21",
     "@types/history": "^4.7.3",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.5"
