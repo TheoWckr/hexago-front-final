@@ -7,7 +7,6 @@ import {GenreModel} from "../../../models/genreModel";
 const GenreQuickSearch = (props : {
     setChoices:  (genres: GenreModel[]) => void | React.Dispatch<React.SetStateAction<GenreModel[]>>,
     choices? : string[]
-
 }) =>  {
     const [chosenGenres, setChosenGenres] = useState<string[]>(props.choices ? props.choices : []);
     const [genreStock, setGenreStock] = useState<GenreModel[] >([]);

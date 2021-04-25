@@ -9,14 +9,14 @@ let genreMockList2 : GenreModel[] = [
     new GenreModel( {genre: "Card Game", _id :'CardGame'} ),new GenreModel({genre: " Duel ", _id : 'Duel'})
 ];
 
-describe('<GenreList />', () => {
+describe('Render Genre list ', () => {
     // @ts-ignore
     let mount :  mount<any> & {
         attachTo: HTMLElement;
         cleanUp(): void;
     };
 
-    beforeAll(() => {  // This is Mocha; in Jest, use beforeAll
+    beforeAll(() => {
         mount = createMount();
     });
 
