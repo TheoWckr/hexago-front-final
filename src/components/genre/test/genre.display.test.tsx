@@ -27,7 +27,7 @@ describe('Render - Genre Component  ', () => {
     });
 
     it('should display - Genres Selector', () => {
-        const wrapper = mount(<GenresSelector genres={[]} changeGenreState={(genre)  => {} }  />) ;
+        const wrapper = mount(<GenresSelecto genres={[]} changeGenreState={(genre)  => {} }  />) ;
     });
 
 });
