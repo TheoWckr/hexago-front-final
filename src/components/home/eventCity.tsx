@@ -22,7 +22,8 @@ export const EventCity = () => {
     const changeLocation= () => {
         setSearch({
             localisation: value,
-            listGames:[]
+            listGames:[],
+            date: new Date()
         } )
     }
     const handleKeyPress = (e: any) => {
