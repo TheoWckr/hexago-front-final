@@ -103,7 +103,7 @@ export const RegisterForm = () => {
     	}
         UserService.createUser(user).then(
 			() => {
-				openSnack("Inscription validée, vous pouvez désormais vous connecter")
+				openSnack("Inscription validée, un mail de validation vous a été envoyé, vous pouvez désormais vous connecter")
 				history.push("/");
 			}
 		).catch((error)=>

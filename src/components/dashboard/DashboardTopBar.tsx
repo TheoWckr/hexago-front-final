@@ -66,7 +66,6 @@ export const DashboardTopBar = () => {
                         <div className={classes.xpwelcome}>
                             <h2 className={classes.xptitle}>Bonjour !</h2>
                             <a className={classes.links} onClick={() => history.push('user/edit')}>Modifier votre profil </a>
-                            <a className={classes.links}  >Verifiez votre mail </a>
                         </div>
                     </Grid>
                 </Grid>
