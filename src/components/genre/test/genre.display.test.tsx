@@ -1,9 +1,11 @@
 import {createMount} from "@material-ui/core/test-utils";
 import GenreQuickSearch from "../shared/GenreQuickSearch";
 import {GenreModel} from "../../../models/genreModel";
-import React from "react";
+import React, {useState} from "react";
 import GenreSearch from "../shared/GenreSearch";
 import GenresSelector from "../shared/GenresSelector";
+import {GenreUpdatePanel} from "../panel/genreUpdatePanel";
+import {genreMock} from "../../../data-mock/GenreMock";
 
 
 describe('Render - Genre Component  ', () => {
@@ -29,5 +31,6 @@ describe('Render - Genre Component  ', () => {
     it('should display - Genres Selector', () => {
         const wrapper = mount(<GenresSelector genres={[]} changeGenreState={(genre)  => {} }  />) ;
     });
+
 
 });
