@@ -27,7 +27,7 @@ describe('Render - Genre Component  ', () => {
     it('should display - Call To action', () => {
         const wrapper = mount(<GenreSearch genresHidden={[]} />) ;
     });
-    
+
 
 
 });

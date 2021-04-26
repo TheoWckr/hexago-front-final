@@ -15,7 +15,9 @@ const useStyles = makeStyles((theme: Theme) =>
             flexGrow: 1,
             borderTop:'0.5rem solid  #cabbdc',
             background: ' #cabbdc',
-
+            left: 0,
+            bottom: 0,
+            position:"static"
         },
         paper: {
             padding: theme.spacing(2),

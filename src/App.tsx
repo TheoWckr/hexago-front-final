@@ -50,6 +50,7 @@ const App = (props: { location: any }) => {
         <AuthContext.Provider value={{isLogged, signIn, token, disconnect, userId, currentUser, refresh}}>
             <SnackContext.Provider value={{openSnack}}>
                 <Header/>
+
                 {loginResolved &&(
                     <TransitionGroup appear={shouldRefresh()} enter={shouldRefresh()} exit={shouldRefresh()}>
                         <CSSTransition key={props.location.key} classNames="fade" timeout={{
@@ -57,7 +58,7 @@ const App = (props: { location: any }) => {
                             enter: 500,
                             exit: 300
                         }}>
-                            <Switch>
+                            <Switch >
                                 <Route exact path="/">
                                     <Home/>
                                 </Route>
@@ -90,13 +91,15 @@ const App = (props: { location: any }) => {
                                 <Route path="/dashboard">
                                     <Dashboard/>
                                 </Route>
+
                             </Switch>
 
                         </CSSTransition>
+
                     </TransitionGroup>
                 )}
+
                 {snack()}
-                <Footer />
             </SnackContext.Provider>
         </AuthContext.Provider>
     );
