@@ -34,7 +34,7 @@ const GenreSearch = (props : {
     return (<div className="iflx mx-2-childs">
         <Typography variant={props.inline ? 'body1' : 'h5' }  style={props.inline ? {} :  {padding: '1.3em'}}>
             Recherche de genre
-        </Typography>
+        </Ty
         <Input placeholder="Quick Search" style={{width : '40%', margin: 'auto'}} onChange={(event)=> setGenresInput(event.target.value)} inputProps={{'aria-label': 'description'}}/>
         <GenreList genres={genresSearched.filter((genre) => props.genresHidden.filter((genreProps) => genre._id === genreProps._id).length === 0)} ClickHandler={props.clickHandler}/>
     </div>);
